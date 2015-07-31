@@ -1,0 +1,63 @@
+﻿@model IEnumerable<userprofile.Models.MATCH>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.matchDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.winnerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOCATION1.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEAM.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEAM1.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.matchDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.winnerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LOCATION1.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEAM.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEAM1.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.mID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.mID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.mID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,66 @@
+﻿@model userprofile.Models.MATCH
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MATCH</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.matchDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.matchDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.winnerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.winnerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOCATION1.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOCATION1.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEAM.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEAM.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEAM1.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEAM1.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOURNAMENT1.sport)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.mID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

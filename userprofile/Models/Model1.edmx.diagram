@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4dc3237307d4446eb4791911c5842867" Name="Diagram1" ZoomLevel="80">
+        <EntityTypeShape EntityType="RaoModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.AspNetRole" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.AspNetUser" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.INFRACTION" Width="1.5" PointX="8.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.LOCATION" Width="1.5" PointX="5.25" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.MATCH" Width="1.5" PointX="7.5" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.MATCHQUAL" Width="1.5" PointX="9.75" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.OFFER" Width="1.5" PointX="10.5" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.PLAYER" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.QUALIFICATION" Width="1.5" PointX="9" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.REFEREE" Width="1.5" PointX="8.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.SCORE" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.SPORT" Width="1.5" PointX="0.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.TEAM" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.TOURNAMENT" Width="1.5" PointX="3" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RaoModel.USERQUAL" Width="1.5" PointX="11.25" PointY="13.375" IsExpanded="true" />
+        <AssociationConnector Association="RaoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_INFRACTION_PLAYER" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_PLAYER_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.FK_REFEREE_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_SCORES_PLAYER" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.FK_TEAM_MANAGER" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_INFRACTION_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_LOCATION" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_QUAL" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_TEAMA" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_TEAMB" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_TOURNAMENT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_OFFER_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_SCORES_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_MATCH_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_OFFER_refID" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_OFFER_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_PLAYER_TEAM" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_QUAL_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_USER_QUAL" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_REFEREE_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.fk_TEAM_TOURNAMENT" ManuallyRouted="false" />
+        <AssociationConnector Association="RaoModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
