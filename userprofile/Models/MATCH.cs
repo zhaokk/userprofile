@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class MATCH
     {
@@ -23,7 +24,8 @@ namespace userprofile.Models
         }
     
         public int mID { get; set; }
-        public System.DateTime matchDate { get; set; }
+
+        public Nullable<System.DateTime> matchDate { get; set; }
         public Nullable<int> location { get; set; }
         public Nullable<int> teamaID { get; set; }
         public Nullable<int> teambID { get; set; }

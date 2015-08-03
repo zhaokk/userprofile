@@ -53,6 +53,11 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="mID,matchDate,location,teamaID,teambID,winnerID,tournament")] MATCH match)
         {
+            DateTime myDate = DateTime.ParseExact(Request.QueryString["datetime"], "yyyy-MM-dd HH:mm:ss",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+            match.matchDate = myDate;
+            
+
             if (ModelState.IsValid)
             {
                 db.MATCHes.Add(match);

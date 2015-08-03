@@ -202,6 +202,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
             string location = @"~\userprofile\default.png";
             
             if (model.upload != null)
