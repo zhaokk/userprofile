@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
     <Compile Include="Controllers\teamController.cs" />
     <Compile Include="Global.asax.cs">
@@ -299,6 +300,8 @@
     <Content Include="Content\AdminLTE\skins\_all-skins.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\calendar\fullCalendar.css" />
+    <Content Include="Content\css\calendar\fullCalendarPrint.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -611,6 +614,9 @@
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\AdminLTE\plugins\daterangepicker\daterangepicker-bs3.css" />
     <Content Include="Scripts\AdminLTE\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Scripts\AdminLTE\plugins\daterangepicker\daterangepicker2.css" />
+    <Content Include="Scripts\AdminLTE\plugins\daterangepicker\daterangepicker2.js" />
+    <Content Include="Scripts\AdminLTE\plugins\daterangepicker\moment.js" />
     <Content Include="Scripts\AdminLTE\plugins\fastclick\fastclick.js" />
     <Content Include="Scripts\AdminLTE\plugins\fastclick\fastclick.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\flot\excanvas.js" />
@@ -787,6 +793,7 @@
     <Content Include="Scripts\AdminLTE\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Scripts\AdminLTE\plugins\knob\jquery.knob.js" />
+    <Content Include="Scripts\AdminLTE\plugins\locationPicker\locationpicker.jquery.js" />
     <Content Include="Scripts\AdminLTE\plugins\morris\morris.css" />
     <Content Include="Scripts\AdminLTE\plugins\morris\morris.js" />
     <Content Include="Scripts\AdminLTE\plugins\morris\morris.min.js" />
@@ -828,10 +835,12 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\LICENSE.md" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\LICENSE.md" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\CHANGES.md" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -856,7 +865,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -885,6 +893,14 @@
     <Content Include="Views\Shared\_AdminLteBreadcrumb.cshtml" />
     <Content Include="Views\AdminLte\Index.cshtml" />
     <Content Include="Views\AdminLte\Colors.cshtml" />
+    <Content Include="Views\Shared\loginPartial2.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LOCATION.cshtml" />
+    <Content Include="Views\location\Create.cshtml" />
+    <Content Include="Views\location\Delete.cshtml" />
+    <Content Include="Views\location\Details.cshtml" />
+    <Content Include="Views\location\Edit.cshtml" />
+    <Content Include="Views\location\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

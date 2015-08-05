@@ -21,8 +21,10 @@
                 <p>Alexander Pierce</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>*@
-            @Html.Partial("_LoginPartial")
-        </div>
+            <div class="pull-left info">
+                @Html.Partial("LoginPartial2")
+            </div>
+         </div>
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -53,6 +55,7 @@
                     <li><a href='@Url.Action("index", "match")'><i class="fa fa-circle-o"></i>Match management</a></li>
                     <li ><a href='@Url.Action("index", "account")'><i class="fa fa-circle-o"></i>usermanagement</a></li>
                     <li ><a href='@Url.Action("index", "team")'><i class="fa fa-circle-o"></i>teammanagement</a></li>
+                    <li><a href='@Url.Action("create", "location")'><i class="fa fa-circle-o"></i>create new location</a></li>
                 </ul>
             </li>
             <li class="treeview">
