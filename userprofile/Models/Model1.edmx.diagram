@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4dc3237307d4446eb4791911c5842867" Name="Diagram1" ZoomLevel="112">
+      <Diagram DiagramId="4dc3237307d4446eb4791911c5842867" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="RaoModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RaoModel.AspNetRole" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="RaoModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
@@ -49,6 +49,8 @@
         <AssociationConnector Association="RaoModel.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
         <AssociationConnector Association="RaoModel.fk_TEAM_TOURNAMENT" ManuallyRouted="false" />
         <AssociationConnector Association="RaoModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RaoModel.Event1" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="RaoModel.FfKk_Table_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

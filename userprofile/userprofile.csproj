@@ -197,6 +197,9 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event1.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\INFRACTION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -841,6 +844,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -901,6 +905,7 @@
     <Content Include="Views\location\Details.cshtml" />
     <Content Include="Views\location\Edit.cshtml" />
     <Content Include="Views\location\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLteLay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

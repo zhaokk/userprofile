@@ -26,7 +26,7 @@ namespace userprofile.Models
         public Nullable<int> snum { get; set; }
         public string city { get; set; }
         public int postcode { get; set; }
-        public int phoneNum { get; set; }
+        public Nullable<int> phoneNum { get; set; }
         public string state { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }

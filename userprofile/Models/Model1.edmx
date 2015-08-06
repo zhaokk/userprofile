@@ -70,6 +70,19 @@
           <Property Name="state" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="dob" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="owner" Type="nvarchar" MaxLength="128" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="start" Type="datetime" />
+          <Property Name="end" Type="datetime" />
+          <Property Name="url" Type="nvarchar" MaxLength="50" />
+          <Property Name="backgroundColor" Type="nvarchar" MaxLength="50" />
+          <Property Name="allDay" Type="bit" />
+        </EntityType>
         <EntityType Name="INFRACTIONS">
           <Key>
             <PropertyRef Name="infractionID" />
@@ -88,12 +101,12 @@
           <Property Name="lID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="price" Type="float" />
-          <Property Name="street" Type="varchar" MaxLength="20" />
+          <Property Name="street" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="snum" Type="int" />
           <Property Name="city" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="postcode" Type="int" Nullable="false" />
-          <Property Name="phoneNum" Type="int" Nullable="false" />
-          <Property Name="state" Type="varchar" MaxLength="50" />
+          <Property Name="phoneNum" Type="int" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="MATCH">
           <Key>
@@ -200,6 +213,18 @@
           <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="qualLevel" Type="int" />
         </EntityType>
+        <Association Name="FfKk_Table_ToTable">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -539,6 +564,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCATION" EntityType="Self.LOCATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATCH" EntityType="Self.MATCH" Schema="dbo" store:Type="Tables" />
@@ -552,6 +578,10 @@
           <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TOURNAMENT" EntityType="Self.TOURNAMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERQUAL" EntityType="Self.USERQUAL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FfKk_Table_ToTable" Association="Self.FfKk_Table_ToTable">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -733,6 +763,7 @@
           <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="AspNetUsers" ToRole="USERQUAL" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Events1" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="AspNetUser" ToRole="Event1" />
         </EntityType>
         <EntityType Name="INFRACTION">
           <Key>
@@ -754,12 +785,12 @@
           <Property Name="lID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Double" />
-          <Property Name="street" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="street" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="snum" Type="Int32" />
           <Property Name="city" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postcode" Type="Int32" Nullable="false" />
-          <Property Name="phoneNum" Type="Int32" Nullable="false" />
-          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNum" Type="Int32" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_LOCATION" FromRole="LOCATION" ToRole="MATCH" />
         </EntityType>
         <EntityType Name="MATCH">
@@ -1335,7 +1366,38 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Event1" EntityType="RaoModel.Event1" />
+          <AssociationSet Name="FfKk_Table_ToTable" Association="RaoModel.FfKk_Table_ToTable">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Event1" EntitySet="Event1" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Event1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="owner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="start" Type="DateTime" Precision="3" />
+          <Property Name="end" Type="DateTime" Precision="3" />
+          <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="backgroundColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="allDay" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="Event1" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FfKk_Table_ToTable">
+          <End Type="RaoModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="RaoModel.Event1" Role="Event1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event1">
+              <PropertyRef Name="owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1548,6 +1610,20 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Event1">
+            <EntityTypeMapping TypeName="RaoModel.Event1">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="allDay" ColumnName="allDay" />
+                <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="owner" ColumnName="owner" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
