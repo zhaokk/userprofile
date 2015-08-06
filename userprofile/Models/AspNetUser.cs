@@ -25,6 +25,7 @@ namespace userprofile.Models
             this.TEAMs = new HashSet<TEAM>();
             this.USERQUALs = new HashSet<USERQUAL>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.Events1 = new HashSet<Events>();
         }
     
         public string Id { get; set; }
@@ -53,5 +54,6 @@ namespace userprofile.Models
         public virtual ICollection<TEAM> TEAMs { get; set; }
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<Events> Events1 { get; set; }
     }
 }
