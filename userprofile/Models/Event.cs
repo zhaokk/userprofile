@@ -12,7 +12,7 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Events
+    public partial class Event
     {
         public int Id { get; set; }
         public string owner { get; set; }

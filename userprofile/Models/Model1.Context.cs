@@ -43,6 +43,6 @@ namespace userprofile.Models
         public virtual DbSet<TEAM> TEAMs { get; set; }
         public virtual DbSet<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual DbSet<USERQUAL> USERQUALs { get; set; }
-        public virtual DbSet<Events> Event1 { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

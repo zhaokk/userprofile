@@ -763,7 +763,7 @@
           <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="AspNetUsers" ToRole="USERQUAL" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Events1" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="AspNetUser" ToRole="Event1" />
+          <NavigationProperty Name="Events" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="AspNetUser" ToRole="Event" />
         </EntityType>
         <EntityType Name="INFRACTION">
           <Key>
@@ -1366,13 +1366,13 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Event1" EntityType="RaoModel.Event1" />
+          <EntitySet Name="Events" EntityType="RaoModel.Event" />
           <AssociationSet Name="FfKk_Table_ToTable" Association="RaoModel.FfKk_Table_ToTable">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Event1" EntitySet="Event1" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Event1">
+        <EntityType Name="Event">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1384,16 +1384,16 @@
           <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="backgroundColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="allDay" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="Event1" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="Event" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FfKk_Table_ToTable">
           <End Type="RaoModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="RaoModel.Event1" Role="Event1" Multiplicity="*" />
+          <End Type="RaoModel.Event" Role="Event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Event1">
+            <Dependent Role="Event">
               <PropertyRef Name="owner" />
             </Dependent>
           </ReferentialConstraint>
@@ -1610,8 +1610,8 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Event1">
-            <EntityTypeMapping TypeName="RaoModel.Event1">
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="RaoModel.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="allDay" ColumnName="allDay" />
                 <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
