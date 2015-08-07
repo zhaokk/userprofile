@@ -49,7 +49,7 @@
         <AssociationConnector Association="RaoModel.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
         <AssociationConnector Association="RaoModel.fk_TEAM_TOURNAMENT" ManuallyRouted="false" />
         <AssociationConnector Association="RaoModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="RaoModel.Events" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="RaoModel.Event" Width="1.5" PointX="4.875" PointY="3.875" />
         <AssociationConnector Association="RaoModel.FfKk_Table_ToTable" />
       </Diagram>
     </edmx:Diagrams>

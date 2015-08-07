@@ -27,24 +27,24 @@ namespace userprofile.Controllers
 
             return View();
         }
-        public ActionResult GetEvents(DateTime start, DateTime end)
+        public ActionResult GetEvent(DateTime start, DateTime end)
         {
             //var fromDate = ConvertFromUnixTimestamp(start);
             //var toDate = ConvertFromUnixTimestamp(end);
 
-            //Get the events
+            //Get the Event1
             //You may get from the repository also
-            var eventList = GetEvents();
+            var eventList = GetEvent();
 
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
 
-        private List<Events> GetEvents()
+        private List<Event> GetEvent()
         {
-            List<Events> eventList = new List<Events>();
+            List<Event> eventList = new List<Event>();
 
-            Events newEvent = new Events
+            Event newEvent = new Event
             {
                 Id = 1,
                 title = "Eventt 1",
@@ -56,7 +56,7 @@ namespace userprofile.Controllers
 
             eventList.Add(newEvent);
 
-            newEvent = new Events
+            newEvent = new Event
             {
                 Id = 2,
                 title = "Event 3",
@@ -76,7 +76,7 @@ namespace userprofile.Controllers
             return origin.AddSeconds(timestamp);
         }
         [HttpPost]
-        public ActionResult AddEvent(Events newE)
+        public ActionResult AddEvent(Event newE)
         {
             var i = Request["id"];
             return null;
