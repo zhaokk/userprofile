@@ -15,26 +15,28 @@ namespace userprofile.Models
 using System;
     using System.Collections.Generic;
     
-public partial class INFRACTION
+public partial class Events
 {
 
-    public int infractionID { get; set; }
+    public int Id { get; set; }
 
-    public string type { get; set; }
+    public string owner { get; set; }
 
-    public bool active { get; set; }
+    public string title { get; set; }
 
-    public Nullable<bool> overruled { get; set; }
+    public Nullable<System.DateTime> start { get; set; }
 
-    public int matchID { get; set; }
+    public Nullable<System.DateTime> end { get; set; }
 
-    public string player { get; set; }
+    public string url { get; set; }
+
+    public string backgroundColor { get; set; }
+
+    public Nullable<bool> allDay { get; set; }
 
 
 
     public virtual AspNetUser AspNetUser { get; set; }
-
-    public virtual MATCH MATCH { get; set; }
 
 }
 

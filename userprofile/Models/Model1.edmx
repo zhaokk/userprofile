@@ -1366,13 +1366,13 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Event1" EntityType="RaoModel.Event1" />
+          <EntitySet Name="Events" EntityType="RaoModel.Events" />
           <AssociationSet Name="FfKk_Table_ToTable" Association="RaoModel.FfKk_Table_ToTable">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Event1" EntitySet="Event1" />
+            <End Role="Event1" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Event1">
+        <EntityType Name="Events">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1388,7 +1388,7 @@
         </EntityType>
         <Association Name="FfKk_Table_ToTable">
           <End Type="RaoModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="RaoModel.Event1" Role="Event1" Multiplicity="*" />
+          <End Type="RaoModel.Events" Role="Event1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -1610,8 +1610,8 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Event1">
-            <EntityTypeMapping TypeName="RaoModel.Event1">
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="RaoModel.Events">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="allDay" ColumnName="allDay" />
                 <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />

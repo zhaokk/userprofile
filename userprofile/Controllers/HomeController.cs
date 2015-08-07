@@ -46,10 +46,10 @@ namespace userprofile.Controllers
 
             Events newEvent = new Events
             {
-                Id = "1",
+                Id = 1,
                 title = "Eventt 1",
-                start = DateTime.Now.AddDays(1).ToString("s"),
-                end = DateTime.Now.AddDays(1).ToString("s"),
+                start = DateTime.Now,
+                end = DateTime.Now,
                 allDay = false
             };
 
@@ -58,10 +58,10 @@ namespace userprofile.Controllers
 
             newEvent = new Events
             {
-                Id = "2",
+                Id = 2,
                 title = "Event 3",
-                start = DateTime.Now.AddDays(2).ToString("s"),
-                end = DateTime.Now.AddDays(3).ToString("s"),
+                start = DateTime.Now,
+                end = DateTime.Now,
                 allDay = false
             };
 
