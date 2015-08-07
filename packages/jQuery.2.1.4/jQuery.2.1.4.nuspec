@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>jQuery</id>
-    <version>1.10.2</version>
+    <version>2.1.4</version>
     <title>jQuery</title>
-    <authors>jQuery Foundation,Inc.</authors>
-    <owners>jQuery Foundation,Inc.</owners>
+    <authors>jQuery Foundation,  Inc.</authors>
+    <owners>jQuery Foundation,  Inc.</owners>
     <licenseUrl>http://jquery.org/license</licenseUrl>
     <projectUrl>http://jquery.com/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
