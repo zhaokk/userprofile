@@ -14,13 +14,11 @@ namespace userprofile.Models
     
     public partial class Events
     {
-        public String Id { get; set; }
+        public int Id { get; set; }
         public string owner { get; set; }
         public string title { get; set; }
-        //public Nullable<System.DateTime> start { get; set; }
-        //public Nullable<System.DateTime> end { get; set; }
-        public string start { get; set; }
-        public string end { get; set; }
+        public Nullable<System.DateTime> start { get; set; }
+        public Nullable<System.DateTime> end { get; set; }
         public string url { get; set; }
         public string backgroundColor { get; set; }
         public Nullable<bool> allDay { get; set; }
