@@ -70,6 +70,24 @@
             </div>
         </div>
     </div>
+@section scripts{
+
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="matchDate"]').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePickerIncrement: 15,
+                locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                }
+            });
+        });
+
+
+    </script>
+}
+
 }
 
 <div>

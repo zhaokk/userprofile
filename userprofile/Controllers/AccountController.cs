@@ -16,7 +16,7 @@ namespace userprofile.Controllers
     public class AccountController : Controller
     {
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Referee")]
         public ActionResult Index(){
             var Db = new ApplicationDbContext();
             var users = Db.Users;

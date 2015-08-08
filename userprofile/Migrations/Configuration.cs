@@ -26,46 +26,13 @@ namespace userprofile.Migrations
             bool success = false;
 
             var idManager = new IdentityManager();
-            success = idManager.CreateRole("Admin");
+            success = idManager.CreateRole("Referee");
             if (!success == true) return success;
 
-            success = idManager.CreateRole("CanEdit");
+             idManager = new IdentityManager();
+             success = idManager.CreateRole("Admin");
             if (!success == true) return success;
 
-            success = idManager.CreateRole("User");
-            if (!success) return success;
-
-
-            var newUser = new ApplicationUser()
-            {
-                UserName = "jatten",
-                firstName = "John",
-                lastName = "Atten",
-                email = "jatten@typecastexception.com",
-                photoDir="~\\userprofile\\zhaokk.jpg",
-                phoneNum=451411202,
-                country="australia",
-                postcode=2500,
-                street="crown",
-                state="nsw",
-                streetNumber=59,
-                dob="21/07/2015"
-            };
-
-            // Be careful here - you  will need to use a password which will 
-            // be valid under the password rules for the application, 
-            // or the process will abort:
-            success = idManager.CreateUser(newUser, "Password");
-            if (!success) return success;
-
-            success = idManager.AddUserToRole(newUser.Id, "Admin");
-            if (!success) return success;
-
-            success = idManager.AddUserToRole(newUser.Id, "CanEdit");
-            if (!success) return success;
-
-            success = idManager.AddUserToRole(newUser.Id, "User");
-            if (!success) return success;
 
             return success;
         }
