@@ -1,10 +1,10 @@
 ﻿@model userprofile.Models.EditUserViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Page";
 }
 
-<h2>Edit</h2>
+
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EditUserViewModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true)
         <div class="form-group">

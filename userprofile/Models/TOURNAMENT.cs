@@ -14,10 +14,12 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+   
+  
 public partial class TOURNAMENT
 {
-
+     
     public TOURNAMENT()
     {
 
@@ -29,13 +31,13 @@ public partial class TOURNAMENT
 
 
     public int tID { get; set; }
-
+    [DisplayName("Tournament")] 
     public string sport { get; set; }
 
 
 
     public virtual ICollection<MATCH> MATCHes { get; set; }
-
+    
     public virtual SPORT SPORT1 { get; set; }
 
     public virtual ICollection<TEAM> TEAMs { get; set; }

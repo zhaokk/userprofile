@@ -906,6 +906,7 @@
     <Content Include="Views\location\Edit.cshtml" />
     <Content Include="Views\location\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLteLay.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

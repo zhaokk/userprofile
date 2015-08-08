@@ -39,26 +39,35 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class=" treeview">
-                <a href="#">
+                <a href='@Url.Action("index", "Home")'>
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-                </ul>
             </li>
             <li class=" treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>RAO functions</span> <i class="fa fa-angle-left pull-right"></i>
+                <a href='@Url.Action("index", "match")'>
+                    <i class="fa fa-files-o"></i> <span>Match Management</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href='@Url.Action("index", "match")'><i class="fa fa-circle-o"></i>Match management</a></li>
-                    <li ><a href='@Url.Action("index", "account")'><i class="fa fa-circle-o"></i>usermanagement</a></li>
-                    <li ><a href='@Url.Action("index", "team")'><i class="fa fa-circle-o"></i>teammanagement</a></li>
-                    <li><a href='@Url.Action("create", "location")'><i class="fa fa-circle-o"></i>create new location</a></li>
-                </ul>
+                
             </li>
-            <li class="treeview">
+            <li class=" treeview">
+                <a href='@Url.Action("index", "account")'>
+                    <i class="fa fa-th"></i> <span>User Management</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+            </li>
+            <li class=" treeview">
+                <a href='@Url.Action("index", "team")'>
+                    <i class="fa fa-share"></i> <span>Team Management</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+            </li>
+            <li class=" treeview">
+                <a href='@Url.Action("index", "location")'>
+                    <i class="fa fa-edit"></i> <span>Location</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+            </li>
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
                     <span>Layout Options</span>
@@ -70,8 +79,8 @@
                     <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
                     <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                 </ul>
-            </li>
-            <li>
+            </li>*@
+            @*<li>
                 <a href="pages/widgets.html">
                     <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
                 </a>
@@ -87,8 +96,8 @@
                     <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
                     <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                 </ul>
-            </li>
-            <li class="treeview">
+            </li>*@
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
                     <span>UI Elements</span>
@@ -102,8 +111,8 @@
                     <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
                     <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
                 </ul>
-            </li>
-            <li class="treeview">
+            </li>*@
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>Forms</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -113,8 +122,8 @@
                     <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
                     <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
                 </ul>
-            </li>
-            <li class="treeview">
+            </li>*@
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-table"></i> <span>Tables</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -135,8 +144,8 @@
                     <i class="fa fa-envelope"></i> <span>Mailbox</span>
                     <small class="label pull-right bg-yellow">12</small>
                 </a>
-            </li>
-            <li class="treeview">
+            </li>*@
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>Examples</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -150,8 +159,8 @@
                     <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
                     <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
                 </ul>
-            </li>
-            <li class="treeview">
+            </li>*@
+            @*<li class="treeview">
                 <a href="#">
                     <i class="fa fa-share"></i> <span>Multilevel</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -173,12 +182,12 @@
                     </li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                 </ul>
-            </li>
-            <li><a href="documentation/index.html"><i class="fa fa-book"></i> Documentation</a></li>
-            <li class="header">LABELS</li>
+            </li>*@
+            @*<li><a href="documentation/index.html"><i class="fa fa-book"></i> Documentation</a></li>*@
+            @*<li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Important</a></li>
             <li><a href="#"><i class="fa fa-circle-o text-warning"></i> Warning</a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-info"></i> Information</a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-info"></i> Information</a></li>*@
         </ul>
     </section>
     <!-- /.sidebar -->

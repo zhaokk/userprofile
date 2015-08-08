@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class TEAM
 {
@@ -31,11 +32,11 @@ public partial class TEAM
 
 
     public int teamID { get; set; }
-
+    [DisplayName("Team")]
     public string name { get; set; }
-
+    [DisplayName("Age")]
     public int ageBracket { get; set; }
-
+    [DisplayName("Grade")]
     public int grade { get; set; }
 
     public string managerID { get; set; }

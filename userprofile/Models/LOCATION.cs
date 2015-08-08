@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class LOCATION
 {
@@ -27,21 +28,21 @@ public partial class LOCATION
 
 
     public int lID { get; set; }
-
+     [DisplayName("Location")]
     public string name { get; set; }
-
+    [DisplayName("Price")]
     public Nullable<double> price { get; set; }
-
+    [DisplayName("Street")]
     public string street { get; set; }
-
+    [DisplayName("Number")]
     public Nullable<int> snum { get; set; }
-
+    [DisplayName("City")]
     public string city { get; set; }
-
+    [DisplayName("Postcode")]
     public int postcode { get; set; }
-
+    [DisplayName("Phone")]
     public Nullable<int> phoneNum { get; set; }
-
+    [DisplayName("State")]
     public string state { get; set; }
 
 

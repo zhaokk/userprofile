@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class AspNetUser
     {
@@ -29,6 +30,7 @@ namespace userprofile.Models
         }
     
         public string Id { get; set; }
+        [DisplayName("User Name")]
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
