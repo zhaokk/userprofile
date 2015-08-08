@@ -1,0 +1,63 @@
+﻿@model IEnumerable<userprofile.Models.REFEREE>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.availability)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.distTravel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prefAge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prefGrade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SPORT1.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.availability)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.distTravel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.prefAge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.prefGrade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPORT1.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.refID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.refID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.refID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -168,6 +168,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
+    <Compile Include="Controllers\QualificationController.cs" />
+    <Compile Include="Controllers\RefereeController.cs" />
+    <Compile Include="Controllers\sportController.cs" />
     <Compile Include="Controllers\teamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -902,6 +905,22 @@
     <Content Include="Views\location\Edit.cshtml" />
     <Content Include="Views\location\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLteLay.cshtml" />
+    <Content Include="Views\Qualification\Create.cshtml" />
+    <Content Include="Views\Qualification\Delete.cshtml" />
+    <Content Include="Views\Qualification\Details.cshtml" />
+    <Content Include="Views\Qualification\Edit.cshtml" />
+    <Content Include="Views\Qualification\Index.cshtml" />
+    <Content Include="Views\sport\Create.cshtml" />
+    <Content Include="Views\sport\Delete.cshtml" />
+    <Content Include="Views\sport\Details.cshtml" />
+    <Content Include="Views\sport\Edit.cshtml" />
+    <Content Include="Views\sport\Index.cshtml" />
+    <Content Include="Views\Account\Getroles.cshtml" />
+    <Content Include="Views\Referee\Create.cshtml" />
+    <Content Include="Views\Referee\Delete.cshtml" />
+    <Content Include="Views\Referee\Details.cshtml" />
+    <Content Include="Views\Referee\Edit.cshtml" />
+    <Content Include="Views\Referee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

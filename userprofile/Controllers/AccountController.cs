@@ -179,6 +179,15 @@ namespace userprofile.Controllers
             return View(model);
         }
 
+        public ActionResult Getroles()
+        {
+            var context = new ApplicationDbContext();
+            var allUsers = context.Users.ToList();
+            var allRoles = context.Roles.ToList();
+            ViewBag.Roles = new MultiSelectList(allRoles, "name", "name");
+            return View();
+        }
+
         //
         // GET: /Account/Register
      //   [Authorize(Roles = "Admin")]
