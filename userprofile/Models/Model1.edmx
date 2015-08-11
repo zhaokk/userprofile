@@ -207,11 +207,10 @@
         <EntityType Name="USERQUAL">
           <Key>
             <PropertyRef Name="qID" />
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="refID" />
           </Key>
           <Property Name="qID" Type="int" Nullable="false" />
-          <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="qualLevel" Type="int" />
+          <Property Name="refID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FfKk_Table_ToTable">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
@@ -449,6 +448,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ref_id">
+          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refID" />
+            </Principal>
+            <Dependent Role="USERQUAL">
+              <PropertyRef Name="refID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_REFEREE_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
@@ -530,18 +541,6 @@
             </Principal>
             <Dependent Role="TOURNAMENT">
               <PropertyRef Name="sport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_USER">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="USERQUAL">
-              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -654,6 +653,10 @@
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
+          <AssociationSet Name="fk_ref_id" Association="Self.fk_ref_id">
+            <End Role="REFEREE" EntitySet="REFEREE" />
+            <End Role="USERQUAL" EntitySet="USERQUAL" />
+          </AssociationSet>
           <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="REFEREE" EntitySet="REFEREE" />
@@ -681,10 +684,6 @@
           <AssociationSet Name="fk_TOURNAMENT_SPORT" Association="Self.fk_TOURNAMENT_SPORT">
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
-          </AssociationSet>
-          <AssociationSet Name="fk_USER" Association="Self.fk_USER">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="USERQUAL" EntitySet="USERQUAL" />
           </AssociationSet>
           <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
@@ -761,7 +760,6 @@
           <NavigationProperty Name="REFEREEs" Relationship="Self.FK_REFEREE_USER" FromRole="AspNetUsers" ToRole="REFEREE" />
           <NavigationProperty Name="SCORES" Relationship="Self.fk_SCORES_PLAYER" FromRole="AspNetUsers" ToRole="SCORES" />
           <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
-          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="AspNetUsers" ToRole="USERQUAL" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="Events" Relationship="RaoModel.FfKk_Table_ToTable" FromRole="AspNetUser" ToRole="Event" />
         </EntityType>
@@ -860,7 +858,7 @@
           <Property Name="supDesc" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MATCHQUALs" Relationship="Self.fk_MATCH_ID" FromRole="QUALIFICATIONS" ToRole="MATCHQUAL" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_QUAL_SPORT" FromRole="QUALIFICATIONS" ToRole="SPORT" />
-          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER_QUAL" FromRole="QUALIFICATIONS" ToRole="USERQUAL" />
+          <NavigationProperty Name="REFEREEs1" Relationship="RaoModel.USERQUAL" FromRole="QUALIFICATION" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="REFEREE">
           <Key>
@@ -876,6 +874,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
+          <NavigationProperty Name="QUALIFICATIONS" Relationship="RaoModel.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATION" />
         </EntityType>
         <EntityType Name="SCORE">
           <Key>
@@ -923,17 +922,6 @@
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="TOURNAMENT" ToRole="MATCH" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="TOURNAMENT" ToRole="SPORT" />
           <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_TOURNAMENT" FromRole="TOURNAMENT" ToRole="TEAM" />
-        </EntityType>
-        <EntityType Name="USERQUAL">
-          <Key>
-            <PropertyRef Name="qID" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="qID" Type="Int32" Nullable="false" />
-          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="qualLevel" Type="Int32" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.fk_USER" FromRole="USERQUAL" ToRole="AspNetUsers" />
-          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_USER_QUAL" FromRole="USERQUAL" ToRole="QUALIFICATIONS" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -1020,18 +1008,6 @@
             </Principal>
             <Dependent Role="TEAM">
               <PropertyRef Name="managerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_USER">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="USERQUAL">
-              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1191,18 +1167,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_USER_QUAL">
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="1" />
-          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qID" />
-            </Principal>
-            <Dependent Role="USERQUAL">
-              <PropertyRef Name="qID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_REFEREE_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
@@ -1261,7 +1225,6 @@
           <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
           <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />
-          <EntitySet Name="USERQUALs" EntityType="Self.USERQUAL" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1289,10 +1252,6 @@
           <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TEAM" EntitySet="TEAMs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_USER" Association="Self.fk_USER">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="USERQUAL" EntitySet="USERQUALs" />
           </AssociationSet>
           <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
@@ -1346,10 +1305,6 @@
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
-          <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-            <End Role="USERQUAL" EntitySet="USERQUALs" />
-          </AssociationSet>
           <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
@@ -1370,6 +1325,10 @@
           <AssociationSet Name="FfKk_Table_ToTable" Association="RaoModel.FfKk_Table_ToTable">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="USERQUAL" Association="RaoModel.USERQUAL">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="QUALIFICATION" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
@@ -1397,6 +1356,10 @@
               <PropertyRef Name="owner" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="USERQUAL">
+          <End Type="RaoModel.REFEREE" Role="REFEREE" Multiplicity="*" />
+          <End Type="RaoModel.QUALIFICATION" Role="QUALIFICATION" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1593,15 +1556,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="RaoModel.USERQUAL">
-              <MappingFragment StoreEntitySet="USERQUAL">
-                <ScalarProperty Name="qID" ColumnName="qID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="RaoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -1624,6 +1578,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="USERQUAL" TypeName="RaoModel.USERQUAL" StoreEntitySet="USERQUAL">
+            <EndProperty Name="QUALIFICATION">
+              <ScalarProperty Name="qID" ColumnName="qID" />
+            </EndProperty>
+            <EndProperty Name="REFEREE">
+              <ScalarProperty Name="refID" ColumnName="refID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

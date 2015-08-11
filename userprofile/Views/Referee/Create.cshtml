@@ -1,68 +1,98 @@
-﻿@model userprofile.Models.REFEREE
+﻿@model userprofile.Models.REFEREEqualViewModel
 
 @{
+    
     ViewBag.Title = "Create";
-    Layout = null;
 }
+
+
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>REFEREE</h4>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.availability, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.availability, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.availability)
-                @Html.ValidationMessageFor(model => model.availability)
+                @Html.EditorFor(model => model.re.availability)
+                @Html.ValidationMessageFor(model => model.re.availability)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.distTravel, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.distTravel, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.distTravel)
-                @Html.ValidationMessageFor(model => model.distTravel)
+                @Html.EditorFor(model => model.re.distTravel)
+                @Html.ValidationMessageFor(model => model.re.distTravel)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.sport, "sport", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.sport, "sport", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("sport", String.Empty)
-                @Html.ValidationMessageFor(model => model.sport)
+                
+                @Html.DropDownList("sport", (SelectList)ViewBag.sport, new { @Name = "re.sport" })
+                @Html.ValidationMessageFor(model => model.re.sport)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.prefAge, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.prefAge, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.prefAge)
-                @Html.ValidationMessageFor(model => model.prefAge)
+                @Html.EditorFor(model => model.re.prefAge)
+                @Html.ValidationMessageFor(model => model.re.prefAge)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.prefGrade, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.prefGrade, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.prefGrade)
-                @Html.ValidationMessageFor(model => model.prefGrade)
+                @Html.EditorFor(model => model.re.prefGrade)
+                @Html.ValidationMessageFor(model => model.re.prefGrade)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ID, "ID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.re.ID, "ID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ID", String.Empty)
-                @Html.ValidationMessageFor(model => model.ID)
+                @Html.DropDownList("ID", (SelectList)ViewBag.ID, new { @Name = "re.ID" })
+                @Html.ValidationMessageFor(model => model.re.ID)
             </div>
         </div>
+        @*<div class="form-group">
+                    @Html.LabelFor(model => model.re.re.QUALIFICATIONS, "QUALIFICATIONS", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ListBox("name", (MultiSelectList)ViewBag.qualifaction)
+              @Html.DropDownList("qualifaction", String.Empty)
+                        @Html.DropDownList("QUALIFICATIONS", String.Empty)
+
+            @Html.DropDownList("name", (MultiSelectList)ViewBag.QUALIFICATIONS, new { multiple = "multiple"})
+            @Html.ValidationMessageFor(model => model.re.QUALIFICATIONS)
+                    </div>
+                </div>*@
+        <table>
+            <tr>
+                <th>
+                    Select
+                </th>
+                <th>
+                    qual
+                </th>
+            </tr>
+            @*@foreach (var item in model.re.srqvm.quals)
+                {
+                @Html.EditorFor(m=>item)
+                }*@
+            @Html.EditorFor(model => model.srqvm.quals)
+     
+        </table>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

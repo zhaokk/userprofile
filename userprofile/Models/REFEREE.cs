@@ -17,6 +17,7 @@ namespace userprofile.Models
         public REFEREE()
         {
             this.OFFERs = new HashSet<OFFER>();
+            this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
         }
     
         public int refID { get; set; }
@@ -26,9 +27,11 @@ namespace userprofile.Models
         public Nullable<int> prefAge { get; set; }
         public Nullable<int> prefGrade { get; set; }
         public string ID { get; set; }
+        
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
+        public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace userprofile.Models
         public QUALIFICATION()
         {
             this.MATCHQUALs = new HashSet<MATCHQUAL>();
-            this.USERQUALs = new HashSet<USERQUAL>();
+            this.REFEREEs1 = new HashSet<REFEREE>();
         }
     
         public int qID { get; set; }
@@ -27,6 +27,6 @@ namespace userprofile.Models
     
         public virtual ICollection<MATCHQUAL> MATCHQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual ICollection<USERQUAL> USERQUALs { get; set; }
+        public virtual ICollection<REFEREE> REFEREEs1 { get; set; }
     }
 }

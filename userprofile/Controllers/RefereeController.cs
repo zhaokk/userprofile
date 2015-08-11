@@ -10,18 +10,18 @@ using userprofile.Models;
 
 namespace userprofile.Controllers
 {
-    public class RefereeController : Controller
+    public class REFEREEController : Controller
     {
         private Raoconnection db = new Raoconnection();
 
-        // GET: /Referee/
+        // GET: /REFEREE/
         public ActionResult Index()
         {
             var referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1);
             return View(referees.ToList());
         }
 
-        // GET: /Referee/Details/5
+        // GET: /REFEREE/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,34 +36,128 @@ namespace userprofile.Controllers
             return View(referee);
         }
 
-        // GET: /Referee/Create
+        //// GET: /REFEREE/Create
+        //public ActionResult Create()
+        //{
+        //    ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
+        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+        //    ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qID", "name");
+        //    return View();
+        //}
+
+        //// POST: /REFEREE/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create( REFEREE referee)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.REFEREEs.Add(referee);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.ID = new SelectList(db.AspNetUsers, "re.Id", "UserName", referee.ID);
+        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
+        //    return View(referee);
+        //}
+
+        // GET: /REFEREE/Create
         public ActionResult Create()
         {
             ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-            return View();
+            ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qID", "name");
+            ViewBag.quallist = new selectRefQuliViewModel(db);
+            REFEREEqualViewModel rqvm = new REFEREEqualViewModel(db);
+            return View(rqvm);
         }
 
-        // POST: /Referee/Create
+        // POST: /REFEREE/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="refID,availability,distTravel,sport,prefAge,prefGrade,ID")] REFEREE referee)
+        public ActionResult Create( selectRefQuliViewModel srqvm, REFEREE re)
         {
+        
+
+
             if (ModelState.IsValid)
             {
-                db.REFEREEs.Add(referee);
+                re.QUALIFICATIONS.Clear();
+                foreach (var qual in srqvm.quals)
+                {
+                    QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
+
+                    if (qual.Selected == true)
+                    {
+                        re.QUALIFICATIONS.Add(thequal);
+                    }
+
+                }
+                db.REFEREEs.Add(re);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", referee.ID);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
-            return View(referee);
+            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", re.ID);
+            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", re.sport);
+            REFEREEqualViewModel rqvm = new REFEREEqualViewModel(db);
+            rqvm.re = re;
+            rqvm.srqvm = srqvm;
+            return View(rqvm);
         }
+        public ActionResult changequal(int? id)
+        {
 
-        // GET: /Referee/Edit/5
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            REFEREE referee = db.REFEREEs.Find(id);
+            if (referee == null)
+            {
+                return HttpNotFound();
+            }
+            selectRefQuliEditViewModel selected = new selectRefQuliEditViewModel(referee, db);
+            return View(selected);
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult changequal( selectRefQuliEditViewModel srqvm)
+        {
+
+          
+            if (ModelState.IsValid)
+            {
+              REFEREE refe=  db.REFEREEs.First(r => r.refID == srqvm.refeid);
+              refe.QUALIFICATIONS.Clear();
+              foreach (SelectQualEditorViewModel qual in srqvm.quals)
+              {
+                  QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
+
+                  if (qual.Selected == true)
+                  {
+                      refe.QUALIFICATIONS.Add(thequal);
+                  }
+              }
+              db.Entry(refe).State = EntityState.Modified;
+              db.SaveChanges();
+                 
+                return RedirectToAction("Index");
+
+            }
+
+            return View(srqvm);
+
+
+        }
+        // GET: /REFEREE/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,7 +174,7 @@ namespace userprofile.Controllers
             return View(referee);
         }
 
-        // POST: /Referee/Edit/5
+        // POST: /REFEREE/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -98,7 +192,7 @@ namespace userprofile.Controllers
             return View(referee);
         }
 
-        // GET: /Referee/Delete/5
+        // GET: /REFEREE/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,7 +207,7 @@ namespace userprofile.Controllers
             return View(referee);
         }
 
-        // POST: /Referee/Delete/5
+        // POST: /REFEREE/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

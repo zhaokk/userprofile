@@ -169,7 +169,7 @@
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
-    <Compile Include="Controllers\RefereeController.cs" />
+    <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />
     <Compile Include="Controllers\teamController.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,6 +239,7 @@
     <Compile Include="Models\REFEREE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\REFEREEqualViewModel.cs" />
     <Compile Include="Models\SCORE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -249,9 +250,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TOURNAMENT.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\USERQUAL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -821,6 +819,7 @@
     </Content>
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -916,11 +915,14 @@
     <Content Include="Views\sport\Edit.cshtml" />
     <Content Include="Views\sport\Index.cshtml" />
     <Content Include="Views\Account\Getroles.cshtml" />
-    <Content Include="Views\Referee\Create.cshtml" />
-    <Content Include="Views\Referee\Delete.cshtml" />
-    <Content Include="Views\Referee\Details.cshtml" />
-    <Content Include="Views\Referee\Edit.cshtml" />
-    <Content Include="Views\Referee\Index.cshtml" />
+    <Content Include="Views\REFEREE\Create.cshtml" />
+    <Content Include="Views\REFEREE\Delete.cshtml" />
+    <Content Include="Views\REFEREE\Details.cshtml" />
+    <Content Include="Views\REFEREE\Edit.cshtml" />
+    <Content Include="Views\REFEREE\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SelectQualEditorViewModel.cshtml" />
+    <Content Include="Views\REFEREE\Cr.cshtml" />
+    <Content Include="Views\REFEREE\changequal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

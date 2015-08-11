@@ -223,6 +223,8 @@ namespace userprofile.Models
 
         [Required]
         public string RoleName { get; set; }
+
+      
     }
 
     public class logindetialViewModel

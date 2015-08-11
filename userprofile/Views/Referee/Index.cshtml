@@ -27,6 +27,9 @@
             @Html.DisplayNameFor(model => model.AspNetUser.UserName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.QUALIFICATIONS)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.SPORT1.name)
         </th>
         <th></th>
@@ -50,12 +53,16 @@
             @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
         </td>
         <td>
+            @Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name"))
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.SPORT1.name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.refID }) |
             @Html.ActionLink("Details", "Details", new { id=item.refID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.refID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.refID }) |
+            @Html.ActionLink("change qualification", "changequal", new { id = item.refID })
         </td>
     </tr>
 }

@@ -23,7 +23,6 @@ namespace userprofile.Models
             this.REFEREEs = new HashSet<REFEREE>();
             this.SCORES = new HashSet<SCORE>();
             this.TEAMs = new HashSet<TEAM>();
-            this.USERQUALs = new HashSet<USERQUAL>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Events = new HashSet<Event>();
         }
@@ -52,7 +51,6 @@ namespace userprofile.Models
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
         public virtual ICollection<SCORE> SCORES { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }
-        public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }
