@@ -27,7 +27,7 @@ namespace userprofile.Controllers
 
             return View();
         }
-        public ActionResult GetEvent(DateTime start, DateTime end)
+        public ActionResult GetEvents(DateTime start, DateTime end)
         {
             //var fromDate = ConvertFromUnixTimestamp(start);
             //var toDate = ConvertFromUnixTimestamp(end);

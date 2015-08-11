@@ -149,6 +149,7 @@ namespace userprofile.Models
         [Required]
         public int phoneNum { get; set; }
         [Required]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
