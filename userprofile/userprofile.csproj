@@ -263,7 +263,6 @@
     <Content Include="Content\AdminLTE\img\avatar2.png" />
     <Content Include="Content\AdminLTE\img\avatar3.png" />
     <Content Include="Content\AdminLTE\img\avatar5.png" />
-    <Content Include="Content\AdminLTE\img\boxed-bg.jpg" />
     <Content Include="Content\AdminLTE\img\boxed-bg.png" />
     <Content Include="Content\AdminLTE\img\credit\american-express.png" />
     <Content Include="Content\AdminLTE\img\credit\cirrus.png" />
@@ -551,14 +550,6 @@
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\hue-horizontal.png" />
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\hue.png" />
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\saturation.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.bootstrap.css" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.bootstrap.js" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_asc.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_asc_disabled.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_both.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_desc.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_desc_disabled.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\jquery.dataTables.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\datepicker3.css" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ar.js" />
