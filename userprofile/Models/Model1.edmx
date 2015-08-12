@@ -120,15 +120,6 @@
           <Property Name="winnerID" Type="bit" />
           <Property Name="tournament" Type="int" />
         </EntityType>
-        <EntityType Name="MATCHQUAL">
-          <Key>
-            <PropertyRef Name="qID" />
-            <PropertyRef Name="matchID" />
-          </Key>
-          <Property Name="qID" Type="int" Nullable="false" />
-          <Property Name="matchID" Type="int" Nullable="false" />
-          <Property Name="qualLevel" Type="int" />
-        </EntityType>
         <EntityType Name="OFFER">
           <Key>
             <PropertyRef Name="offerID" />
@@ -137,8 +128,16 @@
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="mid" Type="int" Nullable="false" />
           <Property Name="refID" Type="int" Nullable="false" />
-          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="dateOfOffer" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OFFERQUAL">
+          <Key>
+            <PropertyRef Name="qID" />
+            <PropertyRef Name="offerID" />
+          </Key>
+          <Property Name="qID" Type="int" Nullable="false" />
+          <Property Name="offerID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
@@ -304,18 +303,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_MATCH_ID">
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
-          <End Role="MATCHQUAL" Type="Self.MATCHQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qID" />
-            </Principal>
-            <Dependent Role="MATCHQUAL">
-              <PropertyRef Name="qID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_MATCH_LOCATION">
           <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
@@ -325,18 +312,6 @@
             </Principal>
             <Dependent Role="MATCH">
               <PropertyRef Name="location" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_MATCH_QUAL">
-          <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
-          <End Role="MATCHQUAL" Type="Self.MATCHQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MATCH">
-              <PropertyRef Name="mID" />
-            </Principal>
-            <Dependent Role="MATCHQUAL">
-              <PropertyRef Name="matchID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -376,6 +351,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_offer_id">
+          <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
+          <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OFFER">
+              <PropertyRef Name="offerID" />
+            </Principal>
+            <Dependent Role="OFFERQUAL">
+              <PropertyRef Name="offerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_OFFER_MATCH">
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
@@ -385,6 +372,18 @@
             </Principal>
             <Dependent Role="OFFER">
               <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_OFFER_QUAL">
+          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
+          <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUALIFICATIONS">
+              <PropertyRef Name="qID" />
+            </Principal>
+            <Dependent Role="OFFERQUAL">
+              <PropertyRef Name="qID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -567,8 +566,8 @@
           <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCATION" EntityType="Self.LOCATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATCH" EntityType="Self.MATCH" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MATCHQUAL" EntityType="Self.MATCHQUAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OFFER" EntityType="Self.OFFER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OFFERQUAL" EntityType="Self.OFFERQUAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLAYER" EntityType="Self.PLAYER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REFEREE" EntityType="Self.REFEREE" Schema="dbo" store:Type="Tables" />
@@ -605,17 +604,9 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
           </AssociationSet>
-          <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-            <End Role="MATCHQUAL" EntitySet="MATCHQUAL" />
-          </AssociationSet>
           <AssociationSet Name="fk_MATCH_LOCATION" Association="Self.fk_MATCH_LOCATION">
             <End Role="LOCATION" EntitySet="LOCATION" />
             <End Role="MATCH" EntitySet="MATCH" />
-          </AssociationSet>
-          <AssociationSet Name="fk_MATCH_QUAL" Association="Self.fk_MATCH_QUAL">
-            <End Role="MATCH" EntitySet="MATCH" />
-            <End Role="MATCHQUAL" EntitySet="MATCHQUAL" />
           </AssociationSet>
           <AssociationSet Name="fk_MATCH_TEAMA" Association="Self.fk_MATCH_TEAMA">
             <End Role="TEAM" EntitySet="TEAM" />
@@ -629,9 +620,17 @@
             <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
             <End Role="MATCH" EntitySet="MATCH" />
           </AssociationSet>
+          <AssociationSet Name="fk_offer_id" Association="Self.fk_offer_id">
+            <End Role="OFFER" EntitySet="OFFER" />
+            <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
+          </AssociationSet>
           <AssociationSet Name="fk_OFFER_MATCH" Association="Self.fk_OFFER_MATCH">
             <End Role="MATCH" EntitySet="MATCH" />
             <End Role="OFFER" EntitySet="OFFER" />
+          </AssociationSet>
+          <AssociationSet Name="fk_OFFER_QUAL" Association="Self.fk_OFFER_QUAL">
+            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
+            <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
           </AssociationSet>
           <AssociationSet Name="fk_OFFER_refID" Association="Self.fk_OFFER_refID">
             <End Role="REFEREE" EntitySet="REFEREE" />
@@ -804,37 +803,11 @@
           <Property Name="tournament" Type="Int32" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_MATCH" FromRole="MATCH" ToRole="INFRACTIONS" />
           <NavigationProperty Name="LOCATION1" Relationship="Self.fk_MATCH_LOCATION" FromRole="MATCH" ToRole="LOCATION" />
-          <NavigationProperty Name="MATCHQUALs" Relationship="Self.fk_MATCH_QUAL" FromRole="MATCH" ToRole="MATCHQUAL" />
           <NavigationProperty Name="TEAM" Relationship="Self.fk_MATCH_TEAMA" FromRole="MATCH" ToRole="TEAM" />
           <NavigationProperty Name="TEAM1" Relationship="Self.fk_MATCH_TEAMB" FromRole="MATCH" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="MATCH" ToRole="TOURNAMENT" />
-          <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_MATCH" FromRole="MATCH" ToRole="OFFER" />
           <NavigationProperty Name="SCORES" Relationship="Self.fk_SCORES_MATCH" FromRole="MATCH" ToRole="SCORES" />
-        </EntityType>
-        <EntityType Name="MATCHQUAL">
-          <Key>
-            <PropertyRef Name="qID" />
-            <PropertyRef Name="matchID" />
-          </Key>
-          <Property Name="qID" Type="Int32" Nullable="false" />
-          <Property Name="matchID" Type="Int32" Nullable="false" />
-          <Property Name="qualLevel" Type="Int32" />
-          <NavigationProperty Name="MATCH" Relationship="Self.fk_MATCH_QUAL" FromRole="MATCHQUAL" ToRole="MATCH" />
-          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_MATCH_ID" FromRole="MATCHQUAL" ToRole="QUALIFICATIONS" />
-        </EntityType>
-        <EntityType Name="OFFER">
-          <Key>
-            <PropertyRef Name="offerID" />
-          </Key>
-          <Property Name="offerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="mid" Type="Int32" Nullable="false" />
-          <Property Name="refID" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="dateOfOffer" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="MATCH" Relationship="Self.fk_OFFER_MATCH" FromRole="OFFER" ToRole="MATCH" />
-          <NavigationProperty Name="REFEREE" Relationship="Self.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
-          <NavigationProperty Name="SPORT1" Relationship="Self.fk_OFFER_SPORT" FromRole="OFFER" ToRole="SPORT" />
+          <NavigationProperty Name="OFFERs" Relationship="RaoModel.fk_OFFER_MATCH" FromRole="MATCH" ToRole="OFFER" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
@@ -856,9 +829,9 @@
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="supDesc" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MATCHQUALs" Relationship="Self.fk_MATCH_ID" FromRole="QUALIFICATIONS" ToRole="MATCHQUAL" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_QUAL_SPORT" FromRole="QUALIFICATIONS" ToRole="SPORT" />
           <NavigationProperty Name="REFEREEs1" Relationship="RaoModel.USERQUAL" FromRole="QUALIFICATION" ToRole="REFEREE" />
+          <NavigationProperty Name="OFFERs" Relationship="RaoModel.OFFERQUAL" FromRole="QUALIFICATION" ToRole="OFFER" />
         </EntityType>
         <EntityType Name="REFEREE">
           <Key>
@@ -872,9 +845,9 @@
           <Property Name="prefGrade" Type="Int32" />
           <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
-          <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="RaoModel.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATION" />
+          <NavigationProperty Name="OFFERs" Relationship="RaoModel.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
         </EntityType>
         <EntityType Name="SCORE">
           <Key>
@@ -892,10 +865,10 @@
             <PropertyRef Name="name" />
           </Key>
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.fk_QUAL_SPORT" FromRole="SPORT" ToRole="QUALIFICATIONS" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
+          <NavigationProperty Name="OFFERs" Relationship="RaoModel.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
         </EntityType>
         <EntityType Name="TEAM">
           <Key>
@@ -1035,18 +1008,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_MATCH_QUAL">
-          <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
-          <End Role="MATCHQUAL" Type="Self.MATCHQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MATCH">
-              <PropertyRef Name="mID" />
-            </Principal>
-            <Dependent Role="MATCHQUAL">
-              <PropertyRef Name="matchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_MATCH_TEAMA">
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
@@ -1083,18 +1044,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_OFFER_MATCH">
-          <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MATCH">
-              <PropertyRef Name="mID" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="mid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_SCORES_MATCH">
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
           <End Role="SCORES" Type="Self.SCORE" Multiplicity="*" />
@@ -1104,42 +1053,6 @@
             </Principal>
             <Dependent Role="SCORES">
               <PropertyRef Name="matchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_MATCH_ID">
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="1" />
-          <End Role="MATCHQUAL" Type="Self.MATCHQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qID" />
-            </Principal>
-            <Dependent Role="MATCHQUAL">
-              <PropertyRef Name="qID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_OFFER_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refID" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="refID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_OFFER_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="sport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1216,8 +1129,6 @@
           <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTION" />
           <EntitySet Name="LOCATIONs" EntityType="Self.LOCATION" />
           <EntitySet Name="MATCHes" EntityType="Self.MATCH" />
-          <EntitySet Name="MATCHQUALs" EntityType="Self.MATCHQUAL" />
-          <EntitySet Name="OFFERs" EntityType="Self.OFFER" />
           <EntitySet Name="PLAYERs" EntityType="Self.PLAYER" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
           <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
@@ -1261,10 +1172,6 @@
             <End Role="LOCATION" EntitySet="LOCATIONs" />
             <End Role="MATCH" EntitySet="MATCHes" />
           </AssociationSet>
-          <AssociationSet Name="fk_MATCH_QUAL" Association="Self.fk_MATCH_QUAL">
-            <End Role="MATCH" EntitySet="MATCHes" />
-            <End Role="MATCHQUAL" EntitySet="MATCHQUALs" />
-          </AssociationSet>
           <AssociationSet Name="fk_MATCH_TEAMA" Association="Self.fk_MATCH_TEAMA">
             <End Role="TEAM" EntitySet="TEAMs" />
             <End Role="MATCH" EntitySet="MATCHes" />
@@ -1277,25 +1184,9 @@
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
             <End Role="MATCH" EntitySet="MATCHes" />
           </AssociationSet>
-          <AssociationSet Name="fk_OFFER_MATCH" Association="Self.fk_OFFER_MATCH">
-            <End Role="MATCH" EntitySet="MATCHes" />
-            <End Role="OFFER" EntitySet="OFFERs" />
-          </AssociationSet>
           <AssociationSet Name="fk_SCORES_MATCH" Association="Self.fk_SCORES_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="SCORES" EntitySet="SCORES" />
-          </AssociationSet>
-          <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-            <End Role="MATCHQUAL" EntitySet="MATCHQUALs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_OFFER_refID" Association="Self.fk_OFFER_refID">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="OFFER" EntitySet="OFFERs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_OFFER_SPORT" Association="Self.fk_OFFER_SPORT">
-            <End Role="SPORT" EntitySet="SPORTs" />
-            <End Role="OFFER" EntitySet="OFFERs" />
           </AssociationSet>
           <AssociationSet Name="fk_PLAYER_TEAM" Association="Self.fk_PLAYER_TEAM">
             <End Role="TEAM" EntitySet="TEAMs" />
@@ -1330,6 +1221,23 @@
             <End Role="REFEREE" EntitySet="REFEREEs" />
             <End Role="QUALIFICATION" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
+          <EntitySet Name="OFFERs" EntityType="RaoModel.OFFER" />
+          <AssociationSet Name="fk_OFFER_MATCH" Association="RaoModel.fk_OFFER_MATCH">
+            <End Role="MATCH" EntitySet="MATCHes" />
+            <End Role="OFFER" EntitySet="OFFERs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_OFFER_refID" Association="RaoModel.fk_OFFER_refID">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="OFFER" EntitySet="OFFERs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_OFFER_SPORT" Association="RaoModel.fk_OFFER_SPORT">
+            <End Role="SPORT" EntitySet="SPORTs" />
+            <End Role="OFFER" EntitySet="OFFERs" />
+          </AssociationSet>
+          <AssociationSet Name="OFFERQUAL" Association="RaoModel.OFFERQUAL">
+            <End Role="OFFER" EntitySet="OFFERs" />
+            <End Role="QUALIFICATION" EntitySet="QUALIFICATIONS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Event">
           <Key>
@@ -1359,6 +1267,61 @@
         </Association>
         <Association Name="USERQUAL">
           <End Type="RaoModel.REFEREE" Role="REFEREE" Multiplicity="*" />
+          <End Type="RaoModel.QUALIFICATION" Role="QUALIFICATION" Multiplicity="*" />
+        </Association>
+        <EntityType Name="OFFER">
+          <Key>
+            <PropertyRef Name="offerID" />
+          </Key>
+          <Property Name="offerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sport" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dateOfOffer" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MATCH" Relationship="RaoModel.fk_OFFER_MATCH" FromRole="OFFER" ToRole="MATCH" />
+          <NavigationProperty Name="REFEREE" Relationship="RaoModel.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
+          <NavigationProperty Name="SPORT1" Relationship="RaoModel.fk_OFFER_SPORT" FromRole="OFFER" ToRole="SPORT" />
+          <NavigationProperty Name="QUALIFICATIONS" Relationship="RaoModel.OFFERQUAL" FromRole="OFFER" ToRole="QUALIFICATION" />
+        </EntityType>
+        <Association Name="fk_OFFER_MATCH">
+          <End Type="RaoModel.MATCH" Role="MATCH" Multiplicity="1" />
+          <End Type="RaoModel.OFFER" Role="OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MATCH">
+              <PropertyRef Name="mID" />
+            </Principal>
+            <Dependent Role="OFFER">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_OFFER_refID">
+          <End Type="RaoModel.REFEREE" Role="REFEREE" Multiplicity="1" />
+          <End Type="RaoModel.OFFER" Role="OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refID" />
+            </Principal>
+            <Dependent Role="OFFER">
+              <PropertyRef Name="refID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_OFFER_SPORT">
+          <End Type="RaoModel.SPORT" Role="SPORT" Multiplicity="1" />
+          <End Type="RaoModel.OFFER" Role="OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPORT">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="OFFER">
+              <PropertyRef Name="sport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OFFERQUAL">
+          <End Type="RaoModel.OFFER" Role="OFFER" Multiplicity="*" />
           <End Type="RaoModel.QUALIFICATION" Role="QUALIFICATION" Multiplicity="*" />
         </Association>
       </Schema>
@@ -1466,27 +1429,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MATCHQUALs">
-            <EntityTypeMapping TypeName="RaoModel.MATCHQUAL">
-              <MappingFragment StoreEntitySet="MATCHQUAL">
-                <ScalarProperty Name="qID" ColumnName="qID" />
-                <ScalarProperty Name="matchID" ColumnName="matchID" />
-                <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="RaoModel.OFFER">
-              <MappingFragment StoreEntitySet="OFFER">
-                <ScalarProperty Name="offerID" ColumnName="offerID" />
-                <ScalarProperty Name="sport" ColumnName="sport" />
-                <ScalarProperty Name="mid" ColumnName="mid" />
-                <ScalarProperty Name="refID" ColumnName="refID" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="dateOfOffer" ColumnName="dateOfOffer" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
             <EntityTypeMapping TypeName="RaoModel.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
@@ -1586,7 +1528,27 @@
               <ScalarProperty Name="refID" ColumnName="refID" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="OFFERs">
+            <EntityTypeMapping TypeName="RaoModel.OFFER">
+              <MappingFragment StoreEntitySet="OFFER">
+                <ScalarProperty Name="dateOfOffer" ColumnName="dateOfOffer" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="sport" ColumnName="sport" />
+                <ScalarProperty Name="offerID" ColumnName="offerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="OFFERQUAL" TypeName="RaoModel.OFFERQUAL" StoreEntitySet="OFFERQUAL">
+            <EndProperty Name="QUALIFICATION">
+              <ScalarProperty Name="qID" ColumnName="qID" />
+            </EndProperty>
+            <EndProperty Name="OFFER">
+              <ScalarProperty Name="offerID" ColumnName="offerID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

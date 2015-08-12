@@ -14,8 +14,6 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     
 public partial class MATCH
 {
@@ -25,29 +23,25 @@ public partial class MATCH
 
         this.INFRACTIONS = new HashSet<INFRACTION>();
 
-        this.MATCHQUALs = new HashSet<MATCHQUAL>();
+        this.SCORES = new HashSet<SCORE>();
 
         this.OFFERs = new HashSet<OFFER>();
-
-        this.SCORES = new HashSet<SCORE>();
 
     }
 
 
     public int mID { get; set; }
-    [DisplayName("Match Date")] 
+
     public System.DateTime matchDate { get; set; }
 
-    [DisplayFormat(NullDisplayText = "Location")]
     public Nullable<int> location { get; set; }
 
-    [DisplayName("TeamaID")]
     public Nullable<int> teamaID { get; set; }
-     [DisplayName("TeambID")]
+
     public Nullable<int> teambID { get; set; }
 
     public Nullable<bool> winnerID { get; set; }
-    [DisplayName("Tournament")] 
+
     public Nullable<int> tournament { get; set; }
 
 
@@ -56,20 +50,15 @@ public partial class MATCH
 
     public virtual LOCATION LOCATION1 { get; set; }
 
-    public virtual ICollection<MATCHQUAL> MATCHQUALs { get; set; }
-
-
     public virtual TEAM TEAM { get; set; }
-   
-  
 
     public virtual TEAM TEAM1 { get; set; }
 
     public virtual TOURNAMENT TOURNAMENT1 { get; set; }
 
-    public virtual ICollection<OFFER> OFFERs { get; set; }
-
     public virtual ICollection<SCORE> SCORES { get; set; }
+
+    public virtual ICollection<OFFER> OFFERs { get; set; }
 
 }
 

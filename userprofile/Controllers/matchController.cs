@@ -67,6 +67,12 @@ namespace userprofile.Controllers
             return View(match);
         }
 
+        public ActionResult OfferManage(int? id)
+        {
+
+            return View();
+        }
+
         // GET: /match/Edit/5
         public ActionResult Edit(int? id)
         {

@@ -21,13 +21,13 @@ public partial class SPORT
     public SPORT()
     {
 
-        this.OFFERs = new HashSet<OFFER>();
-
         this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
 
         this.REFEREEs = new HashSet<REFEREE>();
 
         this.TOURNAMENTs = new HashSet<TOURNAMENT>();
+
+        this.OFFERs = new HashSet<OFFER>();
 
     }
 
@@ -36,13 +36,13 @@ public partial class SPORT
 
 
 
-    public virtual ICollection<OFFER> OFFERs { get; set; }
-
     public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
 
     public virtual ICollection<REFEREE> REFEREEs { get; set; }
 
     public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
+
+    public virtual ICollection<OFFER> OFFERs { get; set; }
 
 }
 

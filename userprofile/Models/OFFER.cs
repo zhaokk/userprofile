@@ -18,6 +18,14 @@ using System;
 public partial class OFFER
 {
 
+    public OFFER()
+    {
+
+        this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
+
+    }
+
+
     public int offerID { get; set; }
 
     public string sport { get; set; }
@@ -26,9 +34,11 @@ public partial class OFFER
 
     public int refID { get; set; }
 
-    public int status { get; set; }
+    public string status { get; set; }
 
     public System.DateTime dateOfOffer { get; set; }
+
+   
 
 
 
@@ -37,6 +47,8 @@ public partial class OFFER
     public virtual REFEREE REFEREE { get; set; }
 
     public virtual SPORT SPORT1 { get; set; }
+
+    public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
 
 }
 

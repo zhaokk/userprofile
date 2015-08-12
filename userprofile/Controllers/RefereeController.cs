@@ -213,6 +213,7 @@ namespace userprofile.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             REFEREE referee = db.REFEREEs.Find(id);
+            referee.QUALIFICATIONS.Clear();
             db.REFEREEs.Remove(referee);
             db.SaveChanges();
             return RedirectToAction("Index");
