@@ -304,6 +304,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\back.jpg" />
+    <Content Include="img\back1.jpg" />
+    <Content Include="img\back2.jpg" />
+    <Content Include="img\back3.jpg" />
+    <Content Include="img\back3_1.jpg" />
+    <Content Include="img\back4.jpg" />
     <Content Include="Scripts\AdminLTE\app.js" />
     <Content Include="Scripts\AdminLTE\app.min.js" />
     <Content Include="Scripts\AdminLTE\demo.js" />
