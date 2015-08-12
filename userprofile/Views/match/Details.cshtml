@@ -8,8 +8,11 @@
     <div class="col-sm-12">
         <div class="box box-primary">
             <div class="box-body">
-                <div>
-
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.mID }, new { @class = "btn btn-warning pull-right" })
+                </p>
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink("Back to List", "Index")
                     <hr />
                     <dl class="dl-horizontal">
                         <dt>
@@ -54,7 +57,4 @@
             </div>
         </div>
     </div>
-                <p>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.mID }) |
-                    @Html.ActionLink("Back to List", "Index")
-                </p>
+                
