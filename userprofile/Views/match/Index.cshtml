@@ -138,8 +138,10 @@
                                 <tr>
                                     <td>
                                         @Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger" })
+                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-success" })
                                         <a href="@Url.Action( "Details", new { id = item.mID })">
                                         @Html.DisplayFor(modelItem => item.matchDate)</a>
+                                       
                                         @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
    
                                         

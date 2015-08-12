@@ -67,10 +67,36 @@ namespace userprofile.Controllers
             return View(match);
         }
 
-        public ActionResult OfferManage(int? id)
+        public ActionResult manageOffer(int? id)
         {
+            if (id != null)
+            {
+                MATCH theMatch = db.MATCHes.First(m => m.mID == id);
+                var refereesList = new List<SelectListItem>()
+                   {
 
-            return View();
+
+
+
+
+                   };
+                foreach (REFEREE re in db.REFEREEs)
+                {
+                    var sli = new SelectListItem();
+                    sli.Text = re.AspNetUser.lastName + re.AspNetUser.lastName;
+                    sli.Value = re.refID.ToString();
+                    refereesList.Add(sli);
+
+                }
+                ViewBag.referees = refereesList;
+                offersViewModels offers = new offersViewModels(theMatch);
+                return View(offers);
+
+            }
+            else {
+
+                return RedirectToAction("index", "match");
+            }
         }
 
         // GET: /match/Edit/5

@@ -1,0 +1,71 @@
+﻿@model userprofile.Models.offersViewModels
+@{
+    ViewBag.Title = "manageOffer";
+    int i = 0;
+    int j = 0;
+}
+<style>
+    .hidde {
+    display:none;
+    
+    }
+
+</style>
+<h2>manageOffer</h2>
+
+@foreach (var item in Model.offers)
+{
+    
+    if (item.status == "dummy") { 
+    <div class="well col-lg-4 col-md-12 hidde" id="@i" >
+        <h1>lol</h1>
+        @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, new { @Name = "refID" + i })
+     @{j++;}
+
+    </div>
+    }
+    else
+    {
+        <div class="well col-lg-4 col-md-12" id="@i">
+
+            @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, new { @Name = "refID"+i })
+       
+            <td>
+                @Html.DisplayFor(modelItem => item.dateOfOffer, new {@id="date"})
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATCH.mID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.REFEREE.availability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SPORT1.name)
+            </td>
+        </div>
+    }
+    i++;
+}
+<div class="well col-lg-4 col-md-12 " id="addnew">
+  
+    <a href="#" id="addnewoffer" class="btn btn-success col-lg-12 col-md-12" onclick="newOffer()" style="margin-left: 34%; float: right;">Add New Offer</a>
+
+
+</div>
+<input type="text" id="flag" value="@j" hidden>
+
+<script>
+    var i = $("#flag").val();
+
+    function newOffer() {
+        var j = 3 - i;
+        $("#" + j).css("display", "block");
+        
+        i--;
+        if (i < 1) {
+
+            $("#addnew").css("display", "none");
+        }
+    }
+    </script>
+
