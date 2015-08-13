@@ -6,14 +6,17 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="box box-primary">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
-                        
+
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.mID)
@@ -84,10 +87,8 @@
 
                 }
 
-                </div>
             </div>
         </div>
+        </div>
     </div>
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                

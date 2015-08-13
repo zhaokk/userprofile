@@ -26,9 +26,8 @@
 <div class="row">
 
     <div class="col-xs-12">
-        <div class="box">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-header">
-
             </div><!-- /.box-header -->
             <div class="box-body">
                 <table id="example2" class="table table-bordered table-hover">
@@ -46,7 +45,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Email)
                             </th>
-
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,19 +53,18 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.UserName }, new { @class = "btn btn-danger" }) 
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.UserName }, new { @class = "btn btn-warning" }) |
+
                                     <a href="@Url.Action("UserRoles", new { id = item.UserName })">
                                         @Html.DisplayFor(modelItem => item.UserName)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-                                   
-                                   
+
+
                                 </td>
                                 @*<td>
-                                        @Html.DisplayFor(modelItem => item.winnerID)
-                                    </td>*@
-                                
+                                    @Html.DisplayFor(modelItem => item.winnerID)
+                                </td>*@
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.FirstName)
                                 </td>
@@ -76,11 +74,13 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
-
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.UserName }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.UserName }, new { @class = "btn btn-warning pull-right" })
+                                </td>
                             </tr>
                         }
                     </tbody>
-
                 </table>
             </div><!-- /.box-body -->
         </div><!-- /.box -->

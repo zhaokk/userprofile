@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<userprofile.Models.REFEREE>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "";
 }
 
 
@@ -41,7 +41,7 @@
 <div class="row">
 
     <div class="col-xs-12">
-        <div class="box">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-header">
 
             </div><!-- /.box-header -->
@@ -65,12 +65,17 @@
                                 @Html.DisplayNameFor(model => model.AspNetUser.UserName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.QUALIFICATIONS)
+                               
+                                    @Html.DisplayNameFor(model => model.QUALIFICATIONS)
+                                
+                               
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.SPORT1.name)
                             </th>
+                            <th>
 
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +83,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.refID }, new { @class = "btn btn-danger" })
+                                   
                                     <a href="@Url.Action("Details", new { id = item.refID })">
                                         @Html.DisplayFor(modelItem => item.availability)
                                     </a>
@@ -99,12 +104,16 @@
                                     @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
                                 </td>
                                 <td>
-                                    @Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name"))
-                                </td>
+                                   
+                                    <a href="@Url.Action("changequal",new {id=item.refID})">
+                                        @Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name")) </a>
+</td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SPORT1.name)
                                 </td>
-
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.refID }, new { @class = "btn btn-danger pull-right" })
+                                </td>
                             </tr>
                         }
                     </tbody>

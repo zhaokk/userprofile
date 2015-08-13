@@ -27,9 +27,8 @@
 <div class="row">
     
     <div class="col-xs-12">
-        <div class="box">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-header">
-
             </div><!-- /.box-header -->
             <div class="box-body">
                 <table id="example2" class="table table-bordered table-hover">
@@ -50,7 +49,9 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
                             </th>
+                            <th>
 
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,18 +59,17 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger" })
+                                   
                                     <a href="@Url.Action("Details", new { id = item.teamID })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-                                    
-                                    
+
+
                                 </td>
                                 @*<td>
-                                        @Html.DisplayFor(modelItem => item.winnerID)
-                                    </td>*@
-
+                                    @Html.DisplayFor(modelItem => item.winnerID)
+                                </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ageBracket)
                                 </td>
@@ -82,11 +82,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
                                 </td>
-
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
+                                </td>
                             </tr>
                         }
                     </tbody>
-
                 </table>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
