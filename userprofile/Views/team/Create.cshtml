@@ -11,6 +11,9 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="box-body">
+                    <div class="fa fa-angle-left">
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
                     <div class="form-horizontal">
 
                         <hr />
@@ -58,9 +61,7 @@
                     </div>
                 </div>
             }
-            <div>
-                @Html.ActionLink("Back to List", "Index")
-            </div>
+            
         </div>
 </div>
 </div>

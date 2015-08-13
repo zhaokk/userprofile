@@ -8,10 +8,12 @@
     <div class="col-sm-6">
         <div class="box" style="height: 400px; background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
-                <div class="col-sm-6">
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.teamID }, new { @class="btn btn-warning"})
+               
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.teamID }, new { @class="btn btn-warning pull-right"})
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink("Back to List", "Index")
                 </div>
-            </div>
+            <hr/>
                
                     <dl class="dl-horizontal">
                         <dt>
@@ -49,6 +51,7 @@
                
         </div>
     </div>
+        </div>
     </div>
-                    @Html.ActionLink("Back to List", "Index")
+                    
                 

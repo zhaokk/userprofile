@@ -4,6 +4,9 @@
     <div class="col-sm-12">
         <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
+                <div class="fa fa-angle-left" >
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
                 @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/jqueryval")
 
@@ -13,10 +16,10 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
-                        <h4>QUALIFICATION</h4>
+                        
                         <hr />
                         @Html.ValidationSummary(true)
-
+                        <h4>QUALIFICATION</h4>
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -43,7 +46,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" />
+                                <input type="submit" value="Create" class="btn btn-success" />
                             </div>
                         </div>
                     </div>
@@ -52,6 +55,4 @@
         </div>
         </div>
     </div>
-                <div>
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                
