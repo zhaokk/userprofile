@@ -53,9 +53,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="mID,matchDate,location,teamaID,teambID,winnerID,tournament")] MATCH match)
         {
-            DateTime myDate = DateTime.ParseExact(Request.QueryString["datetime"], "yyyy-MM-dd HH:mm:ss",
-                                       System.Globalization.CultureInfo.InvariantCulture);
-            match.matchDate = myDate;
+           
             
 
             if (ModelState.IsValid)
@@ -195,6 +193,10 @@ namespace userprofile.Controllers
             if (match == null)
             {
                 return HttpNotFound();
+            }
+            if (match.OFFERs.Count() != 0) { 
+             ViewBag.error = "this match cant be delete because there are related offers";
+             return View(match);
             }
             return View(match);
         }
