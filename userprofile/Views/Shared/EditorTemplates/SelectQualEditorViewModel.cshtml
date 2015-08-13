@@ -1,0 +1,14 @@
+﻿@model userprofile.Models.SelectQualEditorViewModel
+
+<tr>
+        
+  
+    @Html.HiddenFor(model => model.qualName)
+    <td style="text-align:center">
+        @Html.CheckBoxFor(model => model.Selected)
+    </td>
+    <td>
+
+        @Html.DisplayFor(model => model.qualName)
+    </td>
+</tr>

@@ -71,6 +71,79 @@ namespace userprofile.Controllers
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", match.tournament);
             return View(match);
         }
+        [HttpGet]
+        public ActionResult manageOffer(int? id)
+        {
+            if (id != null)
+            {
+                MATCH theMatch = db.MATCHes.First(m => m.mID == id);
+                var refereesList = new List<SelectListItem>()
+                   {
+
+
+
+
+
+                   };
+            
+                foreach (REFEREE re in db.REFEREEs)
+                {
+                    var sli = new SelectListItem();
+                    sli.Text = re.AspNetUser.lastName + re.AspNetUser.lastName;
+                    sli.Value = re.refID.ToString();
+                    refereesList.Add(sli);
+
+                }
+                //var refereesLists = new SelectList(, db.REFEREEs.ToList().First(r => r.refID ==2));
+                ViewBag.referees = refereesList;
+                refereesList.Select(x=>refereesList.First(r => r.Value == "2"));
+                offersViewModels offers = new offersViewModels(theMatch);
+                return View(offers);
+
+            }
+            else {
+
+                return RedirectToAction("index", "match");
+            }
+        }
+        [HttpPost]
+        public ActionResult manageOffer() {
+          var i=0;
+            while(i<3){
+                string indexofid = "offer[" + i + "][ID]";
+                string indexofrefid = "offer[" + i + "][refID]";
+               var offerID= Convert.ToInt32(Request[indexofid]);
+                int mid=Convert.ToInt32(Request["mID"]);
+              var stringrefID=  Request[indexofrefid];
+              if (stringrefID != "") {
+                   var refID= Convert.ToInt32(Request[indexofrefid]) ;
+                   if (offerID != 0)
+                   {
+                       OFFER of = db.OFFERs.First(o => o.offerID == offerID);
+                       if (of.refID != refID)
+                       {
+                           of.refID = refID;
+                           of.status = "pending";
+                           db.Entry(of).State = EntityState.Modified;
+
+                       }
+                   }
+                   else {
+                       var newof = new OFFER();
+                       newof.status = "pending";
+                       newof.refID = refID;
+                       newof.dateOfOffer = System.DateTime.Now;
+                       newof.mid = mid;
+                       newof.sport = "soccer";
+                       db.OFFERs.Add(newof);
+                   }
+              }
+                i++;
+          }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
 
         // GET: /match/Edit/5
         public ActionResult Edit(int? id)

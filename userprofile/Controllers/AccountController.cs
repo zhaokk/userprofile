@@ -16,7 +16,7 @@ namespace userprofile.Controllers
     public class AccountController : Controller
     {
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Referee")]
         public ActionResult Index(){
             var Db = new ApplicationDbContext();
             var users = Db.Users;
@@ -177,6 +177,15 @@ namespace userprofile.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult Getroles()
+        {
+            var context = new ApplicationDbContext();
+            var allUsers = context.Users.ToList();
+            var allRoles = context.Roles.ToList();
+            ViewBag.Roles = new MultiSelectList(allRoles, "name", "name");
+            return View();
         }
 
         //

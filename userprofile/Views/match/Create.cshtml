@@ -1,178 +1,102 @@
 ﻿@model userprofile.Models.MATCH
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "";
 }
+@*<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src="~/Scripts/AdminLTE/plugins/locationPicker/locationpicker.jquery.js"></script>*@
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>MATCH</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        <div class="box box-primary">
-            <div class="box-header">
-                <h3 class="box-title">Date picker</h3>
-            </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
-                <!-- Date range -->
-                <div class="form-group">
-                    <label>Date range:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="text" class="form-control pull-right" id="reservation">
-                    </div><!-- /.input group -->
-                </div><!-- /.form group -->
-                <!-- Date and time range -->
-                <div class="form-group">
-                    <label>Date and time range:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-clock-o"></i>
-                        </div>
-                        <input type="text" class="form-control pull-right" id="reservationtime">
-                    </div><!-- /.input group -->
-                </div><!-- /.form group -->
-                <!-- Date and time range -->
-                <div class="form-group">
-                    <label>Date range button:</label>
-                    <div class="input-group">
-                        <button class="btn btn-default pull-right" id="daterange-btn">
-                            <i class="fa fa-calendar"></i> Date range picker
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                    </div>
-                </div><!-- /.form group -->
-
-            </div><!-- /.box-body -->
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.matchDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.matchDate, new { type="date"})
-                @Html.ValidationMessageFor(model => model.matchDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.location, "location", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("location", String.Empty)
-                @Html.ValidationMessageFor(model => model.location)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.teamaID, "teamaID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("teamaID", String.Empty)
-                @Html.ValidationMessageFor(model => model.teamaID)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.teambID, "teambID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("teambID", String.Empty)
-                @Html.ValidationMessageFor(model => model.teambID)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.winnerID, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.winnerID)
-                @Html.ValidationMessageFor(model => model.winnerID)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tournament, "tournament", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("tournament", String.Empty)
-                @Html.ValidationMessageFor(model => model.tournament)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-      $(function () {
-        //Initialize Select2 Elements
-        $(".select2").select2();
-
-        //Datemask dd/mm/yyyy
-        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-        //Datemask2 mm/dd/yyyy
-        $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-        //Money Euro
-        $("[data-mask]").inputmask();
-
-        //Date range picker
-        $('#reservation').daterangepicker();
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-        //Date range as a button
-        $('#daterange-btn').daterangepicker(
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
+                @using (Html.BeginForm())
                 {
-                  ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                  },
-                  startDate: moment().subtract(29, 'days'),
-                  endDate: moment()
-                },
-        function (start, end) {
-          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-        );
+                    @Html.AntiForgeryToken()
 
-        //iCheck for checkbox and radio inputs
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-          checkboxClass: 'icheckbox_minimal-blue',
-          radioClass: 'iradio_minimal-blue'
-        });
-        //Red color scheme for iCheck
-        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-          checkboxClass: 'icheckbox_minimal-red',
-          radioClass: 'iradio_minimal-red'
-        });
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-          checkboxClass: 'icheckbox_flat-green',
-          radioClass: 'iradio_flat-green'
-        });
 
-        //Colorpicker
-        $(".my-colorpicker1").colorpicker();
-        //color picker with addon
-        $(".my-colorpicker2").colorpicker();
 
-        //Timepicker
-        $(".timepicker").timepicker({
-          showInputs: false
-        });
-      });
-    </script>
-    
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+
+
+                    <div class="form-horizontal">
+
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.matchDate, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.matchDate)
+                                @Html.ValidationMessageFor(model => model.matchDate)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.location, "location", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("location", String.Empty)
+                                @Html.ValidationMessageFor(model => model.location)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.teamaID, "teamaID", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("teamaID", String.Empty)
+                                @Html.ValidationMessageFor(model => model.teamaID)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.teambID, "teambID", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("teambID", String.Empty)
+                                @Html.ValidationMessageFor(model => model.teambID)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.winnerID, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.winnerID)
+                                @Html.ValidationMessageFor(model => model.winnerID)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.tournament, "tournament", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("tournament", String.Empty)
+                                @Html.ValidationMessageFor(model => model.tournament)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-sm-1">
+                                <input type="submit" value="Create" class="btn btn-block btn-success" />
+                            </div>
+                        </div>
+                    </div>
+                    @section scripts{
+                        <script type="text/javascript">
+                            $(function () {
+                                $('input[name="matchDate"]').daterangepicker({
+                                    singleDatePicker: true,
+                                    timePicker: true,
+                                    timePickerIncrement: 15,
+                                    locale: {
+                                        format: 'MM/DD/YYYY h:mm A'
+                                    }
+                                });
+                            });
+
+
+                        </script>
+                    }
+                }
+
+            </div>
+
+        </div>
+</div>
 </div>

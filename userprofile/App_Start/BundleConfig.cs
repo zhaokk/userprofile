@@ -8,8 +8,22 @@ namespace userprofile
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+        //    bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+        //               "~/Scripts/jquery-{version}.js"));
+           bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                     "~/Scripts/jquery-1.10.2.min.js"));
+           bundles.Add(new ScriptBundle("~/bundles/jquery2").Include(
+                "~/Scripts/jQuery-2.1.4.min.js"));
+
+           bundles.Add(new StyleBundle("~/Content/fullcalendarcss").Include(
+                 
+                       "~/Scripts/AdminLTE/plugins/fullcalendar/fullcalendar.print.css",
+                       "~/Scripts/AdminLTE/plugins/fullcalendar/fullcalendar.css"));
+
+           bundles.Add(new ScriptBundle("~/bundles/fullcalendarjs").Include(
+                "~/Scripts/jquery-ui.js",
+
+                       "~/Scripts/AdminLTE/plugins/fullcalendar/fullcalendar.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

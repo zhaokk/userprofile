@@ -3,44 +3,47 @@
 @{
     ViewBag.Title = "User Roles";
 }
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+            <div class="box-body">
+                <h2>Roles for user @Html.DisplayFor(model => model.UserName)</h2>
+                <hr />
+                @using (Html.BeginForm("UserRoles", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+                {
+                    @Html.AntiForgeryToken()
 
-<h2>Roles for user @Html.DisplayFor(model => model.UserName)</h2>
-<hr />
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.HiddenFor(model => model.UserName)
+                            </div>
+                        </div>
+                        <h4>Select Role Assignments</h4>
 
-@using (Html.BeginForm("UserRoles", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
-{
-    @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="col-md-10">
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.UserName)
+                                @Html.EditorFor(model => model.Roles)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="submit" value="Save" class="btn btn-success" />
+                            </div>
+                        </div>
+
+
+
+
+                        <br />
+
+                        <hr />
+
+                    </div>
+                }
             </div>
         </div>
-
-        <h4>Select Role Assignments</h4>
-        <br />
-        <hr />
-
-        <table>
-            <tr>
-                <th>
-                    Select
-                </th>
-                <th>
-                    Role
-                </th>
-            </tr>
-            @Html.EditorFor(model => model.Roles)
-        </table>
-        <br />
-        <hr />
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+</div>
+</div>

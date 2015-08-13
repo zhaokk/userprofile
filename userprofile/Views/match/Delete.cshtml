@@ -1,72 +1,73 @@
 ﻿@model userprofile.Models.MATCH
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "";
 }
 
-<h2>Delete</h2>
+<div class="row">
+    <div class="col-sm-12">
+		<div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+			
+			<div class="box-body">
+				<p>
+					@using(Html.BeginForm()) {
+						@Html.AntiForgeryToken()
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>MATCH</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.matchDate)
-        </dt>
+						<div class="form-actions no-color">
+							<input type="submit" value="Delete" class="btn btn-danger pull-right" />
 
-        <dd>
-            @Html.DisplayFor(model => model.matchDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.winnerID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.winnerID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LOCATION1.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LOCATION1.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TEAM.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TEAM.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TEAM1.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TEAM1.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TOURNAMENT1.sport)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+						</div>
+					}
+				</p>
+			
+				
+				
+				<div class="fa fa-angle-left">
+					@Html.ActionLink(" Back to List", "Index")
+					<hr />
+					<h3>Are you sure you want to delete this MATCH ?</h3>
+					<dl class="dl-horizontal">
+						<dt>
+							@Html.DisplayNameFor(model => model.matchDate)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.matchDate)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.winnerID)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.winnerID)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.LOCATION1.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.LOCATION1.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TEAM.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TEAM.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TEAM1.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TEAM1.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TOURNAMENT1.sport)
+						</dd>
+					</dl>
+				</div>
+					
+				</div>
+		</div>
         </div>
-    }
-</div>
+               
+            </div>

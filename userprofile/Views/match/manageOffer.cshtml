@@ -1,0 +1,107 @@
+﻿@model userprofile.Models.offersViewModels
+@{
+    ViewBag.Title = "manageOffer";
+    int i = 0;
+    int j = 0;
+}
+<style>
+    .hidde {
+    display:none;
+    
+    }
+
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-body">
+                <h2>manageOffer</h2>
+                @using (Html.BeginForm())
+                {
+                    foreach (var item in Model.offers)
+                    {
+
+                        if (item.status == "dummy")
+                        {
+                            <div class="" id="@i" hidden>
+                                <h1>lol</h1>
+                                @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
+                                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+
+                                @{j++;}
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="" id="@i">
+                                <select name="offer[@i][refID]">
+                                    @foreach (var selection in ViewBag.referees)
+                                    {
+                                        if (item.refID.ToString() == selection.Value)
+                                        {
+                                            <option value="@selection.Value" selected>@selection.Text</option>
+
+                                        }
+                                        else
+                                        {
+
+                                            <option value="@selection.Value">@selection.Text</option>
+                                        }
+                                    }
+                                </select>
+                                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.dateOfOffer, new { @id = "date" })
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.status)
+
+                                </td>
+
+                            </div>
+                        }
+                        i++;
+                    }
+                    
+                    if (j == 0) { }
+                    else
+                    {
+                        <div class="" id="addnew">
+
+                            <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
+
+
+                        </div>
+                    }
+                    @Html.HiddenFor(model => model.mID)
+                    <input type="text" id="flag" value="@j" hidden>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input onload="check()" type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+
+                </div>
+            </div>
+        </div>
+    </div>
+                <script>
+                    var i = $("#flag").val();
+
+                    function newOffer() {
+                        var j = 3 - i;
+                        $("#" + j).css("display", "block");
+
+                        i--;
+                        if (i < 1) {
+
+                            $("#addnew").css("display", "none");
+                        }
+                    }
+
+
+                </script>
+

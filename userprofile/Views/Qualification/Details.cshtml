@@ -1,0 +1,48 @@
+﻿@model userprofile.Models.QUALIFICATION
+
+@{
+  
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+            <div class="box-body">
+                <h4>QUALIFICATION</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.supDesc)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.supDesc)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SPORT1.name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SPORT1.name)
+                    </dd>
+
+                </dl>
+            </div>
+
+        </div>
+        </div>
+    </div>
+
+                @Html.ActionLink("Edit", "Edit", new { id = Model.qID }) |
+                @Html.ActionLink("Back to List", "Index")
+            
+            
