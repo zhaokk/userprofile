@@ -90,7 +90,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.SPORT1.name)
                             </th>
-
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,7 +98,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.qID }, new { @class = "btn btn-danger" })
+                                   
                                     <a href="@Url.Action("Details", new { id = item.qID })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
@@ -115,7 +115,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SPORT1.name)
                                 </td>
-
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.qID }, new { @class = "btn btn-danger pull-right" })
+                                </td>
                             </tr>
                         }
                     </tbody>
