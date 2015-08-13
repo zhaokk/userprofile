@@ -98,7 +98,7 @@
    
     <div class="row">
         
-        <div class="col-xs-12">
+        <div class="col-xs-9">
             <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
                 <div class="box-header">
                     
@@ -129,6 +129,7 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
                                 </th>
+								<th></th>
                                 
                             </tr>
                         </thead>
@@ -137,8 +138,7 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger" })
-                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-success" })
+                                       
                                         <a href="@Url.Action( "Details", new { id = item.mID })">
                                         @Html.DisplayFor(modelItem => item.matchDate)</a>
                                        
@@ -160,7 +160,12 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
+										
                                     </td>
+									<td>
+										@Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger" })
+										@Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-success" })
+										</td>
                                    
                                 </tr>
                             }
@@ -171,11 +176,10 @@
             </div><!-- /.box -->
 
         </div><!-- /.col -->
-        <div class="col-md-3">
-
-            <div class="btn-group" >
-                <a class=" btn btn-block btn-success" href='@Url.Action("Create","match")'><b>Create New Match</b></a>
-            </div>
-        </div>
+		<div class="col-xs-6 col-sm-4">
+			<div class="btn-group">
+				<a class=" btn btn-block btn-success" href='@Url.Action("Create","match")'><b>Create New Match</b></a>
+			</div>
+		</div>
     </div><!-- /.row -->
 
