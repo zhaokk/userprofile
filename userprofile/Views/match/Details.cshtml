@@ -6,55 +6,55 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="box box-primary">
-            <div class="box-body">
-                <p>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.mID }, new { @class = "btn btn-warning pull-right" })
-                </p>
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink("Back to List", "Index")
-                    <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.matchDate)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.matchDate)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.winnerID)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.winnerID)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.LOCATION1.name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.LOCATION1.name)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TEAM.name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.TEAM.name)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TEAM1.name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.TEAM1.name)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.TOURNAMENT1.sport)
-                        </dd>
-                    </dl>
-                </div>
-                </div>
-            </div>
+		<div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+			<div class="box-body">
+				<p>
+					@Html.ActionLink("Edit", "Edit", new { id = Model.mID }, new { @class = "btn btn-warning pull-right" })
+				</p>
+				<div class="fa fa-angle-left">
+					@Html.ActionLink("Back to List", "Index")
+					<hr />
+					<dl class="dl-horizontal">
+						<dt>
+							@Html.DisplayNameFor(model => model.matchDate)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.matchDate)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.winnerID)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.winnerID)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.LOCATION1.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.LOCATION1.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TEAM.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TEAM.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TEAM1.name)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TEAM1.name)
+						</dd>
+						<dt>
+							@Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.TOURNAMENT1.sport)
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
         </div>
     </div>
                 
