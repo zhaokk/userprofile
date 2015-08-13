@@ -20,7 +20,7 @@ namespace userprofile.Models
                     this.offers.Add(of);
 
                 }
-                if (ma.OFFERs.Count() != 2)
+                if (ma.OFFERs.Count() != 3)
                 {
                     for (int i = (3 - ma.OFFERs.Count()); i > 0; i--)
                     {
@@ -39,5 +39,18 @@ namespace userprofile.Models
         public int mID { get; set; }
     }
 
+    public class shortoffer
+    {
+    public shortoffer(OFFER of){
+    
+    }
+        public shortoffer(){
+        
+        }
+    public int matchId {get;set;}
+    public int refId {get;set;}
+    public string status {get;set;}
+    
+    }
   
 }

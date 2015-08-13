@@ -12,51 +12,72 @@
 
 </style>
 <h2>manageOffer</h2>
-
-@foreach (var item in Model.offers)
+@using (Html.BeginForm())
+{
+foreach (var item in Model.offers)
 {
     
     if (item.status == "dummy") { 
-    <div class="well col-lg-4 col-md-12 hidde" id="@i" >
+    <div class="well col-lg-4 col-md-12  " id="@i" hidden>
         <h1>lol</h1>
-        @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, new { @Name = "refID" + i })
-     @{j++;}
+        @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
+        <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+        
+        @{j++;}
 
     </div>
     }
     else
     {
-        <div class="well col-lg-4 col-md-12" id="@i">
+        <div class="well col-lg-4 col-md-12 " id="@i">
+            <select name="offer[@i][refID]">
+                @foreach (var selection in ViewBag.referees)
+                {
+                    if (item.refID.ToString() == selection.Value)
+                    {
+                        <option value="@selection.Value" selected>@selection.Text</option>
 
-            @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, new { @Name = "refID"+i })
-       
+                    }
+                    else
+                    {
+
+                        <option value="@selection.Value">@selection.Text</option>
+                    }
+                }
+            </select>
+            <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
             <td>
-                @Html.DisplayFor(modelItem => item.dateOfOffer, new {@id="date"})
+                @Html.DisplayFor(modelItem => item.dateOfOffer, new { @id = "date" })
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.MATCH.mID)
+                @Html.DisplayFor(modelItem => item.status)
+
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.REFEREE.availability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SPORT1.name)
-            </td>
+
         </div>
     }
     i++;
 }
-<div class="well col-lg-4 col-md-12 " id="addnew">
+if(j==0){}else{
+<div class="well col-lg-4 col-md-12 col-xs-12" id="addnew">
   
-    <a href="#" id="addnewoffer" class="btn btn-success col-lg-12 col-md-12" onclick="newOffer()" style="margin-left: 34%; float: right;">Add New Offer</a>
+    <a href="#" id="addnewoffer" class="btn btn-success col-lg-12 col-md-12" onclick="newOffer()" style="margin-left: 34%; float: right;" >Add New Offer</a>
 
 
 </div>
+}
+    @Html.HiddenFor(model=>model.mID)
 <input type="text" id="flag" value="@j" hidden>
-
+     <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input onload="check()" type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+}
 <script>
     var i = $("#flag").val();
-
+   
     function newOffer() {
         var j = 3 - i;
         $("#" + j).css("display", "block");
@@ -67,5 +88,7 @@
             $("#addnew").css("display", "none");
         }
     }
+
+    
     </script>
 
