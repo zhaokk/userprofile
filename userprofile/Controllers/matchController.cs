@@ -205,9 +205,17 @@ namespace userprofile.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             MATCH match = db.MATCHes.Find(id);
-            db.MATCHes.Remove(match);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (match.OFFERs.Count() == 0)
+            {
+                db.MATCHes.Remove(match);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.error = "this match cant be delete because there are related offers";
+                return View(match);
+            }
         }
 
         protected override void Dispose(bool disposing)

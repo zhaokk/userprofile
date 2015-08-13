@@ -59,7 +59,7 @@
                                     @Html.DisplayFor(modelItem => item.status)
 
                                 </td>
-
+                              @Html.ActionLink("Delete", "Delete","offer" ,new { id = item.offerID }, new { @class = "btn btn-danger pull-right" })
                             </div>
                         }
                         i++;

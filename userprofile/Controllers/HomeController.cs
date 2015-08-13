@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
@@ -42,32 +43,62 @@ namespace userprofile.Controllers
 
         private List<Event> GetEvent()
         {
-            List<Event> eventList = new List<Event>();
-
-            Event newEvent = new Event
+            if (User.Identity.IsAuthenticated)
             {
-                Id = 1,
-                title = "Eventt 1",
-                start = DateTime.Now,
-                end = DateTime.Now,
-                allDay = false
-            };
+                var i = 0;
+                var userID = User.Identity.GetUserId();
+                TimeSpan time = new TimeSpan(0, 1, 30, 0);
+                List<Event> eventList = new List<Event>();
+
+                var db = new Raoconnection();
+                List<OFFER> offers= db.REFEREEs.First(r=>r.ID==userID).OFFERs.ToList();
+                foreach(OFFER offer in offers){
+                    
+                    Event newEvent = new Event
+                    {
+                        Id = i,
+                        title = "Match:"+i,
+                        start =offer.MATCH.matchDate,
+                        end = offer.MATCH.matchDate+time,
+                        allDay = false
+                    };
+                    eventList.Add(newEvent);
+                i++;
+                }
+
+              
+                return eventList;
+            }
+            else {
+
+                List<Event> eventList = new List<Event>();
+
+                Event newEvent = new Event
+                {
+                    Id = 1,
+                    title = "Eventt 1",
+                    start = DateTime.Now,
+                    end = DateTime.Now,
+                    allDay = false
+                };
 
 
-            eventList.Add(newEvent);
+                eventList.Add(newEvent);
 
-            newEvent = new Event
-            {
-                Id = 2,
-                title = "Event 3",
-                start = DateTime.Now,
-                end = DateTime.Now,
-                allDay = false
-            };
+                newEvent = new Event
+                {
+                    Id = 2,
+                    title = "Event 3",
+                    start = DateTime.Now,
+                    end = DateTime.Now,
+                    allDay = false
+                };
 
-            eventList.Add(newEvent);
+                eventList.Add(newEvent);
 
-            return eventList;
+                return eventList;
+            }
+            
         }
 
         private static DateTime ConvertFromUnixTimestamp(double timestamp)
@@ -81,5 +112,7 @@ namespace userprofile.Controllers
             var i = Request["id"];
             return null;
         }
+
+        
     }
 }
