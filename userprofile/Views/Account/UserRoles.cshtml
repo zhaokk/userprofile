@@ -4,11 +4,15 @@
     ViewBag.Title = "User Roles";
 }
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
-                <h2>Roles for user @Html.DisplayFor(model => model.UserName)</h2>
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
+                
                 <hr />
+                <h2>Roles for user @Html.DisplayFor(model => model.UserName)</h2>
                 @using (Html.BeginForm("UserRoles", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
                 {
                     @Html.AntiForgeryToken()
@@ -37,9 +41,7 @@
 
 
 
-                        <br />
-
-                        <hr />
+                       
 
                     </div>
                 }

@@ -1,82 +1,77 @@
 ﻿@model userprofile.Models.LOCATION
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>LOCATION</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.street)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.street)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.snum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.snum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.city)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.city)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.postcode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.postcode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.phoneNum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.phoneNum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.state)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.state)
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-xs-8">
+        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+           
+           
+            <div class="box-body">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.lID }, new { @class = "btn btn-warning pull-right" })
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
+                    <hr />
+                <h3>Details Of Location</h3>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.price)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.price)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.street)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.street)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.snum)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.snum)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.city)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.city)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.postcode)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.postcode)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.phoneNum)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.phoneNum)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.state)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.state)
+                        </dd>
+                    </dl>
+               
+                <p>
+                   
+                 
+                </p>
+            </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.lID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</div>
+</div>

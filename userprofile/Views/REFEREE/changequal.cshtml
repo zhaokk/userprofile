@@ -1,19 +1,26 @@
 ﻿@model userprofile.Models.selectRefQuliEditViewModel
 @{
-    ViewBag.Title = "changequal";
+    ViewBag.Title = "";
 }
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box" style="height:250px; background-color:rgba(255, 255, 255,0.7)">
+           
 
-<h2>changequal</h2>
-
-@using (Html.BeginForm("changequal", "REFEREE", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
-{
-     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-     @Html.HiddenFor(model => model.refeid)
-@Html.EditorFor(model => model.quals)
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-}
+           
+            <div class="box-body">
+                <h2>Change Qualification</h2>
+                @using (Html.BeginForm("changequal", "REFEREE", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.refeid)
+                    @Html.EditorFor(model => model.quals)
+    <div>
+        <input type="submit" value="Save" class="btn btn-success pull-left" />
+    </div>
+                }
+</div>
+</div>
+</div>
+</div>

@@ -8,8 +8,14 @@
     <div class="col-sm-12">
         <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
             <div class="box-body">
-                <h4>QUALIFICATION</h4>
+                
+                <div class="fa fa-angle-left" >
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
+                
+               @Html.ActionLink("Edit", "Edit", new { id = Model.qID }, new {@class="btn btn-warning pull-right" })
                 <hr />
+                <h4>QUALIFICATION</h4>
                 <dl class="dl-horizontal">
                     <dt>
                         @Html.DisplayNameFor(model => model.name)
@@ -42,7 +48,5 @@
         </div>
     </div>
 
-                @Html.ActionLink("Edit", "Edit", new { id = Model.qID }) |
-                @Html.ActionLink("Back to List", "Index")
             
             
