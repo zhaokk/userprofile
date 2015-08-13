@@ -17,64 +17,62 @@
             <div class="box-body">
                 <h2>manageOffer</h2>
                 @using (Html.BeginForm())
-                {
-                    foreach (var item in Model.offers)
+{
+    foreach (var item in Model.offers)
+    {
+
+        if (item.status == "dummy")
+        {
+            <div class="well col-lg-4 col-md-12" id="@i" hidden>
+                <h1>lol</h1>
+                @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
+                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+
+                @{j++;}
+
+            </div>
+        }
+        else
+        {
+            <div class="well col-lg-4 col-md-12" id="@i" hidden>
+                <select name="offer[@i][refID]">
+                    @foreach (var selection in ViewBag.referees)
                     {
-
-                        if (item.status == "dummy")
+                        if (item.refID.ToString() == selection.Value)
                         {
-                            <div class="" id="@i" hidden>
-                                <h1>lol</h1>
-                                @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
-                                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+                            <option value="@selection.Value" selected>@selection.Text</option>
 
-                                @{j++;}
-
-                            </div>
                         }
                         else
                         {
-                            <div class="" id="@i">
-                                <select name="offer[@i][refID]">
-                                    @foreach (var selection in ViewBag.referees)
-                                    {
-                                        if (item.refID.ToString() == selection.Value)
-                                        {
-                                            <option value="@selection.Value" selected>@selection.Text</option>
 
-                                        }
-                                        else
-                                        {
-
-                                            <option value="@selection.Value">@selection.Text</option>
-                                        }
-                                    }
-                                </select>
-                                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.dateOfOffer, new { @id = "date" })
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.status)
-
-                                </td>
-
-                            </div>
+                            <option value="@selection.Value">@selection.Text</option>
                         }
-                        i++;
                     }
-                    
-                    if (j == 0) { }
-                    else
-                    {
-                        <div class="" id="addnew">
+                </select>
+                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+                
+                    @Html.DisplayFor(modelItem => item.dateOfOffer, new { @id = "date" })
+                
+                    @Html.DisplayFor(modelItem => item.status)
 
-                            <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
+               
+
+            </div>
+        }
+        i++;
+    }
+
+    if (j == 0) { }
+    else
+    {
+        <div class="well col-lg-4 col-md-12 col-xs-12" id="addnew">
+
+            <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
 
 
-                        </div>
-                    }
+        </div>
+    }
                     @Html.HiddenFor(model => model.mID)
                     <input type="text" id="flag" value="@j" hidden>
                     <div class="form-group">
