@@ -16,16 +16,16 @@ namespace userprofile.Models
     {
         public QUALIFICATION()
         {
-            this.MATCHQUALs = new HashSet<MATCHQUAL>();
+            this.OFFERQUALs = new HashSet<OFFERQUAL>();
             this.USERQUALs = new HashSet<USERQUAL>();
         }
     
         public int qID { get; set; }
         public string name { get; set; }
         public string sport { get; set; }
-        public string supDesc { get; set; }
+        public string desc { get; set; }
     
-        public virtual ICollection<MATCHQUAL> MATCHQUALs { get; set; }
+        public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
     }

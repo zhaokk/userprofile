@@ -12,13 +12,12 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserClaim
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-        public string User_Id { get; set; }
-    
-        public virtual AspNetUser AspNetUser { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

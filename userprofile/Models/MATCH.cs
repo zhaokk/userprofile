@@ -17,7 +17,6 @@ namespace userprofile.Models
         public MATCH()
         {
             this.INFRACTIONS = new HashSet<INFRACTION>();
-            this.MATCHQUALs = new HashSet<MATCHQUAL>();
             this.OFFERs = new HashSet<OFFER>();
             this.SCORES = new HashSet<SCORE>();
         }
@@ -32,7 +31,6 @@ namespace userprofile.Models
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION1 { get; set; }
-        public virtual ICollection<MATCHQUAL> MATCHQUALs { get; set; }
         public virtual TEAM TEAM { get; set; }
         public virtual TEAM TEAM1 { get; set; }
         public virtual TOURNAMENT TOURNAMENT1 { get; set; }

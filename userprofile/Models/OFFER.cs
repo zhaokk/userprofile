@@ -14,6 +14,12 @@ namespace userprofile.Models
     
     public partial class OFFER
     {
+        public OFFER()
+        {
+            this.OFFERQUALs = new HashSet<OFFERQUAL>();
+            this.TYPEs = new HashSet<TYPE>();
+        }
+    
         public int offerID { get; set; }
         public string sport { get; set; }
         public int mid { get; set; }
@@ -24,5 +30,7 @@ namespace userprofile.Models
         public virtual MATCH MATCH { get; set; }
         public virtual REFEREE REFEREE { get; set; }
         public virtual SPORT SPORT1 { get; set; }
+        public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
+        public virtual ICollection<TYPE> TYPEs { get; set; }
     }
 }

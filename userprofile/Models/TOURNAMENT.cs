@@ -18,6 +18,7 @@ namespace userprofile.Models
         {
             this.MATCHes = new HashSet<MATCH>();
             this.TEAMs = new HashSet<TEAM>();
+            this.WEEKLYAVAILABILITies = new HashSet<WEEKLYAVAILABILITY>();
         }
     
         public int tID { get; set; }
@@ -26,5 +27,6 @@ namespace userprofile.Models
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }
+        public virtual ICollection<WEEKLYAVAILABILITY> WEEKLYAVAILABILITies { get; set; }
     }
 }

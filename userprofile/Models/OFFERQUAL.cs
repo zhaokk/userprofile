@@ -12,13 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserClaim
+    public partial class OFFERQUAL
     {
-        public int Id { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-        public string User_Id { get; set; }
+        public int qID { get; set; }
+        public int offerID { get; set; }
+        public Nullable<int> qualLevel { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual OFFER OFFER { get; set; }
+        public virtual QUALIFICATION QUALIFICATION { get; set; }
     }
 }

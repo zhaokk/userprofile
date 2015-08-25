@@ -11,6 +11,7 @@ namespace userprofile.Controllers
     {
         public ActionResult Index()
         {
+            
             return View();
         }
 

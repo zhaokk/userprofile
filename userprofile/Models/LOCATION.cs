@@ -11,7 +11,6 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class LOCATION
     {
@@ -21,14 +20,13 @@ namespace userprofile.Models
         }
     
         public int lID { get; set; }
-        [Display(Name="location")]
         public string name { get; set; }
         public Nullable<double> price { get; set; }
         public string street { get; set; }
         public Nullable<int> snum { get; set; }
         public string city { get; set; }
         public int postcode { get; set; }
-        public int phoneNum { get; set; }
+        public Nullable<int> phoneNum { get; set; }
         public string state { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }

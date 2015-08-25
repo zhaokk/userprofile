@@ -12,13 +12,12 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserClaim
+    public partial class TIMEOFF
     {
-        public int Id { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-        public string User_Id { get; set; }
+        public int refID { get; set; }
+        public Nullable<System.DateTime> dateRequired { get; set; }
+        public string description { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual REFEREE REFEREE { get; set; }
     }
 }

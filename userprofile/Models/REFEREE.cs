@@ -20,7 +20,6 @@ namespace userprofile.Models
         }
     
         public int refID { get; set; }
-        public string availability { get; set; }
         public Nullable<int> distTravel { get; set; }
         public string sport { get; set; }
         public Nullable<int> prefAge { get; set; }
@@ -30,5 +29,7 @@ namespace userprofile.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
+        public virtual TIMEOFF TIMEOFF { get; set; }
+        public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
     }
 }
