@@ -14,16 +14,17 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class AspNetUserClaim
 {
 
     public int Id { get; set; }
-
+    [DisplayName("Claim Type")]
     public string ClaimType { get; set; }
-
+    [DisplayName("Claim Valuee")]
     public string ClaimValue { get; set; }
-
+     [DisplayName("User Id")]
     public string User_Id { get; set; }
 
 

@@ -14,12 +14,13 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class SCORE
 {
 
     public int score1 { get; set; }
-
+    [DisplayName("Player")]
     public string player { get; set; }
 
     public int matchID { get; set; }

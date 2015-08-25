@@ -14,22 +14,23 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class Event
 {
 
     public int Id { get; set; }
-
+    [DisplayName("Owner")]
     public string owner { get; set; }
-
+    [DisplayName("Title")]
     public string title { get; set; }
 
     public Nullable<System.DateTime> start { get; set; }
 
     public Nullable<System.DateTime> end { get; set; }
-
+    [DisplayName("Url")]
     public string url { get; set; }
-
+    [DisplayName("Background Color")]
     public string backgroundColor { get; set; }
 
     public Nullable<bool> allDay { get; set; }

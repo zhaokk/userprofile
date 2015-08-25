@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class AspNetUser
 {
@@ -43,19 +44,19 @@ public partial class AspNetUser
 
 
     public string Id { get; set; }
-
+    [DisplayName("User Name")]
     public string UserName { get; set; }
-
+    [DisplayName("Password Hash")]
     public string PasswordHash { get; set; }
-
+    [DisplayName("Security Stamp")]
     public string SecurityStamp { get; set; }
-
+    [DisplayName("PhotoDir")]
     public string photoDir { get; set; }
-
+    [DisplayName("Discriminator")]
     public string Discriminator { get; set; }
-
+    [DisplayName("First Name")]
     public string firstName { get; set; }
-
+    [DisplayName("Last Namee")]
     public string lastName { get; set; }
 
     public Nullable<int> phoneNum { get; set; }
