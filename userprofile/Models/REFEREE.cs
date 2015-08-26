@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class REFEREE
 {
@@ -29,11 +30,11 @@ public partial class REFEREE
 
 
     public int refID { get; set; }
-
+    [DisplayName("Availability")]
     public string availability { get; set; }
 
     public Nullable<int> distTravel { get; set; }
-
+    [DisplayName("Sport Type")]
     public string sport { get; set; }
 
     public Nullable<int> prefAge { get; set; }

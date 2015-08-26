@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class OFFER
 {
@@ -27,13 +28,13 @@ public partial class OFFER
 
 
     public int offerID { get; set; }
-
+     [DisplayName("Sport Type")]
     public string sport { get; set; }
 
     public int mid { get; set; }
 
     public int refID { get; set; }
-
+     [DisplayName("Status")]
     public string status { get; set; }
 
     public System.DateTime dateOfOffer { get; set; }

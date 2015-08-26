@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class PLAYER
 {
@@ -21,7 +22,7 @@ public partial class PLAYER
     public int team { get; set; }
 
     public string ID { get; set; }
-
+     [DisplayName("Position")]
     public string position { get; set; }
 
     public Nullable<int> shirtNum { get; set; }

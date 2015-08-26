@@ -98,8 +98,8 @@
    
     <div class="row">
         
-        <div class="col-xs-9">
-            <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+        <div class="col-xs-12">
+            <div class="box">
                 <div class="box-header">
                     
                 </div><!-- /.box-header -->
@@ -108,8 +108,8 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.matchDate)
-
+                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                    Match Date
                                 </th>
                                 @*<th>
                                         @Html.DisplayNameFor(model => model.matchDate)
@@ -118,7 +118,8 @@
                                         @Html.DisplayNameFor(model => model.winnerID)
                                     </th>*@
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LOCATION1.name)
+                                    @*@Html.DisplayNameFor(model => model.LOCATION1.name)*@
+                                    Location
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.TEAM.name)

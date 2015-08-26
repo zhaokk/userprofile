@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class TOURNAMENT
 {
@@ -29,7 +30,7 @@ public partial class TOURNAMENT
 
 
     public int tID { get; set; }
-
+    [DisplayName("Sport Type")]
     public string sport { get; set; }
 
 

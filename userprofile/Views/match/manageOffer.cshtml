@@ -1,6 +1,6 @@
 ﻿@model userprofile.Models.offersViewModels
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "manageOffer";
     int i = 0;
     int j = 0;
 }
@@ -12,10 +12,10 @@
 
 </style>
 
-    <div class="col-sm-12">
-        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+    <div class="col-lg-12">
+        <div class="box">
             <div class="box-body" style="height:500px">
-                <h2>manageOffer</h2>
+               
                 @using (Html.BeginForm())
                 {
                     foreach (var item in Model.offers)
@@ -38,11 +38,13 @@
                             <div class="well col-lg-4 col-md-12" id="@i">
                                 @Html.ActionLink("Delete", "Delete", "offer", new { id = item.offerID }, new { @class = "btn btn-danger pull-right" })
                                 <div class="form-group">
+                                    <p>Please select a Referee :</p>
                                     <select name="offer[@i][refID]">
                                         @foreach (var selection in ViewBag.referees)
                                         {
                                             if (item.refID.ToString() == selection.Value)
                                             {
+                                                
                                                 <option value="@selection.Value" selected>@selection.Text</option>
 
                                             }
@@ -58,9 +60,11 @@
                                 <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
 
                                 <div class="form-group">
+                                    <p>The Date of the match is: </p>
                                     <div class=" label label-default"> @Html.DisplayFor(modelItem => item.dateOfOffer, new { @id = "date" })</div>
                                     </div>
                                 <div class="form-group">
+                                    <p>The state of the Match is: </p>
                                     <div class="label label-warning">@Html.DisplayFor(modelItem => item.status)</div>
                                 </div>
 

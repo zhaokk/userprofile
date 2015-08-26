@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class SPORT
 {
@@ -31,7 +32,7 @@ public partial class SPORT
 
     }
 
-
+    [DisplayName("Sport Type")]
     public string name { get; set; }
 
 

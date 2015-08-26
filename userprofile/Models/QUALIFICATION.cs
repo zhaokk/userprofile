@@ -14,6 +14,7 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class QUALIFICATION
 {
@@ -29,11 +30,11 @@ public partial class QUALIFICATION
 
 
     public int qID { get; set; }
-
+     [DisplayName("Name")]
     public string name { get; set; }
-
+     [DisplayName("Sport Type")]
     public string sport { get; set; }
-
+     [DisplayName("SupDesc")]
     public string supDesc { get; set; }
 
 

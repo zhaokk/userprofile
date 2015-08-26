@@ -87,7 +87,7 @@ namespace userprofile.Controllers
                 foreach (REFEREE re in db.REFEREEs)
                 {
                     var sli = new SelectListItem();
-                    sli.Text = re.AspNetUser.lastName + re.AspNetUser.lastName;
+                    sli.Text = re.AspNetUser.lastName +" "+ re.AspNetUser.firstName;
                     sli.Value = re.refID.ToString();
                     refereesList.Add(sli);
 

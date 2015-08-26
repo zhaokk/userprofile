@@ -14,12 +14,13 @@ namespace userprofile.Models
 
 using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
 public partial class INFRACTION
 {
 
     public int infractionID { get; set; }
-
+     [DisplayName("Type")]
     public string type { get; set; }
 
     public bool active { get; set; }
@@ -27,7 +28,7 @@ public partial class INFRACTION
     public Nullable<bool> overruled { get; set; }
 
     public int matchID { get; set; }
-
+     [DisplayName("Player")]
     public string player { get; set; }
 
 
