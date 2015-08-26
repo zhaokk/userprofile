@@ -17,6 +17,7 @@ namespace userprofile.Models
         public REFEREE()
         {
             this.OFFERs = new HashSet<OFFER>();
+            this.USERQUALs = new HashSet<USERQUAL>();
         }
     
         public int refID { get; set; }
@@ -30,6 +31,7 @@ namespace userprofile.Models
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual TIMEOFF TIMEOFF { get; set; }
+        public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
     }
 }

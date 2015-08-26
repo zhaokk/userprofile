@@ -15,10 +15,10 @@ namespace userprofile.Models
     public partial class USERQUAL
     {
         public int qID { get; set; }
-        public string ID { get; set; }
+        public int ID { get; set; }
         public Nullable<int> qualLevel { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         public virtual QUALIFICATION QUALIFICATION { get; set; }
+        public virtual REFEREE REFEREE { get; set; }
     }
 }

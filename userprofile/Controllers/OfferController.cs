@@ -29,12 +29,32 @@ namespace userprofile.Controllers
         {
             
 
-            //get offers that have not been assigned
-            var offers = db.OFFERs.Where(m => m.status == 1); // date in the future
+            //get offers & attached match that have not been assigned
+            var offers = db.OFFERs.Where(m => m.status == 1).Include(m => m.MATCH); // date in the future
+            List<USERQUAL> qualificationsThatExist = new List<USERQUAL>();
+
+            var qualifications = db.OFFERQUALs;
+
+            var refereesWeWant =  db.REFEREEs.Include(m => m.USERQUALs);
+            List<REFEREE> refArray = refereesWeWant.ToList();
+            qualificationsThatExist = refArray.USERQUAL.ToList();
+
+           // IEnumerable<REFEREE> refsWeActualyWant = refereesWeWant.Intersect(qualifications);
+
+
+
+
+
             var offerQualifications = new OFFERQUAL();
 
-            for()
-            var offerQualifications = db.OFFERQUALs.where
+            for (var i = 0; i < offers.Count(); i++){
+               // var qualifications = db.OFFERQUALs.Where(m=> m.offerID in offers.id);
+
+            }
+
+
+            //for()
+            //var offerQualifications = db.OFFERQUALs.where
 
             var matches = db.MATCHes.Include(m => m.LOCATION1).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT1);
 

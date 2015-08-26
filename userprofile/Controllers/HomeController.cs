@@ -35,13 +35,14 @@ namespace userprofile.Controllers
 
             //Get the events
             //You may get from the repository also
-            var eventList = GetEvents();
+            //var eventList = GetEvents();
 
-            var rows = eventList.ToArray();
-            return Json(rows, JsonRequestBehavior.AllowGet);
+            //var rows = eventList.ToArray();
+            //return Json(rows, JsonRequestBehavior.AllowGet);
+            return null;
         }
 
-        private List<Events> GetEvents()
+        /*private List<Events> GetEvents()
         {
             List<Events> eventList = new List<Events>();
 
@@ -69,18 +70,18 @@ namespace userprofile.Controllers
             eventList.Add(newEvent);
 
             return eventList;
-        }
+        }*/
 
         private static DateTime ConvertFromUnixTimestamp(double timestamp)
         {
             var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return origin.AddSeconds(timestamp);
         }
-        [HttpPost]
-        public ActionResult AddEvent(Events newE)
+        //[HttpPost]
+        /*public ActionResult AddEvent(Events newE)
         {
             var i = Request["id"];
             return null;
-        }
+        }*/
     }
 }
