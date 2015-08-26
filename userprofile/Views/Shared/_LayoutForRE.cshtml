@@ -42,7 +42,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 
-<body>
+<body class="skin-purple" style="background-color:rgb(238, 238, 238)">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -58,15 +58,15 @@
                     <li>@Html.ActionLink("Match list", "Index", "match")</li>
                     <li>@Html.ActionLink("team list", "Index", "team")</li>
                     <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
-                
+
                 </ul>
-               @Html.Partial("_LoginPartial")
-             @*  @Html.Action("showProfile", "Account", new  { id = User.Identity.GetUserName() });*@
-            </div>
+                @Html.Partial("_LoginPartial")
+                @*  @Html.Action("showProfile", "Account", new  { id = User.Identity.GetUserName() });*@
             </div>
         </div>
-    
-    <div class="container body-content" style="margin-top:90px">
+    </div>
+
+    <div class="container body-content skin-purple" style="margin-top:90px">
         @RenderBody()
         <hr />
         <footer>
@@ -94,7 +94,6 @@
     <script src="~/Scripts/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="~/Scripts/AdminLTE/plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-
     @RenderSection("scripts", required: false)
 </body>
 </html>
