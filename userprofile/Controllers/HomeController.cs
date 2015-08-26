@@ -8,8 +8,11 @@ using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
+    
     public class HomeController : Controller
     {
+        public Raoconnection db = new Raoconnection();
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -112,6 +115,36 @@ namespace userprofile.Controllers
             var i = Request["id"];
             return null;
         }
+        public ActionResult checkOffer(){
+
+            var userID = User.Identity.GetUserId();
+            var db = new Raoconnection();
+            if (User.IsInRole("Referee")) {
+                REFEREE refe = db.REFEREEs.First(r => r.ID == userID);
+
+                return View(refe.OFFERs);
+            }
+         
+
+
+            return View();
+        }
+        [Authorize(Roles="Referee")]
+        public ActionResult acceptOffer(int refeID){
+
+            
+            
+            return View();
+        }
+         [Authorize(Roles = "Referee")]
+        public ActionResult denyOffer(int refeID){
+
+            return View();
+        }
+
+
+
+
 
         
     }

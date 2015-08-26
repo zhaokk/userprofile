@@ -39,8 +39,9 @@ namespace userprofile.Controllers
             ViewBag.MessageId = Message;
             return View(model);
         }
+   
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+     //   [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditUserViewModel model)
         {
@@ -66,6 +67,16 @@ namespace userprofile.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+     // [Authorize(Roles = "Admin")]
+        public ActionResult SelfEdit()
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+            var model = new EditUserViewModel(user);
+            
+            return View("Edit",model);
+        }
+     
 
 
         [Authorize(Roles = "Admin")]

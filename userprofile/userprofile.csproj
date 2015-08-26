@@ -935,6 +935,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\match\manageOffer.cshtml" />
     <Content Include="Views\match\DeleteConfirmed.cshtml" />
+    <Content Include="Views\Home\checkOffer.cshtml" />
+    <Content Include="Views\Shared\_LayoutForRE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

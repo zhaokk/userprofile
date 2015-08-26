@@ -5,6 +5,7 @@ using System.Web;
 
 namespace userprofile.Models
 {
+    
     public class offersViewModels
     {
         public offersViewModels()
@@ -52,5 +53,17 @@ namespace userprofile.Models
     public string status {get;set;}
     
     }
-  
+    public class offerRefereeViewModels
+    {
+        public offerRefereeViewModels() { }
+        public offerRefereeViewModels(REFEREE refe){
+             this.offers = refe.OFFERs.ToList();
+
+
+    
+    }
+        public List<OFFER> offers { get; set; }
+    
+    
+    }
 }
