@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<userprofile.Models.MATCH>
 
 @{
+   
     ViewBag.Title = "Match Management";
     
 }
@@ -164,9 +165,12 @@
 										
                                     </td>
 									<td>
-										@Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger pull-right" })
-										@Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-warning pull-right" })
-										</td>
+										
+									@if (User.IsInRole("Admin")) { 
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-warning pull-right" })
+                                    
+                                    }</td>
                                    
                                 </tr>
                             }

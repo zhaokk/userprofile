@@ -1,6 +1,13 @@
 ﻿@model userprofile.Models.EditUserViewModel
 
 @{
+    if (User.IsInRole("Referee"))
+    {
+
+        Layout = "~/Views/shared/_LayoutForRE.cshtml";
+
+    }
+    else { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
     ViewBag.Title = "Edit Page";
 }
 
@@ -10,7 +17,8 @@
         <div class="box">
             <div class="box-body">
                 <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to List", "Index")
+                    @if (User.IsInRole("Admin")) { 
+                    @Html.ActionLink(" Back to List", "Index")}
                 </div>
                 @using (Html.BeginForm())
                 {
