@@ -87,14 +87,19 @@ namespace userprofile.Controllers
 
             if (ModelState.IsValid)
             {
-                re.QUALIFICATIONS.Clear();
+                re.USERQUALs.Clear();
                 foreach (var qual in srqvm.quals)
                 {
                     QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
 
+
+
+
                     if (qual.Selected == true)
                     {
-                        re.QUALIFICATIONS.Add(thequal);
+						USERQUAL newQual = new USERQUAL();
+						newQual.qID = thequal.qID;
+                        re.USERQUALs.Add(newQual);
                     }
 
                 }
@@ -135,15 +140,17 @@ namespace userprofile.Controllers
           
             if (ModelState.IsValid)
             {
-              REFEREE refe=  db.REFEREEs.First(r => r.refID == srqvm.refeid);
-              refe.QUALIFICATIONS.Clear();
+              REFEREE refe =  db.REFEREEs.First(r => r.refID == srqvm.refeid);
+              refe.USERQUALs.Clear();
               foreach (SelectQualEditorViewModel qual in srqvm.quals)
               {
                   QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
+				  USERQUAL newQual = new USERQUAL();
+				  newQual.qID = thequal.qID;
 
                   if (qual.Selected == true)
                   {
-                      refe.QUALIFICATIONS.Add(thequal);
+                      refe.USERQUALs.Add(newQual);
                   }
               }
               db.Entry(refe).State = EntityState.Modified;
@@ -213,7 +220,7 @@ namespace userprofile.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             REFEREE referee = db.REFEREEs.Find(id);
-            referee.QUALIFICATIONS.Clear();
+            referee.USERQUALs.Clear();
             db.REFEREEs.Remove(referee);
             db.SaveChanges();
             return RedirectToAction("Index");

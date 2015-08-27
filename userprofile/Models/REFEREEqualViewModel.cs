@@ -59,9 +59,10 @@ namespace userprofile.Models
                 var qvm = new SelectQualEditorViewModel(qual);
                 this.quals.Add(qvm);
             }
-            foreach (var qual in refe.QUALIFICATIONS)
+            foreach (var qual in refe.USERQUALs)
             {
-                var checkqual = this.quals.Find(q => q.qualName == qual.name);
+				QUALIFICATION qualificationToLookFor = db.QUALIFICATIONS.Find(qual.qID);
+				var checkqual = this.quals.Find(q => q.qualName == qualificationToLookFor.name);
                 checkqual.Selected = true;
 
 
@@ -106,9 +107,11 @@ namespace userprofile.Models
                 var qvm = new SelectQualEditorViewModel(qual);
                 this.quals.Add(qvm);
             }
-            foreach (var qual in refe.QUALIFICATIONS)
+            foreach (var qual in refe.USERQUALs)
             {
-                var checkqual = this.quals.Find(q => q.qualName == qual.name);
+				QUALIFICATION qualificationToLookFor = db.QUALIFICATIONS.Find(qual.qID);
+
+				var checkqual = this.quals.Find(q => q.qualName == qualificationToLookFor.name);
                 checkqual.Selected = true;
 
 

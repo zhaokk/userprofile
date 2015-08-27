@@ -26,7 +26,7 @@ namespace userprofile.Models
                     for (int i = (3 - ma.OFFERs.Count()); i > 0; i--)
                     {
                         OFFER fakeOffer = new OFFER();
-                        fakeOffer.status = "dummy";
+                        fakeOffer.status = -1;
                         this.offers.Add(fakeOffer);
 
                     }

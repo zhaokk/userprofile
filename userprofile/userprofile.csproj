@@ -194,9 +194,6 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Event.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -209,11 +206,6 @@
     <Compile Include="Models\MATCH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OFFER.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\offersViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,6 +221,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OFFER.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OFFERQUAL.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\offersViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PLAYER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -239,7 +239,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\REFEREEqualViewModel.cs" />
-    <Compile Include="Models\SCORE.cs">
+    <Compile Include="Models\score.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SPORT.cs">
@@ -248,7 +248,19 @@
     <Compile Include="Models\TEAM.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TIMEOFF.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TOURNAMENT.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TYPE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USERQUAL.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WEEKLYAVAILABILITY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -812,6 +824,16 @@
     <Content Include="Scripts\AdminLTE\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Scripts\AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\README.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\LICENSE.md" />
+    <Content Include="Scripts\AdminLTE\plugins\ckeditor\CHANGES.md" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -823,23 +845,12 @@
     </Content>
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />
-    <Content Include="Scripts\AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\skins\moono\readme.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\README.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\wsc\README.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\wsc\LICENSE.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\README.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\LICENSE.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\LICENSE.md" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\CHANGES.md" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

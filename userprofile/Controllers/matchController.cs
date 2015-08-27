@@ -122,14 +122,14 @@ namespace userprofile.Controllers
                        if (of.refID != refID)
                        {
                            of.refID = refID;
-                           of.status = "pending";
+                           of.status = 0;
                            db.Entry(of).State = EntityState.Modified;
 
                        }
                    }
                    else {
                        var newof = new OFFER();
-                       newof.status = "pending";
+                       newof.status = 0;
                        newof.refID = refID;
                        newof.dateOfOffer = System.DateTime.Now;
                        newof.mid = mid;

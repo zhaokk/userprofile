@@ -17,7 +17,7 @@ namespace userprofile.Controllers
         // GET: /team/
         public ActionResult Index()
         {
-            var teams = db.TEAMs.Include(t => t.AspNetUser).Include(t => t.TOURNAMENT1);
+            var teams = db.TEAMs.Include(t => t.TOURNAMENT1);
             ViewBag.breadcrumbs = "list of team";
             return View(teams.ToList());
         }

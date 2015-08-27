@@ -47,9 +47,7 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.availability)
-                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.distTravel)
                             </th>
@@ -64,7 +62,7 @@
                             </th>
                             <th>
                                
-                                    @Html.DisplayNameFor(model => model.QUALIFICATIONS)
+                                    @Html.DisplayNameFor(model => model.USERQUALs)
                                 
                                
                             </th>
@@ -83,7 +81,6 @@
                                 <td>
                                    
                                     <a href="@Url.Action("Details", new { id = item.refID })">
-                                        @Html.DisplayFor(modelItem => item.availability)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
 
@@ -104,7 +101,7 @@
                                 <td>
                                    
                                     <a href="@Url.Action("changequal",new {id=item.refID})">
-                                        @Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name")) </a>
+                                        @Html.ListBox("Id", new SelectList(item.USERQUALs, "qID")) </a>
 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SPORT1.name)

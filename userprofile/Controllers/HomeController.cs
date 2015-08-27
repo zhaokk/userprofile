@@ -53,7 +53,8 @@ namespace userprofile.Controllers
                 TimeSpan time = new TimeSpan(0, 1, 30, 0);
                 List<Event> eventList = new List<Event>();
 
-                var db = new Raoconnection();
+                //var db = new Raoconnection();
+
                 List<OFFER> offers= db.REFEREEs.First(r=>r.ID==userID).OFFERs.ToList();
                 foreach(OFFER offer in offers){
                     

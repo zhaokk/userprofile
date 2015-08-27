@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RAOMainModel4StoreContainer" CdmEntityContainer="Raoconnection">
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="RAOMainModel4.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="RAOMainModel4.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="RAOMainModel4.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="RAOMainModel4.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="phoneNum" ColumnName="phoneNum" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="photoDir" ColumnName="photoDir" />
+          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="postcode" ColumnName="postcode" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="streetNumber" ColumnName="streetNumber" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+          <ScalarProperty Name="isOrganizer" ColumnName="isOrganizer" />
+          <ScalarProperty Name="isReferee" ColumnName="isReferee" />
+          <ScalarProperty Name="isPlayer" ColumnName="isPlayer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="RAOMainModel4.Event">
+        <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="owner" ColumnName="owner" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="end" ColumnName="end" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
+          <ScalarProperty Name="allDay" ColumnName="allDay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INFRACTIONS">
+      <EntityTypeMapping TypeName="RAOMainModel4.INFRACTION">
+        <MappingFragment StoreEntitySet="INFRACTIONS">
+          <ScalarProperty Name="infractionID" ColumnName="infractionID" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="overruled" ColumnName="overruled" />
+          <ScalarProperty Name="matchID" ColumnName="matchID" />
+          <ScalarProperty Name="player" ColumnName="player" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOCATIONs">
+      <EntityTypeMapping TypeName="RAOMainModel4.LOCATION">
+        <MappingFragment StoreEntitySet="LOCATION">
+          <ScalarProperty Name="lID" ColumnName="lID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="snum" ColumnName="snum" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="postcode" ColumnName="postcode" />
+          <ScalarProperty Name="phoneNum" ColumnName="phoneNum" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATCHes">
+      <EntityTypeMapping TypeName="RAOMainModel4.MATCH">
+        <MappingFragment StoreEntitySet="MATCH">
+          <ScalarProperty Name="mID" ColumnName="mID" />
+          <ScalarProperty Name="matchDate" ColumnName="matchDate" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="teamaID" ColumnName="teamaID" />
+          <ScalarProperty Name="teambID" ColumnName="teambID" />
+          <ScalarProperty Name="winnerID" ColumnName="winnerID" />
+          <ScalarProperty Name="tournament" ColumnName="tournament" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OFFERs">
+      <EntityTypeMapping TypeName="RAOMainModel4.OFFER">
+        <MappingFragment StoreEntitySet="OFFER">
+          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="sport" ColumnName="sport" />
+          <ScalarProperty Name="mid" ColumnName="mid" />
+          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="dateOfOffer" ColumnName="dateOfOffer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OFFERQUALs">
+      <EntityTypeMapping TypeName="RAOMainModel4.OFFERQUAL">
+        <MappingFragment StoreEntitySet="OFFERQUAL">
+          <ScalarProperty Name="qID" ColumnName="qID" />
+          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PLAYERs">
+      <EntityTypeMapping TypeName="RAOMainModel4.PLAYER">
+        <MappingFragment StoreEntitySet="PLAYER">
+          <ScalarProperty Name="team" ColumnName="team" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="position" ColumnName="position" />
+          <ScalarProperty Name="shirtNum" ColumnName="shirtNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QUALIFICATIONS">
+      <EntityTypeMapping TypeName="RAOMainModel4.QUALIFICATION">
+        <MappingFragment StoreEntitySet="QUALIFICATIONS">
+          <ScalarProperty Name="qID" ColumnName="qID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="sport" ColumnName="sport" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REFEREEs">
+      <EntityTypeMapping TypeName="RAOMainModel4.REFEREE">
+        <MappingFragment StoreEntitySet="REFEREE">
+          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="distTravel" ColumnName="distTravel" />
+          <ScalarProperty Name="sport" ColumnName="sport" />
+          <ScalarProperty Name="prefAge" ColumnName="prefAge" />
+          <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="scores">
+      <EntityTypeMapping TypeName="RAOMainModel4.score">
+        <MappingFragment StoreEntitySet="scores">
+          <ScalarProperty Name="score1" ColumnName="score" />
+          <ScalarProperty Name="player" ColumnName="player" />
+          <ScalarProperty Name="matchID" ColumnName="matchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SPORTs">
+      <EntityTypeMapping TypeName="RAOMainModel4.SPORT">
+        <MappingFragment StoreEntitySet="SPORT">
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEAMs">
+      <EntityTypeMapping TypeName="RAOMainModel4.TEAM">
+        <MappingFragment StoreEntitySet="TEAM">
+          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
+          <ScalarProperty Name="grade" ColumnName="grade" />
+          <ScalarProperty Name="managerID" ColumnName="managerID" />
+          <ScalarProperty Name="tournament" ColumnName="tournament" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIMEOFFs">
+      <EntityTypeMapping TypeName="RAOMainModel4.TIMEOFF">
+        <MappingFragment StoreEntitySet="TIMEOFF">
+          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="start" ColumnName="start" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="allDay" ColumnName="allDay" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TOURNAMENTs">
+      <EntityTypeMapping TypeName="RAOMainModel4.TOURNAMENT">
+        <MappingFragment StoreEntitySet="TOURNAMENT">
+          <ScalarProperty Name="tID" ColumnName="tID" />
+          <ScalarProperty Name="sport" ColumnName="sport" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TYPEs">
+      <EntityTypeMapping TypeName="RAOMainModel4.TYPE">
+        <MappingFragment StoreEntitySet="TYPE">
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERQUALs">
+      <EntityTypeMapping TypeName="RAOMainModel4.USERQUAL">
+        <MappingFragment StoreEntitySet="USERQUAL">
+          <ScalarProperty Name="qID" ColumnName="qID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WEEKLYAVAILABILITies">
+      <EntityTypeMapping TypeName="RAOMainModel4.WEEKLYAVAILABILITY">
+        <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
+          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+          <ScalarProperty Name="monday" ColumnName="monday" />
+          <ScalarProperty Name="tuesday" ColumnName="tuesday" />
+          <ScalarProperty Name="wednesday" ColumnName="wednesday" />
+          <ScalarProperty Name="thursday" ColumnName="thursday" />
+          <ScalarProperty Name="friday" ColumnName="friday" />
+          <ScalarProperty Name="saturday" ColumnName="saturday" />
+          <ScalarProperty Name="sunday" ColumnName="sunday" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="RAOMainModel4.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
