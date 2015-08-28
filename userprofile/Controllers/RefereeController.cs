@@ -144,12 +144,13 @@ namespace userprofile.Controllers
               refe.USERQUALs.Clear();
               foreach (SelectQualEditorViewModel qual in srqvm.quals)
               {
-                  QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
-				  USERQUAL newQual = new USERQUAL();
-				  newQual.qID = thequal.qID;
+                  
 
                   if (qual.Selected == true)
                   {
+                      QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
+                      USERQUAL newQual = new USERQUAL();
+                      newQual.qID = thequal.qID;
                       refe.USERQUALs.Add(newQual);
                   }
               }

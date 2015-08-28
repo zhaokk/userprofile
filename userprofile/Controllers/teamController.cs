@@ -17,7 +17,7 @@ namespace userprofile.Controllers
         // GET: /team/
         public ActionResult Index()
         {
-            var teams = db.TEAMs.Include(t => t.TOURNAMENT1);
+            var teams = db.TEAMs.Include(t => t.TOURNAMENTs);
             ViewBag.breadcrumbs = "list of team";
             return View(teams.ToList());
         }
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
             }
 
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.TOURNAMENTs);
             return View(team);
         }
 
@@ -77,7 +77,7 @@ namespace userprofile.Controllers
                 return HttpNotFound();
             }
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.TOURNAMENTs);
             return View(team);
         }
 
@@ -95,7 +95,7 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.TOURNAMENTs);
             return View(team);
         }
 

@@ -15,9 +15,10 @@ namespace userprofile.Models
     public partial class TIMEOFF
     {
         public int refID { get; set; }
-        public Nullable<System.DateTime> start { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
         public Nullable<bool> allDay { get; set; }
+        public Nullable<bool> whatType { get; set; }
         public string description { get; set; }
     
         public virtual REFEREE REFEREE { get; set; }

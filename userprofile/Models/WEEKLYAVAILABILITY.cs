@@ -15,16 +15,14 @@ namespace userprofile.Models
     public partial class WEEKLYAVAILABILITY
     {
         public int refID { get; set; }
-        public Nullable<int> tid { get; set; }
-        public bool monday { get; set; }
-        public bool tuesday { get; set; }
-        public bool wednesday { get; set; }
-        public bool thursday { get; set; }
-        public bool friday { get; set; }
-        public bool saturday { get; set; }
-        public bool sunday { get; set; }
+        public int monday { get; set; }
+        public int tuesday { get; set; }
+        public int wednesday { get; set; }
+        public int thursday { get; set; }
+        public int friday { get; set; }
+        public int saturday { get; set; }
+        public int sunday { get; set; }
     
         public virtual REFEREE REFEREE { get; set; }
-        public virtual TOURNAMENT TOURNAMENT { get; set; }
     }
 }

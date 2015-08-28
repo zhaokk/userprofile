@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RAOMainModel4.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="RAO_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -111,6 +111,8 @@
           <Property Name="location" Type="int" />
           <Property Name="teamaID" Type="int" />
           <Property Name="teambID" Type="int" />
+          <Property Name="teamAScore" Type="int" />
+          <Property Name="teamBScore" Type="int" />
           <Property Name="winnerID" Type="bit" />
           <Property Name="tournament" Type="int" />
         </EntityType>
@@ -164,15 +166,6 @@
           <Property Name="prefGrade" Type="int" />
           <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="scores">
-          <Key>
-            <PropertyRef Name="player" />
-            <PropertyRef Name="matchID" />
-          </Key>
-          <Property Name="score" Type="int" Nullable="false" />
-          <Property Name="player" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="matchID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="SPORT">
           <Key>
             <PropertyRef Name="name" />
@@ -187,17 +180,26 @@
           <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="ageBracket" Type="int" Nullable="false" />
           <Property Name="grade" Type="int" Nullable="false" />
+          <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="managerID" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="tournament" Type="int" />
+        </EntityType>
+        <EntityType Name="TEAMINS">
+          <Key>
+            <PropertyRef Name="teamID" />
+            <PropertyRef Name="tournament" />
+          </Key>
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="tournament" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TIMEOFF">
           <Key>
             <PropertyRef Name="refID" />
           </Key>
           <Property Name="refID" Type="int" Nullable="false" />
-          <Property Name="start" Type="datetime" />
+          <Property Name="startDate" Type="datetime" />
           <Property Name="endDate" Type="datetime" />
           <Property Name="allDay" Type="bit" />
+          <Property Name="whatType" Type="bit" />
           <Property Name="description" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="TOURNAMENT">
@@ -205,7 +207,10 @@
             <PropertyRef Name="tID" />
           </Key>
           <Property Name="tID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="sport" Type="varchar" MaxLength="100" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="organizer" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -230,14 +235,13 @@
             <PropertyRef Name="refID" />
           </Key>
           <Property Name="refID" Type="int" Nullable="false" />
-          <Property Name="tid" Type="int" />
-          <Property Name="monday" Type="bit" Nullable="false" />
-          <Property Name="tuesday" Type="bit" Nullable="false" />
-          <Property Name="wednesday" Type="bit" Nullable="false" />
-          <Property Name="thursday" Type="bit" Nullable="false" />
-          <Property Name="friday" Type="bit" Nullable="false" />
-          <Property Name="saturday" Type="bit" Nullable="false" />
-          <Property Name="sunday" Type="bit" Nullable="false" />
+          <Property Name="monday" Type="int" Nullable="false" />
+          <Property Name="tuesday" Type="int" Nullable="false" />
+          <Property Name="wednesday" Type="int" Nullable="false" />
+          <Property Name="thursday" Type="int" Nullable="false" />
+          <Property Name="friday" Type="int" Nullable="false" />
+          <Property Name="saturday" Type="int" Nullable="false" />
+          <Property Name="sunday" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetUserClaims_dbo_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -491,42 +495,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_SCORES_MATCH">
-          <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
-          <End Role="scores" Type="Self.scores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MATCH">
-              <PropertyRef Name="mID" />
-            </Principal>
-            <Dependent Role="scores">
-              <PropertyRef Name="matchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_SCORES_PLAYER">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="scores" Type="Self.scores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="scores">
-              <PropertyRef Name="player" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_TEAM_MANAGER" />-->
-        <Association Name="fk_TEAM_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
+        <Association Name="fk_TEAM_SPORT">
+          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPORT">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="sport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TEAM_TOURNAMENT">
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
+          <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TOURNAMENT">
               <PropertyRef Name="tID" />
             </Principal>
-            <Dependent Role="TEAM">
+            <Dependent Role="TEAMINS">
               <PropertyRef Name="tournament" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEAMINS_TEAM">
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEAM">
+              <PropertyRef Name="teamID" />
+            </Principal>
+            <Dependent Role="TEAMINS">
+              <PropertyRef Name="teamID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -542,8 +546,11 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_TOURNAMENT_MANAGER" />-->
         <Association Name="fk_TOURNAMENT_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="0..1" />
+          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SPORT">
@@ -590,18 +597,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WA_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
-          <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tID" />
-            </Principal>
-            <Dependent Role="WEEKLYAVAILABILITY">
-              <PropertyRef Name="tid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WEEKLYAVAILABILITY_USER">
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
           <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="0..1" />
@@ -614,7 +609,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RAOMainModel4StoreContainer">
+        <EntityContainer Name="RAO_DBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -629,9 +624,9 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <EntitySet Name="PLAYER" EntityType="Self.PLAYER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REFEREE" EntityType="Self.REFEREE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="scores" EntityType="Self.scores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPORT" EntityType="Self.SPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEAMINS" EntityType="Self.TEAMINS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIMEOFF" EntityType="Self.TIMEOFF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TOURNAMENT" EntityType="Self.TOURNAMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
@@ -721,17 +716,17 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREE" />
           </AssociationSet>
-          <AssociationSet Name="fk_SCORES_MATCH" Association="Self.fk_SCORES_MATCH">
-            <End Role="MATCH" EntitySet="MATCH" />
-            <End Role="scores" EntitySet="scores" />
-          </AssociationSet>
-          <AssociationSet Name="fk_SCORES_PLAYER" Association="Self.fk_SCORES_PLAYER">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="scores" EntitySet="scores" />
+          <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
+            <End Role="SPORT" EntitySet="SPORT" />
+            <End Role="TEAM" EntitySet="TEAM" />
           </AssociationSet>
           <AssociationSet Name="fk_TEAM_TOURNAMENT" Association="Self.fk_TEAM_TOURNAMENT">
             <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
+            <End Role="TEAMINS" EntitySet="TEAMINS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEAMINS_TEAM" Association="Self.FK_TEAMINS_TEAM">
             <End Role="TEAM" EntitySet="TEAM" />
+            <End Role="TEAMINS" EntitySet="TEAMINS" />
           </AssociationSet>
           <AssociationSet Name="FK_TIMEOFF_USER" Association="Self.FK_TIMEOFF_USER">
             <End Role="REFEREE" EntitySet="REFEREE" />
@@ -753,10 +748,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
             <End Role="USERQUAL" EntitySet="USERQUAL" />
           </AssociationSet>
-          <AssociationSet Name="FK_WA_TOURNAMENT" Association="Self.FK_WA_TOURNAMENT">
-            <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
-            <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
-          </AssociationSet>
           <AssociationSet Name="FK_WEEKLYAVAILABILITY_USER" Association="Self.FK_WEEKLYAVAILABILITY_USER">
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
@@ -766,7 +757,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="RAOMainModel4" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="RAO_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -826,7 +817,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.FK_REFEREE_USER" FromRole="AspNetUsers" ToRole="REFEREE" />
-          <NavigationProperty Name="scores" Relationship="Self.fk_SCORES_PLAYER" FromRole="AspNetUsers" ToRole="scores" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Event">
@@ -880,6 +870,8 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <Property Name="location" Type="Int32" />
           <Property Name="teamaID" Type="Int32" />
           <Property Name="teambID" Type="Int32" />
+          <Property Name="teamAScore" Type="Int32" />
+          <Property Name="teamBScore" Type="Int32" />
           <Property Name="winnerID" Type="Boolean" />
           <Property Name="tournament" Type="Int32" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_MATCH" FromRole="MATCH" ToRole="INFRACTIONS" />
@@ -888,7 +880,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <NavigationProperty Name="TEAM1" Relationship="Self.fk_MATCH_TEAMB" FromRole="MATCH" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="MATCH" ToRole="TOURNAMENT" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_MATCH" FromRole="MATCH" ToRole="OFFER" />
-          <NavigationProperty Name="scores" Relationship="Self.fk_SCORES_MATCH" FromRole="MATCH" ToRole="scores" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
@@ -958,17 +949,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="REFEREE" ToRole="USERQUAL" />
           <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
         </EntityType>
-        <EntityType Name="score">
-          <Key>
-            <PropertyRef Name="player" />
-            <PropertyRef Name="matchID" />
-          </Key>
-          <Property Name="score1" Type="Int32" Nullable="false" />
-          <Property Name="player" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="matchID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.fk_SCORES_PLAYER" FromRole="scores" ToRole="AspNetUsers" />
-          <NavigationProperty Name="MATCH" Relationship="Self.fk_SCORES_MATCH" FromRole="scores" ToRole="MATCH" />
-        </EntityType>
         <EntityType Name="SPORT">
           <Key>
             <PropertyRef Name="name" />
@@ -977,6 +957,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.fk_QUAL_SPORT" FromRole="SPORT" ToRole="QUALIFICATIONS" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
+          <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_SPORT" FromRole="SPORT" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
         </EntityType>
         <EntityType Name="TEAM">
@@ -987,21 +968,23 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ageBracket" Type="Int32" Nullable="false" />
           <Property Name="grade" Type="Int32" Nullable="false" />
+          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="managerID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="tournament" Type="Int32" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TEAMA" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="MATCHes1" Relationship="Self.fk_MATCH_TEAMB" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_TEAM" FromRole="TEAM" ToRole="PLAYER" />
-          <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_TEAM_TOURNAMENT" FromRole="TEAM" ToRole="TOURNAMENT" />
+          <NavigationProperty Name="SPORT1" Relationship="Self.fk_TEAM_SPORT" FromRole="TEAM" ToRole="SPORT" />
+          <NavigationProperty Name="TOURNAMENTs" Relationship="Self.TEAMINS" FromRole="TEAM" ToRole="TOURNAMENT" />
         </EntityType>
         <EntityType Name="TIMEOFF">
           <Key>
             <PropertyRef Name="refID" />
           </Key>
           <Property Name="refID" Type="Int32" Nullable="false" />
-          <Property Name="start" Type="DateTime" Precision="3" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
           <Property Name="endDate" Type="DateTime" Precision="3" />
           <Property Name="allDay" Type="Boolean" />
+          <Property Name="whatType" Type="Boolean" />
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_TIMEOFF_USER" FromRole="TIMEOFF" ToRole="REFEREE" />
         </EntityType>
@@ -1010,11 +993,13 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <PropertyRef Name="tID" />
           </Key>
           <Property Name="tID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="organizer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="TOURNAMENT" ToRole="MATCH" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="TOURNAMENT" ToRole="SPORT" />
-          <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_TOURNAMENT" FromRole="TOURNAMENT" ToRole="TEAM" />
-          <NavigationProperty Name="WEEKLYAVAILABILITies" Relationship="Self.FK_WA_TOURNAMENT" FromRole="TOURNAMENT" ToRole="WEEKLYAVAILABILITY" />
+          <NavigationProperty Name="TEAMs" Relationship="Self.TEAMINS" FromRole="TOURNAMENT" ToRole="TEAM" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -1042,16 +1027,14 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <PropertyRef Name="refID" />
           </Key>
           <Property Name="refID" Type="Int32" Nullable="false" />
-          <Property Name="tid" Type="Int32" />
-          <Property Name="monday" Type="Boolean" Nullable="false" />
-          <Property Name="tuesday" Type="Boolean" Nullable="false" />
-          <Property Name="wednesday" Type="Boolean" Nullable="false" />
-          <Property Name="thursday" Type="Boolean" Nullable="false" />
-          <Property Name="friday" Type="Boolean" Nullable="false" />
-          <Property Name="saturday" Type="Boolean" Nullable="false" />
-          <Property Name="sunday" Type="Boolean" Nullable="false" />
+          <Property Name="monday" Type="Int32" Nullable="false" />
+          <Property Name="tuesday" Type="Int32" Nullable="false" />
+          <Property Name="wednesday" Type="Int32" Nullable="false" />
+          <Property Name="thursday" Type="Int32" Nullable="false" />
+          <Property Name="friday" Type="Int32" Nullable="false" />
+          <Property Name="saturday" Type="Int32" Nullable="false" />
+          <Property Name="sunday" Type="Int32" Nullable="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
-          <NavigationProperty Name="TOURNAMENT" Relationship="Self.FK_WA_TOURNAMENT" FromRole="WEEKLYAVAILABILITY" ToRole="TOURNAMENT" />
         </EntityType>
         <Association Name="FK_AspNetUserClaims_dbo_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
@@ -1125,18 +1108,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_SCORES_PLAYER">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="scores" Type="Self.score" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="scores">
-              <PropertyRef Name="player" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_INFRACTION_MATCH">
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
           <End Role="INFRACTIONS" Type="Self.INFRACTION" Multiplicity="*" />
@@ -1206,18 +1177,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Principal>
             <Dependent Role="OFFER">
               <PropertyRef Name="mid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_SCORES_MATCH">
-          <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
-          <End Role="scores" Type="Self.score" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MATCH">
-              <PropertyRef Name="mID" />
-            </Principal>
-            <Dependent Role="scores">
-              <PropertyRef Name="matchID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1365,8 +1324,20 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TEAM_SPORT">
+          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPORT">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="sport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TOURNAMENT_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="0..1" />
+          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SPORT">
@@ -1377,35 +1348,15 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_TEAM_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tID" />
-            </Principal>
-            <Dependent Role="TEAM">
-              <PropertyRef Name="tournament" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WA_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
-          <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tID" />
-            </Principal>
-            <Dependent Role="WEEKLYAVAILABILITY">
-              <PropertyRef Name="tid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Raoconnection" annotation:LazyLoadingEnabled="true">
+        <Association Name="TEAMINS">
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="RAO_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1419,7 +1370,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <EntitySet Name="PLAYERs" EntityType="Self.PLAYER" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
           <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
-          <EntitySet Name="scores" EntityType="Self.score" />
           <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
           <EntitySet Name="TIMEOFFs" EntityType="Self.TIMEOFF" />
@@ -1451,10 +1401,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
           </AssociationSet>
-          <AssociationSet Name="fk_SCORES_PLAYER" Association="Self.fk_SCORES_PLAYER">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="scores" EntitySet="scores" />
-          </AssociationSet>
           <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
@@ -1478,10 +1424,6 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <AssociationSet Name="fk_OFFER_MATCH" Association="Self.fk_OFFER_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="OFFER" EntitySet="OFFERs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_SCORES_MATCH" Association="Self.fk_SCORES_MATCH">
-            <End Role="MATCH" EntitySet="MATCHes" />
-            <End Role="scores" EntitySet="scores" />
           </AssociationSet>
           <AssociationSet Name="fk_OFFER_QUAL" Association="Self.fk_OFFER_QUAL">
             <End Role="OFFER" EntitySet="OFFERs" />
@@ -1531,21 +1473,21 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             <End Role="REFEREE" EntitySet="REFEREEs" />
             <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITies" />
           </AssociationSet>
+          <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
+            <End Role="SPORT" EntitySet="SPORTs" />
+            <End Role="TEAM" EntitySet="TEAMs" />
+          </AssociationSet>
           <AssociationSet Name="fk_TOURNAMENT_SPORT" Association="Self.fk_TOURNAMENT_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
           </AssociationSet>
-          <AssociationSet Name="fk_TEAM_TOURNAMENT" Association="Self.fk_TEAM_TOURNAMENT">
-            <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
-            <End Role="TEAM" EntitySet="TEAMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WA_TOURNAMENT" Association="Self.FK_WA_TOURNAMENT">
-            <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
-            <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITies" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="TEAMINS" Association="Self.TEAMINS">
+            <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
+            <End Role="TEAM" EntitySet="TEAMs" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1553,9 +1495,9 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RAOMainModel4StoreContainer" CdmEntityContainer="Raoconnection">
+        <EntityContainerMapping StorageEntityContainer="RAO_DBModelStoreContainer" CdmEntityContainer="RAO_DBEntities">
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="RAOMainModel4.AspNetRole">
+            <EntityTypeMapping TypeName="RAO_DBModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1563,7 +1505,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="RAOMainModel4.AspNetUserClaim">
+            <EntityTypeMapping TypeName="RAO_DBModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -1573,7 +1515,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="RAOMainModel4.AspNetUserLogin">
+            <EntityTypeMapping TypeName="RAO_DBModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
@@ -1582,7 +1524,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="RAOMainModel4.AspNetUser">
+            <EntityTypeMapping TypeName="RAO_DBModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1608,7 +1550,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="RAOMainModel4.Event">
+            <EntityTypeMapping TypeName="RAO_DBModel.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="owner" ColumnName="owner" />
@@ -1622,7 +1564,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INFRACTIONS">
-            <EntityTypeMapping TypeName="RAOMainModel4.INFRACTION">
+            <EntityTypeMapping TypeName="RAO_DBModel.INFRACTION">
               <MappingFragment StoreEntitySet="INFRACTIONS">
                 <ScalarProperty Name="infractionID" ColumnName="infractionID" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1634,7 +1576,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONs">
-            <EntityTypeMapping TypeName="RAOMainModel4.LOCATION">
+            <EntityTypeMapping TypeName="RAO_DBModel.LOCATION">
               <MappingFragment StoreEntitySet="LOCATION">
                 <ScalarProperty Name="lID" ColumnName="lID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1649,20 +1591,22 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATCHes">
-            <EntityTypeMapping TypeName="RAOMainModel4.MATCH">
+            <EntityTypeMapping TypeName="RAO_DBModel.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
                 <ScalarProperty Name="mID" ColumnName="mID" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="teamaID" ColumnName="teamaID" />
                 <ScalarProperty Name="teambID" ColumnName="teambID" />
+                <ScalarProperty Name="teamAScore" ColumnName="teamAScore" />
+                <ScalarProperty Name="teamBScore" ColumnName="teamBScore" />
                 <ScalarProperty Name="winnerID" ColumnName="winnerID" />
                 <ScalarProperty Name="tournament" ColumnName="tournament" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="RAOMainModel4.OFFER">
+            <EntityTypeMapping TypeName="RAO_DBModel.OFFER">
               <MappingFragment StoreEntitySet="OFFER">
                 <ScalarProperty Name="offerID" ColumnName="offerID" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
@@ -1674,7 +1618,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERQUALs">
-            <EntityTypeMapping TypeName="RAOMainModel4.OFFERQUAL">
+            <EntityTypeMapping TypeName="RAO_DBModel.OFFERQUAL">
               <MappingFragment StoreEntitySet="OFFERQUAL">
                 <ScalarProperty Name="qID" ColumnName="qID" />
                 <ScalarProperty Name="offerID" ColumnName="offerID" />
@@ -1683,7 +1627,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
-            <EntityTypeMapping TypeName="RAOMainModel4.PLAYER">
+            <EntityTypeMapping TypeName="RAO_DBModel.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
                 <ScalarProperty Name="team" ColumnName="team" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1693,7 +1637,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QUALIFICATIONS">
-            <EntityTypeMapping TypeName="RAOMainModel4.QUALIFICATION">
+            <EntityTypeMapping TypeName="RAO_DBModel.QUALIFICATION">
               <MappingFragment StoreEntitySet="QUALIFICATIONS">
                 <ScalarProperty Name="qID" ColumnName="qID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1703,7 +1647,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="RAOMainModel4.REFEREE">
+            <EntityTypeMapping TypeName="RAO_DBModel.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
                 <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
@@ -1714,55 +1658,50 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="scores">
-            <EntityTypeMapping TypeName="RAOMainModel4.score">
-              <MappingFragment StoreEntitySet="scores">
-                <ScalarProperty Name="score1" ColumnName="score" />
-                <ScalarProperty Name="player" ColumnName="player" />
-                <ScalarProperty Name="matchID" ColumnName="matchID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
-            <EntityTypeMapping TypeName="RAOMainModel4.SPORT">
+            <EntityTypeMapping TypeName="RAO_DBModel.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMs">
-            <EntityTypeMapping TypeName="RAOMainModel4.TEAM">
+            <EntityTypeMapping TypeName="RAO_DBModel.TEAM">
               <MappingFragment StoreEntitySet="TEAM">
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
                 <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="managerID" ColumnName="managerID" />
-                <ScalarProperty Name="tournament" ColumnName="tournament" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIMEOFFs">
-            <EntityTypeMapping TypeName="RAOMainModel4.TIMEOFF">
+            <EntityTypeMapping TypeName="RAO_DBModel.TIMEOFF">
               <MappingFragment StoreEntitySet="TIMEOFF">
                 <ScalarProperty Name="refID" ColumnName="refID" />
-                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="allDay" ColumnName="allDay" />
+                <ScalarProperty Name="whatType" ColumnName="whatType" />
                 <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TOURNAMENTs">
-            <EntityTypeMapping TypeName="RAOMainModel4.TOURNAMENT">
+            <EntityTypeMapping TypeName="RAO_DBModel.TOURNAMENT">
               <MappingFragment StoreEntitySet="TOURNAMENT">
                 <ScalarProperty Name="tID" ColumnName="tID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="organizer" ColumnName="organizer" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TYPEs">
-            <EntityTypeMapping TypeName="RAOMainModel4.TYPE">
+            <EntityTypeMapping TypeName="RAO_DBModel.TYPE">
               <MappingFragment StoreEntitySet="TYPE">
                 <ScalarProperty Name="typeID" ColumnName="typeID" />
                 <ScalarProperty Name="offerID" ColumnName="offerID" />
@@ -1772,7 +1711,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="RAOMainModel4.USERQUAL">
+            <EntityTypeMapping TypeName="RAO_DBModel.USERQUAL">
               <MappingFragment StoreEntitySet="USERQUAL">
                 <ScalarProperty Name="qID" ColumnName="qID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1781,10 +1720,9 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WEEKLYAVAILABILITies">
-            <EntityTypeMapping TypeName="RAOMainModel4.WEEKLYAVAILABILITY">
+            <EntityTypeMapping TypeName="RAO_DBModel.WEEKLYAVAILABILITY">
               <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
                 <ScalarProperty Name="refID" ColumnName="refID" />
-                <ScalarProperty Name="tid" ColumnName="tid" />
                 <ScalarProperty Name="monday" ColumnName="monday" />
                 <ScalarProperty Name="tuesday" ColumnName="tuesday" />
                 <ScalarProperty Name="wednesday" ColumnName="wednesday" />
@@ -1795,12 +1733,20 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="RAOMainModel4.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="RAO_DBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TEAMINS" TypeName="RAO_DBModel.TEAMINS" StoreEntitySet="TEAMINS">
+            <EndProperty Name="TOURNAMENT">
+              <ScalarProperty Name="tID" ColumnName="tournament" />
+            </EndProperty>
+            <EndProperty Name="TEAM">
+              <ScalarProperty Name="teamID" ColumnName="teamID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

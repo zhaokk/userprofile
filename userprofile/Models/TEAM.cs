@@ -19,18 +19,20 @@ namespace userprofile.Models
             this.MATCHes = new HashSet<MATCH>();
             this.MATCHes1 = new HashSet<MATCH>();
             this.PLAYERs = new HashSet<PLAYER>();
+            this.TOURNAMENTs = new HashSet<TOURNAMENT>();
         }
     
         public int teamID { get; set; }
         public string name { get; set; }
         public int ageBracket { get; set; }
         public int grade { get; set; }
+        public string sport { get; set; }
         public string managerID { get; set; }
-        public Nullable<int> tournament { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual ICollection<MATCH> MATCHes1 { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
-        public virtual TOURNAMENT TOURNAMENT1 { get; set; }
+        public virtual SPORT SPORT1 { get; set; }
+        public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System;
 
 namespace userprofile.Models
 {
@@ -89,7 +90,7 @@ namespace userprofile.Models
         [Required]
         public string state { get; set; }
         [Required]
-        public string dob { get; set; }
+        public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
         
@@ -163,7 +164,7 @@ namespace userprofile.Models
         [Required]
         public string state { get; set; }
         [Required]
-        public string dob { get; set; }
+        public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
     }

@@ -112,6 +112,43 @@ namespace userprofile.Controllers
             return View(offer);
         }
 
+
+        public ActionResult AutomateAssign()
+        {
+
+            List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m=> m.TYPEs).Include(m=> m.MATCH).Include(m=> m.OFFERQUALs).Include(m=> m.SPORT1).ToList();
+
+            List<REFEREE> refs = new List<REFEREE>();
+            //get referees from correct sport with related tables
+            List<REFEREE> tempRefs = db.REFEREEs.Where(m => m.SPORT1.name == offers[0].SPORT1.name).Include(m => m.USERQUALs).Include(m=> m.TIMEOFFs).Include(m=> m.WEEKLYAVAILABILITY).ToList();
+
+            //find referees that meet our qualification needs, add them to new list
+            bool refereeAlredyAdded = false; //stops adding the same referee multiple times
+
+            foreach (REFEREE referee in tempRefs){
+                foreach (OFFER off in offers){
+                    foreach (OFFERQUAL oQual in off.OFFERQUALs){
+                        foreach (USERQUAL singleReferee in referee.USERQUALs){
+                            //go through each referee, and compare their qualifications to the match/offer
+                            if (!refereeAlredyAdded){
+                                refs.Add(referee);
+                                refereeAlredyAdded = true;
+                            }
+                        }
+                    }
+                }
+                refereeAlredyAdded = false;
+            }
+
+
+
+
+            //junk view return
+            OFFER offer = db.OFFERs.Find(1);
+            return View(offer);
+        }
+
+
         // GET: /offer/Delete/5
         public ActionResult Delete(int? id)
         {

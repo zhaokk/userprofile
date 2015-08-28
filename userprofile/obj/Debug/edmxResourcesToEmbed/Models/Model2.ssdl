@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="RAO_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="testingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -39,38 +39,21 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="UserName" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="255" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
     <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="photoDir" Type="nvarchar(max)" />
+    <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="firstName" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="lastName" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="phoneNum" Type="int" />
     <Property Name="email" Type="varchar" MaxLength="255" />
-    <Property Name="photoDir" Type="nvarchar(max)" />
-    <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="country" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="postcode" Type="int" Nullable="false" />
     <Property Name="street" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="streetNumber" Type="int" Nullable="false" />
     <Property Name="state" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="dob" Type="date" Nullable="false" />
-    <Property Name="isAdmin" Type="bit" />
-    <Property Name="isOrganizer" Type="bit" />
-    <Property Name="isReferee" Type="bit" />
-    <Property Name="isPlayer" Type="bit" />
-  </EntityType>
-  <EntityType Name="Events">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="owner" Type="nvarchar" MaxLength="128" />
-    <Property Name="title" Type="nvarchar" MaxLength="50" />
-    <Property Name="start" Type="datetime" />
-    <Property Name="end" Type="datetime" />
-    <Property Name="url" Type="nvarchar" MaxLength="50" />
-    <Property Name="backgroundColor" Type="nvarchar" MaxLength="50" />
-    <Property Name="allDay" Type="bit" />
+    <Property Name="dob" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="INFRACTIONS">
     <Key>
@@ -90,12 +73,12 @@
     <Property Name="lID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="price" Type="float" />
-    <Property Name="street" Type="varchar" MaxLength="20" />
+    <Property Name="street" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="snum" Type="int" />
     <Property Name="city" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="postcode" Type="int" Nullable="false" />
-    <Property Name="phoneNum" Type="int" Nullable="false" />
-    <Property Name="state" Type="varchar" MaxLength="50" />
+    <Property Name="phoneNum" Type="int" />
+    <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="MATCH">
     <Key>
@@ -106,8 +89,6 @@
     <Property Name="location" Type="int" />
     <Property Name="teamaID" Type="int" />
     <Property Name="teambID" Type="int" />
-    <Property Name="teamAScore" Type="int" />
-    <Property Name="teamBScore" Type="int" />
     <Property Name="winnerID" Type="bit" />
     <Property Name="tournament" Type="int" />
   </EntityType>
@@ -148,24 +129,43 @@
     <Property Name="qID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="description" Type="nvarchar" MaxLength="128" />
+    <Property Name="desc" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="REFEREE">
     <Key>
       <PropertyRef Name="refID" />
     </Key>
-    <Property Name="refID" Type="int" Nullable="false" />
+    <Property Name="refID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="distTravel" Type="int" />
     <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="prefAge" Type="int" />
     <Property Name="prefGrade" Type="int" />
     <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
   </EntityType>
+  <EntityType Name="SCORES">
+    <Key>
+      <PropertyRef Name="player" />
+      <PropertyRef Name="matchID" />
+    </Key>
+    <Property Name="score" Type="int" Nullable="false" />
+    <Property Name="player" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="matchID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="SPORT">
     <Key>
       <PropertyRef Name="name" />
     </Key>
     <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="TEAM">
     <Key>
@@ -175,26 +175,15 @@
     <Property Name="name" Type="varchar" MaxLength="100" />
     <Property Name="ageBracket" Type="int" Nullable="false" />
     <Property Name="grade" Type="int" Nullable="false" />
-    <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="managerID" Type="varchar" MaxLength="255" Nullable="false" />
-  </EntityType>
-  <EntityType Name="TEAMINS">
-    <Key>
-      <PropertyRef Name="teamID" />
-      <PropertyRef Name="tournament" />
-    </Key>
-    <Property Name="teamID" Type="int" Nullable="false" />
-    <Property Name="tournament" Type="int" Nullable="false" />
+    <Property Name="managerID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="tournament" Type="int" />
   </EntityType>
   <EntityType Name="TIMEOFF">
     <Key>
       <PropertyRef Name="refID" />
     </Key>
-    <Property Name="refID" Type="int" Nullable="false" />
-    <Property Name="startDate" Type="datetime" />
-    <Property Name="endDate" Type="datetime" />
-    <Property Name="allDay" Type="bit" />
-    <Property Name="whatType" Type="bit" />
+    <Property Name="refID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dateRequired" Type="date" />
     <Property Name="description" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="TOURNAMENT">
@@ -202,10 +191,7 @@
       <PropertyRef Name="tID" />
     </Key>
     <Property Name="tID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="128" />
-    <Property Name="startDate" Type="datetime" Nullable="false" />
-    <Property Name="organizer" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="sport" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="TYPE">
     <Key>
@@ -222,7 +208,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="qID" Type="int" Nullable="false" />
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="qualLevel" Type="int" />
   </EntityType>
   <EntityType Name="WEEKLYAVAILABILITY">
@@ -230,16 +216,19 @@
       <PropertyRef Name="refID" />
     </Key>
     <Property Name="refID" Type="int" Nullable="false" />
-    <Property Name="monday" Type="int" Nullable="false" />
-    <Property Name="tuesday" Type="int" Nullable="false" />
-    <Property Name="wednesday" Type="int" Nullable="false" />
-    <Property Name="thursday" Type="int" Nullable="false" />
-    <Property Name="friday" Type="int" Nullable="false" />
-    <Property Name="saturday" Type="int" Nullable="false" />
-    <Property Name="sunday" Type="int" Nullable="false" />
+    <Property Name="tid" Type="int" />
+    <Property Name="monday" Type="bit" Nullable="false" />
+    <Property Name="tuesday" Type="bit" Nullable="false" />
+    <Property Name="wednesday" Type="bit" Nullable="false" />
+    <Property Name="thursday" Type="bit" Nullable="false" />
+    <Property Name="friday" Type="bit" Nullable="false" />
+    <Property Name="saturday" Type="bit" Nullable="false" />
+    <Property Name="sunday" Type="bit" Nullable="false" />
   </EntityType>
-  <Association Name="FK_AspNetUserClaims_dbo_User_Id">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
@@ -250,8 +239,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserLogins_dbo_User_Id">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
@@ -262,8 +253,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserRoles_dbo_Role_Id">
-    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AspNetRoles">
@@ -274,8 +267,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserRoles_dbo_User_Id">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
@@ -283,18 +278,6 @@
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_EVENTS_USERS">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="Events" Type="Self.Events" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Events">
-        <PropertyRef Name="owner" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -319,18 +302,6 @@
       </Principal>
       <Dependent Role="INFRACTIONS">
         <PropertyRef Name="player" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_MATCH_ID">
-    <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
-    <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="QUALIFICATIONS">
-        <PropertyRef Name="qID" />
-      </Principal>
-      <Dependent Role="OFFERQUAL">
-        <PropertyRef Name="qID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -382,6 +353,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_OFFER_ID">
+    <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
+    <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUALIFICATIONS">
+        <PropertyRef Name="qID" />
+      </Principal>
+      <Dependent Role="OFFERQUAL">
+        <PropertyRef Name="qID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_OFFER_MATCH">
     <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
     <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
@@ -391,18 +374,6 @@
       </Principal>
       <Dependent Role="OFFER">
         <PropertyRef Name="mid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_OFFER_QUAL">
-    <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
-    <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="OFFER">
-        <PropertyRef Name="offerID" />
-      </Principal>
-      <Dependent Role="OFFERQUAL">
-        <PropertyRef Name="offerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -430,6 +401,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_OFFERQUAL_QUAL">
+    <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
+    <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OFFER">
+        <PropertyRef Name="offerID" />
+      </Principal>
+      <Dependent Role="OFFERQUAL">
+        <PropertyRef Name="offerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PLAYER_ID">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PLAYER">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_PLAYER_TEAM">
     <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
     <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
@@ -439,18 +434,6 @@
       </Principal>
       <Dependent Role="PLAYER">
         <PropertyRef Name="team" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PLAYER_USERNAME">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-    <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PLAYER">
-        <PropertyRef Name="ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -490,42 +473,51 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_TEAM_MANAGER" />-->
-  <Association Name="fk_TEAM_SPORT">
-    <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
+  <Association Name="fk_SCORES_MATCH">
+    <End Role="MATCH" Type="Self.MATCH" Multiplicity="1" />
+    <End Role="SCORES" Type="Self.SCORES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MATCH">
+        <PropertyRef Name="mID" />
+      </Principal>
+      <Dependent Role="SCORES">
+        <PropertyRef Name="matchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_SCORES_PLAYER">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="SCORES" Type="Self.SCORES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SCORES">
+        <PropertyRef Name="player" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TEAM_MANAGER">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="SPORT">
-        <PropertyRef Name="name" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="TEAM">
-        <PropertyRef Name="sport" />
+        <PropertyRef Name="managerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_TEAM_TOURNAMENT">
-    <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
-    <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
+    <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
+    <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TOURNAMENT">
         <PropertyRef Name="tID" />
       </Principal>
-      <Dependent Role="TEAMINS">
+      <Dependent Role="TEAM">
         <PropertyRef Name="tournament" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TEAMINS_TEAM">
-    <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
-    <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TEAM">
-        <PropertyRef Name="teamID" />
-      </Principal>
-      <Dependent Role="TEAMINS">
-        <PropertyRef Name="teamID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -541,11 +533,8 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="fk_TOURNAMENT_MANAGER" />-->
   <Association Name="fk_TOURNAMENT_SPORT">
-    <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
+    <End Role="SPORT" Type="Self.SPORT" Multiplicity="0..1" />
     <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SPORT">
@@ -569,11 +558,11 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_USER">
-    <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="REFEREE">
-        <PropertyRef Name="refID" />
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="USERQUAL">
         <PropertyRef Name="ID" />
@@ -592,6 +581,18 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_WA_TOURNAMENT">
+    <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
+    <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TOURNAMENT">
+        <PropertyRef Name="tID" />
+      </Principal>
+      <Dependent Role="WEEKLYAVAILABILITY">
+        <PropertyRef Name="tid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_WEEKLYAVAILABILITY_USER">
     <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
     <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="0..1" />
@@ -604,13 +605,12 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="RAO_DBModelStoreContainer">
+  <EntityContainer Name="testingModelStoreContainer">
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTIONS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LOCATION" EntityType="Self.LOCATION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MATCH" EntityType="Self.MATCH" Schema="dbo" store:Type="Tables" />
@@ -619,33 +619,30 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
     <EntitySet Name="PLAYER" EntityType="Self.PLAYER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATIONS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="REFEREE" EntityType="Self.REFEREE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SCORES" EntityType="Self.SCORES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SPORT" EntityType="Self.SPORT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TEAMINS" EntityType="Self.TEAMINS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIMEOFF" EntityType="Self.TIMEOFF" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TOURNAMENT" EntityType="Self.TOURNAMENT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="USERQUAL" EntityType="Self.USERQUAL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WEEKLYAVAILABILITY" EntityType="Self.WEEKLYAVAILABILITY" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserLogins_dbo_User_Id" Association="Self.FK_AspNetUserLogins_dbo_User_Id">
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserRoles_dbo_Role_Id" Association="Self.FK_AspNetUserRoles_dbo_Role_Id">
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserRoles_dbo_User_Id" Association="Self.FK_AspNetUserRoles_dbo_User_Id">
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-    </AssociationSet>
-    <AssociationSet Name="fk_EVENTS_USERS" Association="Self.fk_EVENTS_USERS">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="Events" EntitySet="Events" />
     </AssociationSet>
     <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
       <End Role="MATCH" EntitySet="MATCH" />
@@ -654,10 +651,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
     <AssociationSet Name="fk_INFRACTION_PLAYER" Association="Self.fk_INFRACTION_PLAYER">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
-    </AssociationSet>
-    <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
-      <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-      <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
     </AssociationSet>
     <AssociationSet Name="fk_MATCH_LOCATION" Association="Self.fk_MATCH_LOCATION">
       <End Role="LOCATION" EntitySet="LOCATION" />
@@ -675,13 +668,13 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
       <End Role="MATCH" EntitySet="MATCH" />
     </AssociationSet>
+    <AssociationSet Name="fk_OFFER_ID" Association="Self.fk_OFFER_ID">
+      <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
+      <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
+    </AssociationSet>
     <AssociationSet Name="fk_OFFER_MATCH" Association="Self.fk_OFFER_MATCH">
       <End Role="MATCH" EntitySet="MATCH" />
       <End Role="OFFER" EntitySet="OFFER" />
-    </AssociationSet>
-    <AssociationSet Name="fk_OFFER_QUAL" Association="Self.fk_OFFER_QUAL">
-      <End Role="OFFER" EntitySet="OFFER" />
-      <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
     </AssociationSet>
     <AssociationSet Name="fk_OFFER_refID" Association="Self.fk_OFFER_refID">
       <End Role="REFEREE" EntitySet="REFEREE" />
@@ -691,12 +684,16 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       <End Role="SPORT" EntitySet="SPORT" />
       <End Role="OFFER" EntitySet="OFFER" />
     </AssociationSet>
-    <AssociationSet Name="fk_PLAYER_TEAM" Association="Self.fk_PLAYER_TEAM">
-      <End Role="TEAM" EntitySet="TEAM" />
+    <AssociationSet Name="fk_OFFERQUAL_QUAL" Association="Self.fk_OFFERQUAL_QUAL">
+      <End Role="OFFER" EntitySet="OFFER" />
+      <End Role="OFFERQUAL" EntitySet="OFFERQUAL" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PLAYER_ID" Association="Self.fk_PLAYER_ID">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="PLAYER" EntitySet="PLAYER" />
     </AssociationSet>
-    <AssociationSet Name="fk_PLAYER_USERNAME" Association="Self.fk_PLAYER_USERNAME">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    <AssociationSet Name="fk_PLAYER_TEAM" Association="Self.fk_PLAYER_TEAM">
+      <End Role="TEAM" EntitySet="TEAM" />
       <End Role="PLAYER" EntitySet="PLAYER" />
     </AssociationSet>
     <AssociationSet Name="fk_QUAL_SPORT" Association="Self.fk_QUAL_SPORT">
@@ -711,17 +708,21 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="REFEREE" EntitySet="REFEREE" />
     </AssociationSet>
-    <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
-      <End Role="SPORT" EntitySet="SPORT" />
+    <AssociationSet Name="fk_SCORES_MATCH" Association="Self.fk_SCORES_MATCH">
+      <End Role="MATCH" EntitySet="MATCH" />
+      <End Role="SCORES" EntitySet="SCORES" />
+    </AssociationSet>
+    <AssociationSet Name="fk_SCORES_PLAYER" Association="Self.fk_SCORES_PLAYER">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="SCORES" EntitySet="SCORES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="TEAM" EntitySet="TEAM" />
     </AssociationSet>
     <AssociationSet Name="fk_TEAM_TOURNAMENT" Association="Self.fk_TEAM_TOURNAMENT">
       <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
-      <End Role="TEAMINS" EntitySet="TEAMINS" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TEAMINS_TEAM" Association="Self.FK_TEAMINS_TEAM">
       <End Role="TEAM" EntitySet="TEAM" />
-      <End Role="TEAMINS" EntitySet="TEAMINS" />
     </AssociationSet>
     <AssociationSet Name="FK_TIMEOFF_USER" Association="Self.FK_TIMEOFF_USER">
       <End Role="REFEREE" EntitySet="REFEREE" />
@@ -736,12 +737,16 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
       <End Role="TYPE" EntitySet="TYPE" />
     </AssociationSet>
     <AssociationSet Name="fk_USER" Association="Self.fk_USER">
-      <End Role="REFEREE" EntitySet="REFEREE" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="USERQUAL" EntitySet="USERQUAL" />
     </AssociationSet>
     <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
       <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
       <End Role="USERQUAL" EntitySet="USERQUAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WA_TOURNAMENT" Association="Self.FK_WA_TOURNAMENT">
+      <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
+      <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
     </AssociationSet>
     <AssociationSet Name="FK_WEEKLYAVAILABILITY_USER" Association="Self.FK_WEEKLYAVAILABILITY_USER">
       <End Role="REFEREE" EntitySet="REFEREE" />

@@ -30,7 +30,7 @@ namespace userprofile.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual TIMEOFF TIMEOFF { get; set; }
+        public virtual ICollection<TIMEOFF> TIMEOFFs { get; set; }
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
     }

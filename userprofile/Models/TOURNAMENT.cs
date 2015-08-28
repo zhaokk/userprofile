@@ -18,15 +18,16 @@ namespace userprofile.Models
         {
             this.MATCHes = new HashSet<MATCH>();
             this.TEAMs = new HashSet<TEAM>();
-            this.WEEKLYAVAILABILITies = new HashSet<WEEKLYAVAILABILITY>();
         }
     
         public int tID { get; set; }
+        public string name { get; set; }
+        public System.DateTime startDate { get; set; }
+        public string organizer { get; set; }
         public string sport { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }
-        public virtual ICollection<WEEKLYAVAILABILITY> WEEKLYAVAILABILITies { get; set; }
     }
 }

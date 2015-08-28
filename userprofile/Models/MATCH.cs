@@ -18,7 +18,6 @@ namespace userprofile.Models
         {
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.OFFERs = new HashSet<OFFER>();
-            this.scores = new HashSet<score>();
         }
     
         public int mID { get; set; }
@@ -26,6 +25,8 @@ namespace userprofile.Models
         public Nullable<int> location { get; set; }
         public Nullable<int> teamaID { get; set; }
         public Nullable<int> teambID { get; set; }
+        public Nullable<int> teamAScore { get; set; }
+        public Nullable<int> teamBScore { get; set; }
         public Nullable<bool> winnerID { get; set; }
         public Nullable<int> tournament { get; set; }
     
@@ -35,6 +36,5 @@ namespace userprofile.Models
         public virtual TEAM TEAM1 { get; set; }
         public virtual TOURNAMENT TOURNAMENT1 { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
-        public virtual ICollection<score> scores { get; set; }
     }
 }

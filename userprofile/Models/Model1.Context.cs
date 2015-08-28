@@ -38,7 +38,6 @@ namespace userprofile.Models
         public virtual DbSet<PLAYER> PLAYERs { get; set; }
         public virtual DbSet<QUALIFICATION> QUALIFICATIONS { get; set; }
         public virtual DbSet<REFEREE> REFEREEs { get; set; }
-        public virtual DbSet<score> scores { get; set; }
         public virtual DbSet<SPORT> SPORTs { get; set; }
         public virtual DbSet<TEAM> TEAMs { get; set; }
         public virtual DbSet<TIMEOFF> TIMEOFFs { get; set; }

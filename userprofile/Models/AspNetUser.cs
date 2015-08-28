@@ -22,7 +22,6 @@ namespace userprofile.Models
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.PLAYERs = new HashSet<PLAYER>();
             this.REFEREEs = new HashSet<REFEREE>();
-            this.scores = new HashSet<score>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
@@ -53,7 +52,6 @@ namespace userprofile.Models
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
-        public virtual ICollection<score> scores { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }
