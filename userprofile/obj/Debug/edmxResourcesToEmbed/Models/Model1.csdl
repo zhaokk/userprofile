@@ -202,6 +202,16 @@
     <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_SPORT" FromRole="SPORT" ToRole="TEAM" />
     <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
   <EntityType Name="TEAM">
     <Key>
       <PropertyRef Name="teamID" />
@@ -613,6 +623,7 @@
     <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
     <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
     <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
     <EntitySet Name="TIMEOFFs" EntityType="Self.TIMEOFF" />
     <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />

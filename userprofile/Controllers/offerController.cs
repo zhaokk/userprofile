@@ -116,32 +116,59 @@ namespace userprofile.Controllers
         public ActionResult AutomateAssign()
         {
 
-            List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m=> m.TYPEs).Include(m=> m.MATCH).Include(m=> m.OFFERQUALs).Include(m=> m.SPORT1).ToList();
+           List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m=> m.TYPEs).Include(m=> m.MATCH).Include(m=> m.OFFERQUALs).Include(m=> m.SPORT1).ToList();
 
-            List<REFEREE> refs = new List<REFEREE>();
-            //get referees from correct sport with related tables
-            List<REFEREE> tempRefs = db.REFEREEs.Where(m => m.SPORT1.name == offers[0].SPORT1.name).Include(m => m.USERQUALs).Include(m=> m.TIMEOFFs).Include(m=> m.WEEKLYAVAILABILITY).ToList();
+             List<REFEREE> refs = new List<REFEREE>();
+             //get referees from correct sport with related tables
+             List<REFEREE> tempRefs = db.REFEREEs.Where(m => m.SPORT1.name == offers[0].SPORT1.name).Include(m => m.USERQUALs).Include(m=> m.TIMEOFF).Include(m=> m.WEEKLYAVAILABILITY).ToList();
 
-            //find referees that meet our qualification needs, add them to new list
-            bool refereeAlredyAdded = false; //stops adding the same referee multiple times
-
-            foreach (REFEREE referee in tempRefs){
-                foreach (OFFER off in offers){
-                    foreach (OFFERQUAL oQual in off.OFFERQUALs){
-                        foreach (USERQUAL singleReferee in referee.USERQUALs){
-                            //go through each referee, and compare their qualifications to the match/offer
-                            if (!refereeAlredyAdded){
-                                refs.Add(referee);
-                                refereeAlredyAdded = true;
-                            }
-                        }
-                    }
-                }
-                refereeAlredyAdded = false;
-            }
+                //look at avaliabilities only include thoes that meet offers
 
 
+             //find referees that meet our qualification needs, add them to new list
+             bool refereeAlredyAdded = false; //stops adding the same referee multiple times
 
+             foreach (REFEREE referee in tempRefs){
+                 foreach (OFFER off in offers){
+                     foreach (OFFERQUAL oQual in off.OFFERQUALs){
+                         foreach (USERQUAL singleReferee in referee.USERQUALs){
+                             //go through each referee, and compare their qualifications to the match/offer
+                             if (!refereeAlredyAdded){
+                                 refs.Add(referee);
+                                 refereeAlredyAdded = true;
+                             }
+                         }
+                     }
+                 }
+                 refereeAlredyAdded = false;
+             }
+
+
+
+
+             /* 
+
+             List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).Include(m => m.TIMEOFF).Include(m => m.WEEKLYAVAILABILITY).ToList(); //possibly add where sport = x tournament =y
+             List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m => m.TYPEs).Include(m => m.MATCH).Include(m => m.OFFERQUALs.Select(y => y.QUALIFICATION)).ToList();
+             List<REFEREE> refereesWeCanUse = new List<REFEREE>();
+
+
+             foreach (REFEREE reff in referees)
+             {
+                 foreach (OFFER off in offers){
+                     if(reff.USERQUALs.Intersect(off.OFFERQUALs)){
+
+                     }
+                 }
+                 if(reff.)
+                 foreach (USERQUAL qual in reff.USERQUALs)
+                 {
+                     sel.Add(new SelectListItem { Text = qual.QUALIFICATION.name, Value = qual.qID.ToString() });
+                 }
+
+
+             }
+             * */
 
             //junk view return
             OFFER offer = db.OFFERs.Find(1);

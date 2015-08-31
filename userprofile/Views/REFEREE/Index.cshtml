@@ -1,9 +1,10 @@
-﻿@model IEnumerable<userprofile.Models.REFEREE>
-
+﻿<!--model IEnumerable<userprofile.Models.REFEREE>
+    -->
 @{
     ViewBag.Title = "Referee Management";
 }
-
+@using userprofile.Models;
+@model Tuple<List<REFEREE>, List<SelectList>>
 
 
 
@@ -47,27 +48,24 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>User name</th>
+                            <th>
+                                Distance willing to travel
+                            </th>
+                            <th>
+                                Prefered age bracket
+                            </th>
+                            <th>
+                                Prefered Grade
+                            </th>
 
                             <th>
-                                @Html.DisplayNameFor(model => model.distTravel)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.prefAge)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.prefGrade)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.AspNetUser.UserName)
-                            </th>
-                            <th>
                                
-                                    @Html.DisplayNameFor(model => model.USERQUALs)
+                                Qualifications
                                 
-                               
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.SPORT1.name)
+                                main sport
                             </th>
                             <th>
 
@@ -75,41 +73,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @{ var counter = 0;}
+                        @foreach (var item in Model.Item1)
                         {
                             <tr>
                                 <td>
-                                   
                                     <a href="@Url.Action("Details", new { id = item.refID })">
+                                        @item.AspNetUser.UserName
                                     </a>
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                </td>
+                                <td>
+                                    @item.distTravel
+                                </td>
+                                <td>
+                                    @item.prefAge
+                                </td>
+                                <td>
+                                    @item.prefGrade
+                                </td>
+                                <td>
 
-
+                                        <a href="@Url.Action("changequal",new {id=item.refID})">
+                                            @Html.ListBox("Id", Model.Item2[counter])
+                                                          
+                                         </a>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.distTravel)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.prefAge)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.prefGrade)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
-                                </td>
-                                <td>
-                                   
-                                    <a href="@Url.Action("changequal",new {id=item.refID})">
-                                        @Html.ListBox("Id", new SelectList(item.USERQUALs, "qID")) </a>
-</td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SPORT1.name)
+                                    @item.SPORT1.name
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "Delete", new { id = item.refID }, new { @class = "btn btn-danger pull-right" })
                                 </td>
                             </tr>
+                            counter++;
                         }
                     </tbody>
                 </table>
@@ -118,7 +114,7 @@
     </div><!-- /.col -->
     <div class="col-md-3">
         <div class="btn-group">
-            <a class=" btn btn-block btn-success" href='@Url.Action("Create","REFEREE")'><b>Create New Match</b></a>
+            <a class=" btn btn-block btn-success" href='@Url.Action("Create","REFEREE")'><b>Create New Referee</b></a>
         </div>
     </div>
 </div><!-- /.row -->

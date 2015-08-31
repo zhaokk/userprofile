@@ -172,6 +172,16 @@
           </Key>
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="TEAM">
           <Key>
             <PropertyRef Name="teamID" />
@@ -625,6 +635,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REFEREE" EntityType="Self.REFEREE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPORT" EntityType="Self.SPORT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAMINS" EntityType="Self.TEAMINS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIMEOFF" EntityType="Self.TIMEOFF" Schema="dbo" store:Type="Tables" />
@@ -959,6 +970,16 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
           <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_SPORT" FromRole="SPORT" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TEAM">
           <Key>
@@ -1371,6 +1392,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
           <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
           <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
           <EntitySet Name="TIMEOFFs" EntityType="Self.TIMEOFF" />
           <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />
@@ -1662,6 +1684,17 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <EntityTypeMapping TypeName="RAO_DBModel.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RAO_DBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

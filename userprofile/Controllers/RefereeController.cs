@@ -16,9 +16,39 @@ namespace userprofile.Controllers
 
         // GET: /REFEREE/
         public ActionResult Index()
-        {
-            var referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1);
-            return View(referees.ToList());
+        {   
+            
+            List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y=> y.QUALIFICATION)).ToList();
+            List<SelectList> qualifications = new List<SelectList>();
+
+             foreach(REFEREE reff in referees){
+                 List<SelectListItem> sel = new List<SelectListItem>();
+                
+                 foreach(USERQUAL qual in reff.USERQUALs){
+                            sel.Add(new SelectListItem {Text = qual.QUALIFICATION.name, Value = qual.qID.ToString()});
+                 }
+                 qualifications.Add(new SelectList(sel, "Value", "Text"));
+
+
+            }
+
+
+/*
+            foreach(REFEREE reff in referees){
+                qualifications.Add(
+                    new SelectList(new List<SelectListItem>
+                    {
+                        foreach(USERQUAL qual in reff.USERQUALs){
+                            new SelectListItem {Text = qual.QUALIFICATION.name, Value = qual.qID.ToString()},
+                        }, "Value", "Text");
+                    }
+                );
+            }
+            */
+
+            var combined = new Tuple<List<REFEREE>, List<SelectList>>(referees, qualifications) { };
+
+            return View(combined);
         }
 
         // GET: /REFEREE/Details/5

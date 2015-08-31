@@ -44,10 +44,10 @@
                                 @Html.DisplayNameFor(model => model.grade)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                @Html.DisplayNameFor(model => model.managerID)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+                                @Html.DisplayNameFor(model => model.TOURNAMENTs.FirstOrDefault().sport)
                             </th>
                             <th>
 
@@ -57,35 +57,37 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
+                            foreach (var TOURNAMENT in item.TOURNAMENTs) { 
+                                <tr>
+                                    <td>
                                    
-                                    <a href="@Url.Action("Details", new { id = item.teamID })">
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </a>
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                        <a href="@Url.Action("Details", new { id = item.teamID })">
+                                            @Html.DisplayFor(modelItem => item.name)
+                                        </a>
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
 
 
-                                </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.winnerID)
-                                </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ageBracket)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.grade)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
-                                </td>
-                            </tr>
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.winnerID)
+                                    </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ageBracket)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.grade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.managerID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => TOURNAMENT.sport)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

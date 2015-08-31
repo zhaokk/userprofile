@@ -167,6 +167,16 @@
     </Key>
     <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="TEAM">
     <Key>
       <PropertyRef Name="teamID" />
@@ -620,6 +630,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
     <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATIONS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="REFEREE" EntityType="Self.REFEREE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SPORT" EntityType="Self.SPORT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TEAMINS" EntityType="Self.TEAMINS" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIMEOFF" EntityType="Self.TIMEOFF" Schema="dbo" store:Type="Tables" />

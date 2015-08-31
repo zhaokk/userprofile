@@ -242,6 +242,9 @@
     <Compile Include="Models\SPORT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TEAM.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-userprofile-20150719114028.mdf" />
+    <Content Include="App_Data\aspnet-userprofile-20150719114028_log.ldf">
+      <DependentUpon>aspnet-userprofile-20150719114028.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\AdminLTE\AdminLTE.css" />
     <Content Include="Content\AdminLTE\AdminLTE.min.css" />
     <Content Include="Content\AdminLTE\img\avatar.png" />
@@ -949,7 +956,6 @@
     <Content Include="Views\Shared\_LayoutForRE.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="userprofile\" />
   </ItemGroup>
   <ItemGroup>
