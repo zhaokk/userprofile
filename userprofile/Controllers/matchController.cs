@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class matchController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /match/
         public ActionResult Index()
@@ -122,14 +122,14 @@ namespace userprofile.Controllers
                        if (of.refID != refID)
                        {
                            of.refID = refID;
-                           of.status = "pending";
+                           of.status = 3;
                            db.Entry(of).State = EntityState.Modified;
 
                        }
                    }
                    else {
                        var newof = new OFFER();
-                       newof.status = "pending";
+                       newof.status =3;
                        newof.refID = refID;
                        newof.dateOfOffer = System.DateTime.Now;
                        newof.mid = mid;

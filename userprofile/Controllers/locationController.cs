@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class locationController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /location/
         public ActionResult Index()

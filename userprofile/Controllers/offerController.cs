@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class offerController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /offer/
         public ActionResult Index()
@@ -136,6 +136,23 @@ namespace userprofile.Controllers
             db.OFFERs.Remove(offer);
             db.SaveChanges();
             return RedirectToAction("Index");
+        
+        }
+        public ActionResult Accept(int offerId)
+        {
+           OFFER accOffer=  db.OFFERs.First(o => o.offerID == offerId);
+           accOffer.status = 1;
+           db.Entry(accOffer).State = EntityState.Modified;
+             db.SaveChanges();
+             return RedirectToAction("index", "home");
+        
+        }
+        public ActionResult decline(int offerId) {
+            OFFER decOffer = db.OFFERs.First(o => o.offerID == offerId);
+            decOffer.status = 2;
+            db.Entry(decOffer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("index", "home");
         }
 
         protected override void Dispose(bool disposing)

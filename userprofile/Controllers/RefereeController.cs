@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class REFEREEController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /REFEREE/
         public ActionResult Index()
@@ -217,6 +217,13 @@ namespace userprofile.Controllers
             db.REFEREEs.Remove(referee);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult Availability(int id) {
+            REFEREE referee = db.REFEREEs.Find(id);
+            
+
+            return View(referee.WEEKLYAVAILABILITY);
         }
 
         protected override void Dispose(bool disposing)

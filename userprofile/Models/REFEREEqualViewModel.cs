@@ -14,7 +14,7 @@ namespace userprofile.Models
             this.srqvm = new selectRefQuliViewModel();
 
         }
-        public REFEREEqualViewModel(Raoconnection db)
+        public REFEREEqualViewModel(Entities db)
         {
 
             this.srqvm = new selectRefQuliViewModel(db);
@@ -36,7 +36,7 @@ namespace userprofile.Models
 
 
         }
-        public selectRefQuliViewModel(Raoconnection db)
+        public selectRefQuliViewModel(Entities db)
         {
 
 
@@ -50,7 +50,7 @@ namespace userprofile.Models
         }
 
 
-        public selectRefQuliViewModel(REFEREE refe, Raoconnection db)
+        public selectRefQuliViewModel(REFEREE refe, Entities db)
         {
             this.quals = new List<SelectQualEditorViewModel>();
             var allquals = db.QUALIFICATIONS;
@@ -82,7 +82,7 @@ namespace userprofile.Models
 
 
         }
-        public selectRefQuliEditViewModel(Raoconnection db)
+        public selectRefQuliEditViewModel(Entities db)
         {
 
 
@@ -96,7 +96,7 @@ namespace userprofile.Models
         }
 
 
-        public selectRefQuliEditViewModel(REFEREE refe, Raoconnection db)
+        public selectRefQuliEditViewModel(REFEREE refe, Entities db)
         {
             this.refeid = refe.refID;
             this.quals = new List<SelectQualEditorViewModel>();

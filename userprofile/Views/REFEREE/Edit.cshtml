@@ -21,13 +21,13 @@
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.refID)
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.LabelFor(model => model.availability, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.availability)
                                 @Html.ValidationMessageFor(model => model.availability)
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.distTravel, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">

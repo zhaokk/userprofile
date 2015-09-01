@@ -11,11 +11,15 @@ namespace userprofile.Controllers
     
     public class HomeController : Controller
     {
-        public Raoconnection db = new Raoconnection();
+        public Entities db = new Entities();
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            var userID = User.Identity.GetUserId();
+            db.AspNetUsers.First(u => u.UserName == User.Identity.Name);
+             List<OFFER> alloffers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
+             offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
+            return View(sortedOffer);
         }
 
         public ActionResult About()
@@ -38,10 +42,14 @@ namespace userprofile.Controllers
 
             //Get the Event1
             //You may get from the repository also
-            var eventList = GetEvent();
+            //if (User.IsInRole("Referee"))
+            //{
+                var eventList = GetEvent();
 
-            var rows = eventList.ToArray();
-            return Json(rows, JsonRequestBehavior.AllowGet);
+                var rows = eventList.ToArray();
+                return Json(rows, JsonRequestBehavior.AllowGet);
+           // }
+          //  return null;
         }
 
         private List<Event> GetEvent()
@@ -53,24 +61,29 @@ namespace userprofile.Controllers
                 TimeSpan time = new TimeSpan(0, 1, 30, 0);
                 List<Event> eventList = new List<Event>();
 
-                var db = new Raoconnection();
-                List<OFFER> offers= db.REFEREEs.First(r=>r.ID==userID).OFFERs.ToList();
-                foreach(OFFER offer in offers){
-                    
-                    Event newEvent = new Event
-                    {
-                        Id = i,
-                        title = "Match:"+i,
-                        start =offer.MATCH.matchDate,
-                        end = offer.MATCH.matchDate+time,
-                        allDay = false
-                    };
-                    eventList.Add(newEvent);
-                i++;
-                }
-
+                var db = new Entities();
               
-                return eventList;
+                    List<OFFER> offers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
+                    foreach (OFFER offer in offers)
+                    {
+
+                        Event newEvent = new Event
+                        {
+                            Id = i,
+                            title = "Match:" + i,
+                            start = offer.MATCH.matchDate,
+                            end = offer.MATCH.matchDate + time,
+                            allDay = false
+                        };
+                        eventList.Add(newEvent);
+                        i++;
+                    }
+
+
+                    return eventList;
+                
+              
+
             }
             else {
 
@@ -118,7 +131,7 @@ namespace userprofile.Controllers
         public ActionResult checkOffer(){
 
             var userID = User.Identity.GetUserId();
-            var db = new Raoconnection();
+            var db = new Entities();
             if (User.IsInRole("Referee")) {
                 REFEREE refe = db.REFEREEs.First(r => r.ID == userID);
 

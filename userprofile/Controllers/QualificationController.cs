@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class qualificationController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /qualification/
         public ActionResult Index()

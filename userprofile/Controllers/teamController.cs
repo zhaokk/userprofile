@@ -12,12 +12,12 @@ namespace userprofile.Controllers
 {
     public class teamController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /team/
         public ActionResult Index()
         {
-            var teams = db.TEAMs.Include(t => t.AspNetUser).Include(t => t.TOURNAMENT1);
+            var teams = db.TEAMs;
             ViewBag.breadcrumbs = "list of team";
             return View(teams.ToList());
         }
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
             }
 
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+           
             return View(team);
         }
 
@@ -77,7 +77,7 @@ namespace userprofile.Controllers
                 return HttpNotFound();
             }
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+           
             return View(team);
         }
 
@@ -95,7 +95,7 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", team.tournament);
+           
             return View(team);
         }
 

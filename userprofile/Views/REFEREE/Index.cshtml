@@ -47,9 +47,9 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.availability)
-                            </th>
+                            </th>*@
                             <th>
                                 @Html.DisplayNameFor(model => model.distTravel)
                             </th>
@@ -82,9 +82,9 @@
                             <tr>
                                 <td>
                                    
-                                    <a href="@Url.Action("Details", new { id = item.refID })">
+                                    @*<a href="@Url.Action("Details", new { id = item.refID })">
                                         @Html.DisplayFor(modelItem => item.availability)
-                                    </a>
+                                    </a>*@
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
 
 
