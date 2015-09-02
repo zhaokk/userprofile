@@ -17,9 +17,9 @@ namespace userprofile.Controllers
         {
             var userID = User.Identity.GetUserId();
             db.AspNetUsers.First(u => u.UserName == User.Identity.Name);
-             List<OFFER> alloffers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
-             offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
-            return View(sortedOffer);
+           //  List<OFFER> alloffers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
+           //  offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
+            return View();
         }
 
         public ActionResult About()
