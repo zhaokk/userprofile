@@ -50,20 +50,36 @@ namespace userprofile.Controllers
 		}
 
 		Dictionary<int, val> dOffers, dReferees; //offers, referees
-
 		LinkedList<pair> llCompleted; //Best options for offers/referees
-
 		HashSet<int> hFilledOffers, hCanBeFilledOffers;
+        Dictionary<int, HashSet<int>> qualificationRefStorage;
+        Dictionary<int, OFFER> offerStorage;
+        Dictionary<int, REFEREE> refereeStorage;
+        List<Dictionary<int, val>> bestOffers, bestReferees;
 
-
-		int maxOffersFilled = 0; //Max amount of offers that can be filled
-		int currOffersFilled = 0; //current number of offers filled
-		long initTemp = 1000; //How many iterations of search to go through
+        Entities db;
+		int maxOffersFilled; //Max amount of offers that can be filled
+		int currOffersFilled; //current number of offers filled
+		long initTemp; //How many iterations of search to go through
 		long currTemp; //What current iteration (temperature it is
-
-		List<Dictionary<int, val>> bestOffers, bestReferees;
 		int bestOffersFilled;
+       
 
+        void initGlobalVars() {
+            db = new Entities();
+            dOffers = new Dictionary<int, val>();
+            dReferees = new Dictionary<int, val>();
+            llCompleted = new LinkedList<pair>();
+            hFilledOffers = new HashSet<int>();
+            hCanBeFilledOffers = new HashSet<int>();
+            qualificationRefStorage = new Dictionary<int, HashSet<int>>();
+            offerStorage = new Dictionary<int, OFFER>();
+            refereeStorage = new Dictionary<int, REFEREE>();
+
+            maxOffersFilled = 0;
+            currOffersFilled = 0;
+            initTemp = 1000;
+        }
 		bool checkTabu(int oID, int rID) { //check if this is tabu
 			return false;
 		}
@@ -145,96 +161,87 @@ namespace userprofile.Controllers
 			}
 		}
 
+        void getOffersAndQualificationIDs() {
+            foreach (var i in db.OFFERs) {
+                if (i.status == 4) {
+                    offerStorage.Add(i.offerID, i); //store offer by offerID
+                    foreach (var k in i.QUALIFICATIONS) {
+                        qualificationRefStorage.Add(k.qID, new HashSet<int>()); //Make list of qualifications needed by all offers
+                    }
+                    dOffers.Add(i.offerID, new val(1)); //store offer ID for use of main algorithm
+                }
+            }
+        }
+
+        void fillRefereeByQualification() {
+            foreach (var i in qualificationRefStorage) { //make all qualificationRefStorage[qID] have all referee id's with qualification
+                foreach (var j in db.REFEREEs) {
+                    foreach (var k in j.QUALIFICATIONS) {
+                        if (i.Key == k.qID) { //check level here later on
+                            i.Value.Add(j.refID); //adding refID to qualificationRefStorage[qID]
+                            if (!refereeStorage.ContainsKey(j.refID)) {
+                                refereeStorage.Add(j.refID, j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        bool checkInitAvailability(int oID, int rID) {
+            return true;
+        }
+
+        void addInitialRefereesToOffer(int oID, int rID) {
+            dOffers[oID].available.Add(rID, new Item());
+            if (!dReferees.ContainsKey(rID)) {
+                dReferees.Add(rID, new val(4)); //needs to add max games they can play here
+                maxOffersFilled += dReferees[rID].canAssign; //count what top number of offers to fill is
+            }
+            dReferees[rID].available.Add(oID, new Item());
+        }
+
+        void addRefereesToOffers() {
+            foreach (var i in offerStorage) {
+                HashSet<int> availableReferees = null;
+                foreach (var j in i.Value.QUALIFICATIONS) {
+                    if (availableReferees == null) {
+                        availableReferees = new HashSet<int>();
+                        foreach (var k in qualificationRefStorage[j.qID]) {
+                            if (checkInitAvailability(i.Key, k)) {
+
+                            }
+                        }
+                    }
+                    else {
+                        HashSet<int> temp = availableReferees;
+                        availableReferees = new HashSet<int>();
+                        foreach (var k in temp) {
+                            if (qualificationRefStorage[j.qID].Contains(k)) {
+                                availableReferees.Add(k);
+                            }
+                        }
+                    }
+                    if (availableReferees.Count() == 0) {
+                        break;
+                    }
+                }
+                if (availableReferees.Count == 0) {
+                    llCompleted.AddLast(new pair(i.Key, -1));
+                    dOffers.Remove(i.Key);
+                }
+                else {
+                    foreach (var j in availableReferees) {
+                        addInitialRefereesToOffer(i.Key, j);
+                    }
+                }
+            }
+        }
+
 		void fillSets() {
-			dOffers = new Dictionary<int, val>();
-			dReferees = new Dictionary<int, val>();
-			llCompleted = new LinkedList<pair>();
-			hCanBeFilledOffers = new HashSet<int>();
-			hFilledOffers = new HashSet<int>();
-
-
-			Dictionary<int, HashSet<int>> qIdToRefs = new Dictionary<int, HashSet<int>>();
-
-
-			Entities db = new Entities();
-			List<OFFER> offers = db.OFFERs.ToList();
-			REFEREE re = new REFEREE();
-			//List<REFEREE> refa = db.REFEREEs.ToList();
-			//List<QUALIFICATION> qs;
-			foreach (var i in db.REFEREEs) {
-				foreach (var j in i.QUALIFICATIONS) {
-					if (j.qID  ==123) { 
-					
-					}
-				}
-			}
-
-			
-			List<OFFER> inactiveOffers = new List<OFFER>();
- 			foreach(var offer in offers){
-
-				if (offer.status == 4) {
-					inactiveOffers.Add(offer);
-
-				}
-			}
-			OFFER of= offers.First(d => d.offerID == 1);
-			of.status = 1;
-			db.Entry(of).State = EntityState.Modified;
-			db.SaveChanges();
-			
-			//int[] offerTest = new int[5] { 0, 1, 2, 3, 4 }; //ALL OFFER IDs WHICH NEED TO BE ASSIGNED
-			int[] offerTest = new int[5] { 10, 5, 2, 19, 4 }; //ALL OFFER IDs WHICH NEED TO BE ASSIGNED
-
-			for (int i = 0; i < 5; i++) {
-				dOffers.Add(offerTest[i], new val(1));
-			}
-
-			foreach (var i in offerTest) {
-				/*foreach (var k in offers[i]) {
-					if (qIdToRefs.ContainsKey(k) {
-						qIdToRefs.Add(k);
-					}
-				}*/
-			}
-
-			foreach (var i in qIdToRefs) {
-				//sql to fill in
-			}
-
-			/*foreach (var i in offer) {
-			 *  HashSet<int> refsAvailable = new HashSet<int>();
-				foreach (var k in offer[i].qualifications) {
-			 *      if (refsAvailable.isEmpty()) {
-			 *          refsAvailable.Add(k);
-			 *      }
-			 *      else {
-			 *          HashSet<int> refsTemp =  refsAvailable;
-			 *          refsAvailable = new HashSet<int>();
-			 *          if (refsTemp.ContainsKey(k)) {
-			 *              refsAvailable.Add(k);
-			 *          }
-			 *      }
-			 *  }
-			 *  foreach (var k in refsAvailable) {
-			 *      checkInitAvailability(k);
-			 *  }
-			 *     
-			}*/
-
-			int[,] refTest = new int[5, 3] { { 1, 4, 5 }, { 2, 3, 4 }, { 4, 3, 6 }, { 1, 5, 2 }, { 2, 3, 4 } }; //FOR EACH OFFER ID GIVEN, EACH REFEREE AVAILABLE (QID, AVAILABILITY)
-			for (int i = 0; i < 5; i++) {
-				for (int k = 0; k < 3; k++) {
-					dOffers[offerTest[i]].available.Add(refTest[i, k], new Item());
-					if (!dReferees.ContainsKey(refTest[i, k])) {
-						dReferees.Add(refTest[i, k], new val(1));//set to how many positions ref can fill
-						maxOffersFilled += 1;
-					}
-					dReferees[refTest[i, k]].available.Add(offerTest[i], new Item());
-				}
-
-			}
-
+            getOffersAndQualificationIDs();
+            fillRefereeByQualification();
+            addRefereesToOffers();
 		}
 
 		void removeOffer(int oID) { //remove offer
@@ -290,11 +297,6 @@ namespace userprofile.Controllers
 		}
 
 		private void initChecks() {
-			foreach (var i in dOffers) { //Remove any offers with 0 refs available
-				if (i.Value.available.Count == 0) {
-					dOffers.Remove(i.Key);
-				}
-			}
 			LinkedList<int> nuke = new LinkedList<int>();
 			do {
 				foreach (var i in nuke) { //remove offers that have been finished
@@ -377,9 +379,12 @@ namespace userprofile.Controllers
 		}
 		
 		public void AssignReferees() {
+            initGlobalVars();
 			fillSets();
 			initChecks();
 			performAlgorithm();
+            //db.Entry(of).State = EntityState.Modified;
+            //db.SaveChanges();
 		}
 	}
 }
