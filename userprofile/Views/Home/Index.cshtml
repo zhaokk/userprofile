@@ -60,7 +60,7 @@
                 day: 'day'
             },
             //Random default events
-            events:"/home/getevents/",
+            events: "/home/getevents/",
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             drop: function (date, allDay) { // this function is called when something is dropped
@@ -87,16 +87,16 @@
                 // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
                 $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
                 $.ajax({
-                    type:"POST",
+                    type: "POST",
                     url: "@Url.Action("AddEvent","home")",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(jsonObject),
-                success: function (data) { alert(data); },
-                failure: function (errMsg) {
-                    alert(errMsg);
-                }
-            });
+                    success: function (data) { alert(data); },
+                    failure: function (errMsg) {
+                        alert(errMsg);
+                    }
+                });
                 // is the "remove after drop" checkbox checked?
                 if ($('#drop-remove').is(':checked')) {
                     // if so, remove the element from the "Draggable Events" list
@@ -142,68 +142,68 @@
 
 
 @*<div class="row">
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-            <div class="inner">
-                <h3>
-                    News
-                </h3>
-                <p>
-                    New referee read more
-                </p>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                <div class="inner">
+                    <h3>
+                        News
+                    </h3>
+                    <p>
+                        New referee read more
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
-            <div class="icon">
-                <i class="ion ion-bag"></i>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                <div class="inner">
+                    <h3>
+                        90<sup style="font-size: 20px">%</sup>
+                    </h3>
+                    <p>
+                        Success Rate
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-            <div class="inner">
-                <h3>
-                    90<sup style="font-size: 20px">%</sup>
-                </h3>
-                <p>
-                    Success Rate
-                </p>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                <div class="inner">
+                    <h3>
+                        TIPS
+                    </h3>
+                    <p>
+                        How to use this website
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
             </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-            <div class="inner">
-                <h3>
-                    TIPS
-                </h3>
-                <p>
-                    How to use this website
-                </p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
 
-    </div><!-- ./col -->
-</div><!-- /.row -->*@
+        </div><!-- ./col -->
+    </div><!-- /.row -->*@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -219,5 +219,125 @@
 
 <!-- Main content -->
 <section class="content">
-  
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        @foreach (var offer in @Model.pendingOffers)
+                        {
+                            <div class="panel panel-default" style="margin-bottom:7px">
+                                <div class="panel-heading" role="tab" id="@("heading" + accordionCounter)">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
+                                            @Html.DisplayFor(modelItem => offer.MATCH.matchDate)
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div id="@("collapse" + accordionCounter)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li>team1name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)</li>
+                                        <li>team2name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)</li>
+                                        <li>match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)</li>
+                                        @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-warning pull-right" })
+                                        @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-primary pull-right" })
+
+                                    </ul>
+                                </div>
+                            </div>
+                            accordionCounter++;
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <div class="box box-default">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Accepted offer</div>
+                    <table class="table">
+
+                        @foreach (var aoffer in Model.acceptedOffers)
+                        {
+                            <tr><td><a href="@Url.Action("Details", "offer", new {id=aoffer.offerID })">@aoffer.MATCH.matchDate</a></td></tr>
+                        }
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Declined offer</div>
+                    <table class="table">
+                        @foreach (var aoffer in Model.declinedOffers)
+                        {
+                            <tr><td><a href="@Url.Action("Details", "offer", new {id=aoffer.offerID })">@aoffer.MATCH.matchDate</a></td></tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        @*<div class="col-md-3">
+
+                    <h4 class="box-title">Draggable Events</h4>
+                </div>
+                <div class="box-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                        <div class="external-event bg-green">Lunch</div>
+                        <div class="external-event bg-yellow">Go home</div>
+                        <div class="external-event bg-aqua">Do homework</div>
+                        <div class="external-event bg-light-blue">Work on UI design</div>
+                        <div class="external-event bg-red">Sleep tight</div>
+                        <div class="checkbox">
+                            <label for="drop-remove">
+                                <input type="checkbox" id="drop-remove" />
+                                remove after drop
+                            </label>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->*@
+        @*<div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Create Event</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                            <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                            <ul class="fc-color-picker" id="color-chooser">
+                                <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
+                                <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <div class="input-group">
+                            <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+                            <div class="input-group-btn">
+                                <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
+                            </div><!-- /btn-group -->
+                        </div><!-- /input-group -->
+                    </div>
+                </div>
+            </div>*@<!-- /.col -->
+        <div class="col-md-8">
+            <div class="box box-body">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 </section><!-- /.content -->
