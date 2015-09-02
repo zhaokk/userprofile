@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="newSchemaModel.MATCH" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.OFFER" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" FillColor="Red" />
         <EntityTypeShape EntityType="newSchemaModel.QUALIFICATION" Width="1.5" PointX="13.5" PointY="19" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="8.25" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.SPORT" Width="1.5" PointX="3.75" PointY="5.375" IsExpanded="true" />

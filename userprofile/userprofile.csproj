@@ -165,6 +165,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
+    <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
@@ -944,6 +945,7 @@
     <Content Include="Views\Home\checkOffer.cshtml" />
     <Content Include="Views\Shared\_LayoutForRE.cshtml" />
     <Content Include="Views\REFEREE\Availability.cshtml" />
+    <Content Include="Views\Algorithm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
