@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         public Entities db = new Entities();
@@ -16,12 +16,31 @@ namespace userprofile.Controllers
         public ActionResult Index()
         {
             var userID = User.Identity.GetUserId();
-            db.AspNetUsers.First(u => u.UserName == User.Identity.Name);
-             List<OFFER> alloffers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
-             offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
-            return View(sortedOffer);
-        }
+           
+            // ICollection<OFFER> offers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs;
+            if (db.REFEREEs.FirstOrDefault(r => r.ID == userID) != null)
+            {
+                List<OFFER> alloffers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs.ToList();
+                
+                offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
+                return View(sortedOffer);
+            }
+            else if (User.IsInRole("Admin")) {
+                return RedirectToAction("IndexforAd", "home");
 
+                }
+            else
+            {
+                return View();
+            }
+
+        }
+        public ActionResult IndexforAd()
+        {
+
+            admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
+            return View(aOVM);
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -44,48 +63,51 @@ namespace userprofile.Controllers
             //You may get from the repository also
             //if (User.IsInRole("Referee"))
             //{
-                var eventList = GetEvent();
+            var eventList = GetEvent();
 
-                var rows = eventList.ToArray();
-                return Json(rows, JsonRequestBehavior.AllowGet);
-           // }
-          //  return null;
+            var rows = eventList.ToArray();
+            return Json(rows, JsonRequestBehavior.AllowGet);
+            // }
+            //  return null;
         }
 
         private List<Event> GetEvent()
         {
-            if (User.Identity.IsAuthenticated)
+            var db = new Entities();
+              var userID = User.Identity.GetUserId();
+            if (User.Identity.IsAuthenticated&&db.REFEREEs.First(r => r.ID == userID)!=null)
             {
                 var i = 0;
-                var userID = User.Identity.GetUserId();
+              
                 TimeSpan time = new TimeSpan(0, 1, 30, 0);
                 List<Event> eventList = new List<Event>();
 
-                var db = new Entities();
-              
-                    List<OFFER> offers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
-                    foreach (OFFER offer in offers)
+               
+             
+                List<OFFER> offers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
+                foreach (OFFER offer in offers)
+                {
+
+                    Event newEvent = new Event
                     {
-
-                        Event newEvent = new Event
-                        {
-                            Id = i,
-                            title = "Match:" + i,
-                            start = offer.MATCH.matchDate,
-                            end = offer.MATCH.matchDate + time,
-                            allDay = false
-                        };
-                        eventList.Add(newEvent);
-                        i++;
-                    }
+                        Id = i,
+                        title = "Match:" + i,
+                        start = offer.MATCH.matchDate,
+                        end = offer.MATCH.matchDate + time,
+                        allDay = false
+                    };
+                    eventList.Add(newEvent);
+                    i++;
+                }
 
 
-                    return eventList;
-                
-              
+                return eventList;
+
+
 
             }
-            else {
+            else
+            {
 
                 List<Event> eventList = new List<Event>();
 
@@ -114,7 +136,7 @@ namespace userprofile.Controllers
 
                 return eventList;
             }
-            
+
         }
 
         private static DateTime ConvertFromUnixTimestamp(double timestamp)
@@ -128,37 +150,41 @@ namespace userprofile.Controllers
             var i = Request["id"];
             return null;
         }
-        public ActionResult checkOffer(){
+        public ActionResult checkOffer()
+        {
 
             var userID = User.Identity.GetUserId();
             var db = new Entities();
-            if (User.IsInRole("Referee")) {
+            if (User.IsInRole("Referee"))
+            {
                 REFEREE refe = db.REFEREEs.First(r => r.ID == userID);
 
                 return View(refe.OFFERs);
             }
-         
+
 
 
             return View();
         }
-        [Authorize(Roles="Referee")]
-        public ActionResult acceptOffer(int refeID){
+        [Authorize(Roles = "Referee")]
+        public ActionResult acceptOffer(int refeID)
+        {
 
-            
-            
-            return View();
-        }
-         [Authorize(Roles = "Referee")]
-        public ActionResult denyOffer(int refeID){
+
 
             return View();
         }
+        [Authorize(Roles = "Referee")]
+        public ActionResult denyOffer(int refeID)
+        {
+
+            return View();
+        }
 
 
 
 
 
-        
+
     }
 }
