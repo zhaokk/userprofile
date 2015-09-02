@@ -4,7 +4,46 @@
     
 }
 
+<script src="~/Scripts/AdminLTE/plugins/chartjs/Chart.js"></script>
+<script>
 
+		var pieData = [
+				{
+					value: @Model.acceptedOffers.Count(),
+					color:"#F7464A",
+					highlight: "#FF5A5E",
+					label: "acceptedOffers"
+				},
+				{
+					value: @Model.declinedOffers.Count(),
+					color: "#46BFBD",
+					highlight: "#5AD3D1",
+					label: "declinedOffers"
+				},
+				{
+					value: @Model.pendingOffers.Count(),
+					color: "#FDB45C",
+					highlight: "#FFC870",
+					label: "pendingOffers"
+				},
+				{
+					value: @Model.notassignedOffers.Count(),
+					color: "#949FB1",
+					highlight: "#A8B3C5",
+					label: "notassignedOffers"
+				},
+				
+
+			];
+
+			window.onload = function(){
+			    var ctx = document.getElementById("pieChart").getContext("2d");
+				window.myPie = new Chart(ctx).Pie(pieData);
+			};
+
+
+
+</script>
 
 <section class="content-header">
     <h1>
@@ -37,22 +76,22 @@
                         </div><!-- /.col -->
                         <div class="col-md-4">
                             <ul class="chart-legend clearfix">
-                                <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                                <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                                <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                                <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                                <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                                <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+                                <li><i class="fa fa-circle-o text-red"></i> acceptedOffers</li>
+                                
+                                <li><i class="fa fa-circle-o text-yellow"></i>pendingOffers</li>
+                                <li><i class="fa fa-circle-o text-aqua"></i>  declinedOffers</li>
+                                
+                                <li><i class="fa fa-circle-o text-gray"></i>offer not assigned</li>
                             </ul>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.box-body -->
                 <div class="box-footer no-padding">
-                    <ul class="nav nav-pills nav-stacked">
+                    @*<ul class="nav nav-pills nav-stacked">
                         <li><a href="#">United States of America <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
                         <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
                         <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-                    </ul>
+                    </ul>*@
                 </div><!-- /.footer -->
             </div>
         </div>

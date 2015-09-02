@@ -69,6 +69,7 @@ namespace userprofile.Models
                 pendingOffers.Add(offer);
                 break;
                 case 4:
+                notassignedOffers.Add(offer);
                 matches.Add(offer.MATCH);
                 break;
                 default:
