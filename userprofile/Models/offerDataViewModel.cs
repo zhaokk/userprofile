@@ -19,29 +19,68 @@ namespace userprofile.Models
             declinedOffers = new List<OFFER>();
             pendingOffers = new List<OFFER>();
             foreach (var offer in allOffer)
-            { 
-            switch (offer.status){
-                case 1:
-                    acceptedOffers.Add(offer);
-                    break;
-                case 2:
-                    declinedOffers.Add(offer);
-                    break;
-                case 3:
-                    pendingOffers.Add(offer);
-                    break;
-                default:
-                    break;
+            {
+                switch (offer.status)
+                {
+                    case 1:
+                        acceptedOffers.Add(offer);
+                        break;
+                    case 2:
+                        declinedOffers.Add(offer);
+                        break;
+                    case 3:
+                        pendingOffers.Add(offer);
+                        break;
+                    default:
+                        break;
 
+                }
             }
-            }
-            
+
         }
 
-    
+
         public List<OFFER> acceptedOffers { get; set; }
         public List<OFFER> declinedOffers { get; set; }
         public List<OFFER> pendingOffers { get; set; }
     }
-    
+    public class admineOfferViewModel
+    {
+        public admineOfferViewModel()
+        { }
+        public admineOfferViewModel(List<OFFER> offers)
+        
+        {
+            acceptedOffers = new List<OFFER>();
+            notassignedOffers = new List<OFFER>();
+            declinedOffers = new List<OFFER>();
+            pendingOffers = new List<OFFER>();
+            matches = new List<MATCH>();
+            foreach (var offer in offers)
+            { 
+            switch (offer.status){
+                case 1:
+                acceptedOffers.Add(offer);
+                break;
+                case 2:
+                declinedOffers.Add(offer);
+                break;
+                case 3:
+                pendingOffers.Add(offer);
+                break;
+                case 4:
+                matches.Add(offer.MATCH);
+                break;
+                default:
+                break;
+            }
+            }
+        }
+        public List<OFFER> acceptedOffers { get; set; }
+        public List<OFFER> declinedOffers { get; set; }
+        public List<OFFER> pendingOffers { get; set; }
+        public List<OFFER> notassignedOffers { get; set; }
+        public List<MATCH> matches { get; set; }
+    }
+
 }
