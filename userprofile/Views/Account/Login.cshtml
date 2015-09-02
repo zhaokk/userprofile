@@ -46,15 +46,15 @@
                 </div>*@
             <div class="wrapper" style="opacity: 0.8" > 
                 <div class="container">
-                    @Html.ValidationSummary(true)
+                   
                     <h1>
                         Welcome to RAO
                     </h1>
 
-                   @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                   @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "sp2" }))
 {
     @Html.AntiForgeryToken()
-
+ @Html.ValidationSummary(true)
                           
                         
                         
@@ -63,9 +63,13 @@
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "password" })
                             @Html.ValidationMessageFor(m => m.Password)
 
-                            <input type="submit" value="Log in" class="login login-submit" />
+    <input  type="submit" value="Log in" class="login login-submit" />
 
-                   }
+                        @*<button type="submit" id="login-button">
+                            Login
+                        </button>*@
+
+}
 
                 </div>
 
