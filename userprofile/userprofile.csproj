@@ -945,6 +945,7 @@
     <Content Include="Views\Shared\_LayoutForRE.cshtml" />
     <Content Include="Views\REFEREE\Availability.cshtml" />
     <Content Include="Views\Home\IndexforAd.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

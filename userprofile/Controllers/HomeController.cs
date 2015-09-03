@@ -48,6 +48,10 @@ namespace userprofile.Controllers
             return View();
         }
 
+        public ActionResult Calendar() {
+            ViewBag.Message = "The Calendar";
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
