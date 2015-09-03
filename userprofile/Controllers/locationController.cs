@@ -13,7 +13,7 @@ namespace userprofile.Controllers
     public class locationController : Controller
     {
         private Entities db = new Entities();
-        private int i = 1;
+       
         // GET: /location/
         public ActionResult Index()
         {
