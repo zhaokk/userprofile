@@ -229,7 +229,7 @@
                                 </div>
                                 <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <div class="row">
+                                        <div class="row alert alert-warning">
                                             <div class="col-sm-12" style="text-align:center">
 
                                                 <a href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.mID })">
@@ -237,15 +237,15 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-5" style="text-align:center">
+                                        <div class="row alert alert-info">
+                                            <div class=" col-sm-5" style="text-align:center">
 
 
 
-                                                <a href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamID })">
-                                                    @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
-                                                </a>
-                                            </div>
+                                            <a href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamID })">
+                                                @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
+                                            </a>
+                                        </div>
                                             <div class="col-sm-2" style="text-align:center">vs</div>
                                             <div class="col-sm-5" style="text-align:center">
                                                 <a href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamID })">
@@ -327,7 +327,7 @@
 
                         @foreach (var aoffer in Model.acceptedOffers)
                         {
-                            <tr><td><a href="@Url.Action("Details", "offer", new {id=aoffer.offerID })">@aoffer.MATCH.matchDate</a></td></tr>
+                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.mID })">@aoffer.MATCH.matchDate</a></td></tr>
                         }
 
                     </table>
@@ -338,7 +338,7 @@
                     <table class="table">
                         @foreach (var aoffer in Model.declinedOffers)
                         {
-                            <tr><td><a href="@Url.Action("Details", "offer", new {id=aoffer.offerID })">@aoffer.MATCH.matchDate</a></td></tr>
+                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.mID })">@aoffer.MATCH.matchDate</a></td></tr>
                         }
                     </table>
                 </div>
