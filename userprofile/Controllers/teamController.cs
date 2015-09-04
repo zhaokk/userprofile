@@ -54,6 +54,7 @@ namespace userprofile.Controllers
         {
             if (ModelState.IsValid)
             {
+                team.sport = "Soccer";
                 db.TEAMs.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Index");

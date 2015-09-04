@@ -30,6 +30,7 @@ namespace userprofile.Models
         public Nullable<int> teamBScore { get; set; }
         public Nullable<bool> winnerID { get; set; }
         public Nullable<int> tournament { get; set; }
+        public int length { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }

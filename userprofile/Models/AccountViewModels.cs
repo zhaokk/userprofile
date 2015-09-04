@@ -78,22 +78,23 @@ namespace userprofile.Models
         [Required]
         public int phoneNum { get; set; }
 
-        [Required]
-        public string country { get; set; }
+        //[Required]
+        //public string country { get; set; }
 
-        [Required]
-        public int postcode { get; set; }
+        //[Required]
+        //public int postcode { get; set; }
 
-        [Required]
-        public int streetNumber { get; set; }
-        [Required]
-        public string state { get; set; }
+        //[Required]
+        //public int streetNumber { get; set; }
+
+        public string Roles { get; set; }
         [Required]
         public System.DateTime dob { get; set; }
-        [Required]
-        public string street { get; set; }
-        
-     
+        //[Required]
+        //public string street { get; set; }
+
+        public REFEREEqualViewModel optionalRe { get; set; }
+        public ResidentLoc residentLoc { get; set; }
         public ApplicationUser GetUser()
         {
             var user = new ApplicationUser()
@@ -103,19 +104,35 @@ namespace userprofile.Models
                 firstName = this.FirstName,
                 lastName = this.LastName,
                 email = this.Email,
-               country = this.country,
+               country = this.residentLoc.country,
             dob = this.dob,
            phoneNum =  this.phoneNum,
-            state = this.state,
-            street = this.street,
-            streetNumber = this.streetNumber
+            state = this.residentLoc.state,
+            street = this.residentLoc.street,
+                streetNumber = this.residentLoc.snum,
+                postcode=this.residentLoc.postcode
 
 
             };
             return user;
         }
+        public RegisterViewModel() { }
+        public RegisterViewModel(Entities db) {
+            this.optionalRe = new REFEREEqualViewModel(db);
+            this.residentLoc = new ResidentLoc();
+        }
     }
+    public class ResidentLoc {
+        public string street { get; set; }
+        //public Nullable<int> snum { get; set; }
+        public int snum { get; set; }
+        public string city { get; set; }
+        public int postcode { get; set; }
+      
+        public string state { get; set; }
 
+        public string country { get; set; }
+    }
     public class EditUserViewModel
     {
         public EditUserViewModel() { }

@@ -46,9 +46,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.AspNetUser.UserName)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
-                            </th>
+
                             <th>
 
                             </th>
@@ -79,9 +77,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
-                                </td>
+                              
                                 <td>
                                     @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
                                 </td>

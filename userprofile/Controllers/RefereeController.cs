@@ -220,11 +220,12 @@ namespace userprofile.Controllers
         }
         [HttpGet]
         public ActionResult Availability(int id) {
-            REFEREE referee = db.REFEREEs.Find(id);
+            REFEREE referee = db.AspNetUsers.Find(id).REFEREEs.First();
             
 
             return View(referee.WEEKLYAVAILABILITY);
         }
+
 
         protected override void Dispose(bool disposing)
         {
