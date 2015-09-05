@@ -4,6 +4,11 @@
 }
 
 <h2>Availability</h2>
+<div id="note" class="callout callout-success" style="margin-bottom: 0!important;" hidden>
+    <h4><i class="fa fa-info"></i> Note : The change has been saved!</h4>
+    
+</div>
+
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">Weekly Availability</div>
@@ -13,13 +18,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>wed</th>
-                <th>thur</th>
-                <th>fri</th>
-                <th>satur</th>
-                <th>sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
             </tr>
         </thead>
         <tbody>
@@ -58,9 +63,11 @@
     </table>
     
 </div>
-<button type="button" class="btn btn-default btn-lg" id="save">
+<button type="button" class="btn btn-warning btn-lg" id="save">
     <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save changes
 </button>
+@Scripts.Render("~/Scripts/jQueryUI")
+
 @section Scripts{
     <script>
         $(function () { 
@@ -69,12 +76,15 @@
                 
                 var col = $(this).parent().children().index($(this))-1;
                 var row = $(this).parent().parent().children().index($(this).parent());
-                $(this).text(col + " " + row);
+                $(this).text(" " );
                 if (availaArray[col][row] == true) {
-                    $(this).css("background-color", "blue");
+                   // 
+                    $(this).css("background-color", "#00a65a");
+                   
                 } else {
 
-                    $(this).css("background-color", "red");
+                    $(this).css("background-color", "#dd4b39");
+                    
                 }
            
             });
@@ -82,11 +92,21 @@
                 var col = $(this).parent().children().index($(this)) - 1;
                 var row = $(this).parent().parent().children().index($(this).parent());
                 if (availaArray[col][row] == true) {
-                    $(this).css("background-color", "red");
+                    $(this).animate
+        ({ backgroundColor: "#dd4b39" }, 500);
+                    $("#note").hide("slow", function () {
+
+                    });
+                    //$(this).css("background-color", "red");
                     availaArray[col][row] = false;
                 } else {
                     availaArray[col][row] = true;
-                    $(this).css("background-color", "blue");
+                    $(this).animate
+        ({ backgroundColor: "#00a65a" }, 500);
+                    $("#note").hide("slow", function () {
+
+                    });
+                   // $(this).css("background-color", "blue");
                 }
             })
             $('#save').click(function () {
@@ -96,9 +116,18 @@
                     data: JSON.stringify(WEEKLYAVAILABILITYViewModel),
                 type: 'POST',
                 contentType: 'application/json'
-            });
+                });
+                $("#note").show("slow", function () {
+
+                });
             })
         })
     </script>
     
+    <style>
+        table {
+            table-layout: fixed;
+            width: 200px;
+        }
+    </style>
     }
