@@ -44,6 +44,7 @@ namespace userprofile.Controllers
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name");
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport");
+            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qID", "name");
             return View();
         }
 
@@ -52,23 +53,61 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="mID,matchDate,location,teamaID,teambID,winnerID,tournament")] MATCH match)
+        public ActionResult Create( matchViewModel matchVM)
         {
-           
-            
 
+
+            matchVM.createdMatch.matchDate = (System.DateTime)matchVM.createdMatch.matchDate;
             if (ModelState.IsValid)
             {
-                db.MATCHes.Add(match);
+                
+                MATCH newMacth = matchVM.createdMatch;
+                OFFER offer1 = new OFFER();
+                OFFER offer2 = new OFFER();
+                OFFER offer3 = new OFFER();
+                offer1.status = offer2.status = offer3.status = 4;
+                offer1.SPORT1 = offer2.SPORT1 = offer3.SPORT1 = db.SPORTs.Find("Soccer");
+                switch (matchVM.offernum) { 
+                    case 1:
+                        
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        newMacth.OFFERs.Add(offer1);
+                       break;
+                    case 2:
+                        
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        
+                        offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        newMacth.OFFERs.Add(offer1);
+                        newMacth.OFFERs.Add(offer2);
+
+                        break;
+                    case 3:
+                        
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        
+                        offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        
+                        offer3.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        newMacth.OFFERs.Add(offer1);
+                        newMacth.OFFERs.Add(offer2);
+                        newMacth.OFFERs.Add(offer3);
+                        break;
+                    default:
+                        break;
+                }
+                db.MATCHes.Add(newMacth);
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name", match.location);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name", match.teamaID);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name", match.teambID);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", match.tournament);
-            return View(match);
+            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name", matchVM.createdMatch.location);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name", matchVM.createdMatch.teamaID);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name", matchVM.createdMatch.teambID);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", matchVM.createdMatch.tournament);
+            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qID", "name");
+            return View(matchVM);
         }
         [HttpGet]
         public ActionResult manageOffer(int? id)
