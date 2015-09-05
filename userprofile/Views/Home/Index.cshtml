@@ -138,7 +138,7 @@
 
 @*<div class="row">
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
+<!-- small box -->
             <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
                 <div class="inner">
                     <h3>
@@ -157,7 +157,7 @@
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
+<!-- small box -->
             <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
                 <div class="inner">
                     <h3>
@@ -176,7 +176,7 @@
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
+<!-- small box -->
             <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
                 <div class="inner">
                     <h3>
@@ -195,8 +195,7 @@
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-
+<!-- small box -->
         </div><!-- ./col -->
     </div><!-- /.row -->*@
 
@@ -221,108 +220,100 @@
                     <div class="panel-group" id="accordion">
                         @foreach (var offer in @Model.pendingOffers)
                         {
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
-                                    </h4>
-                                </div>
-                                <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="row alert alert-warning">
-                                            <div class="col-sm-12" style="text-align:center">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
+                                </h4>
+                            </div>
+                            <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row alert alert-warning">
+                                        <div class="col-sm-12" style="text-align:center">
 
-                                                <a href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.mID })">
+                                            <p>
+                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.mID })">
                                                     match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)
                                                 </a>
-                                            </div>
+                                            </p>
                                         </div>
-                                        <div class="row alert alert-info">
-                                            <div class=" col-sm-5" style="text-align:center">
+                                    </div>
+                                    <div class="row alert alert-info" role="alert">
+                                        <div class=" col-sm-5" style="text-align:center">
 
 
-
-                                            <a href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamID })">
-                                                @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
+                                            <p>
+                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamID})">
+                                                    @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-2" style="text-align:center">vs</div>
+                                        <div class="col-sm-5" style="text-align:center">
+                                            <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamID })">
+                                                @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
                                             </a>
                                         </div>
-                                            <div class="col-sm-2" style="text-align:center">vs</div>
-                                            <div class="col-sm-5" style="text-align:center">
-                                                <a href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamID })">
-                                                    @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <hr />
-
-
-
-                                        @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-danger pull-right" })
-                                        @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-success pull-right" })
-
-
                                     </div>
+
+                                    <hr />
+
+
+
+                                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-success pull-right" })
+
+
                                 </div>
                             </div>
-                            accordionCounter++;
+                        </div>
+                        accordionCounter++;
                         }
 
                     </div>
-
+                    
+                    </div>
 
 
                     @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            @foreach (var offer in @Model.pendingOffers)
-                            {
-                                <div class="panel panel-default" style="margin-bottom:7px">
-                                    <div class="panel-heading" role="tab" id="@("heading" + accordionCounter)">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
-                                                @Html.DisplayFor(modelItem => offer.MATCH.matchDate)
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                                <div id="@("collapse" + accordionCounter)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li>team1name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)</li>
-                                            <li>team2name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)</li>
-                                            <li>match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)</li>
-                                            @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-warning pull-right" })
-                                            @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-primary pull-right" })
+                    @foreach (var offer in @Model.pendingOffers)
+                    {
+                    <div class="panel panel-default" style="margin-bottom:7px">
+                    <div class="panel-heading" role="tab" id="@("heading" + accordionCounter)">
+                    <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
+                    @Html.DisplayFor(modelItem => offer.MATCH.matchDate)
+                    </a>
+                    </h4>
+                    </div>
+                    </div>
+                    <div id="@("collapse" + accordionCounter)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)">
+                    <div class="panel-body">
+                    <ul>
+                    <li>team1name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)</li>
+                    <li>team2name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)</li>
+                    <li>match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)</li>
+                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-warning pull-right" })
+                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-primary pull-right" })
 
-                                        </ul>
-                                    </div>
-                                </div>
-                                accordionCounter++;
-                            }
-                        </div>*@
+                    </ul>
+                    </div>
+                    </div>
+                    accordionCounter++;
+                    }
+                    </div>*@
 
                 </div>
-            </div>
-            <div class="box box-default">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">accepted offeres</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body " style="display: block;">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Accepted offer</div>
                     <table class="table">
 
                         @foreach (var aoffer in Model.acceptedOffers)
@@ -331,10 +322,17 @@
                         }
 
                     </table>
-                </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Declined offer</div>
+                </div>
+            </div>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Declined offeres</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body " style="display: block;">
                     <table class="table">
                         @foreach (var aoffer in Model.declinedOffers)
                         {
@@ -344,17 +342,38 @@
                 </div>
             </div>
 
-        </div>
+            </div>
 
-        <div class="col-md-8">
-            <div class="box box-body">
-                <div class="box-body no-padding">
-                    <!-- THE CALENDAR -->
-                    <div id="calendar"></div>
-                </div><!-- /.box-body -->
-            </div><!-- /. box -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+
+
+
+
+                <div class="col-md-8">
+                    <div class="box box-body">
+                        <div class="box-body no-padding">
+                            <!-- THE CALENDAR -->
+                            <div id="calendar"></div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /. box -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
 </section><!-- /.content -->
 
 
