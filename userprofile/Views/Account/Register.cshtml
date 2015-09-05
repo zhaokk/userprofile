@@ -31,31 +31,33 @@
                             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.country, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.country, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.country, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.country, new { @class = "form-control" })
+                            </div>
+                        </div>*@
+                    <div class="form-group row">
                         @Html.LabelFor(m => m.dob, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.dob, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.street, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.street, new { @class = "form-control" })
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.postcode, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.postcode, new { @class = "form-control" })
-                        </div>
+                            @Html.EditorFor(model => model.dob)
+
+                        </div><div class="col-md-2 " id="dobinfor"></div>
                     </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.street, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.street, new { @class = "form-control" })
+                            </div>
+                        </div>*@
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.postcode, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.postcode, new { @class = "form-control" })
+                            </div>
+                        </div>*@
                     <div class="form-group">
                         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
@@ -74,25 +76,79 @@
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         </div>
                     </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.phoneNum, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.phoneNum, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div>
+                        @Html.EditorFor(m => m.residentLoc);
+                    </div>
+                   
+                    @*<div class="form-group">
+                            @Html.LabelFor(m => m.streetNumber, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.streetNumber, new { @class = "form-control" })
+                            </div>
+                        </div>*@
 
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.streetNumber, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.streetNumber, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.state, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.state, new { @class = "form-control" })
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-md-2 control-label">Getroles</label>
                         <div class="col-md-10">
                             @Html.Action("Getroles", "Account")
                         </div>
+                    </div>
+                    <div class="well well-lg" id="reForm" hidden>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.optionalRe.re.distTravel, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.optionalRe.re.distTravel)
+                                @Html.ValidationMessageFor(model => model.optionalRe.re.distTravel)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.optionalRe.re.sport, "sport", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+
+                                @Html.DropDownList("sport", (SelectList)ViewBag.sport, new { @Name = "optionalRe.re.sport" })
+                                @Html.ValidationMessageFor(model => model.optionalRe.re.sport)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.optionalRe.re.prefAge, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.optionalRe.re.prefAge)
+                                @Html.ValidationMessageFor(model => model.optionalRe.re.prefAge)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.optionalRe.re.prefGrade, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.optionalRe.re.prefGrade)
+                                @Html.ValidationMessageFor(model => model.optionalRe.re.prefGrade)
+                            </div>
+                        </div>
+                       
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.optionalRe.re.ID, "ID", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ID", (SelectList)ViewBag.ID, new { @Name = "re.ID" })
+                                    @Html.ValidationMessageFor(model => model.optionalRe.re.ID)
+                                </div>
+                            </div>*@
+
+                        <div class="form-group">
+                            <div class="control-label col-md-2">
+                                Select qual
+                            </div>
+
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.optionalRe.srqvm.quals)
+                            </div>
+                        </div>
+
                     </div>
 
                     <div id="refereedetail">
@@ -115,18 +171,41 @@
             }
 
         </div>
-        </div>
     </div>
+</div>
 
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-                <script>
-                    $('#Roles').change(function () {
-                        if ($(this).val() == 'Referee') {
-                            alert("asdfadsf");
-                            $('#refereedetail').load("/Referee/Create")
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('input[name="dob"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
 
-                        }
-                    }
-                    );</script>
+            },
+            function (start, end, label) {
+                var years = moment().diff(start, 'years');
+                $("#dobinfor").empty();
+                $("#dobinfor").append("<span class='label label-default'>" + years + "years old</span> ");
+
+            });
+        });
+        
+
+        $('#Roles').change(function () {
+            if ($(this).val() == 'Referee') {
+                $('#reForm').show("slow", function () {
+
+                });
+
+
+            } else {
+
+                $('#reForm').hide("slow", function () {
+                    alert("Animation complete.");
+                });
             }
+        }
+
+        );</script>
+}

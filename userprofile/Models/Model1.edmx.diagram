@@ -4,25 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6d8fe38557e7492ebe1349948f255a77" Name="Diagram1">
-        <EntityTypeShape EntityType="newSchemaModel.AspNetRole" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUser" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.Event" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.INFRACTION" Width="1.5" PointX="8.25" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.LOCATION" Width="1.5" PointX="3.75" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.MATCH" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.OFFER" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.QUALIFICATION" Width="1.5" PointX="13.5" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="8.25" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.SPORT" Width="1.5" PointX="3.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TEAM" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TOURNAMENT" Width="1.5" PointX="3.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TYPE" Width="1.5" PointX="12.75" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.WEEKLYAVAILABILITY" Width="1.5" PointX="10.5" PointY="27.375" IsExpanded="true" />
+      <Diagram DiagramId="a397153c963f414fb4f3848da4b82881" Name="Diagram1">
+        <EntityTypeShape EntityType="newSchemaModel.AspNetRole" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.AspNetUser" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.Event" Width="1.5" PointX="5.25" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.INFRACTION" Width="1.5" PointX="8.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.LOCATION" Width="1.5" PointX="11.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.MATCH" Width="1.5" PointX="13.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.OFFER" Width="1.5" PointX="15.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.QUALIFICATION" Width="1.5" PointX="13.5" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="8.25" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.SPORT" Width="1.5" PointX="9" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.TEAM" Width="1.5" PointX="11.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.TOURNAMENT" Width="1.5" PointX="9" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.TYPE" Width="1.5" PointX="18" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.WEEKLYAVAILABILITY" Width="1.5" PointX="8.25" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.database_firewall_rules" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="newSchemaModel.FK_AspNetUserClaims_dbo_User_Id" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.FK_AspNetUserLogins_dbo_User_Id" ManuallyRouted="false" />
@@ -30,6 +30,7 @@
         <AssociationConnector Association="newSchemaModel.fk_INFRACTION_PLAYER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_PLAYER_USERNAME" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.FK_REFEREE_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="newSchemaModel.FK_TEAM_MANAGER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_INFRACTION_MATCH" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_MATCH_LOCATION" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_MATCH_TEAMA" ManuallyRouted="false" />

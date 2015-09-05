@@ -28,6 +28,7 @@ namespace userprofile.Models
         public Nullable<int> prefAge { get; set; }
         public Nullable<int> prefGrade { get; set; }
         public string ID { get; set; }
+        public int maxGames { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -115,6 +115,7 @@
           <Property Name="teamBScore" Type="int" />
           <Property Name="winnerID" Type="bit" />
           <Property Name="tournament" Type="int" />
+          <Property Name="length" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
@@ -176,6 +177,7 @@
           <Property Name="prefAge" Type="int" />
           <Property Name="prefGrade" Type="int" />
           <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="maxGames" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
@@ -192,7 +194,7 @@
           <Property Name="ageBracket" Type="int" Nullable="false" />
           <Property Name="grade" Type="int" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="managerID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="managerID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="TEAMINS">
           <Key>
@@ -512,9 +514,18 @@ warning 6002: The table/view 'newSchema.sys.database_firewall_rules' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_TEAM_MANAGER" />-->
+        <Association Name="FK_TEAM_MANAGER">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TEAM_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
@@ -743,6 +754,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREE" />
           </AssociationSet>
+          <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TEAM" EntitySet="TEAM" />
+          </AssociationSet>
           <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="TEAM" EntitySet="TEAM" />
@@ -844,6 +859,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.FK_REFEREE_USER" FromRole="AspNetUsers" ToRole="REFEREE" />
+          <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Event">
@@ -901,6 +917,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="teamBScore" Type="Int32" />
           <Property Name="winnerID" Type="Boolean" />
           <Property Name="tournament" Type="Int32" />
+          <Property Name="length" Type="Int32" Nullable="false" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_MATCH" FromRole="MATCH" ToRole="INFRACTIONS" />
           <NavigationProperty Name="LOCATION1" Relationship="Self.fk_MATCH_LOCATION" FromRole="MATCH" ToRole="LOCATION" />
           <NavigationProperty Name="TEAM" Relationship="Self.fk_MATCH_TEAMA" FromRole="MATCH" ToRole="TEAM" />
@@ -971,6 +988,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="prefAge" Type="Int32" />
           <Property Name="prefGrade" Type="Int32" />
           <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="maxGames" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
           <NavigationProperty Name="OneOffAVAILABILITies" Relationship="Self.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
@@ -998,7 +1016,8 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="ageBracket" Type="Int32" Nullable="false" />
           <Property Name="grade" Type="Int32" Nullable="false" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="managerID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="managerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TEAM_MANAGER" FromRole="TEAM" ToRole="AspNetUsers" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TEAMA" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="MATCHes1" Relationship="Self.fk_MATCH_TEAMB" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_TEAM" FromRole="TEAM" ToRole="PLAYER" />
@@ -1127,6 +1146,18 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Principal>
             <Dependent Role="REFEREE">
               <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEAM_MANAGER">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="managerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1382,6 +1413,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
           </AssociationSet>
+          <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TEAM" EntitySet="TEAMs" />
+          </AssociationSet>
           <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
@@ -1575,6 +1610,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
                 <ScalarProperty Name="teamBScore" ColumnName="teamBScore" />
                 <ScalarProperty Name="winnerID" ColumnName="winnerID" />
                 <ScalarProperty Name="tournament" ColumnName="tournament" />
+                <ScalarProperty Name="length" ColumnName="length" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1631,6 +1667,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
                 <ScalarProperty Name="prefAge" ColumnName="prefAge" />
                 <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="maxGames" ColumnName="maxGames" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

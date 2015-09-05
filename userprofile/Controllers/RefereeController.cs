@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
@@ -219,12 +220,32 @@ namespace userprofile.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult Availability(int id) {
-            REFEREE referee = db.REFEREEs.Find(id);
-            
+        public ActionResult Availability() {
+            var currentRefereeId= User.Identity.GetUserId();
+            var refe= db.REFEREEs.First(rid=>rid.ID==currentRefereeId);
+            if(refe.WEEKLYAVAILABILITY!=null){
+           
+            WEEKLYAVAILABILITYViewModel WAVM = new WEEKLYAVAILABILITYViewModel(refe.WEEKLYAVAILABILITY);
 
-            return View(referee.WEEKLYAVAILABILITY);
+            return View(WAVM);}
+            else return View(new WEEKLYAVAILABILITYViewModel());
         }
+        [HttpPost]
+        public ActionResult Availability(WEEKLYAVAILABILITYViewModel jsonData)
+        {
+            var currentRefereeId = User.Identity.GetUserId();
+            var refe = db.REFEREEs.First(rid => rid.ID == currentRefereeId);
+            if (refe.WEEKLYAVAILABILITY != null) { 
+            db.WEEKLYAVAILABILITies.Remove(refe.WEEKLYAVAILABILITY);}
+            refe.WEEKLYAVAILABILITY = jsonData.getWeekADb();
+            db.Entry(refe).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+            return View(jsonData);
+
+        }
+
 
         protected override void Dispose(bool disposing)
         {
