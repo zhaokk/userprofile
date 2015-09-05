@@ -1,4 +1,4 @@
-﻿@model userprofile.Models.WEEKLYAVAILABILITY
+﻿@model userprofile.Models.WEEKLYAVAILABILITYViewModel
 @{
     ViewBag.Title = "Availability";
 }
@@ -56,4 +56,49 @@
 
         </tbody>
     </table>
+    
 </div>
+<button type="button" class="btn btn-default btn-lg" id="save">
+    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save changes
+</button>
+@section Scripts{
+    <script>
+        $(function () { 
+            var availaArray= JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
+            $("td").each(function () {
+                
+                var col = $(this).parent().children().index($(this))-1;
+                var row = $(this).parent().parent().children().index($(this).parent());
+                $(this).text(col + " " + row);
+                if (availaArray[col][row] == true) {
+                    $(this).css("background-color", "blue");
+                } else {
+
+                    $(this).css("background-color", "red");
+                }
+           
+            });
+            $('td').click(function () {
+                var col = $(this).parent().children().index($(this)) - 1;
+                var row = $(this).parent().parent().children().index($(this).parent());
+                if (availaArray[col][row] == true) {
+                    $(this).css("background-color", "red");
+                    availaArray[col][row] = false;
+                } else {
+                    availaArray[col][row] = true;
+                    $(this).css("background-color", "blue");
+                }
+            })
+            $('#save').click(function () {
+                var WEEKLYAVAILABILITYViewModel = {  "moment": availaArray  };
+                $.ajax({
+                    url: "@Url.Content("~/REFEREE/Availability")",
+                    data: JSON.stringify(WEEKLYAVAILABILITYViewModel),
+                type: 'POST',
+                contentType: 'application/json'
+            });
+            })
+        })
+    </script>
+    
+    }

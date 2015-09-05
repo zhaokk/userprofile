@@ -22,7 +22,7 @@
         <EntityTypeShape EntityType="newSchemaModel.TEAM" Width="1.5" PointX="11.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.TOURNAMENT" Width="1.5" PointX="9" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.TYPE" Width="1.5" PointX="18" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.WEEKLYAVAILABILITY" Width="1.5" PointX="10.5" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="newSchemaModel.WEEKLYAVAILABILITY" Width="1.5" PointX="8.25" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.database_firewall_rules" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="newSchemaModel.FK_AspNetUserClaims_dbo_User_Id" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.FK_AspNetUserLogins_dbo_User_Id" ManuallyRouted="false" />

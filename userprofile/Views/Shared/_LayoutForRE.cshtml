@@ -58,8 +58,8 @@
                     <li>@Html.ActionLink("Match list", "Index", "match")</li>
                     <li>@Html.ActionLink("team list", "Index", "team")</li>
                     <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
-                    <li>@Html.ActionLink("MyAvailability", "Availability", "Referee", new { id=User.Identity.GetUserId()})</li>
-
+                    <li>@Html.ActionLink("MyAvailability", "Availability", "REFEREE", new { id = User.Identity.GetUserId() })</li>
+                    <li>@Html.ActionLink("MyAvailability", "Availability", "REFEREE")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
                 @*  @Html.Action("showProfile", "Account", new  { id = User.Identity.GetUserName() });*@
