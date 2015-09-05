@@ -48,23 +48,26 @@
             <div class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
                 </button>
                 @Html.ActionLink("RefereeAO", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+         
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Match list", "Index", "match")</li>
-                            <li>@Html.ActionLink("Team list", "Index", "team")</li>
+                    <li>@Html.ActionLink("Team list", "Index", "team")</li>
                     <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
-                    <li>@Html.ActionLink("MyAvailability", "Availability", "REFEREE", new { id = User.Identity.GetUserId() })</li>
+
                     <li>@Html.ActionLink("MyAvailability", "Availability", "REFEREE")</li>
+                   
                 </ul>
+               
+            </div><!-- /.navbar-collapse -->
+
+            <div class="navbar-custom-menu ">
                 @Html.Partial("_LoginPartial")
-                @*  @Html.Action("showProfile", "Account", new  { id = User.Identity.GetUserName() });*@
             </div>
         </div>
     </div>

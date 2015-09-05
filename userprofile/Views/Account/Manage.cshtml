@@ -1,24 +1,37 @@
 ﻿@using userprofile.Models;
 @using Microsoft.AspNet.Identity;
 @{
-    ViewBag.Title = "Manage Account";
+    Layout = null;
+    if (User.IsInRole("Admin")) { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
+    else
+        if (User.IsInRole("Referee"))
+        {
+
+            Layout = "~/Views/shared/_LayoutForRE.cshtml";
+
+        }
+        else { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
 }
 
-<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row">
-    <div class="col-md-12">
-        @if (ViewBag.HasLocalPassword)
+<div class="col-md-12">
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (ViewBag.HasLocalPassword)
         {
-            @Html.Partial("_ChangePasswordPartial")
+                        @Html.Partial("_ChangePasswordPartial")
         }
         else
         {
-            @Html.Partial("_SetPasswordPartial")
+                        @Html.Partial("_SetPasswordPartial")
         }
 
-
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @section Scripts {
