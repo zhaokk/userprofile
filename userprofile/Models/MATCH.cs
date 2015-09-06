@@ -47,6 +47,8 @@ public partial class MATCH
 
     public Nullable<int> tournament { get; set; }
 
+    public int length { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

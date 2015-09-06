@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="newSchemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="newSchemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -115,6 +115,7 @@
           <Property Name="teamBScore" Type="int" />
           <Property Name="winnerID" Type="bit" />
           <Property Name="tournament" Type="int" />
+          <Property Name="length" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
@@ -176,6 +177,7 @@
           <Property Name="prefAge" Type="int" />
           <Property Name="prefGrade" Type="int" />
           <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="maxGames" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
@@ -780,8 +782,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="newSchemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -907,6 +908,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <NavigationProperty Name="TEAM1" Relationship="Self.fk_MATCH_TEAMB" FromRole="MATCH" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="MATCH" ToRole="TOURNAMENT" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_MATCH" FromRole="MATCH" ToRole="OFFER" />
+          <Property Name="length" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
@@ -977,6 +979,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
           <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATIONS" />
+          <Property Name="maxGames" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
@@ -1566,6 +1569,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySetMapping Name="MATCHes">
             <EntityTypeMapping TypeName="newSchemaModel.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
+                <ScalarProperty Name="length" ColumnName="length" />
                 <ScalarProperty Name="mID" ColumnName="mID" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
                 <ScalarProperty Name="location" ColumnName="location" />
@@ -1625,6 +1629,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySetMapping Name="REFEREEs">
             <EntityTypeMapping TypeName="newSchemaModel.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
+                <ScalarProperty Name="maxGames" ColumnName="maxGames" />
                 <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
                 <ScalarProperty Name="sport" ColumnName="sport" />

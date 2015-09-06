@@ -43,6 +43,8 @@ public partial class REFEREE
 
     public string ID { get; set; }
 
+    public int maxGames { get; set; }
+
 
 
     public virtual AspNetUser AspNetUser { get; set; }
