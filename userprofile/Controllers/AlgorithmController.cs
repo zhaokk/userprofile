@@ -209,7 +209,7 @@ namespace userprofile.Controllers
                         availableReferees = new HashSet<int>();
                         foreach (var k in qualificationRefStorage[j.qID]) {
                             if (checkInitAvailability(i.Key, k)) {
-
+                                availableReferees.Add(k);
                             }
                         }
                     }
