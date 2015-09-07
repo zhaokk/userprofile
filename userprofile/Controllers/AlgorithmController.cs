@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -56,6 +56,7 @@ namespace userprofile.Controllers
         Dictionary<int, OFFER> offerStorage;
         Dictionary<int, REFEREE> refereeStorage;
         List<Dictionary<int, val>> bestOffers, bestReferees;
+		Dictionary<int, Dictionary<int, bool>> matchClashes;
 
         Entities db;
 		int maxOffersFilled; //Max amount of offers that can be filled
@@ -195,7 +196,7 @@ namespace userprofile.Controllers
         void addInitialRefereesToOffer(int oID, int rID) {
             dOffers[oID].available.Add(rID, new Item());
             if (!dReferees.ContainsKey(rID)) {
-                dReferees.Add(rID, new val(4)); //needs to add max games they can play here
+                dReferees.Add(rID, new val(refereeStorage[rID].maxGames)); //needs to add max games they can play here
                 maxOffersFilled += dReferees[rID].canAssign; //count what top number of offers to fill is
             }
             dReferees[rID].available.Add(oID, new Item());
@@ -238,10 +239,53 @@ namespace userprofile.Controllers
             }
         }
 
+		bool calcMatchTimeClash(int i, int j) {
+			
+			return true;
+		}
+
+		void calculateClash(int i, int j) {
+			if (matchClashes.ContainsKey(i)) {
+				if (matchClashes[i].ContainsKey(j)) { //have already calculated
+					return;
+				}
+				else {
+					bool tmp = calcMatchTimeClash(i, j);
+					matchClashes[i].Add(j, tmp);
+					if (!matchClashes.ContainsKey(j)) {
+						matchClashes.Add(j,new Dictionary<int,bool>());
+					}
+					matchClashes[j].Add(i,tmp);
+				}
+			}
+			else {
+				bool tmp = calcMatchTimeClash(i,j);
+				matchClashes.Add(i,new Dictionary<int,bool>());
+				matchClashes[i].Add(j,tmp);
+				if (!matchClashes.ContainsKey(j)) {
+					matchClashes.Add(j,new Dictionary<int,bool>());
+				}
+				matchClashes[j].Add(i,tmp);
+			}
+		}
+
+		void calculateClashes() {
+			foreach (var i in dReferees) {
+				foreach (var j in i.Value.available) {
+					foreach (var k in i.Value.available) {
+						if (j.Key != k.Key) {
+							calculateClash(j.Key, k.Key);
+						}
+					}
+				}
+			}
+		}
+
 		void fillSets() {
             getOffersAndQualificationIDs();
             fillRefereeByQualification();
             addRefereesToOffers();
+			calculateClashes();
 		}
 
 		void removeOffer(int oID) { //remove offer
