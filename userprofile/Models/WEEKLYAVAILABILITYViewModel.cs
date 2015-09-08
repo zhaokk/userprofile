@@ -8,7 +8,7 @@ namespace userprofile.Models
     public class WEEKLYAVAILABILITYViewModel
     {
         public WEEKLYAVAILABILITYViewModel() {
-            this.moment = new Boolean[7][] { new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false } };
+            //this.moment = new Boolean[7][] { new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false }, new Boolean[] { false, false, false } };
         }
         public WEEKLYAVAILABILITYViewModel(WEEKLYAVAILABILITY availa)
         {
