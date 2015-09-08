@@ -1,7 +1,7 @@
 @model userprofile.Models.admineOfferViewModel
 @{
     ViewBag.Title = "Home Page";
-    
+
 }
 
 
@@ -13,6 +13,7 @@
 
 <script>
     $(function () {
+        $("#example3").DataTable();
         $("#example1").DataTable();
         $('#example2').DataTable({
             "paging": true,
@@ -23,39 +24,39 @@
             "autoWidth": false
         });
     });
-		var pieData = [
-				{
-					value: @Model.acceptedOffers.Count(),
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "acceptedOffers"
-				},
-				{
-					value: @Model.declinedOffers.Count(),
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "declinedOffers"
-				},
-				{
-					value: @Model.pendingOffers.Count(),
-					color: "#FDB45C",
-					highlight: "#FFC870",
-					label: "pendingOffers"
-				},
-				{
-					value: @Model.notassignedOffers.Count(),
-					color: "#949FB1",
-					highlight: "#A8B3C5",
-					label: "notassignedOffers"
-				},
-				
+    var pieData = [
+            {
+                value: @Model.acceptedOffers.Count(),
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "acceptedOffers"
+            },
+            {
+                value: @Model.declinedOffers.Count(),
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "declinedOffers"
+            },
+            {
+                value: @Model.pendingOffers.Count(),
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "pendingOffers"
+            },
+            {
+                value: @Model.notassignedOffers.Count(),
+                color: "#949FB1",
+                highlight: "#A8B3C5",
+                label: "notassignedOffers"
+            },
 
-			];
 
-			window.onload = function(){
-			    var ctx = document.getElementById("pieChart").getContext("2d");
-				window.myPie = new Chart(ctx).Pie(pieData);
-			};
+    ];
+
+    window.onload = function(){
+        var ctx = document.getElementById("pieChart").getContext("2d");
+        window.myPie = new Chart(ctx).Pie(pieData);
+    };
 
 
 
@@ -140,7 +141,7 @@
                         </thead>
                         <tbody>
                             @foreach (var offer in @Model.declinedOffers)
-                        {
+                            {
                                 <tr>
                                     <td>
                                         @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
@@ -150,7 +151,7 @@
                                     </td>
                                 </tr>
 
-                        }
+                            }
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
@@ -205,15 +206,44 @@
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
 
-                    <table id="example2" class="table table-bordered table-hover">
-                        @foreach (var match in @Model.matches)
-                {
-                        <tr><td>@match.matchDate</td></tr>
+                    <table id="example3" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Match ID
+                                </th>
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                    Match Date
+                                </th>
+                                <th>
+                                    Match Location
+                                </th>
 
-                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var match in @Model.matches)
+                            {
+                                <tr>
+                                    <td>
+                                       @match.mID
+                                    </td>
+
+                                    <td>
+                                        @match.matchDate
+                                    </td>
+                                    <td>
+                                        @match.LOCATION1.name
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
                     </table>
                 </div><!-- /.box-body -->
             </div>
         </div>
-        </div>
+    </div>
 </section><!-- /.content -->

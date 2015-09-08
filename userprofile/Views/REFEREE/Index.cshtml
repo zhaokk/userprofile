@@ -80,15 +80,15 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
+                                @*<td>
                                    
-                                    @*<a href="@Url.Action("Details", new { id = item.refID })">
+                                    <a href="@Url.Action("Details", new { id = item.refID })">
                                         @Html.DisplayFor(modelItem => item.availability)
-                                    </a>*@
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                    </a>
+                                    @Html.ActionLink("Details", "Details", new { id = item.mID })
 
 
-                                </td>
+                                </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.distTravel)
                                 </td>
@@ -104,7 +104,12 @@
                                 <td>
                                    
                                     <a href="@Url.Action("changequal",new {id=item.refID})">
-                                        @Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name")) </a>
+                                        Change Qualification
+                                        </a>
+                                    @foreach (var temp in item.QUALIFICATIONS) { 
+                                        <div>@temp.name</div>
+                                    }
+                                    @*@Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name"))*@
 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SPORT1.name)
