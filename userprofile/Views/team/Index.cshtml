@@ -26,61 +26,63 @@
             <div class="box-header">
             </div><!-- /.box-header -->
             <div class="box-body">
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ageBracket)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.grade)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.AspNetUser.UserName)
-                            </th>
-
-                            <th>
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td>
-                                   
-                                    <a href="@Url.Action("Details", new { id = item.teamID })">
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </a>
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ageBracket)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.grade)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                </th>
 
+                                <th>
 
-                                </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.winnerID)
-                                </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ageBracket)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.grade)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
-                                </td>
-                              
-                                <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
-                                </td>
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+
+                                <a href="@Url.Action("Details", new { id = item.teamID })">
+                                    @Html.DisplayFor(modelItem => item.name)
+                                </a>
+                                @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+
+
+                            </td>
+                            @*<td>
+                        @Html.DisplayFor(modelItem => item.winnerID)
+                    </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ageBracket)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.grade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
+                            </td>
+                        </tr>
                         }
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
+                        </tbody>
+                    </table>
+                </div>
+                </div><!-- /.box-body -->
         </div><!-- /.box -->
 
     </div><!-- /.col -->

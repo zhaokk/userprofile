@@ -31,4 +31,24 @@
     div.dataTables_filter input {
     width: 8em;
 }
+    #buttongroup_import {
+        display:none;
+    }
+
+    #File_forPC{
+        display:none;
+    }
+
+    #map_field_pc_mobile{
+        width:250px;
+    }
+
+    #us3{
+        width:210px; 
+        height:160px;
+    }
+
+    #map_box {
+        height:200px;
+    }
 }
