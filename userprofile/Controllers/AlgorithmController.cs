@@ -12,7 +12,13 @@ namespace userprofile.Controllers
 {
     public class AlgorithmController : Controller
     {
+        public ActionResult showresult(AlgorithmModel model)
+        {
 
+
+            return View(model);
+
+        }
 		public ActionResult Index() {
 	
 			return View();
