@@ -67,14 +67,28 @@
                
             </div><!-- /.navbar-collapse -->
 
-            <div class="navbar-custom-menu ">
-                @Html.Partial("_LoginPartial")
-            </div>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href=" #" class="dropdown-toggle" data-toggle="dropdown">
+                        @Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName()})
+                       Hello @User.Identity.GetUserName()
+                        </a>
+
+
+                        <ul class="dropdown-menu">
+
+                            @Html.Partial("_LoginPartial")
+
+                        </ul>
+                    </li>
+                    </ul>
+</div>
         </div>
     </div>
         </header>
 
-       <div class="content-wrapper" style="min-height:890px;">
+       <div class="content-wrapper">
            <div class="container">
         @RenderBody()
         <hr />
@@ -96,6 +110,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/Datatable.js")
     @Styles.Render("~/Scripts/Datatable.css")
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @*@Scripts.Render("~/bundles/jquery")*@
     <!-- FastClick -->
     <script src='~/Scripts/AdminLTE/plugins/fastclick/fastclick.min.js'></script>
