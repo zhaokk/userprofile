@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="RAO_DBModelStoreContainer" CdmEntityContainer="RAO_DBEntities">
+  <EntityContainerMapping StorageEntityContainer="test12ModelStoreContainer" CdmEntityContainer="Raoconnection">
     <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="RAO_DBModel.AspNetRole">
+      <EntityTypeMapping TypeName="test12Model.AspNetRole">
         <MappingFragment StoreEntitySet="AspNetRoles">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserClaims">
-      <EntityTypeMapping TypeName="RAO_DBModel.AspNetUserClaim">
+      <EntityTypeMapping TypeName="test12Model.AspNetUserClaim">
         <MappingFragment StoreEntitySet="AspNetUserClaims">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -20,7 +20,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserLogins">
-      <EntityTypeMapping TypeName="RAO_DBModel.AspNetUserLogin">
+      <EntityTypeMapping TypeName="test12Model.AspNetUserLogin">
         <MappingFragment StoreEntitySet="AspNetUserLogins">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
@@ -29,9 +29,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="RAO_DBModel.AspNetUser">
+      <EntityTypeMapping TypeName="test12Model.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ffaNum" ColumnName="ffaNum" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
           <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
@@ -55,7 +56,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Events">
-      <EntityTypeMapping TypeName="RAO_DBModel.Event">
+      <EntityTypeMapping TypeName="test12Model.Event">
         <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="owner" ColumnName="owner" />
@@ -69,9 +70,9 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="INFRACTIONS">
-      <EntityTypeMapping TypeName="RAO_DBModel.INFRACTION">
+      <EntityTypeMapping TypeName="test12Model.INFRACTION">
         <MappingFragment StoreEntitySet="INFRACTIONS">
-          <ScalarProperty Name="infractionID" ColumnName="infractionID" />
+          <ScalarProperty Name="infractionId" ColumnName="infractionId" />
           <ScalarProperty Name="type" ColumnName="type" />
           <ScalarProperty Name="active" ColumnName="active" />
           <ScalarProperty Name="overruled" ColumnName="overruled" />
@@ -81,13 +82,13 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LOCATIONs">
-      <EntityTypeMapping TypeName="RAO_DBModel.LOCATION">
+      <EntityTypeMapping TypeName="test12Model.LOCATION">
         <MappingFragment StoreEntitySet="LOCATION">
-          <ScalarProperty Name="lID" ColumnName="lID" />
+          <ScalarProperty Name="locationId" ColumnName="locationId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="price" ColumnName="price" />
           <ScalarProperty Name="street" ColumnName="street" />
-          <ScalarProperty Name="snum" ColumnName="snum" />
+          <ScalarProperty Name="streetNum" ColumnName="streetNum" />
           <ScalarProperty Name="city" ColumnName="city" />
           <ScalarProperty Name="postcode" ColumnName="postcode" />
           <ScalarProperty Name="phoneNum" ColumnName="phoneNum" />
@@ -96,26 +97,27 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MATCHes">
-      <EntityTypeMapping TypeName="RAO_DBModel.MATCH">
+      <EntityTypeMapping TypeName="test12Model.MATCH">
         <MappingFragment StoreEntitySet="MATCH">
-          <ScalarProperty Name="mID" ColumnName="mID" />
+          <ScalarProperty Name="matchId" ColumnName="matchId" />
           <ScalarProperty Name="matchDate" ColumnName="matchDate" />
-          <ScalarProperty Name="location" ColumnName="location" />
-          <ScalarProperty Name="teamaID" ColumnName="teamaID" />
-          <ScalarProperty Name="teambID" ColumnName="teambID" />
+          <ScalarProperty Name="locationId" ColumnName="locationId" />
+          <ScalarProperty Name="teamaId" ColumnName="teamaId" />
+          <ScalarProperty Name="teambId" ColumnName="teambId" />
           <ScalarProperty Name="teamAScore" ColumnName="teamAScore" />
           <ScalarProperty Name="teamBScore" ColumnName="teamBScore" />
-          <ScalarProperty Name="winnerID" ColumnName="winnerID" />
-          <ScalarProperty Name="tournament" ColumnName="tournament" />
+          <ScalarProperty Name="winnerId" ColumnName="winnerId" />
+          <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
+          <ScalarProperty Name="matchLength" ColumnName="matchLength" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OFFERs">
-      <EntityTypeMapping TypeName="RAO_DBModel.OFFER">
+      <EntityTypeMapping TypeName="test12Model.OFFER">
         <MappingFragment StoreEntitySet="OFFER">
-          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="offerId" ColumnName="offerId" />
           <ScalarProperty Name="sport" ColumnName="sport" />
-          <ScalarProperty Name="mid" ColumnName="mid" />
+          <ScalarProperty Name="matchId" ColumnName="matchId" />
           <ScalarProperty Name="refID" ColumnName="refID" />
           <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="dateOfOffer" ColumnName="dateOfOffer" />
@@ -123,68 +125,71 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OFFERQUALs">
-      <EntityTypeMapping TypeName="RAO_DBModel.OFFERQUAL">
+      <EntityTypeMapping TypeName="test12Model.OFFERQUAL">
         <MappingFragment StoreEntitySet="OFFERQUAL">
-          <ScalarProperty Name="qID" ColumnName="qID" />
-          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
+          <ScalarProperty Name="offerId" ColumnName="offerId" />
           <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OneOffAVAILABILITies">
+      <EntityTypeMapping TypeName="test12Model.OneOffAVAILABILITY">
+        <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
+          <ScalarProperty Name="refId" ColumnName="refId" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="allDay" ColumnName="allDay" />
+          <ScalarProperty Name="timeOnOrOff" ColumnName="timeOnOrOff" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PLAYERs">
-      <EntityTypeMapping TypeName="RAO_DBModel.PLAYER">
+      <EntityTypeMapping TypeName="test12Model.PLAYER">
         <MappingFragment StoreEntitySet="PLAYER">
-          <ScalarProperty Name="team" ColumnName="team" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="teamId" ColumnName="teamId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="position" ColumnName="position" />
           <ScalarProperty Name="shirtNum" ColumnName="shirtNum" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="QUALIFICATIONS">
-      <EntityTypeMapping TypeName="RAO_DBModel.QUALIFICATION">
+      <EntityTypeMapping TypeName="test12Model.QUALIFICATION">
         <MappingFragment StoreEntitySet="QUALIFICATIONS">
-          <ScalarProperty Name="qID" ColumnName="qID" />
+          <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="sport" ColumnName="sport" />
           <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="qualificationLevel" ColumnName="qualificationLevel" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="REFEREEs">
-      <EntityTypeMapping TypeName="RAO_DBModel.REFEREE">
+      <EntityTypeMapping TypeName="test12Model.REFEREE">
         <MappingFragment StoreEntitySet="REFEREE">
-          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="refId" ColumnName="refId" />
           <ScalarProperty Name="distTravel" ColumnName="distTravel" />
           <ScalarProperty Name="sport" ColumnName="sport" />
           <ScalarProperty Name="prefAge" ColumnName="prefAge" />
           <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="maxGames" ColumnName="maxGames" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SPORTs">
-      <EntityTypeMapping TypeName="RAO_DBModel.SPORT">
+      <EntityTypeMapping TypeName="test12Model.SPORT">
         <MappingFragment StoreEntitySet="SPORT">
           <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="RAO_DBModel.sysdiagram">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TEAMs">
-      <EntityTypeMapping TypeName="RAO_DBModel.TEAM">
+      <EntityTypeMapping TypeName="test12Model.TEAM">
         <MappingFragment StoreEntitySet="TEAM">
-          <ScalarProperty Name="teamID" ColumnName="teamID" />
+          <ScalarProperty Name="teamId" ColumnName="teamId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
           <ScalarProperty Name="grade" ColumnName="grade" />
@@ -193,22 +198,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TIMEOFFs">
-      <EntityTypeMapping TypeName="RAO_DBModel.TIMEOFF">
-        <MappingFragment StoreEntitySet="TIMEOFF">
-          <ScalarProperty Name="refID" ColumnName="refID" />
-          <ScalarProperty Name="startDate" ColumnName="startDate" />
-          <ScalarProperty Name="endDate" ColumnName="endDate" />
-          <ScalarProperty Name="allDay" ColumnName="allDay" />
-          <ScalarProperty Name="whatType" ColumnName="whatType" />
-          <ScalarProperty Name="description" ColumnName="description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TOURNAMENTs">
-      <EntityTypeMapping TypeName="RAO_DBModel.TOURNAMENT">
+      <EntityTypeMapping TypeName="test12Model.TOURNAMENT">
         <MappingFragment StoreEntitySet="TOURNAMENT">
-          <ScalarProperty Name="tID" ColumnName="tID" />
+          <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="startDate" ColumnName="startDate" />
           <ScalarProperty Name="organizer" ColumnName="organizer" />
@@ -217,28 +210,28 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TYPEs">
-      <EntityTypeMapping TypeName="RAO_DBModel.TYPE">
+      <EntityTypeMapping TypeName="test12Model.TYPE">
         <MappingFragment StoreEntitySet="TYPE">
-          <ScalarProperty Name="typeID" ColumnName="typeID" />
-          <ScalarProperty Name="offerID" ColumnName="offerID" />
+          <ScalarProperty Name="typeId" ColumnName="typeId" />
+          <ScalarProperty Name="offerId" ColumnName="offerId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="USERQUALs">
-      <EntityTypeMapping TypeName="RAO_DBModel.USERQUAL">
+      <EntityTypeMapping TypeName="test12Model.USERQUAL">
         <MappingFragment StoreEntitySet="USERQUAL">
-          <ScalarProperty Name="qID" ColumnName="qID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
+          <ScalarProperty Name="refID" ColumnName="refID" />
           <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="WEEKLYAVAILABILITies">
-      <EntityTypeMapping TypeName="RAO_DBModel.WEEKLYAVAILABILITY">
+      <EntityTypeMapping TypeName="test12Model.WEEKLYAVAILABILITY">
         <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
-          <ScalarProperty Name="refID" ColumnName="refID" />
+          <ScalarProperty Name="refId" ColumnName="refId" />
           <ScalarProperty Name="monday" ColumnName="monday" />
           <ScalarProperty Name="tuesday" ColumnName="tuesday" />
           <ScalarProperty Name="wednesday" ColumnName="wednesday" />
@@ -249,7 +242,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="RAO_DBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+    <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="test12Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
+      <EndProperty Name="OFFER">
+        <ScalarProperty Name="offerId" ColumnName="offerId" />
+      </EndProperty>
+      <EndProperty Name="REFEREE">
+        <ScalarProperty Name="refId" ColumnName="refId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="test12Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetRoles">
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
@@ -257,12 +258,20 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="TEAMINS" TypeName="RAO_DBModel.TEAMINS" StoreEntitySet="TEAMINS">
+    <AssociationSetMapping Name="TEAMINS" TypeName="test12Model.TEAMINS" StoreEntitySet="TEAMINS">
       <EndProperty Name="TOURNAMENT">
-        <ScalarProperty Name="tID" ColumnName="tournament" />
+        <ScalarProperty Name="tournamentId" ColumnName="tournament" />
       </EndProperty>
       <EndProperty Name="TEAM">
-        <ScalarProperty Name="teamID" ColumnName="teamID" />
+        <ScalarProperty Name="teamId" ColumnName="teamID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="test12Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
+      <EndProperty Name="LOCATION">
+        <ScalarProperty Name="locationId" ColumnName="locationId" />
+      </EndProperty>
+      <EndProperty Name="REFEREE">
+        <ScalarProperty Name="refId" ColumnName="refId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

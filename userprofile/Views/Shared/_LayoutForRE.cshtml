@@ -42,37 +42,56 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 
-<body class="skin-purple" style="background-color:rgb(238, 238, 238)">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body class="layout-top-nav skin-green">
+    <div class="wrapper">
+        <header class="main-header">
+            <div class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
                 </button>
                 @Html.ActionLink("RefereeAO", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+         
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Match list", "Index", "match")</li>
-                    <li>@Html.ActionLink("team list", "Index", "team")</li>
+                    <li>@Html.ActionLink("Team list", "Index", "team")</li>
                     <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
 
+                    <li>@Html.ActionLink("MyAvailability", "Availability", "REFEREE")</li>
+                   
                 </ul>
+               
+            </div><!-- /.navbar-collapse -->
+
+            <div class="navbar-custom-menu ">
                 @Html.Partial("_LoginPartial")
-                @*  @Html.Action("showProfile", "Account", new  { id = User.Identity.GetUserName() });*@
             </div>
         </div>
     </div>
+        </header>
 
-    <div class="container body-content skin-purple" style="margin-top:90px">
+       <div class="content-wrapper" style="min-height:890px;">
+           <div class="container">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+           </div>
+       </div>
+            
+       
+        <footer class="main-footer" style="background-color:rgb(128, 128, 128)">
+            <div class="container">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 0.6
+                </div>
+                <strong>Copyright © 2014-2015 RAO </strong> All rights reserved.
+            </div><!-- /.container -->
         </footer>
     </div>
+
     @Scripts.Render("~/bundles/bootstrap")
     @*@Scripts.Render("~/bundles/jquery")*@
     <!-- FastClick -->

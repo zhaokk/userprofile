@@ -61,9 +61,8 @@ namespace userprofile.Models
             }
             foreach (var qual in refe.USERQUALs)
             {
-				QUALIFICATION qualificationToLookFor = db.QUALIFICATIONS.Find(qual.qID);
-				var checkqual = this.quals.Find(q => q.qualName == qualificationToLookFor.name);
-                checkqual.Selected = true;
+               // var checkqual = this.quals.Find(q => q.qualName == qual.name);
+               // checkqual.Selected = true;
 
 
             }
@@ -99,7 +98,7 @@ namespace userprofile.Models
 
         public selectRefQuliEditViewModel(REFEREE refe, Raoconnection db)
         {
-            this.refeid = refe.refID;
+            this.refeid = refe.refId;
             this.quals = new List<SelectQualEditorViewModel>();
             var allquals = db.QUALIFICATIONS;
             foreach (var qual in allquals)
@@ -107,15 +106,13 @@ namespace userprofile.Models
                 var qvm = new SelectQualEditorViewModel(qual);
                 this.quals.Add(qvm);
             }
-            foreach (var qual in refe.USERQUALs)
+            /*foreach (var qual in refe.QUALIFICATIONS)
             {
-				QUALIFICATION qualificationToLookFor = db.QUALIFICATIONS.Find(qual.qID);
-
-				var checkqual = this.quals.Find(q => q.qualName == qualificationToLookFor.name);
+                var checkqual = this.quals.Find(q => q.qualName == qual.name);
                 checkqual.Selected = true;
 
 
-            }
+            }*/
 
 
         }

@@ -1,11 +1,11 @@
-﻿@model userprofile.Models.MATCH
+﻿@model userprofile.Models.matchViewModel
 
 @{
     ViewBag.Title = "";
 }
 @*<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
-<script src="~/Scripts/AdminLTE/plugins/locationPicker/locationpicker.jquery.js"></script>*@
+    <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+    <script src="~/Scripts/AdminLTE/plugins/locationPicker/locationpicker.jquery.js"></script>*@
 
 <div class="row">
     <div class="col-sm-12">
@@ -18,85 +18,161 @@
                 {
                     @Html.AntiForgeryToken()
 
-
-
-
-
-
-
                     <div class="form-horizontal">
 
                         <hr />
                         @Html.ValidationSummary(true)
+
                         <div class="form-group">
-                            @Html.LabelFor(model => model.matchDate, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.matchDate, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.matchDate)
-                                @Html.ValidationMessageFor(model => model.matchDate)
+                                @Html.EditorFor(model => model.createdMatch.matchDate)
+                                @Html.ValidationMessageFor(model => model.createdMatch.matchDate)
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.location, "location", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.locationId, "location", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("location", String.Empty)
-                                @Html.ValidationMessageFor(model => model.location)
+                                @Html.DropDownList("location", (SelectList)ViewBag.locationId, String.Empty, new { @Name = "createdMatch.locationId" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.locationId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.teamaID, "teamaID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamaId, "teamaID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("teamaID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.teamaID)
+                                
+                                @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.teamaId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.teambID, "teambID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teambId, "teambID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("teambID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.teambID)
+                                @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.teambId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.winnerID, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.winnerId, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.winnerID)
-                                @Html.ValidationMessageFor(model => model.winnerID)
+                                @Html.EditorFor(model => model.createdMatch.winnerId)
+                                @Html.ValidationMessageFor(model => model.createdMatch.winnerId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.tournament, "tournament", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.tournamentId, "tournament", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("tournament", String.Empty)
-                                @Html.ValidationMessageFor(model => model.tournament)
+                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
+                                
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.offernum, "number of offer", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select id="offernum" name="offernum">
+                                    <option>        </option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="q1" hidden>
+                            @Html.LabelFor(model => model.q1, "offer one qualification", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                        </div>
+                        <div class="form-group" id="q2" hidden>
+                            @Html.LabelFor(model => model.q2, "offer two qualification", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                               @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                        </div>
+                        <div class="form-group" id="q3" hidden>
+                            @Html.LabelFor(model => model.q3, "offer three qualification", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-offset-2 col-sm-1">
-                                <input type="submit" value="Create" class="btn btn-block btn-success" />
+                                <input type="submit" value="Create" id="newoffers" class="btn btn-block btn-success" />
                             </div>
                         </div>
+                        <div id="offers">
+                        </div>
                     </div>
-                    @section scripts{
-                        <script type="text/javascript">
-                            $(function () {
-                                $('input[name="matchDate"]').daterangepicker({
-                                    singleDatePicker: true,
-                                    timePicker: true,
-                                    timePickerIncrement: 15,
-                                    locale: {
-                                        format: 'MM/DD/YYYY h:mm A'
-                                    }
-                                });
-                            });
-
-
-                        </script>
-                    }
+                 
                 }
 
             </div>
 
         </div>
+    </div>
 </div>
-</div>
+@section scripts{
+
+    <script>
+        $(function () {
+            $('input[name="createdMatch.matchDate"]').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePickerIncrement: 15,
+                locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                }
+            });
+        });
+        $("#offernum").change(function () {
+            switch($(this).val()) {
+                case "1":
+                    $('#q1').show("slow", function () {
+
+                    });
+                    $('#q2').hide("slow", function () {
+
+                    });
+                    $('#q3').hide("slow", function () {
+
+                    });
+                    break;
+                case "2":
+                    $('#q2').show("slow", function () {
+
+                    });
+                    $('#q1').show("slow", function () {
+
+                    });
+                    $('#q3').hide("slow", function () {
+
+                    });
+                    break;
+                case "3":
+                    $('#q2').show("slow", function () {
+
+                    });
+                    $('#q1').show("slow", function () {
+
+                    });
+                    $('#q3').show("slow", function () {
+
+                    });
+                default:
+                    break;
+                   
+            }
+        });
+      
+
+
+
+
+                             </script>
+}

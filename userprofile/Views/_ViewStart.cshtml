@@ -1,4 +1,5 @@
 ﻿@{
+    if (User.IsInRole("Admin")) { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }else
     if (User.IsInRole("Referee"))
     {
        

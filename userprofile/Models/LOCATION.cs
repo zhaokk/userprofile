@@ -17,18 +17,20 @@ namespace userprofile.Models
         public LOCATION()
         {
             this.MATCHes = new HashSet<MATCH>();
+            this.REFEREEs = new HashSet<REFEREE>();
         }
     
-        public int lID { get; set; }
+        public int locationId { get; set; }
         public string name { get; set; }
         public Nullable<double> price { get; set; }
         public string street { get; set; }
-        public Nullable<int> snum { get; set; }
+        public Nullable<int> streetNum { get; set; }
         public string city { get; set; }
         public int postcode { get; set; }
         public int phoneNum { get; set; }
         public string state { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }
+        public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }
 }

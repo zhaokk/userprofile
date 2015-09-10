@@ -39,8 +39,8 @@ namespace userprofile.Controllers
         // GET: /offer/Create
         public ActionResult Create()
         {
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID");
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability");
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId");
+            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "refID");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
             ViewBag.statusList = new List<SelectListItem>()
             {
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="offerID,sport,mid,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Create([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
             ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
@@ -87,8 +87,8 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
+            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "refID", offer.refID);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
@@ -98,7 +98,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="offerID,sport,mid,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Edit([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -106,75 +106,11 @@ namespace userprofile.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
             ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
-
-
-        public ActionResult AutomateAssign()
-        {
-
-           List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m=> m.TYPEs).Include(m=> m.MATCH).Include(m=> m.OFFERQUALs).Include(m=> m.SPORT1).ToList();
-
-             List<REFEREE> refs = new List<REFEREE>();
-             //get referees from correct sport with related tables
-             List<REFEREE> tempRefs = db.REFEREEs.Where(m => m.SPORT1.name == offers[0].SPORT1.name).Include(m => m.USERQUALs).Include(m=> m.TIMEOFF).Include(m=> m.WEEKLYAVAILABILITY).ToList();
-
-                //look at avaliabilities only include thoes that meet offers
-
-
-             //find referees that meet our qualification needs, add them to new list
-             bool refereeAlredyAdded = false; //stops adding the same referee multiple times
-
-             foreach (REFEREE referee in tempRefs){
-                 foreach (OFFER off in offers){
-                     foreach (OFFERQUAL oQual in off.OFFERQUALs){
-                         foreach (USERQUAL singleReferee in referee.USERQUALs){
-                             //go through each referee, and compare their qualifications to the match/offer
-                             if (!refereeAlredyAdded){
-                                 refs.Add(referee);
-                                 refereeAlredyAdded = true;
-                             }
-                         }
-                     }
-                 }
-                 refereeAlredyAdded = false;
-             }
-
-
-
-
-             /* 
-
-             List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).Include(m => m.TIMEOFF).Include(m => m.WEEKLYAVAILABILITY).ToList(); //possibly add where sport = x tournament =y
-             List<OFFER> offers = db.OFFERs.Where(m => m.status == 0).Include(m => m.TYPEs).Include(m => m.MATCH).Include(m => m.OFFERQUALs.Select(y => y.QUALIFICATION)).ToList();
-             List<REFEREE> refereesWeCanUse = new List<REFEREE>();
-
-
-             foreach (REFEREE reff in referees)
-             {
-                 foreach (OFFER off in offers){
-                     if(reff.USERQUALs.Intersect(off.OFFERQUALs)){
-
-                     }
-                 }
-                 if(reff.)
-                 foreach (USERQUAL qual in reff.USERQUALs)
-                 {
-                     sel.Add(new SelectListItem { Text = qual.QUALIFICATION.name, Value = qual.qID.ToString() });
-                 }
-
-
-             }
-             * */
-
-            //junk view return
-            OFFER offer = db.OFFERs.Find(1);
-            return View(offer);
-        }
-
 
         // GET: /offer/Delete/5
         public ActionResult Delete(int? id)
@@ -200,6 +136,23 @@ namespace userprofile.Controllers
             db.OFFERs.Remove(offer);
             db.SaveChanges();
             return RedirectToAction("Index");
+        
+        }
+        public ActionResult Accept(int offerId)
+        {
+           OFFER accOffer=  db.OFFERs.First(o => o.offerId == offerId);
+           accOffer.status = 1;
+           db.Entry(accOffer).State = EntityState.Modified;
+             db.SaveChanges();
+             return RedirectToAction("index", "home");
+        
+        }
+        public ActionResult decline(int offerId) {
+            OFFER decOffer = db.OFFERs.First(o => o.offerId == offerId);
+            decOffer.status = 2;
+            db.Entry(decOffer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("index", "home");
         }
 
         protected override void Dispose(bool disposing)

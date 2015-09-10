@@ -20,7 +20,7 @@ namespace userprofile.Models
             this.TEAMs = new HashSet<TEAM>();
         }
     
-        public int tID { get; set; }
+        public int tournamentId { get; set; }
         public string name { get; set; }
         public System.DateTime startDate { get; set; }
         public string organizer { get; set; }

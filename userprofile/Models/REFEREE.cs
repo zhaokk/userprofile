@@ -18,20 +18,25 @@ namespace userprofile.Models
         {
             this.OFFERs = new HashSet<OFFER>();
             this.USERQUALs = new HashSet<USERQUAL>();
+            this.OFFERs1 = new HashSet<OFFER>();
+            this.LOCATIONs = new HashSet<LOCATION>();
         }
     
-        public int refID { get; set; }
+        public int refId { get; set; }
         public Nullable<int> distTravel { get; set; }
         public string sport { get; set; }
         public Nullable<int> prefAge { get; set; }
         public Nullable<int> prefGrade { get; set; }
-        public string ID { get; set; }
+        public string userId { get; set; }
+        public Nullable<int> maxGames { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
+        public virtual OneOffAVAILABILITY OneOffAVAILABILITY { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual TIMEOFF TIMEOFF { get; set; }
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
+        public virtual ICollection<OFFER> OFFERs1 { get; set; }
+        public virtual ICollection<LOCATION> LOCATIONs { get; set; }
     }
 }

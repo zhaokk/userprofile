@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
@@ -16,36 +17,20 @@ namespace userprofile.Controllers
 
         // GET: /REFEREE/
         public ActionResult Index()
-        {   
-            
+        {
             List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y=> y.QUALIFICATION)).ToList();
             List<SelectList> qualifications = new List<SelectList>();
 
-             foreach(REFEREE reff in referees){
-                 List<SelectListItem> sel = new List<SelectListItem>();
-                
-                 foreach(USERQUAL qual in reff.USERQUALs){
-                            sel.Add(new SelectListItem {Text = qual.QUALIFICATION.name, Value = qual.qID.ToString()});
-                 }
-                 qualifications.Add(new SelectList(sel, "Value", "Text"));
+            foreach (REFEREE reff in referees)
+            {
+                List<SelectListItem> sel = new List<SelectListItem>();
 
-
+                foreach (USERQUAL qual in reff.USERQUALs)
+                {
+                    sel.Add(new SelectListItem { Text = qual.QUALIFICATION.name, Value = qual.qualificationId.ToString() });
+                }
+                qualifications.Add(new SelectList(sel, "Value", "Text"));
             }
-
-
-/*
-            foreach(REFEREE reff in referees){
-                qualifications.Add(
-                    new SelectList(new List<SelectListItem>
-                    {
-                        foreach(USERQUAL qual in reff.USERQUALs){
-                            new SelectListItem {Text = qual.QUALIFICATION.name, Value = qual.qID.ToString()},
-                        }, "Value", "Text");
-                    }
-                );
-            }
-            */
-
             var combined = new Tuple<List<REFEREE>, List<SelectList>>(referees, qualifications) { };
 
             return View(combined);
@@ -118,27 +103,27 @@ namespace userprofile.Controllers
             if (ModelState.IsValid)
             {
                 re.USERQUALs.Clear();
-                foreach (var qual in srqvm.quals)
+                if (srqvm.quals != null)
                 {
-                    QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
-
-
-
-
-                    if (qual.Selected == true)
+                    foreach (var qual in srqvm.quals)
                     {
-						USERQUAL newQual = new USERQUAL();
-						newQual.qID = thequal.qID;
-                        re.USERQUALs.Add(newQual);
-                    }
+                        QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
 
+                        if (qual.Selected == true)
+                        {
+                            USERQUAL newQual = new USERQUAL();
+                            newQual.qualificationId = thequal.qualificationId;
+                            re.USERQUALs.Add(newQual);
+                        }
+
+                    }
                 }
                 db.REFEREEs.Add(re);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", re.ID);
+            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", re.userId);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", re.sport);
             REFEREEqualViewModel rqvm = new REFEREEqualViewModel(db);
             rqvm.re = re;
@@ -170,17 +155,17 @@ namespace userprofile.Controllers
           
             if (ModelState.IsValid)
             {
-              REFEREE refe =  db.REFEREEs.First(r => r.refID == srqvm.refeid);
+              REFEREE refe=  db.REFEREEs.First(r => r.refId == srqvm.refeid);
               refe.USERQUALs.Clear();
               foreach (SelectQualEditorViewModel qual in srqvm.quals)
               {
-                  
+
 
                   if (qual.Selected == true)
                   {
                       QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
                       USERQUAL newQual = new USERQUAL();
-                      newQual.qID = thequal.qID;
+                      newQual.qualificationId = thequal.qualificationId;
                       refe.USERQUALs.Add(newQual);
                   }
               }
@@ -203,11 +188,11 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             REFEREE referee = db.REFEREEs.Find(id);
+            db.Entry(referee).Reference(r => r.AspNetUser).Load();
             if (referee == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", referee.ID);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
             return View(referee);
         }
@@ -217,7 +202,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="refID,availability,distTravel,sport,prefAge,prefGrade,ID")] REFEREE referee)
+        public ActionResult Edit([Bind(Include="refID,availability,distTravel,sport,prefAge,prefGrade,userId")] REFEREE referee)
         {
             if (ModelState.IsValid)
             {
@@ -225,7 +210,7 @@ namespace userprofile.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", referee.ID);
+            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", referee.userId);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
             return View(referee);
         }
@@ -256,6 +241,33 @@ namespace userprofile.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult Availability() {
+            var currentRefereeId= User.Identity.GetUserId();
+            var refe= db.REFEREEs.First(rid=>rid.userId==currentRefereeId);
+            if(refe.WEEKLYAVAILABILITY!=null){
+           
+            WEEKLYAVAILABILITYViewModel WAVM = new WEEKLYAVAILABILITYViewModel(refe.WEEKLYAVAILABILITY);
+
+            return View(WAVM);}
+            else return View(new WEEKLYAVAILABILITYViewModel());
+        }
+        [HttpPost]
+        public ActionResult Availability(WEEKLYAVAILABILITYViewModel jsonData)
+        {
+            var currentRefereeId = User.Identity.GetUserId();
+            var refe = db.REFEREEs.First(rid => rid.userId == currentRefereeId);
+            if (refe.WEEKLYAVAILABILITY != null) { 
+            db.WEEKLYAVAILABILITies.Remove(refe.WEEKLYAVAILABILITY);}
+            refe.WEEKLYAVAILABILITY = jsonData.getWeekADb();
+            db.Entry(refe).State = EntityState.Modified;
+            db.SaveChanges();
+
+
+            return View(jsonData);
+
+        }
+
 
         protected override void Dispose(bool disposing)
         {

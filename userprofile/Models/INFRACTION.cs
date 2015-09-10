@@ -14,7 +14,7 @@ namespace userprofile.Models
     
     public partial class INFRACTION
     {
-        public int infractionID { get; set; }
+        public int infractionId { get; set; }
         public string type { get; set; }
         public bool active { get; set; }
         public Nullable<bool> overruled { get; set; }

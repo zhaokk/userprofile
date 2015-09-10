@@ -26,14 +26,14 @@ namespace userprofile.Models
                     for (int i = (3 - ma.OFFERs.Count()); i > 0; i--)
                     {
                         OFFER fakeOffer = new OFFER();
-                        fakeOffer.status = -1;
+                        fakeOffer.status = 5;
                         this.offers.Add(fakeOffer);
 
                     }
                 
                 }
             }
-            this.mID = ma.mID;
+            this.mID = ma.matchId;
         }
 
         public List<OFFER> offers { get; set; }

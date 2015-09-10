@@ -22,13 +22,13 @@
                         </div>
                         <hr />
                         @Html.ValidationSummary(true)
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.LabelFor(model => model.re.availability, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.re.availability)
                                 @Html.ValidationMessageFor(model => model.re.availability)
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.re.distTravel, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -59,23 +59,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.re.ID, "ID", new { @class = "control-label col-md-2" })
+                            <label class="control-label col-md-2" for="re_prefGrade">Numer of games willing to referee per week</label>
                             <div class="col-md-10">
-                                @Html.DropDownList("ID", (SelectList)ViewBag.ID, new { @Name = "re.ID" })
-                                @Html.ValidationMessageFor(model => model.re.ID)
+                                @Html.EditorFor(model => model.re.maxGames)
+                                @Html.ValidationMessageFor(model => model.re.maxGames)
                             </div>
                         </div>
-                        @*<div class="form-group">
-                                    @Html.LabelFor(model => model.re.re.QUALIFICATIONS, "QUALIFICATIONS", new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.ListBox("name", (MultiSelectList)ViewBag.qualifaction)
-                              @Html.DropDownList("qualifaction", String.Empty)
-                                        @Html.DropDownList("QUALIFICATIONS", String.Empty)
-
-                            @Html.DropDownList("name", (MultiSelectList)ViewBag.QUALIFICATIONS, new { multiple = "multiple"})
-                            @Html.ValidationMessageFor(model => model.re.QUALIFICATIONS)
-                                    </div>
-                                </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.re.userId, "userId", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("userId", (SelectList)ViewBag.ID, new { @Name = "re.userId" })
+                                @Html.ValidationMessageFor(model => model.re.userId)
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <div class="control-label col-md-2">
                                 Select qual

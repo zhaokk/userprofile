@@ -35,13 +35,12 @@ namespace userprofile.Models
         public virtual DbSet<MATCH> MATCHes { get; set; }
         public virtual DbSet<OFFER> OFFERs { get; set; }
         public virtual DbSet<OFFERQUAL> OFFERQUALs { get; set; }
+        public virtual DbSet<OneOffAVAILABILITY> OneOffAVAILABILITies { get; set; }
         public virtual DbSet<PLAYER> PLAYERs { get; set; }
         public virtual DbSet<QUALIFICATION> QUALIFICATIONS { get; set; }
         public virtual DbSet<REFEREE> REFEREEs { get; set; }
         public virtual DbSet<SPORT> SPORTs { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TEAM> TEAMs { get; set; }
-        public virtual DbSet<TIMEOFF> TIMEOFFs { get; set; }
         public virtual DbSet<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual DbSet<TYPE> TYPEs { get; set; }
         public virtual DbSet<USERQUAL> USERQUALs { get; set; }

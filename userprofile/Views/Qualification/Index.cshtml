@@ -85,7 +85,7 @@
                                 @Html.DisplayNameFor(model => model.name)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.supDesc)
+                                @Html.DisplayNameFor(model => model.description)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.SPORT1.name)
@@ -99,7 +99,7 @@
                             <tr>
                                 <td>
                                    
-                                    <a href="@Url.Action("Details", new { id = item.qID })">
+                                    <a href="@Url.Action("Details", new { id = item.qualificationId })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
@@ -110,13 +110,13 @@
                                     @Html.DisplayFor(modelItem => item.winnerID)
                                 </td>*@
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.supDesc)
+                                    @Html.DisplayFor(modelItem => item.description)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SPORT1.name)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.qID }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.qualificationId }, new { @class = "btn btn-danger pull-right" })
                                 </td>
                             </tr>
                         }

@@ -14,8 +14,8 @@ namespace userprofile.Models
     
     public partial class OFFERQUAL
     {
-        public int qID { get; set; }
-        public int offerID { get; set; }
+        public int qualificationId { get; set; }
+        public int offerId { get; set; }
         public Nullable<int> qualLevel { get; set; }
     
         public virtual OFFER OFFER { get; set; }

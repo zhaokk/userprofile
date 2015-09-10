@@ -1,5 +1,5 @@
-﻿<!--model IEnumerable<userprofile.Models.REFEREE>
-    -->
+﻿
+
 @{
     ViewBag.Title = "Referee Management";
 }
@@ -60,9 +60,9 @@
                             </th>
 
                             <th>
-                               
+
                                 Qualifications
-                                
+
                             </th>
                             <th>
                                 main sport
@@ -78,7 +78,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.Action("Details", new { id = item.refID })">
+                                    <a href="@Url.Action("Details", new { id = item.refId })">
                                         @item.AspNetUser.UserName
                                     </a>
                                 </td>
@@ -93,16 +93,16 @@
                                 </td>
                                 <td>
 
-                                        <a href="@Url.Action("changequal",new {id=item.refID})">
-                                            @Html.ListBox("Id", Model.Item2[counter])
-                                                          
-                                         </a>
+                                    <a href="@Url.Action("changequal",new {id=item.refId})">
+                                        @Html.ListBox("Id", Model.Item2[counter])
+
+                                    </a>
                                 </td>
                                 <td>
                                     @item.SPORT1.name
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.refID }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.refId }, new { @class = "btn btn-danger pull-right" })
                                 </td>
                             </tr>
                             counter++;
@@ -114,7 +114,7 @@
     </div><!-- /.col -->
     <div class="col-md-3">
         <div class="btn-group">
-            <a class=" btn btn-block btn-success" href='@Url.Action("Create","REFEREE")'><b>Create New Referee</b></a>
+            <a class=" btn btn-block btn-success" href='@Url.Action("Create","REFEREE")'><b>Add a new referee</b></a>
         </div>
     </div>
 </div><!-- /.row -->

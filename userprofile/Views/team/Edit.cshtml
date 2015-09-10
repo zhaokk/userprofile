@@ -19,7 +19,9 @@
                        
                         <hr />
                         @Html.ValidationSummary(true)
-                        @Html.HiddenFor(model => model.teamID)
+                        @Html.HiddenFor(model => model.teamId)
+                        @Html.HiddenFor(model => model.sport)
+                        @Html.HiddenFor(model => model.SPORT1)
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -42,19 +44,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.managerID, "managerID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.managerID, Model.managerID, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("managerID", String.Empty)
+                                @Html.DropDownList("managerID")
+)
                                 @Html.ValidationMessageFor(model => model.managerID)
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.tournament, "tournament", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("tournament", String.Empty)
-                                @Html.ValidationMessageFor(model => model.tournament)
-                            </div>
-                        </div>
+                      
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Save" class="btn btn-success" />

@@ -20,21 +20,22 @@ namespace userprofile.Models
             this.OFFERs = new HashSet<OFFER>();
         }
     
-        public int mID { get; set; }
+        public int matchId { get; set; }
         public System.DateTime matchDate { get; set; }
-        public Nullable<int> location { get; set; }
-        public Nullable<int> teamaID { get; set; }
-        public Nullable<int> teambID { get; set; }
+        public Nullable<int> locationId { get; set; }
+        public int teamaId { get; set; }
+        public int teambId { get; set; }
         public Nullable<int> teamAScore { get; set; }
         public Nullable<int> teamBScore { get; set; }
-        public Nullable<bool> winnerID { get; set; }
-        public Nullable<int> tournament { get; set; }
+        public Nullable<int> winnerId { get; set; }
+        public int tournamentId { get; set; }
+        public Nullable<int> matchLength { get; set; }
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
-        public virtual LOCATION LOCATION1 { get; set; }
+        public virtual LOCATION LOCATION { get; set; }
         public virtual TEAM TEAM { get; set; }
         public virtual TEAM TEAM1 { get; set; }
-        public virtual TOURNAMENT TOURNAMENT1 { get; set; }
+        public virtual TOURNAMENT TOURNAMENT { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
     }
 }

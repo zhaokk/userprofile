@@ -1,0 +1,133 @@
+﻿@model userprofile.Models.WEEKLYAVAILABILITYViewModel
+@{
+    ViewBag.Title = "Availability";
+}
+
+<h2>Availability</h2>
+<div id="note" class="callout callout-success" style="margin-bottom: 0!important;" hidden>
+    <h4><i class="fa fa-info"></i> Note : The change has been saved!</h4>
+    
+</div>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Weekly Availability</div>
+
+    <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">8-12</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">12-16</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>fat</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">16-20</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>twitter</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>mdo</td>
+            </tr>
+
+        </tbody>
+    </table>
+    
+</div>
+<button type="button" class="btn btn-warning btn-lg" id="save">
+    <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save changes
+</button>
+@Scripts.Render("~/Scripts/jQueryUI")
+
+@section Scripts{
+    <script>
+        $(function () { 
+            var availaArray= JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
+            $("td").each(function () {
+                
+                var col = $(this).parent().children().index($(this))-1;
+                var row = $(this).parent().parent().children().index($(this).parent());
+                $(this).text(" " );
+                if (availaArray[col][row] == true) {
+                   // 
+                    $(this).css("background-color", "#00a65a");
+                   
+                } else {
+
+                    $(this).css("background-color", "#dd4b39");
+                    
+                }
+           
+            });
+            $('td').click(function () {
+                var col = $(this).parent().children().index($(this)) - 1;
+                var row = $(this).parent().parent().children().index($(this).parent());
+                if (availaArray[col][row] == true) {
+                    $(this).animate
+        ({ backgroundColor: "#dd4b39" }, 500);
+                    $("#note").hide("slow", function () {
+
+                    });
+                    //$(this).css("background-color", "red");
+                    availaArray[col][row] = false;
+                } else {
+                    availaArray[col][row] = true;
+                    $(this).animate
+        ({ backgroundColor: "#00a65a" }, 500);
+                    $("#note").hide("slow", function () {
+
+                    });
+                   // $(this).css("background-color", "blue");
+                }
+            })
+            $('#save').click(function () {
+                var WEEKLYAVAILABILITYViewModel = {  "moment": availaArray  };
+                $.ajax({
+                    url: "@Url.Content("~/REFEREE/Availability")",
+                    data: JSON.stringify(WEEKLYAVAILABILITYViewModel),
+                type: 'POST',
+                contentType: 'application/json'
+                });
+                $("#note").show("slow", function () {
+
+                });
+            })
+        })
+    </script>
+    
+    <style>
+        table {
+            table-layout: fixed;
+            width: 200px;
+        }
+    </style>
+    }

@@ -22,13 +22,13 @@ namespace userprofile.Models
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
         }
     
-        public int teamID { get; set; }
+        public int teamId { get; set; }
         public string name { get; set; }
         public int ageBracket { get; set; }
         public int grade { get; set; }
         public string sport { get; set; }
         public string managerID { get; set; }
-    
+
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual ICollection<MATCH> MATCHes1 { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }

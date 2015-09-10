@@ -20,10 +20,11 @@ namespace userprofile.Models
             this.USERQUALs = new HashSet<USERQUAL>();
         }
     
-        public int qID { get; set; }
+        public int qualificationId { get; set; }
         public string name { get; set; }
         public string sport { get; set; }
         public string description { get; set; }
+        public int qualificationLevel { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }

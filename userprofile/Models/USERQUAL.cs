@@ -14,8 +14,8 @@ namespace userprofile.Models
     
     public partial class USERQUAL
     {
-        public int qID { get; set; }
-        public int ID { get; set; }
+        public int qualificationId { get; set; }
+        public int refID { get; set; }
         public Nullable<int> qualLevel { get; set; }
     
         public virtual QUALIFICATION QUALIFICATION { get; set; }
