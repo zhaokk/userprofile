@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -61,8 +61,10 @@ namespace userprofile.Controllers
         Dictionary<int, HashSet<int>> qualificationRefStorage;
         Dictionary<int, OFFER> offerStorage;
         Dictionary<int, REFEREE> refereeStorage;
+        Dictionary<int, MATCH> matchStorage;
         List<Dictionary<int, val>> bestOffers, bestReferees;
 		Dictionary<int, Dictionary<int, bool>> matchClashes;
+
 
         Entities db;
 		int maxOffersFilled; //Max amount of offers that can be filled
@@ -82,6 +84,8 @@ namespace userprofile.Controllers
             qualificationRefStorage = new Dictionary<int, HashSet<int>>();
             offerStorage = new Dictionary<int, OFFER>();
             refereeStorage = new Dictionary<int, REFEREE>();
+            matchStorage = new Dictionary<int, MATCH>();
+            matchClashes = new Dictionary<int, Dictionary<int, bool>>();
 
             maxOffersFilled = 0;
             currOffersFilled = 0;
@@ -216,7 +220,7 @@ namespace userprofile.Controllers
                         availableReferees = new HashSet<int>();
                         foreach (var k in qualificationRefStorage[j.qID]) {
                             if (checkInitAvailability(i.Key, k)) {
-                                availableReferees.Add(k);
+
                             }
                         }
                     }
@@ -245,10 +249,44 @@ namespace userprofile.Controllers
             }
         }
 
+        int calcTimeBufferBetweenGames(int i, int j) {
+            if (matchStorage[i].location == matchStorage[j].location) {
+                return 0;
+            }
+            else {
+                return 30; // CALCULATE TIME 
+            }
+        }
+
 		bool calcMatchTimeClash(int i, int j) {
-			
+            if (!matchStorage.ContainsKey(i)) {
+                matchStorage.Add(i, db.MATCHes.Find(i));
+            }
+            if (!matchStorage.ContainsKey(j)) {
+                matchStorage.Add(j, db.MATCHes.Find(j));
+            }
+            int buffer = calcTimeBufferBetweenGames(i, j);
+            if (matchStorage[i].matchDate.Date == matchStorage[j].matchDate.Date) {
+                if (matchStorage[i].matchDate < matchStorage[j].matchDate) {
+                    if (matchStorage[i].matchDate.AddMinutes(matchStorage[i].length + buffer) <= matchStorage[j].matchDate)
+                        return false;
+                    else
+                        return true;
+                }
+                else if (matchStorage[i].matchDate > matchStorage[j].matchDate) {
+                    if (matchStorage[i].matchDate >= matchStorage[j].matchDate.AddMinutes(matchStorage[j].length + buffer))
+                        return false;
+                    else
+                        return true;
+                }
+                else { // ==
 			return true;
 		}
+            }
+            else {
+                return false;
+            }
+        }
 
 		void calculateClash(int i, int j) {
 			if (matchClashes.ContainsKey(i)) {
@@ -259,19 +297,19 @@ namespace userprofile.Controllers
 					bool tmp = calcMatchTimeClash(i, j);
 					matchClashes[i].Add(j, tmp);
 					if (!matchClashes.ContainsKey(j)) {
-						matchClashes.Add(j,new Dictionary<int,bool>());
+                        matchClashes.Add(j, new Dictionary<int, bool>());
 					}
-					matchClashes[j].Add(i,tmp);
+                    matchClashes[j].Add(i, tmp);
 				}
 			}
 			else {
-				bool tmp = calcMatchTimeClash(i,j);
-				matchClashes.Add(i,new Dictionary<int,bool>());
-				matchClashes[i].Add(j,tmp);
+                bool tmp = calcMatchTimeClash(i, j);
+                matchClashes.Add(i, new Dictionary<int, bool>());
+                matchClashes[i].Add(j, tmp);
 				if (!matchClashes.ContainsKey(j)) {
-					matchClashes.Add(j,new Dictionary<int,bool>());
+                    matchClashes.Add(j, new Dictionary<int, bool>());
 				}
-				matchClashes[j].Add(i,tmp);
+                matchClashes[j].Add(i, tmp);
 			}
 		}
 
@@ -279,7 +317,7 @@ namespace userprofile.Controllers
 			foreach (var i in dReferees) {
 				foreach (var j in i.Value.available) {
 					foreach (var k in i.Value.available) {
-						if (j.Key != k.Key) {
+                        if (offerStorage[j.Key].MATCH.mID != offerStorage[j.Key].MATCH.mID) {
 							calculateClash(j.Key, k.Key);
 						}
 					}
@@ -414,8 +452,8 @@ namespace userprofile.Controllers
 				}
 				if (currOffersFilled > bestOffersFilled) {
 					bestOffersFilled = currOffersFilled;
-					bestOffers.Clear();
-					bestReferees.Clear();
+                    bestOffers = new List<Dictionary<int, val>>();
+                    bestReferees = new List<Dictionary<int, val>>();
 					saveState();
 				}
 				else if (currOffersFilled == bestOffersFilled) {
