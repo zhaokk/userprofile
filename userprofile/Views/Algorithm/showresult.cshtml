@@ -1,0 +1,38 @@
+﻿@model userprofile.Models.AlgorithmModel
+
+@{
+    ViewBag.Title = "Index";
+    var i = 0;
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>AlgorithmModel</h4>
+    @foreach (userprofile.Models.solution solu in Model.result) {
+        i++;
+        <h2>SOLUTION @i</h2>
+        <table>
+            <tr><td>MatchDate</td><td>referName</td></tr>
+            @foreach (userprofile.Models.pair pair in solu.pairs)
+        {
+                <tr>
+                    <td>
+                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.mID })">
+                            @pair.offer.MATCH.matchDate
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.ID })">
+                            @pair.refe.AspNetUser.lastName
+                        </a>
+                    </td>
+                </tr>
+        }
+        </table>
+
+
+    }
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
