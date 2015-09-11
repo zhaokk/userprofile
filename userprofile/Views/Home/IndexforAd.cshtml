@@ -26,6 +26,7 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
 
 
     $(function () {
+        $("#example3").DataTable();
         $("#example1").DataTable();
         $('#example2').DataTable({
             "paging": true,
@@ -100,6 +101,7 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -128,6 +130,7 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                             }
                         </tbody>
                     </table>
+                    </div>
                 </div><!-- /.box-body -->
             </div>
 
@@ -141,6 +144,7 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
                     <table id="example1" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -169,6 +173,7 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                         }
                         </tbody>
                     </table>
+                    </div>
                 </div><!-- /.box-body -->
             </div>
         </div><!-- /.col -->
@@ -220,14 +225,44 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
+                        <table id="example3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Match ID
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+                                    <th>
+                                        Match Location
+                                    </th>
 
-                    <table id="example2" class="table table-bordered table-hover">
+                                </tr>
+                            </thead>
+                            <tbody>
                         @foreach (var match in @Model.matches)
                 {
-                        <tr><td>@match.matchDate</td></tr>
+                            <tr>
+                                <td>
+                                    @match.mID
+                                </td>
+
+                                <td>
+                                    @match.matchDate
+                                </td>
+                                <td>
+                                    @match.LOCATION1.name
+                                </td>
+                            </tr>
+
 
                 }
+                            </tbody>
                     </table>
+                    </div>
                 </div><!-- /.box-body -->
             </div>
         </div>

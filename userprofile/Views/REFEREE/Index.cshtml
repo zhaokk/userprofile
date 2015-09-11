@@ -78,15 +78,15 @@
                         @foreach (var item in Model.Item1)
                         {
                             <tr>
-                                <td>
+                            @*<td>
                                    
-                                    @*<a href="@Url.Action("Details", new { id = item.refID })">
+                                    <a href="@Url.Action("Details", new { id = item.refID })">
                                         @Html.DisplayFor(modelItem => item.availability)
-                                    </a>*@
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                    </a>
+                                    @Html.ActionLink("Details", "Details", new { id = item.mID })
 
 
-                                </td>
+                                </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.distTravel)
                                 </td>
