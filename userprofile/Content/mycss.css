@@ -51,4 +51,12 @@
     #map_box {
         height:200px;
     }
+
+     #map_box2 {
+        height:430px;
+    }
+
+     #map_field_pc_mobile2{
+        width:250px;
+    }
 }
