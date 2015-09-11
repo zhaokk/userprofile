@@ -33,7 +33,7 @@ namespace userprofile.Models
                 
                 }
             }
-            this.mID = ma.mID;
+            this.mID = ma.matchId;
         }
 
         public List<OFFER> offers { get; set; }

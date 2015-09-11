@@ -78,7 +78,7 @@
                             <tr>
                                 <td>
                                     
-                                    <a href="@Url.Action("Details", new { id = item.lID })">
+                                    <a href="@Url.Action("Details", new { id = item.locationId })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
@@ -109,7 +109,7 @@
                                     @Html.DisplayFor(modelItem => item.state)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.lID }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.locationId }, new { @class = "btn btn-danger pull-right" })
                                 </td>
                             </tr>
                         }

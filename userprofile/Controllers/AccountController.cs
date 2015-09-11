@@ -59,12 +59,11 @@ namespace userprofile.Controllers
                 user.phoneNum = model.phoneNum;
                 user.state = model.state;
                 user.street = model.street;
-                user.streetNumber = model.streetNumber;
                 Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 await Db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            // If we got this far, something failed, redisplay form
+            // If we got this far something failed, redisplay form
             return View(model);
         }
      // [Authorize(Roles = "Admin")]
@@ -128,17 +127,46 @@ namespace userprofile.Controllers
             if (ModelState.IsValid)
             {
                 var idManager = new IdentityManager();
-                var Db = new ApplicationDbContext();
-                var user = Db.Users.First(u => u.UserName == model.UserName);
+                var db = new Raoconnection();
+
+                var user = db.AspNetUsers.First(u => u.UserName == model.UserName);
                 idManager.ClearUserRoles(user.Id);
-                foreach (var role in model.Roles)
+
+
+                if (model.Roles[0].Selected)
                 {
-                    if (role.Selected)
-                    {
-                        idManager.AddUserToRole(user.Id, role.RoleName);
-                    }
+                    user.isAdmin = true;
+                    var roleMap = db.AspNetRoles.First(m => m.Name=="Admin");
+                    user.AspNetRoles.Add(roleMap);
+
                 }
-                return RedirectToAction("index");
+                if (model.Roles[1].Selected)
+                {
+                    user.isPlayer = true;
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "User"); //change to  == "Player"
+                    user.AspNetRoles.Add(roleMap);
+
+                }
+                if (model.Roles[2].Selected)
+                {
+                    user.isReferee = true;
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Referee");
+                    user.AspNetRoles.Add(roleMap);
+
+                }
+                if (model.Roles[3].Selected)
+                {
+                    user.isOrganizer = true;
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "CanEdit"); //change to  == "Organizer"
+                    user.AspNetRoles.Add(roleMap);
+                   
+                }
+
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                int x = db.SaveChanges();
+
+
+                return RedirectToAction("Index");
             }
             return View();
         }
@@ -205,7 +233,7 @@ namespace userprofile.Controllers
        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
-            var db = new Entities();
+            var db = new Raoconnection();
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
             RegisterViewModel RVM = new RegisterViewModel(db);
             return View(RVM);
@@ -224,7 +252,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            var db = new Entities();
+            var db = new Raoconnection();
             string location = @"~\userprofile\default.png";
             REFEREE newref=new REFEREE();
             if (model.upload != null)
@@ -250,15 +278,17 @@ namespace userprofile.Controllers
                     switch (model.Roles) { 
                         case "Referee":
                             REFEREE refComeWithUser = model.optionalRe.re;
-                            refComeWithUser.ID = storedUser.Id;
-                            refComeWithUser.QUALIFICATIONS.Clear();
+                            refComeWithUser.userId = storedUser.Id;
+                            refComeWithUser.USERQUALs.Clear();
                             foreach (var qual in model.optionalRe.srqvm.quals)
                             {
                                 QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
 
                                 if (qual.Selected == true)
                                 {
-                                    refComeWithUser.QUALIFICATIONS.Add(thequal);
+                                    USERQUAL newQual = new USERQUAL();
+                                    newQual.qualificationId = thequal.qualificationId;
+                                    refComeWithUser.USERQUALs.Add(newQual);
                                 }
 
                             }

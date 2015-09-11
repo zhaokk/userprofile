@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class teamController : Controller
     {
-        private Entities db = new Entities();
+        private Raoconnection db = new Raoconnection();
 
         // GET: /team/
         public ActionResult Index()
@@ -41,7 +41,7 @@ namespace userprofile.Controllers
         public ActionResult Create()
         {
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="teamID,name,ageBracket,grade,managerID,tournament")] TEAM team)
+        public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,tournamentId")] TEAM team)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
+            ViewBag.managerId = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerId);
            
             return View(team);
         }
@@ -73,11 +73,13 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TEAM team = db.TEAMs.Find(id);
+            db.Entry(team).Reference(r => r.SPORT1).Load();
+
             if (team == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
+            ViewBag.managerId = new SelectList(db.AspNetUsers, "UserName", "UserName", team.managerId);
            
             return View(team);
         }
@@ -87,15 +89,16 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="teamID,name,ageBracket,grade,managerID,tournament")] TEAM team)
+        public ActionResult Edit([Bind(Include = "teamId,name,ageBracket,grade,managerId,sport")] TEAM team)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
+                db.Entry(team).State = System.Data.Entity.EntityState.Modified;
+                //db.Entry(team).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerID);
+            ViewBag.managerId = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerId);
            
             return View(team);
         }

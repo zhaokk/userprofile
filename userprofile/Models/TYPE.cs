@@ -14,8 +14,8 @@ namespace userprofile.Models
     
     public partial class TYPE
     {
-        public int typeID { get; set; }
-        public int offerID { get; set; }
+        public int typeId { get; set; }
+        public int offerId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
     

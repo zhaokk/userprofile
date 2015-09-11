@@ -14,7 +14,6 @@ namespace userprofile.Models
     
     public partial class TEAM
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TEAM()
         {
             this.MATCHes = new HashSet<MATCH>();
@@ -23,22 +22,18 @@ namespace userprofile.Models
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
         }
     
-        public int teamID { get; set; }
+        public int teamId { get; set; }
         public string name { get; set; }
         public int ageBracket { get; set; }
         public int grade { get; set; }
         public string sport { get; set; }
-        public string managerID { get; set; }
+        public string managerId { get; set; }
+        public int active { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATCH> MATCHes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATCH> MATCHes1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
     }
 }

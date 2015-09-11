@@ -44,7 +44,7 @@
                                 @Html.DisplayNameFor(model => model.grade)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                @Html.DisplayNameFor(model => model.managerId)
                             </th>
 
                             <th>
@@ -58,7 +58,7 @@
                             <tr>
                                 <td>
                                    
-                                    <a href="@Url.Action("Details", new { id = item.teamID })">
+                                    <a href="@Url.Action("Details", new { id = item.teamId })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
                                     @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
@@ -75,11 +75,11 @@
                                     @Html.DisplayFor(modelItem => item.grade)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                                    @Html.DisplayFor(modelItem => item.managerId)
                                 </td>
                               
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamID }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
                                 </td>
                             </tr>
                         }

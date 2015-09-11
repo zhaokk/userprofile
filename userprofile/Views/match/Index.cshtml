@@ -129,7 +129,7 @@
                                     @Html.DisplayNameFor(model => model.TEAM1.name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+                                    @Html.DisplayNameFor(model => model.TOURNAMENT.sport)
                                 </th>
 								<th></th>
                                 
@@ -141,7 +141,7 @@
                                 <tr>
                                     <td>
                                        
-                                        <a href="@Url.Action( "Details", new { id = item.mID })">
+                                        <a href="@Url.Action( "Details", new { id = item.matchId })">
                                         @Html.DisplayFor(modelItem => item.matchDate)</a>
                                        
                                         @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
@@ -152,7 +152,7 @@
                                             @Html.DisplayFor(modelItem => item.winnerID)
                                         </td>*@
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LOCATION1.name)
+                                        @Html.DisplayFor(modelItem => item.LOCATION.name)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.TEAM.name)
@@ -161,14 +161,14 @@
                                         @Html.DisplayFor(modelItem => item.TEAM1.name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TOURNAMENT1.sport)
+                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
 										
                                     </td>
 									<td>
 										
 									@if (User.IsInRole("Admin")) { 
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.mID }, new { @class = "btn btn-danger pull-right" })
-                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.mID }, new { @class = "btn btn-warning pull-right" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
                                     
                                     }</td>
                                    

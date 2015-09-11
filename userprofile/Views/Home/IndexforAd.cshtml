@@ -11,7 +11,20 @@
 <link href="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
 
 
-<script>
+<script type="text/javascript">
+if (window.addEventListener) { // Mozilla, Netscape, Firefox
+    window.addEventListener('load', WindowLoad, false);
+} else if (window.attachEvent) { // IE
+    window.attachEvent('onload', WindowLoad);
+}
+
+    function WindowLoad(event) {
+        var ctx = document.getElementById("pieChart").getContext("2d");
+        window.myPie = new Chart(ctx).Pie(pieData);
+    }
+
+
+
     $(function () {
         $("#example1").DataTable();
         $('#example2').DataTable({
@@ -23,6 +36,9 @@
             "autoWidth": false
         });
     });
+
+        
+
 		var pieData = [
 				{
 					value: @Model.acceptedOffers.Count(),
@@ -52,10 +68,10 @@
 
 			];
 
-			window.onload = function(){
-			    var ctx = document.getElementById("pieChart").getContext("2d");
-				window.myPie = new Chart(ctx).Pie(pieData);
-			};
+			//window.onload = function(){
+			//    var ctx = document.getElementById("pieChart").getContext("2d");
+			//	window.myPie = new Chart(ctx).Pie(pieData);
+			//};
 
 
 
