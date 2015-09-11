@@ -14,11 +14,11 @@ namespace userprofile.Models
     
     public partial class OneOffAVAILABILITY
     {
-        public int availabilityId { get; set; }
-        public int refId { get; set; }
+        public int refID { get; set; }
         public System.DateTime startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
         public Nullable<bool> allDay { get; set; }
-        public bool timeOnOrOff { get; set; }
+        public Nullable<bool> timeOnOrOff { get; set; }
         public string description { get; set; }
     
         public virtual REFEREE REFEREE { get; set; }

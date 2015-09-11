@@ -41,6 +41,18 @@ namespace userprofile
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/Scripts/jQueryUI").Include("~/Scripts/jquery-ui.min.js"));
+
+
+            bundles.Add(new StyleBundle("~/Content/mycss").Include("~/Content/mycss.css",
+                "~/Content/indexReferee.css"));
+
+
+            bundles.Add(new StyleBundle("~/Scripts/Datatable.css").Include("~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/Datatable.js").Include("~/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js",
+                "~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.js"));
+
+
         }
     }
 }

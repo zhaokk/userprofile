@@ -84,7 +84,8 @@ namespace userprofile.Models
         //[Required]
         //public int postcode { get; set; }
 
-
+        //[Required]
+        //public int streetNumber { get; set; }
 
         public string Roles { get; set; }
         [Required]
@@ -108,6 +109,7 @@ namespace userprofile.Models
            phoneNum =  this.phoneNum,
             state = this.residentLoc.state,
             street = this.residentLoc.street,
+                streetNumber = this.residentLoc.snum,
                 postcode=this.residentLoc.postcode
 
 
@@ -115,8 +117,7 @@ namespace userprofile.Models
             return user;
         }
         public RegisterViewModel() { }
-        public RegisterViewModel(Raoconnection db)
-        {
+        public RegisterViewModel(Entities db) {
             this.optionalRe = new REFEREEqualViewModel(db);
             this.residentLoc = new ResidentLoc();
         }
@@ -124,6 +125,7 @@ namespace userprofile.Models
     public class ResidentLoc {
         public string street { get; set; }
         //public Nullable<int> snum { get; set; }
+        public int snum { get; set; }
         public string city { get; set; }
         public int postcode { get; set; }
       
@@ -147,7 +149,7 @@ namespace userprofile.Models
             this.phoneNum = user.phoneNum;
             this.state = user.state;
             this.street = user.street;
-            this.postcode = user.postcode;
+            this.streetNumber = user.streetNumber;
         }
 
 
@@ -173,6 +175,8 @@ namespace userprofile.Models
         [Required]
         public int postcode { get; set; }
 
+        [Required]
+        public int streetNumber { get; set; }
         [Required]
         public string state { get; set; }
         [Required]

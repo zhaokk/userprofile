@@ -4,27 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="test14Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ADMINISTRATION">
-          <Key>
-            <PropertyRef Name="refsCanViewOthers" />
-            <PropertyRef Name="refsCanSeeOtherGames" />
-            <PropertyRef Name="durationOfAlgorithm" />
-          </Key>
-          <Property Name="refsCanViewOthers" Type="bit" Nullable="false" />
-          <Property Name="refsCanSeeOtherGames" Type="bit" Nullable="false" />
-          <Property Name="durationOfAlgorithm" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ALTERNATEOFFERS">
-          <Key>
-            <PropertyRef Name="offerId" />
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="offerId" Type="int" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
-        </EntityType>
+      <Schema Namespace="newSchemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,30 +44,25 @@ warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ffaNum" Type="int" />
           <Property Name="UserName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="firstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="lastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="phoneNum" Type="int" />
-          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
           <Property Name="photoDir" Type="nvarchar(max)" />
           <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="country" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="postcode" Type="int" Nullable="false" />
           <Property Name="street" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="streetNumber" Type="int" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="dob" Type="date" Nullable="false" />
-          <Property Name="isAdmin" Type="bit" Nullable="false" />
-          <Property Name="isOrganizer" Type="bit" Nullable="false" />
-          <Property Name="isReferee" Type="bit" Nullable="false" />
-          <Property Name="isPlayer" Type="bit" Nullable="false" />
-          <Property Name="willingToShowPhoneNum" Type="bit" Nullable="false" />
-          <Property Name="willingToShowDOB" Type="bit" Nullable="false" />
-          <Property Name="willingToShowAddress" Type="bit" Nullable="false" />
-          <Property Name="willingToshowEmail" Type="bit" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
+          <Property Name="isAdmin" Type="bit" />
+          <Property Name="isOrganizer" Type="bit" />
+          <Property Name="isReferee" Type="bit" />
+          <Property Name="isPlayer" Type="bit" />
         </EntityType>
         <EntityType Name="Events">
           <Key>
@@ -96,142 +71,130 @@ warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="owner" Type="nvarchar" MaxLength="128" />
           <Property Name="title" Type="nvarchar" MaxLength="50" />
-          <Property Name="start" Type="date" />
-          <Property Name="end" Type="date" />
+          <Property Name="start" Type="datetime" />
+          <Property Name="end" Type="datetime" />
           <Property Name="url" Type="nvarchar" MaxLength="50" />
           <Property Name="backgroundColor" Type="nvarchar" MaxLength="50" />
           <Property Name="allDay" Type="bit" />
         </EntityType>
         <EntityType Name="INFRACTIONS">
           <Key>
-            <PropertyRef Name="infractionId" />
+            <PropertyRef Name="infractionID" />
           </Key>
-          <Property Name="infractionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="infractionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="overruled" Type="bit" />
           <Property Name="matchID" Type="int" Nullable="false" />
-          <Property Name="player" Type="int" Nullable="false" />
-          <Property Name="expiryDate" Type="date" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
+          <Property Name="player" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="LOCATION">
           <Key>
-            <PropertyRef Name="locationId" />
+            <PropertyRef Name="lID" />
           </Key>
-          <Property Name="locationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="price" Type="float" />
-          <Property Name="street" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="street" Type="varchar" MaxLength="20" />
+          <Property Name="snum" Type="int" />
           <Property Name="city" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="postcode" Type="int" Nullable="false" />
           <Property Name="phoneNum" Type="int" Nullable="false" />
-          <Property Name="country" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="50" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MATCH">
           <Key>
-            <PropertyRef Name="matchId" />
+            <PropertyRef Name="mID" />
           </Key>
-          <Property Name="matchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="matchDate" Type="datetime" Nullable="false" />
-          <Property Name="locationId" Type="int" />
-          <Property Name="teamaId" Type="int" Nullable="false" />
-          <Property Name="teambId" Type="int" Nullable="false" />
+          <Property Name="mID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="matchDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="location" Type="int" />
+          <Property Name="teamaID" Type="int" />
+          <Property Name="teambID" Type="int" />
           <Property Name="teamAScore" Type="int" />
           <Property Name="teamBScore" Type="int" />
-          <Property Name="winnerId" Type="int" />
-          <Property Name="tournamentId" Type="int" Nullable="false" />
-          <Property Name="matchLength" Type="int" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
+          <Property Name="winnerID" Type="bit" />
+          <Property Name="tournament" Type="int" />
+          <Property Name="length" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
-            <PropertyRef Name="offerId" />
+            <PropertyRef Name="offerID" />
           </Key>
-          <Property Name="offerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="offerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="matchId" Type="int" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="mid" Type="int" Nullable="false" />
+          <Property Name="refID" Type="int" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="dateOfOffer" Type="date" Nullable="false" />
-          <Property Name="declinedReason" Type="nvarchar(max)" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFERQUAL">
           <Key>
-            <PropertyRef Name="qualificationId" />
-            <PropertyRef Name="offerId" />
+            <PropertyRef Name="qID" />
+            <PropertyRef Name="offerID" />
           </Key>
-          <Property Name="qualificationId" Type="int" Nullable="false" />
-          <Property Name="offerId" Type="int" Nullable="false" />
-          <Property Name="qualLevel" Type="int" />
+          <Property Name="qID" Type="int" Nullable="false" />
+          <Property Name="offerID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OneOffAVAILABILITY">
           <Key>
-            <PropertyRef Name="availabilityId" />
+            <PropertyRef Name="refID" />
             <PropertyRef Name="startDate" />
           </Key>
-          <Property Name="availabilityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="startDate" Type="date" Nullable="false" />
+          <Property Name="refID" Type="int" Nullable="false" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" />
           <Property Name="allDay" Type="bit" />
-          <Property Name="timeOnOrOff" Type="bit" Nullable="false" />
+          <Property Name="timeOnOrOff" Type="bit" />
           <Property Name="description" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
-            <PropertyRef Name="teamId" />
-            <PropertyRef Name="userId" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="teamId" Type="int" Nullable="false" />
-          <Property Name="userId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="team" Type="int" Nullable="false" />
+          <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="position" Type="varchar" MaxLength="20" />
           <Property Name="shirtNum" Type="int" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="QUALIFICATIONS">
           <Key>
-            <PropertyRef Name="qualificationId" />
+            <PropertyRef Name="qID" />
           </Key>
-          <Property Name="qualificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="128" />
-          <Property Name="qualificationLevel" Type="int" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="REFEREE">
           <Key>
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="refID" />
           </Key>
-          <Property Name="refId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="refID" Type="int" Nullable="false" />
           <Property Name="distTravel" Type="int" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="prefAge" Type="int" />
           <Property Name="prefGrade" Type="int" />
-          <Property Name="userId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="maxGames" Type="int" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
             <PropertyRef Name="name" />
           </Key>
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TEAM">
           <Key>
-            <PropertyRef Name="teamId" />
+            <PropertyRef Name="teamID" />
           </Key>
-          <Property Name="teamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" />
           <Property Name="ageBracket" Type="int" Nullable="false" />
           <Property Name="grade" Type="int" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="managerId" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
+          <Property Name="managerID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="TEAMINS">
           <Key>
@@ -243,40 +206,36 @@ warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary
         </EntityType>
         <EntityType Name="TOURNAMENT">
           <Key>
-            <PropertyRef Name="tournamentId" />
+            <PropertyRef Name="tID" />
           </Key>
-          <Property Name="tournamentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="startDate" Type="date" Nullable="false" />
+          <Property Name="tID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
           <Property Name="organizer" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="ageBracket" Type="int" Nullable="false" />
-          <Property Name="grade" Type="int" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="active" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
-            <PropertyRef Name="typeId" />
+            <PropertyRef Name="typeID" />
           </Key>
-          <Property Name="typeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="offerId" Type="int" Nullable="false" />
+          <Property Name="typeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="offerID" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="USERQUAL">
           <Key>
-            <PropertyRef Name="qualificationId" />
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="qID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="qualificationId" Type="int" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="qualLevel" Type="int" />
+          <Property Name="qID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="WEEKLYAVAILABILITY">
           <Key>
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="refID" />
           </Key>
-          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="refID" Type="int" Nullable="false" />
           <Property Name="monday" Type="int" Nullable="false" />
           <Property Name="tuesday" Type="int" Nullable="false" />
           <Property Name="wednesday" Type="int" Nullable="false" />
@@ -285,38 +244,24 @@ warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary
           <Property Name="saturday" Type="int" Nullable="false" />
           <Property Name="sunday" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="WILLINGLOCATIONS">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'newSchema.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
           <Key>
-            <PropertyRef Name="refId" />
-            <PropertyRef Name="locationId" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
           </Key>
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="locationId" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="fk_ALTERNATEOFFERS_offID">
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
-          <End Role="ALTERNATEOFFERS" Type="Self.ALTERNATEOFFERS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OFFER">
-              <PropertyRef Name="offerId" />
-            </Principal>
-            <Dependent Role="ALTERNATEOFFERS">
-              <PropertyRef Name="offerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_ALTERNATEOFFERS_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="ALTERNATEOFFERS" Type="Self.ALTERNATEOFFERS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
-            </Principal>
-            <Dependent Role="ALTERNATEOFFERS">
-              <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AspNetUserClaims_dbo_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
@@ -382,25 +327,34 @@ warning 6002: The table/view 'test14.dbo.ADMINISTRATION' does not have a primary
           <End Role="INFRACTIONS" Type="Self.INFRACTIONS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MATCH">
-              <PropertyRef Name="matchId" />
+              <PropertyRef Name="mID" />
             </Principal>
             <Dependent Role="INFRACTIONS">
               <PropertyRef Name="matchID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="fk_INFRACTION_PLAYER" />-->
+        <Association Name="fk_INFRACTION_PLAYER">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="INFRACTIONS" Type="Self.INFRACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INFRACTIONS">
+              <PropertyRef Name="player" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_MATCH_ID">
           <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
           <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qualificationId" />
+              <PropertyRef Name="qID" />
             </Principal>
             <Dependent Role="OFFERQUAL">
-              <PropertyRef Name="qualificationId" />
+              <PropertyRef Name="qID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -409,46 +363,46 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOCATION">
-              <PropertyRef Name="locationId" />
+              <PropertyRef Name="lID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="locationId" />
+              <PropertyRef Name="location" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TEAMA">
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="teamaId" />
+              <PropertyRef Name="teamaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TEAMB">
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="teambId" />
+              <PropertyRef Name="teambID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tournamentId" />
+              <PropertyRef Name="tID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="tournamentId" />
+              <PropertyRef Name="tournament" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -457,10 +411,10 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MATCH">
-              <PropertyRef Name="matchId" />
+              <PropertyRef Name="mID" />
             </Principal>
             <Dependent Role="OFFER">
-              <PropertyRef Name="matchId" />
+              <PropertyRef Name="mid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,10 +423,10 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
           <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OFFER">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="offerID" />
             </Principal>
             <Dependent Role="OFFERQUAL">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="offerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -481,10 +435,10 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="OFFER">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -505,10 +459,10 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
           <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="PLAYER">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="team" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -520,7 +474,7 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PLAYER">
-              <PropertyRef Name="userId" />
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -556,13 +510,22 @@ warning 6035: The relationship 'fk_INFRACTION_PLAYER' has columns that are not p
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="REFEREE">
-              <PropertyRef Name="userId" />
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_TEAM_MANAGER" />-->
+        <Association Name="FK_TEAM_MANAGER">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="managerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_TEAM_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
@@ -580,7 +543,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tournamentId" />
+              <PropertyRef Name="tID" />
             </Principal>
             <Dependent Role="TEAMINS">
               <PropertyRef Name="tournament" />
@@ -592,7 +555,7 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <End Role="TEAMINS" Type="Self.TEAMINS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="TEAMINS">
               <PropertyRef Name="teamID" />
@@ -604,10 +567,10 @@ warning 6035: The relationship 'FK_TEAM_MANAGER' has columns that are not part o
           <End Role="OneOffAVAILABILITY" Type="Self.OneOffAVAILABILITY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="OneOffAVAILABILITY">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -631,10 +594,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="TYPE" Type="Self.TYPE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OFFER">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="offerID" />
             </Principal>
             <Dependent Role="TYPE">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="offerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -643,10 +606,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="USERQUAL">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -655,10 +618,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qualificationId" />
+              <PropertyRef Name="qID" />
             </Principal>
             <Dependent Role="USERQUAL">
-              <PropertyRef Name="qualificationId" />
+              <PropertyRef Name="qID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -667,39 +630,14 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="WEEKLYAVAILABILITY">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WILLINGLOCATION_LOCATION">
-          <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="1" />
-          <End Role="WILLINGLOCATIONS" Type="Self.WILLINGLOCATIONS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOCATION">
-              <PropertyRef Name="locationId" />
-            </Principal>
-            <Dependent Role="WILLINGLOCATIONS">
-              <PropertyRef Name="locationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WILLINGLOCATION_REF">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="WILLINGLOCATIONS" Type="Self.WILLINGLOCATIONS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
-            </Principal>
-            <Dependent Role="WILLINGLOCATIONS">
-              <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="test14ModelStoreContainer">
-          <EntitySet Name="ALTERNATEOFFERS" EntityType="Self.ALTERNATEOFFERS" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="newSchemaModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -722,22 +660,16 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERQUAL" EntityType="Self.USERQUAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEEKLYAVAILABILITY" EntityType="Self.WEEKLYAVAILABILITY" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WILLINGLOCATIONS" EntityType="Self.WILLINGLOCATIONS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ADMINISTRATION" EntityType="Self.ADMINISTRATION" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
-    [ADMINISTRATION].[refsCanViewOthers] AS [refsCanViewOthers], 
-    [ADMINISTRATION].[refsCanSeeOtherGames] AS [refsCanSeeOtherGames], 
-    [ADMINISTRATION].[durationOfAlgorithm] AS [durationOfAlgorithm]
-    FROM [dbo].[ADMINISTRATION] AS [ADMINISTRATION]</DefiningQuery>
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="fk_ALTERNATEOFFERS_offID" Association="Self.fk_ALTERNATEOFFERS_offID">
-            <End Role="OFFER" EntitySet="OFFER" />
-            <End Role="ALTERNATEOFFERS" EntitySet="ALTERNATEOFFERS" />
-          </AssociationSet>
-          <AssociationSet Name="fk_ALTERNATEOFFERS_refID" Association="Self.fk_ALTERNATEOFFERS_refID">
-            <End Role="REFEREE" EntitySet="REFEREE" />
-            <End Role="ALTERNATEOFFERS" EntitySet="ALTERNATEOFFERS" />
-          </AssociationSet>
           <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -760,6 +692,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           </AssociationSet>
           <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
             <End Role="MATCH" EntitySet="MATCH" />
+            <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="fk_INFRACTION_PLAYER" Association="Self.fk_INFRACTION_PLAYER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
           </AssociationSet>
           <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
@@ -817,6 +753,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <AssociationSet Name="FK_REFEREE_USER" Association="Self.FK_REFEREE_USER">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TEAM" EntitySet="TEAM" />
           </AssociationSet>
           <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
             <End Role="SPORT" EntitySet="SPORT" />
@@ -854,20 +794,12 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
           </AssociationSet>
-          <AssociationSet Name="FK_WILLINGLOCATION_LOCATION" Association="Self.FK_WILLINGLOCATION_LOCATION">
-            <End Role="LOCATION" EntitySet="LOCATION" />
-            <End Role="WILLINGLOCATIONS" EntitySet="WILLINGLOCATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WILLINGLOCATION_REF" Association="Self.FK_WILLINGLOCATION_REF">
-            <End Role="REFEREE" EntitySet="REFEREE" />
-            <End Role="WILLINGLOCATIONS" EntitySet="WILLINGLOCATIONS" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="test14Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="newSchemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -902,35 +834,32 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ffaNum" Type="Int32" />
           <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="firstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phoneNum" Type="Int32" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="photoDir" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="country" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="postcode" Type="Int32" Nullable="false" />
           <Property Name="street" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="streetNumber" Type="Int32" Nullable="false" />
           <Property Name="state" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="dob" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="isOrganizer" Type="Boolean" Nullable="false" />
-          <Property Name="isReferee" Type="Boolean" Nullable="false" />
-          <Property Name="isPlayer" Type="Boolean" Nullable="false" />
-          <Property Name="willingToShowPhoneNum" Type="Boolean" Nullable="false" />
-          <Property Name="willingToShowDOB" Type="Boolean" Nullable="false" />
-          <Property Name="willingToShowAddress" Type="Boolean" Nullable="false" />
-          <Property Name="willingToshowEmail" Type="Boolean" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
+          <Property Name="isAdmin" Type="Boolean" />
+          <Property Name="isOrganizer" Type="Boolean" />
+          <Property Name="isReferee" Type="Boolean" />
+          <Property Name="isPlayer" Type="Boolean" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_AspNetUserClaims_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_AspNetUserLogins_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Events" Relationship="Self.fk_EVENTS_USERS" FromRole="AspNetUsers" ToRole="Events" />
+          <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.FK_REFEREE_USER" FromRole="AspNetUsers" ToRole="REFEREE" />
+          <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Event">
@@ -940,8 +869,8 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="owner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="start" Type="DateTime" Precision="0" />
-          <Property Name="end" Type="DateTime" Precision="0" />
+          <Property Name="start" Type="DateTime" Precision="3" />
+          <Property Name="end" Type="DateTime" Precision="3" />
           <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="backgroundColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="allDay" Type="Boolean" />
@@ -949,153 +878,129 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
         </EntityType>
         <EntityType Name="INFRACTION">
           <Key>
-            <PropertyRef Name="infractionId" />
+            <PropertyRef Name="infractionID" />
           </Key>
-          <Property Name="infractionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="infractionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="overruled" Type="Boolean" />
           <Property Name="matchID" Type="Int32" Nullable="false" />
-          <Property Name="player" Type="Int32" Nullable="false" />
-          <Property Name="expiryDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="active" Type="Int32" Nullable="false" />
+          <Property Name="player" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="INFRACTIONS" ToRole="AspNetUsers" />
           <NavigationProperty Name="MATCH" Relationship="Self.fk_INFRACTION_MATCH" FromRole="INFRACTIONS" ToRole="MATCH" />
         </EntityType>
         <EntityType Name="LOCATION">
           <Key>
-            <PropertyRef Name="locationId" />
+            <PropertyRef Name="lID" />
           </Key>
-          <Property Name="locationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Double" />
-          <Property Name="street" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="street" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="snum" Type="Int32" />
           <Property Name="city" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postcode" Type="Int32" Nullable="false" />
           <Property Name="phoneNum" Type="Int32" Nullable="false" />
-          <Property Name="country" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_LOCATION" FromRole="LOCATION" ToRole="MATCH" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.WILLINGLOCATIONS" FromRole="LOCATION" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="MATCH">
           <Key>
-            <PropertyRef Name="matchId" />
+            <PropertyRef Name="mID" />
           </Key>
-          <Property Name="matchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="matchDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="locationId" Type="Int32" />
-          <Property Name="teamaId" Type="Int32" Nullable="false" />
-          <Property Name="teambId" Type="Int32" Nullable="false" />
+          <Property Name="mID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="matchDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="location" Type="Int32" />
+          <Property Name="teamaID" Type="Int32" />
+          <Property Name="teambID" Type="Int32" />
           <Property Name="teamAScore" Type="Int32" />
           <Property Name="teamBScore" Type="Int32" />
-          <Property Name="winnerId" Type="Int32" />
-          <Property Name="tournamentId" Type="Int32" Nullable="false" />
-          <Property Name="matchLength" Type="Int32" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
+          <Property Name="winnerID" Type="Boolean" />
+          <Property Name="tournament" Type="Int32" />
+          <Property Name="length" Type="Int32" Nullable="false" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_MATCH" FromRole="MATCH" ToRole="INFRACTIONS" />
-          <NavigationProperty Name="LOCATION" Relationship="Self.fk_MATCH_LOCATION" FromRole="MATCH" ToRole="LOCATION" />
+          <NavigationProperty Name="LOCATION1" Relationship="Self.fk_MATCH_LOCATION" FromRole="MATCH" ToRole="LOCATION" />
           <NavigationProperty Name="TEAM" Relationship="Self.fk_MATCH_TEAMA" FromRole="MATCH" ToRole="TEAM" />
           <NavigationProperty Name="TEAM1" Relationship="Self.fk_MATCH_TEAMB" FromRole="MATCH" ToRole="TEAM" />
-          <NavigationProperty Name="TOURNAMENT" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="MATCH" ToRole="TOURNAMENT" />
+          <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="MATCH" ToRole="TOURNAMENT" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_MATCH" FromRole="MATCH" ToRole="OFFER" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
-            <PropertyRef Name="offerId" />
+            <PropertyRef Name="offerID" />
           </Key>
-          <Property Name="offerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="offerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="matchId" Type="Int32" Nullable="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="dateOfOffer" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="declinedReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MATCH" Relationship="Self.fk_OFFER_MATCH" FromRole="OFFER" ToRole="MATCH" />
-          <NavigationProperty Name="OFFERQUALs" Relationship="Self.fk_OFFER_QUAL" FromRole="OFFER" ToRole="OFFERQUAL" />
           <NavigationProperty Name="REFEREE" Relationship="Self.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_OFFER_SPORT" FromRole="OFFER" ToRole="SPORT" />
           <NavigationProperty Name="TYPEs" Relationship="Self.FK_TYPE_OFFER" FromRole="OFFER" ToRole="TYPE" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.ALTERNATEOFFERS" FromRole="OFFER" ToRole="REFEREE" />
-        </EntityType>
-        <EntityType Name="OFFERQUAL">
-          <Key>
-            <PropertyRef Name="qualificationId" />
-            <PropertyRef Name="offerId" />
-          </Key>
-          <Property Name="qualificationId" Type="Int32" Nullable="false" />
-          <Property Name="offerId" Type="Int32" Nullable="false" />
-          <Property Name="qualLevel" Type="Int32" />
-          <NavigationProperty Name="OFFER" Relationship="Self.fk_OFFER_QUAL" FromRole="OFFERQUAL" ToRole="OFFER" />
-          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_MATCH_ID" FromRole="OFFERQUAL" ToRole="QUALIFICATIONS" />
+          <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.OFFERQUAL" FromRole="OFFER" ToRole="QUALIFICATIONS" />
         </EntityType>
         <EntityType Name="OneOffAVAILABILITY">
           <Key>
-            <PropertyRef Name="availabilityId" />
+            <PropertyRef Name="refID" />
             <PropertyRef Name="startDate" />
           </Key>
-          <Property Name="availabilityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Precision="3" />
           <Property Name="allDay" Type="Boolean" />
-          <Property Name="timeOnOrOff" Type="Boolean" Nullable="false" />
+          <Property Name="timeOnOrOff" Type="Boolean" />
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_TIMEOFF_USER" FromRole="OneOffAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
-            <PropertyRef Name="teamId" />
-            <PropertyRef Name="userId" />
+            <PropertyRef Name="team" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="teamId" Type="Int32" Nullable="false" />
-          <Property Name="userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="team" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="shirtNum" Type="Int32" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.fk_PLAYER_USERNAME" FromRole="PLAYER" ToRole="AspNetUsers" />
-          <NavigationProperty Name="TEAM" Relationship="Self.fk_PLAYER_TEAM" FromRole="PLAYER" ToRole="TEAM" />
+          <NavigationProperty Name="TEAM1" Relationship="Self.fk_PLAYER_TEAM" FromRole="PLAYER" ToRole="TEAM" />
         </EntityType>
         <EntityType Name="QUALIFICATION">
           <Key>
-            <PropertyRef Name="qualificationId" />
+            <PropertyRef Name="qID" />
           </Key>
-          <Property Name="qualificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="qualificationLevel" Type="Int32" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="OFFERQUALs" Relationship="Self.fk_MATCH_ID" FromRole="QUALIFICATIONS" ToRole="OFFERQUAL" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_QUAL_SPORT" FromRole="QUALIFICATIONS" ToRole="SPORT" />
-          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER_QUAL" FromRole="QUALIFICATIONS" ToRole="USERQUAL" />
+          <NavigationProperty Name="OFFERs" Relationship="Self.OFFERQUAL" FromRole="QUALIFICATIONS" ToRole="OFFER" />
+          <NavigationProperty Name="REFEREEs" Relationship="Self.USERQUAL" FromRole="QUALIFICATIONS" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="REFEREE">
           <Key>
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="refID" />
           </Key>
-          <Property Name="refId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
           <Property Name="distTravel" Type="Int32" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prefAge" Type="Int32" />
           <Property Name="prefGrade" Type="Int32" />
-          <Property Name="userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="maxGames" Type="Int32" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
           <NavigationProperty Name="OneOffAVAILABILITies" Relationship="Self.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
-          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="REFEREE" ToRole="USERQUAL" />
           <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
-          <NavigationProperty Name="OFFERs1" Relationship="Self.ALTERNATEOFFERS" FromRole="REFEREE" ToRole="OFFER" />
-          <NavigationProperty Name="LOCATIONs" Relationship="Self.WILLINGLOCATIONS" FromRole="REFEREE" ToRole="LOCATION" />
+          <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATIONS" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
             <PropertyRef Name="name" />
           </Key>
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.fk_QUAL_SPORT" FromRole="SPORT" ToRole="QUALIFICATIONS" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
@@ -1104,15 +1009,15 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
         </EntityType>
         <EntityType Name="TEAM">
           <Key>
-            <PropertyRef Name="teamId" />
+            <PropertyRef Name="teamID" />
           </Key>
-          <Property Name="teamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="teamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ageBracket" Type="Int32" Nullable="false" />
           <Property Name="grade" Type="Int32" Nullable="false" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="managerId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
+          <Property Name="managerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TEAM_MANAGER" FromRole="TEAM" ToRole="AspNetUsers" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TEAMA" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="MATCHes1" Relationship="Self.fk_MATCH_TEAMB" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_TEAM" FromRole="TEAM" ToRole="PLAYER" />
@@ -1121,46 +1026,32 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
         </EntityType>
         <EntityType Name="TOURNAMENT">
           <Key>
-            <PropertyRef Name="tournamentId" />
+            <PropertyRef Name="tID" />
           </Key>
-          <Property Name="tournamentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="tID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="organizer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ageBracket" Type="Int32" Nullable="false" />
-          <Property Name="grade" Type="Int32" Nullable="false" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="active" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="TOURNAMENT" ToRole="MATCH" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="TOURNAMENT" ToRole="SPORT" />
           <NavigationProperty Name="TEAMs" Relationship="Self.TEAMINS" FromRole="TOURNAMENT" ToRole="TEAM" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
-            <PropertyRef Name="typeId" />
+            <PropertyRef Name="typeID" />
           </Key>
-          <Property Name="typeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="offerId" Type="Int32" Nullable="false" />
+          <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="offerID" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="OFFER" Relationship="Self.FK_TYPE_OFFER" FromRole="TYPE" ToRole="OFFER" />
         </EntityType>
-        <EntityType Name="USERQUAL">
-          <Key>
-            <PropertyRef Name="qualificationId" />
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="qualificationId" Type="Int32" Nullable="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="qualLevel" Type="Int32" />
-          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_USER_QUAL" FromRole="USERQUAL" ToRole="QUALIFICATIONS" />
-          <NavigationProperty Name="REFEREE" Relationship="Self.fk_USER" FromRole="USERQUAL" ToRole="REFEREE" />
-        </EntityType>
         <EntityType Name="WEEKLYAVAILABILITY">
           <Key>
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="refID" />
           </Key>
-          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
           <Property Name="monday" Type="Int32" Nullable="false" />
           <Property Name="tuesday" Type="Int32" Nullable="false" />
           <Property Name="wednesday" Type="Int32" Nullable="false" />
@@ -1170,15 +1061,21 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="sunday" Type="Int32" Nullable="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
-        <EntityType Name="ADMINISTRATION">
+        <EntityType Name="database_firewall_rules">
           <Key>
-            <PropertyRef Name="refsCanViewOthers" />
-            <PropertyRef Name="refsCanSeeOtherGames" />
-            <PropertyRef Name="durationOfAlgorithm" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
           </Key>
-          <Property Name="refsCanViewOthers" Type="Boolean" Nullable="false" />
-          <Property Name="refsCanSeeOtherGames" Type="Boolean" Nullable="false" />
-          <Property Name="durationOfAlgorithm" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_AspNetUserClaims_dbo_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
@@ -1216,6 +1113,18 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_INFRACTION_PLAYER">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="INFRACTIONS" Type="Self.INFRACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="INFRACTIONS">
+              <PropertyRef Name="player" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_PLAYER_USERNAME">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
           <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
@@ -1224,7 +1133,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PLAYER">
-              <PropertyRef Name="userId" />
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1236,7 +1145,19 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="REFEREE">
-              <PropertyRef Name="userId" />
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEAM_MANAGER">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TEAM">
+              <PropertyRef Name="managerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1245,7 +1166,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="INFRACTIONS" Type="Self.INFRACTION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MATCH">
-              <PropertyRef Name="matchId" />
+              <PropertyRef Name="mID" />
             </Principal>
             <Dependent Role="INFRACTIONS">
               <PropertyRef Name="matchID" />
@@ -1257,46 +1178,46 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOCATION">
-              <PropertyRef Name="locationId" />
+              <PropertyRef Name="lID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="locationId" />
+              <PropertyRef Name="location" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TEAMA">
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="teamaId" />
+              <PropertyRef Name="teamaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TEAMB">
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="teambId" />
+              <PropertyRef Name="teambID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_MATCH_TOURNAMENT">
-          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="0..1" />
           <End Role="MATCH" Type="Self.MATCH" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TOURNAMENT">
-              <PropertyRef Name="tournamentId" />
+              <PropertyRef Name="tID" />
             </Principal>
             <Dependent Role="MATCH">
-              <PropertyRef Name="tournamentId" />
+              <PropertyRef Name="tournament" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1305,22 +1226,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MATCH">
-              <PropertyRef Name="matchId" />
+              <PropertyRef Name="mID" />
             </Principal>
             <Dependent Role="OFFER">
-              <PropertyRef Name="matchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_OFFER_QUAL">
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
-          <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OFFER">
-              <PropertyRef Name="offerId" />
-            </Principal>
-            <Dependent Role="OFFERQUAL">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="mid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1329,10 +1238,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="OFFER">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1353,22 +1262,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="TYPE" Type="Self.TYPE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OFFER">
-              <PropertyRef Name="offerId" />
+              <PropertyRef Name="offerID" />
             </Principal>
             <Dependent Role="TYPE">
-              <PropertyRef Name="offerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_MATCH_ID">
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="1" />
-          <End Role="OFFERQUAL" Type="Self.OFFERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qualificationId" />
-            </Principal>
-            <Dependent Role="OFFERQUAL">
-              <PropertyRef Name="qualificationId" />
+              <PropertyRef Name="offerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1377,10 +1274,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="OneOffAVAILABILITY" Type="Self.OneOffAVAILABILITY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="OneOffAVAILABILITY">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1389,10 +1286,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TEAM">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="teamID" />
             </Principal>
             <Dependent Role="PLAYER">
-              <PropertyRef Name="teamId" />
+              <PropertyRef Name="team" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1408,18 +1305,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_USER_QUAL">
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="1" />
-          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QUALIFICATIONS">
-              <PropertyRef Name="qualificationId" />
-            </Principal>
-            <Dependent Role="USERQUAL">
-              <PropertyRef Name="qualificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_REFEREE_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
@@ -1432,27 +1317,15 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_USER">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
-            </Principal>
-            <Dependent Role="USERQUAL">
-              <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WEEKLYAVAILABILITY_USER">
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
           <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Principal>
             <Dependent Role="WEEKLYAVAILABILITY">
-              <PropertyRef Name="refId" />
+              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1480,23 +1353,23 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ALTERNATEOFFERS">
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="OFFERQUAL">
+          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="*" />
+          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
         </Association>
         <Association Name="TEAMINS">
           <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
         </Association>
-        <Association Name="WILLINGLOCATIONS">
-          <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="*" />
+        <Association Name="USERQUAL">
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
+          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Raoconnection" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1506,7 +1379,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="LOCATIONs" EntityType="Self.LOCATION" />
           <EntitySet Name="MATCHes" EntityType="Self.MATCH" />
           <EntitySet Name="OFFERs" EntityType="Self.OFFER" />
-          <EntitySet Name="OFFERQUALs" EntityType="Self.OFFERQUAL" />
           <EntitySet Name="OneOffAVAILABILITies" EntityType="Self.OneOffAVAILABILITY" />
           <EntitySet Name="PLAYERs" EntityType="Self.PLAYER" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
@@ -1515,9 +1387,8 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
           <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />
           <EntitySet Name="TYPEs" EntityType="Self.TYPE" />
-          <EntitySet Name="USERQUALs" EntityType="Self.USERQUAL" />
           <EntitySet Name="WEEKLYAVAILABILITies" EntityType="Self.WEEKLYAVAILABILITY" />
-          <EntitySet Name="ADMINISTRATIONs" EntityType="Self.ADMINISTRATION" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
           <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1530,6 +1401,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
+          <AssociationSet Name="fk_INFRACTION_PLAYER" Association="Self.fk_INFRACTION_PLAYER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="INFRACTIONS" EntitySet="INFRACTIONS" />
+          </AssociationSet>
           <AssociationSet Name="fk_PLAYER_USERNAME" Association="Self.fk_PLAYER_USERNAME">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="PLAYER" EntitySet="PLAYERs" />
@@ -1537,6 +1412,10 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <AssociationSet Name="FK_REFEREE_USER" Association="Self.FK_REFEREE_USER">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TEAM" EntitySet="TEAMs" />
           </AssociationSet>
           <AssociationSet Name="fk_INFRACTION_MATCH" Association="Self.fk_INFRACTION_MATCH">
             <End Role="MATCH" EntitySet="MATCHes" />
@@ -1562,10 +1441,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="OFFER" EntitySet="OFFERs" />
           </AssociationSet>
-          <AssociationSet Name="fk_OFFER_QUAL" Association="Self.fk_OFFER_QUAL">
-            <End Role="OFFER" EntitySet="OFFERs" />
-            <End Role="OFFERQUAL" EntitySet="OFFERQUALs" />
-          </AssociationSet>
           <AssociationSet Name="fk_OFFER_refID" Association="Self.fk_OFFER_refID">
             <End Role="REFEREE" EntitySet="REFEREEs" />
             <End Role="OFFER" EntitySet="OFFERs" />
@@ -1577,10 +1452,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <AssociationSet Name="FK_TYPE_OFFER" Association="Self.FK_TYPE_OFFER">
             <End Role="OFFER" EntitySet="OFFERs" />
             <End Role="TYPE" EntitySet="TYPEs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-            <End Role="OFFERQUAL" EntitySet="OFFERQUALs" />
           </AssociationSet>
           <AssociationSet Name="FK_TIMEOFF_USER" Association="Self.FK_TIMEOFF_USER">
             <End Role="REFEREE" EntitySet="REFEREEs" />
@@ -1594,17 +1465,9 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
-          <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-            <End Role="USERQUAL" EntitySet="USERQUALs" />
-          </AssociationSet>
           <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_USER" Association="Self.fk_USER">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="USERQUAL" EntitySet="USERQUALs" />
           </AssociationSet>
           <AssociationSet Name="FK_WEEKLYAVAILABILITY_USER" Association="Self.FK_WEEKLYAVAILABILITY_USER">
             <End Role="REFEREE" EntitySet="REFEREEs" />
@@ -1618,21 +1481,21 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
           </AssociationSet>
-          <AssociationSet Name="ALTERNATEOFFERS" Association="Self.ALTERNATEOFFERS">
-            <End Role="OFFER" EntitySet="OFFERs" />
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="OFFERQUAL" Association="Self.OFFERQUAL">
+            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
+            <End Role="OFFER" EntitySet="OFFERs" />
           </AssociationSet>
           <AssociationSet Name="TEAMINS" Association="Self.TEAMINS">
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
             <End Role="TEAM" EntitySet="TEAMs" />
           </AssociationSet>
-          <AssociationSet Name="WILLINGLOCATIONS" Association="Self.WILLINGLOCATIONS">
-            <End Role="LOCATION" EntitySet="LOCATIONs" />
+          <AssociationSet Name="USERQUAL" Association="Self.USERQUAL">
             <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1640,9 +1503,9 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="test14ModelStoreContainer" CdmEntityContainer="Raoconnection">
+        <EntityContainerMapping StorageEntityContainer="newSchemaModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="test14Model.AspNetRole">
+            <EntityTypeMapping TypeName="newSchemaModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1650,7 +1513,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="test14Model.AspNetUserClaim">
+            <EntityTypeMapping TypeName="newSchemaModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -1660,7 +1523,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="test14Model.AspNetUserLogin">
+            <EntityTypeMapping TypeName="newSchemaModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
@@ -1669,10 +1532,9 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="test14Model.AspNetUser">
+            <EntityTypeMapping TypeName="newSchemaModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ffaNum" ColumnName="ffaNum" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
@@ -1685,22 +1547,18 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
                 <ScalarProperty Name="country" ColumnName="country" />
                 <ScalarProperty Name="postcode" ColumnName="postcode" />
                 <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="streetNumber" ColumnName="streetNumber" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="dob" ColumnName="dob" />
                 <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
                 <ScalarProperty Name="isOrganizer" ColumnName="isOrganizer" />
                 <ScalarProperty Name="isReferee" ColumnName="isReferee" />
                 <ScalarProperty Name="isPlayer" ColumnName="isPlayer" />
-                <ScalarProperty Name="willingToShowPhoneNum" ColumnName="willingToShowPhoneNum" />
-                <ScalarProperty Name="willingToShowDOB" ColumnName="willingToShowDOB" />
-                <ScalarProperty Name="willingToShowAddress" ColumnName="willingToShowAddress" />
-                <ScalarProperty Name="willingToshowEmail" ColumnName="willingToshowEmail" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="test14Model.Event">
+            <EntityTypeMapping TypeName="newSchemaModel.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="owner" ColumnName="owner" />
@@ -1714,80 +1572,66 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INFRACTIONS">
-            <EntityTypeMapping TypeName="test14Model.INFRACTION">
+            <EntityTypeMapping TypeName="newSchemaModel.INFRACTION">
               <MappingFragment StoreEntitySet="INFRACTIONS">
-                <ScalarProperty Name="infractionId" ColumnName="infractionId" />
+                <ScalarProperty Name="infractionID" ColumnName="infractionID" />
                 <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="overruled" ColumnName="overruled" />
                 <ScalarProperty Name="matchID" ColumnName="matchID" />
                 <ScalarProperty Name="player" ColumnName="player" />
-                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONs">
-            <EntityTypeMapping TypeName="test14Model.LOCATION">
+            <EntityTypeMapping TypeName="newSchemaModel.LOCATION">
               <MappingFragment StoreEntitySet="LOCATION">
-                <ScalarProperty Name="locationId" ColumnName="locationId" />
+                <ScalarProperty Name="lID" ColumnName="lID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="snum" ColumnName="snum" />
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="postcode" ColumnName="postcode" />
                 <ScalarProperty Name="phoneNum" ColumnName="phoneNum" />
-                <ScalarProperty Name="country" ColumnName="country" />
                 <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATCHes">
-            <EntityTypeMapping TypeName="test14Model.MATCH">
+            <EntityTypeMapping TypeName="newSchemaModel.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
-                <ScalarProperty Name="matchId" ColumnName="matchId" />
+                <ScalarProperty Name="mID" ColumnName="mID" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
-                <ScalarProperty Name="locationId" ColumnName="locationId" />
-                <ScalarProperty Name="teamaId" ColumnName="teamaId" />
-                <ScalarProperty Name="teambId" ColumnName="teambId" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="teamaID" ColumnName="teamaID" />
+                <ScalarProperty Name="teambID" ColumnName="teambID" />
                 <ScalarProperty Name="teamAScore" ColumnName="teamAScore" />
                 <ScalarProperty Name="teamBScore" ColumnName="teamBScore" />
-                <ScalarProperty Name="winnerId" ColumnName="winnerId" />
-                <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
-                <ScalarProperty Name="matchLength" ColumnName="matchLength" />
-                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="winnerID" ColumnName="winnerID" />
+                <ScalarProperty Name="tournament" ColumnName="tournament" />
+                <ScalarProperty Name="length" ColumnName="length" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="test14Model.OFFER">
+            <EntityTypeMapping TypeName="newSchemaModel.OFFER">
               <MappingFragment StoreEntitySet="OFFER">
-                <ScalarProperty Name="offerId" ColumnName="offerId" />
+                <ScalarProperty Name="offerID" ColumnName="offerID" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
-                <ScalarProperty Name="matchId" ColumnName="matchId" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="dateOfOffer" ColumnName="dateOfOffer" />
-                <ScalarProperty Name="declinedReason" ColumnName="declinedReason" />
-                <ScalarProperty Name="active" ColumnName="active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OFFERQUALs">
-            <EntityTypeMapping TypeName="test14Model.OFFERQUAL">
-              <MappingFragment StoreEntitySet="OFFERQUAL">
-                <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
-                <ScalarProperty Name="offerId" ColumnName="offerId" />
-                <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OneOffAVAILABILITies">
-            <EntityTypeMapping TypeName="test14Model.OneOffAVAILABILITY">
+            <EntityTypeMapping TypeName="newSchemaModel.OneOffAVAILABILITY">
               <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
-                <ScalarProperty Name="availabilityId" ColumnName="availabilityId" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="allDay" ColumnName="allDay" />
                 <ScalarProperty Name="timeOnOrOff" ColumnName="timeOnOrOff" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -1795,100 +1639,82 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
-            <EntityTypeMapping TypeName="test14Model.PLAYER">
+            <EntityTypeMapping TypeName="newSchemaModel.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
-                <ScalarProperty Name="teamId" ColumnName="teamId" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="team" ColumnName="team" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="shirtNum" ColumnName="shirtNum" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QUALIFICATIONS">
-            <EntityTypeMapping TypeName="test14Model.QUALIFICATION">
+            <EntityTypeMapping TypeName="newSchemaModel.QUALIFICATION">
               <MappingFragment StoreEntitySet="QUALIFICATIONS">
-                <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
+                <ScalarProperty Name="qID" ColumnName="qID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="qualificationLevel" ColumnName="qualificationLevel" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="test14Model.REFEREE">
+            <EntityTypeMapping TypeName="newSchemaModel.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
-                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="prefAge" ColumnName="prefAge" />
                 <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="maxGames" ColumnName="maxGames" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
-            <EntityTypeMapping TypeName="test14Model.SPORT">
+            <EntityTypeMapping TypeName="newSchemaModel.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMs">
-            <EntityTypeMapping TypeName="test14Model.TEAM">
+            <EntityTypeMapping TypeName="newSchemaModel.TEAM">
               <MappingFragment StoreEntitySet="TEAM">
-                <ScalarProperty Name="teamId" ColumnName="teamId" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
                 <ScalarProperty Name="grade" ColumnName="grade" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
-                <ScalarProperty Name="managerId" ColumnName="managerId" />
-                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="managerID" ColumnName="managerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TOURNAMENTs">
-            <EntityTypeMapping TypeName="test14Model.TOURNAMENT">
+            <EntityTypeMapping TypeName="newSchemaModel.TOURNAMENT">
               <MappingFragment StoreEntitySet="TOURNAMENT">
-                <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
+                <ScalarProperty Name="tID" ColumnName="tID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="organizer" ColumnName="organizer" />
-                <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
-                <ScalarProperty Name="grade" ColumnName="grade" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TYPEs">
-            <EntityTypeMapping TypeName="test14Model.TYPE">
+            <EntityTypeMapping TypeName="newSchemaModel.TYPE">
               <MappingFragment StoreEntitySet="TYPE">
-                <ScalarProperty Name="typeId" ColumnName="typeId" />
-                <ScalarProperty Name="offerId" ColumnName="offerId" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="offerID" ColumnName="offerID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="test14Model.USERQUAL">
-              <MappingFragment StoreEntitySet="USERQUAL">
-                <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="qualLevel" ColumnName="qualLevel" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WEEKLYAVAILABILITies">
-            <EntityTypeMapping TypeName="test14Model.WEEKLYAVAILABILITY">
+            <EntityTypeMapping TypeName="newSchemaModel.WEEKLYAVAILABILITY">
               <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
-                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
                 <ScalarProperty Name="monday" ColumnName="monday" />
                 <ScalarProperty Name="tuesday" ColumnName="tuesday" />
                 <ScalarProperty Name="wednesday" ColumnName="wednesday" />
@@ -1899,24 +1725,19 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ADMINISTRATIONs">
-            <EntityTypeMapping TypeName="test14Model.ADMINISTRATION">
-              <MappingFragment StoreEntitySet="ADMINISTRATION">
-                <ScalarProperty Name="refsCanViewOthers" ColumnName="refsCanViewOthers" />
-                <ScalarProperty Name="refsCanSeeOtherGames" ColumnName="refsCanSeeOtherGames" />
-                <ScalarProperty Name="durationOfAlgorithm" ColumnName="durationOfAlgorithm" />
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="newSchemaModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="test14Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
-            <EndProperty Name="OFFER">
-              <ScalarProperty Name="offerId" ColumnName="offerId" />
-            </EndProperty>
-            <EndProperty Name="REFEREE">
-              <ScalarProperty Name="refId" ColumnName="refId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="test14Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="newSchemaModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -1924,20 +1745,28 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TEAMINS" TypeName="test14Model.TEAMINS" StoreEntitySet="TEAMINS">
-            <EndProperty Name="TOURNAMENT">
-              <ScalarProperty Name="tournamentId" ColumnName="tournament" />
+          <AssociationSetMapping Name="OFFERQUAL" TypeName="newSchemaModel.OFFERQUAL" StoreEntitySet="OFFERQUAL">
+            <EndProperty Name="QUALIFICATIONS">
+              <ScalarProperty Name="qID" ColumnName="qID" />
             </EndProperty>
-            <EndProperty Name="TEAM">
-              <ScalarProperty Name="teamId" ColumnName="teamID" />
+            <EndProperty Name="OFFER">
+              <ScalarProperty Name="offerID" ColumnName="offerID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="test14Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
-            <EndProperty Name="LOCATION">
-              <ScalarProperty Name="locationId" ColumnName="locationId" />
+          <AssociationSetMapping Name="TEAMINS" TypeName="newSchemaModel.TEAMINS" StoreEntitySet="TEAMINS">
+            <EndProperty Name="TOURNAMENT">
+              <ScalarProperty Name="tID" ColumnName="tournament" />
             </EndProperty>
+            <EndProperty Name="TEAM">
+              <ScalarProperty Name="teamID" ColumnName="teamID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="USERQUAL" TypeName="newSchemaModel.USERQUAL" StoreEntitySet="USERQUAL">
             <EndProperty Name="REFEREE">
-              <ScalarProperty Name="refId" ColumnName="refId" />
+              <ScalarProperty Name="refID" ColumnName="ID" />
+            </EndProperty>
+            <EndProperty Name="QUALIFICATIONS">
+              <ScalarProperty Name="qID" ColumnName="qID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class qualificationController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /qualification/
         public ActionResult Index()
@@ -69,7 +69,6 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             QUALIFICATION qualification = db.QUALIFICATIONS.Find(id);
-            db.Entry(qualification).Reference(r => r.SPORT1).Load();
             if (qualification == null)
             {
                 return HttpNotFound();
@@ -83,13 +82,11 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "qualificationId,name,sport,description,qualificationLevel")] QUALIFICATION qualification)
+        public ActionResult Edit([Bind(Include="qID,name,sport,supDesc")] QUALIFICATION qualification)
         {
             if (ModelState.IsValid)
             {
-                //qualification.SPORT1 = db.SPORTs.Find(qualification.sport);
                 db.Entry(qualification).State = EntityState.Modified;
-
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

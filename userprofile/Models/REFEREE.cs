@@ -14,31 +14,30 @@ namespace userprofile.Models
     
     public partial class REFEREE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public REFEREE()
         {
             this.OFFERs = new HashSet<OFFER>();
             this.OneOffAVAILABILITies = new HashSet<OneOffAVAILABILITY>();
-            this.USERQUALs = new HashSet<USERQUAL>();
-            this.OFFERs1 = new HashSet<OFFER>();
-            this.LOCATIONs = new HashSet<LOCATION>();
+            this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
         }
     
-        public int refId { get; set; }
+        public int refID { get; set; }
         public Nullable<int> distTravel { get; set; }
         public string sport { get; set; }
         public Nullable<int> prefAge { get; set; }
         public Nullable<int> prefGrade { get; set; }
-        public string userId { get; set; }
+        public string ID { get; set; }
         public int maxGames { get; set; }
-        public int active { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OFFER> OFFERs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OneOffAVAILABILITY> OneOffAVAILABILITies { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
-        public virtual ICollection<OFFER> OFFERs1 { get; set; }
-        public virtual ICollection<LOCATION> LOCATIONs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
     }
 }

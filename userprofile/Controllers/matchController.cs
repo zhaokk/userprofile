@@ -12,12 +12,12 @@ namespace userprofile.Controllers
 {
     public class matchController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /match/
         public ActionResult Index()
         {
-            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT);
+            var matches = db.MATCHes.Include(m => m.LOCATION1).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT1);
             return View(matches.ToList());
         }
 
@@ -40,11 +40,11 @@ namespace userprofile.Controllers
         // GET: /match/Create
         public ActionResult Create()
         {
-            ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
-            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
+            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name");
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name");
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport");
+            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qID", "name");
             return View();
         }
 
@@ -70,25 +70,25 @@ namespace userprofile.Controllers
                 switch (matchVM.offernum) { 
                     case 1:
                         
-                        //offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         newMacth.OFFERs.Add(offer1);
                        break;
                     case 2:
                         
-                       // offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         
-                        //offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         newMacth.OFFERs.Add(offer1);
                         newMacth.OFFERs.Add(offer2);
 
                         break;
                     case 3:
                         
-                        //offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         
-                        //offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         
-                        //offer3.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
+                        offer3.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         newMacth.OFFERs.Add(offer1);
                         newMacth.OFFERs.Add(offer2);
                         newMacth.OFFERs.Add(offer3);
@@ -97,18 +97,16 @@ namespace userprofile.Controllers
                         break;
                 }
                 db.MATCHes.Add(newMacth);
-
-                //add exception catch here to skip return for date check
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-
-            ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name", matchVM.createdMatch.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teambId);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", matchVM.createdMatch.tournamentId);
-            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
+            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name", matchVM.createdMatch.location);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name", matchVM.createdMatch.teamaID);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name", matchVM.createdMatch.teambID);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", matchVM.createdMatch.tournament);
+            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qID", "name");
             return View(matchVM);
         }
         [HttpGet]
@@ -116,7 +114,7 @@ namespace userprofile.Controllers
         {
             if (id != null)
             {
-                MATCH theMatch = db.MATCHes.First(m => m.matchId == id);
+                MATCH theMatch = db.MATCHes.First(m => m.mID == id);
                 var refereesList = new List<SelectListItem>()
                    {
 
@@ -130,7 +128,7 @@ namespace userprofile.Controllers
                 {
                     var sli = new SelectListItem();
                     sli.Text = re.AspNetUser.lastName +" "+ re.AspNetUser.firstName;
-                    sli.Value = re.refId.ToString();
+                    sli.Value = re.refID.ToString();
                     refereesList.Add(sli);
 
                 }
@@ -159,10 +157,10 @@ namespace userprofile.Controllers
                    var refID= Convert.ToInt32(Request[indexofrefid]) ;
                    if (offerID != 0)
                    {
-                       OFFER of = db.OFFERs.First(o => o.offerId == offerID);
-                       if (of.refId != refID)
+                       OFFER of = db.OFFERs.First(o => o.offerID == offerID);
+                       if (of.refID != refID)
                        {
-                           of.refId = refID;
+                           of.refID = refID;
                            of.status = 3;
                            db.Entry(of).State = EntityState.Modified;
 
@@ -171,9 +169,9 @@ namespace userprofile.Controllers
                    else {
                        var newof = new OFFER();
                        newof.status =3;
-                       newof.refId = refID;
+                       newof.refID = refID;
                        newof.dateOfOffer = System.DateTime.Now;
-                       newof.matchId = mid;
+                       newof.mid = mid;
                        newof.sport = "soccer";
                        db.OFFERs.Add(newof);
                    }
@@ -197,10 +195,10 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teambId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name", match.location);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name", match.teamaID);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name", match.teambID);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", match.tournament);
             return View(match);
         }
 
@@ -209,7 +207,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "matchId,matchDate,locationId,teamaId,teambId,teamAScore,teamBScore,winnerId,tournamentId,matchLength")] MATCH match)
+        public ActionResult Edit([Bind(Include="mID,matchDate,location,teamaID,teambID,winnerID,tournament")] MATCH match)
         {
             if (ModelState.IsValid)
             {
@@ -217,10 +215,10 @@ namespace userprofile.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teambId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.location = new SelectList(db.LOCATIONs, "lID", "name", match.location);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamID", "name", match.teamaID);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamID", "name", match.teambID);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tID", "sport", match.tournament);
             return View(match);
         }
 

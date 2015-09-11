@@ -14,27 +14,26 @@ namespace userprofile.Models
     
     public partial class OFFER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OFFER()
         {
-            this.OFFERQUALs = new HashSet<OFFERQUAL>();
             this.TYPEs = new HashSet<TYPE>();
-            this.REFEREEs = new HashSet<REFEREE>();
+            this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
         }
     
-        public int offerId { get; set; }
+        public int offerID { get; set; }
         public string sport { get; set; }
-        public int matchId { get; set; }
-        public int refId { get; set; }
+        public int mid { get; set; }
+        public int refID { get; set; }
         public int status { get; set; }
         public System.DateTime dateOfOffer { get; set; }
-        public string declinedReason { get; set; }
-        public int active { get; set; }
     
         public virtual MATCH MATCH { get; set; }
-        public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual REFEREE REFEREE { get; set; }
         public virtual SPORT SPORT1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TYPE> TYPEs { get; set; }
-        public virtual ICollection<REFEREE> REFEREEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
     }
 }

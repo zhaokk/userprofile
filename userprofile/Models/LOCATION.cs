@@ -14,24 +14,23 @@ namespace userprofile.Models
     
     public partial class LOCATION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOCATION()
         {
             this.MATCHes = new HashSet<MATCH>();
-            this.REFEREEs = new HashSet<REFEREE>();
         }
     
-        public int locationId { get; set; }
+        public int lID { get; set; }
         public string name { get; set; }
         public Nullable<double> price { get; set; }
         public string street { get; set; }
+        public Nullable<int> snum { get; set; }
         public string city { get; set; }
         public int postcode { get; set; }
         public int phoneNum { get; set; }
-        public string country { get; set; }
         public string state { get; set; }
-        public int active { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATCH> MATCHes { get; set; }
-        public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }
 }

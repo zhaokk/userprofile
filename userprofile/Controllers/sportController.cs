@@ -12,7 +12,7 @@ namespace userprofile.Controllers
 {
     public class sportController : Controller
     {
-        private Raoconnection db = new Raoconnection();
+        private Entities db = new Entities();
 
         // GET: /sport/
         public ActionResult Index()

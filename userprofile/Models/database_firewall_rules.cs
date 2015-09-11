@@ -12,13 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USERQUAL
+    public partial class database_firewall_rules
     {
-        public int qualificationId { get; set; }
-        public int refId { get; set; }
-        public Nullable<int> qualLevel { get; set; }
-    
-        public virtual QUALIFICATION QUALIFICATION { get; set; }
-        public virtual REFEREE REFEREE { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string start_ip_address { get; set; }
+        public string end_ip_address { get; set; }
+        public System.DateTime create_date { get; set; }
+        public System.DateTime modify_date { get; set; }
     }
 }
