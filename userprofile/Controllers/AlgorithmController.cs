@@ -70,10 +70,12 @@ namespace userprofile.Controllers {
         long initTemp; //How many iterations of search to go through
         long currTemp; //What current iteration (temperature it is
         int bestOffersFilled;
+        Random rand;
 
 
         void initGlobalVars() {
             db = new Entities();
+            rand = new Random();
             dOffers = new Dictionary<int, val>();
             dReferees = new Dictionary<int, val>();
             llCompleted = new LinkedList<pair>();
@@ -84,9 +86,8 @@ namespace userprofile.Controllers {
             refereeStorage = new Dictionary<int, REFEREE>();
             matchStorage = new Dictionary<int, MATCH>();
             matchClashes = new Dictionary<int, Dictionary<int, bool>>();
+
             bestOffersFilled = 0;
-
-
             maxOffersFilled = 0;
             currOffersFilled = 0;
             initTemp = 1000;
@@ -533,9 +534,18 @@ namespace userprofile.Controllers {
             dReferees = new Dictionary<int, val>(bestReferees[chooseState]);
         }
 
+        bool SimulatedAnnealing(int dif) {
+            double difPercent = dif / maxOffersFilled;
+            double currTempPercent = currTemp / initTemp;
+            if (rand.Next(0, 101) > ((currTempPercent + difPercent) * 100))
+                return true; //accept
+            else
+                return false; //deny
+
+        }
+
         void performAlgorithm() {
-            Random rand = new Random();
-            for (currTemp = initTemp; currTemp > 0 && currOffersFilled < maxOffersFilled; currTemp--) {
+            for (currTemp = 0; currTemp < initTemp && currOffersFilled < maxOffersFilled; currTemp--) {
                 long countAssign = calcOffersToReset();
                 for (long i = 0; i < countAssign; i++) {
                     unassignRandom();
@@ -554,8 +564,8 @@ namespace userprofile.Controllers {
                     saveState();
                 }
                 else { //worse than best
-                    //if sim annealing stuff
-                    resetState();
+                    if (!SimulatedAnnealing(bestOffersFilled-currOffersFilled))
+                        resetState();
                 }
             }
         }
