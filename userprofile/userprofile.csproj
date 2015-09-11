@@ -165,6 +165,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
+    <Compile Include="Controllers\AlgorithmController.cs" />
+    <Compile Include="Controllers\ExcelManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
@@ -182,6 +184,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AlgorithmModel.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -200,6 +203,7 @@
     <Compile Include="Models\Event.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\excelModel.cs" />
     <Compile Include="Models\INFRACTION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -279,12 +283,6 @@
     <Content Include="Content\AdminLTE\img\credit\paypal.png" />
     <Content Include="Content\AdminLTE\img\credit\paypal2.png" />
     <Content Include="Content\AdminLTE\img\credit\visa.png" />
-    <Content Include="Content\AdminLTE\img\default-50x50.gif" />
-    <Content Include="Content\AdminLTE\img\icons.png" />
-    <Content Include="Content\AdminLTE\img\photo1.png" />
-    <Content Include="Content\AdminLTE\img\photo2.png" />
-    <Content Include="Content\AdminLTE\img\user1-128x128.jpg" />
-    <Content Include="Content\AdminLTE\img\user2-160x160.jpg" />
     <Content Include="Content\AdminLTE\img\user3-128x128.jpg" />
     <Content Include="Content\AdminLTE\img\user4-128x128.jpg" />
     <Content Include="Content\AdminLTE\img\user5-128x128.jpg" />
@@ -309,6 +307,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\calendar\fullCalendar.css" />
     <Content Include="Content\css\calendar\fullCalendarPrint.css" />
+    <Content Include="Content\indexReferee.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\mycss.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -327,9 +328,6 @@
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-slider\slider.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
-    <Content Include="Scripts\AdminLTE\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
-    <Content Include="Scripts\AdminLTE\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.js" />
-    <Content Include="Scripts\AdminLTE\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
     <Content Include="Scripts\AdminLTE\plugins\chartjs\Chart.js" />
     <Content Include="Scripts\AdminLTE\plugins\chartjs\Chart.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\adapters\jquery.js" />
@@ -350,9 +348,7 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\el.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\en-au.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\en-ca.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\en-gb.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\en.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\eo.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\es.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\et.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\eu.js" />
@@ -379,8 +375,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\lv.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\mk.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\mn.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\ms.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\nb.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\nl.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\no.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\pl.js" />
@@ -391,9 +385,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\si.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sk.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sl.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sq.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sr-latn.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sr.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\sv.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\th.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\lang\tr.js" />
@@ -405,11 +396,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
@@ -423,10 +409,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
@@ -451,12 +433,7 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\about\dialogs\about.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
@@ -473,7 +450,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\link\images\anchor.png" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\link\images\hidpi\anchor.png" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\hidpi\icon.png" />
-    <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\icon.png" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\pastefromword\filter\default.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\dialogs\options.js" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\dialogs\toolbar.css" />
@@ -598,8 +574,6 @@
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ja.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ka.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.kk.js" />
-    <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.kr.js" />
-    <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.lt.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.lv.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.mk.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ms.js" />
@@ -848,6 +822,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\referee321 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\referee321 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -859,6 +835,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -948,10 +925,14 @@
     <Content Include="Views\REFEREE\Availability.cshtml" />
     <Content Include="Views\Home\IndexforAd.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ResidentLoc.cshtml" />
+    <Content Include="Views\Algorithm\showTestResult.cshtml" />
+    <Content Include="Views\Shared\login_left_bar.cshtml" />
+    <Content Include="Views\Account\showhead_Icon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="userprofile\" />
+    <Folder Include="Views\ExcelManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
