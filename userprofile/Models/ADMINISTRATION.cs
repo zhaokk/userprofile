@@ -12,15 +12,10 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OneOffAVAILABILITY
+    public partial class ADMINISTRATION
     {
-        public int availabilityId { get; set; }
-        public int refId { get; set; }
-        public System.DateTime startDate { get; set; }
-        public Nullable<bool> allDay { get; set; }
-        public bool timeOnOrOff { get; set; }
-        public string description { get; set; }
-    
-        public virtual REFEREE REFEREE { get; set; }
+        public bool refsCanViewOthers { get; set; }
+        public bool refsCanSeeOtherGames { get; set; }
+        public int durationOfAlgorithm { get; set; }
     }
 }

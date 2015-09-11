@@ -26,7 +26,7 @@
                                 <div class="form-group">
                                     <p>Please select a Referee :</p>
                                     @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
-                                    <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+                                    <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
                                     </div>
                                     <div class="form-group">
                                         <p>The issue date of the offer is: </p>
@@ -46,13 +46,13 @@
                         {
 
                             <div class="well col-lg-4 col-md-12" id="@i">
-                                @Html.ActionLink("Delete", "Delete", "offer", new { id = item.offerID }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("Delete", "Delete", "offer", new { id = item.offerId }, new { @class = "btn btn-danger pull-right" })
                                 <div class="form-group">
                                     <p>Please select a Referee :</p>
                                     <select name="offer[@i][refID]">
                                         @foreach (var selection in ViewBag.referees)
                                         {
-                                            if (item.refID.ToString() == selection.Value)
+                                            if (item.refId.ToString() == selection.Value)
                                             {
 
                                                 <option value="@selection.Value" selected>@selection.Text</option>
@@ -67,7 +67,7 @@
                                     </select>
                                 </div>
 
-                                <input type="text" value="@item.offerID" name="offer[@i][ID]" hidden>
+                                <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
 
                                 <div class="form-group">
                                     <p>The issue date of the offer is: </p>

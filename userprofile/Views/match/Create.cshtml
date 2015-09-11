@@ -32,40 +32,40 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.location, "location", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.locationId, "location", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("location", (SelectList)ViewBag.location, String.Empty, new { @Name = "createdMatch.location" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.location)
+                                @Html.DropDownList("location", (SelectList)ViewBag.locationId, String.Empty, new { @Name = "createdMatch.locationId" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.locationId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamaID, "teamaID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamaId, "teamaID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.teamaID)
+                                @Html.ValidationMessageFor(model => model.createdMatch.teamaId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teambID, "teambID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teambId, "teambID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.teambID)
+                                @Html.ValidationMessageFor(model => model.createdMatch.teambId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.winnerID, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.winnerId, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.createdMatch.winnerID)
-                                @Html.ValidationMessageFor(model => model.createdMatch.winnerID)
+                                @Html.EditorFor(model => model.createdMatch.winnerId)
+                                @Html.ValidationMessageFor(model => model.createdMatch.winnerId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.tournament, "tournament", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.tournamentId, "tournament", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournament, String.Empty, new { @Name = "createdMatch.tournament" })
+                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
                                 
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,21 +83,21 @@
                             @Html.LabelFor(model => model.q1, "offer one qualification", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
                         <div class="form-group" id="q2" hidden>
                             @Html.LabelFor(model => model.q2, "offer two qualification", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
                         <div class="form-group" id="q3" hidden>
                             @Html.LabelFor(model => model.q3, "offer three qualification", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
 

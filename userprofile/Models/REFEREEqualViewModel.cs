@@ -14,7 +14,7 @@ namespace userprofile.Models
             this.srqvm = new selectRefQuliViewModel();
 
         }
-        public REFEREEqualViewModel(Entities db)
+        public REFEREEqualViewModel(Raoconnection db)
         {
 
             this.srqvm = new selectRefQuliViewModel(db);
@@ -36,7 +36,7 @@ namespace userprofile.Models
 
 
         }
-        public selectRefQuliViewModel(Entities db)
+        public selectRefQuliViewModel(Raoconnection db)
         {
 
 
@@ -50,7 +50,7 @@ namespace userprofile.Models
         }
 
 
-        public selectRefQuliViewModel(REFEREE refe, Entities db)
+        public selectRefQuliViewModel(REFEREE refe, Raoconnection db)
         {
             this.quals = new List<SelectQualEditorViewModel>();
             var allquals = db.QUALIFICATIONS;
@@ -59,10 +59,10 @@ namespace userprofile.Models
                 var qvm = new SelectQualEditorViewModel(qual);
                 this.quals.Add(qvm);
             }
-            foreach (var qual in refe.QUALIFICATIONS)
+            foreach (var qual in refe.USERQUALs)
             {
-                var checkqual = this.quals.Find(q => q.qualName == qual.name);
-                checkqual.Selected = true;
+               // var checkqual = this.quals.Find(q => q.qualName == qual.name);
+               // checkqual.Selected = true;
 
 
             }
@@ -82,7 +82,7 @@ namespace userprofile.Models
 
 
         }
-        public selectRefQuliEditViewModel(Entities db)
+        public selectRefQuliEditViewModel(Raoconnection db)
         {
 
 
@@ -96,9 +96,9 @@ namespace userprofile.Models
         }
 
 
-        public selectRefQuliEditViewModel(REFEREE refe, Entities db)
+        public selectRefQuliEditViewModel(REFEREE refe, Raoconnection db)
         {
-            this.refeid = refe.refID;
+            this.refeid = refe.refId;
             this.quals = new List<SelectQualEditorViewModel>();
             var allquals = db.QUALIFICATIONS;
             foreach (var qual in allquals)
@@ -106,13 +106,13 @@ namespace userprofile.Models
                 var qvm = new SelectQualEditorViewModel(qual);
                 this.quals.Add(qvm);
             }
-            foreach (var qual in refe.QUALIFICATIONS)
+            /*foreach (var qual in refe.QUALIFICATIONS)
             {
                 var checkqual = this.quals.Find(q => q.qualName == qual.name);
                 checkqual.Selected = true;
 
 
-            }
+            }*/
 
 
         }

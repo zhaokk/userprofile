@@ -11,16 +11,16 @@ namespace userprofile.Controllers
 
     public class HomeController : Controller
     {
-        public Entities db = new Entities();
+        public Raoconnection db = new Raoconnection();
         [Authorize]
         public ActionResult Index()
         {
             var userID = User.Identity.GetUserId();
            
             // ICollection<OFFER> offers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs;
-            if (db.REFEREEs.FirstOrDefault(r => r.ID == userID) != null)
+            if (db.REFEREEs.FirstOrDefault( r => r.userId == userID) != null)
             {
-                List<OFFER> alloffers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs.ToList();
+                List<OFFER> alloffers = db.REFEREEs.FirstOrDefault(r => r.userId == userID).OFFERs.ToList();
                 
                 offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
                 return View(sortedOffer);
@@ -77,9 +77,9 @@ namespace userprofile.Controllers
 
         private List<Event> GetEvent()
         {
-            var db = new Entities();
+            var db = new Raoconnection();
               var userID = User.Identity.GetUserId();
-            if (User.Identity.IsAuthenticated&&db.REFEREEs.First(r => r.ID == userID)!=null)
+            if (User.Identity.IsAuthenticated&&db.REFEREEs.First(r => r.userId == userID)!=null)
             {
                 var i = 0;
               
@@ -88,7 +88,7 @@ namespace userprofile.Controllers
 
                
              
-                List<OFFER> offers = db.REFEREEs.First(r => r.ID == userID).OFFERs.ToList();
+                List<OFFER> offers = db.REFEREEs.First(r => r.userId == userID).OFFERs.ToList();
                 foreach (OFFER offer in offers)
                 {
 
@@ -158,10 +158,10 @@ namespace userprofile.Controllers
         {
 
             var userID = User.Identity.GetUserId();
-            var db = new Entities();
+            var db = new Raoconnection();
             if (User.IsInRole("Referee"))
             {
-                REFEREE refe = db.REFEREEs.First(r => r.ID == userID);
+                REFEREE refe = db.REFEREEs.First(r => r.userId == userID);
 
                 return View(refe.OFFERs);
             }

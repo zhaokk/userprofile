@@ -14,14 +14,14 @@ namespace userprofile.Models
     
     public partial class INFRACTION
     {
-        public int infractionID { get; set; }
+        public int infractionId { get; set; }
         public string type { get; set; }
-        public bool active { get; set; }
-        public Nullable<bool> overruled { get; set; }
+        public int status { get; set; }
         public int matchID { get; set; }
-        public string player { get; set; }
+        public int player { get; set; }
+        public System.DateTime expiryDate { get; set; }
+        public int active { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         public virtual MATCH MATCH { get; set; }
     }
 }

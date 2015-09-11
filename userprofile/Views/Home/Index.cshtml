@@ -232,8 +232,8 @@
                                         <div class="col-sm-12" style="text-align:center">
 
                                             <p>
-                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.mID })">
-                                                    match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)
+                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
+                                                    match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
                                                 </a>
                                             </p>
                                         </div>
@@ -243,14 +243,14 @@
 
 
                                             <p>
-                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamID})">
+                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamId})">
                                                     @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
                                                 </a>
                                             </p>
                                         </div>
                                         <div class="col-sm-2" style="text-align:center">vs</div>
                                         <div class="col-sm-5" style="text-align:center">
-                                            <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamID })">
+                                            <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamId })">
                                                 @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
                                             </a>
                                         </div>
@@ -260,8 +260,8 @@
 
 
 
-                                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-danger pull-right" })
-                                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-success pull-right" })
+                                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-success pull-right" })
 
 
                                 </div>
@@ -318,7 +318,7 @@
 
                         @foreach (var aoffer in Model.acceptedOffers)
                         {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.mID })">@aoffer.MATCH.matchDate</a></td></tr>
+                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
                         }
 
                     </table>
@@ -336,7 +336,7 @@
                     <table class="table">
                         @foreach (var aoffer in Model.declinedOffers)
                         {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.mID })">@aoffer.MATCH.matchDate</a></td></tr>
+                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
                         }
                     </table>
                 </div>

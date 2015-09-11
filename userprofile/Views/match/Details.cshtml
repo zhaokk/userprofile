@@ -9,7 +9,7 @@
 		<div class="box">
 			<div class="box-body">
 				<p>
-					@Html.ActionLink("Edit", "Edit", new { id = Model.mID }, new { @class = "btn btn-warning pull-right" })
+					@Html.ActionLink("Edit", "Edit", new { id = Model.matchId }, new { @class = "btn btn-warning pull-right" })
 				</p>
 				<div class="fa fa-angle-left">
 					@Html.ActionLink("Back to List", "Index")
@@ -22,16 +22,29 @@
 							@Html.DisplayFor(model => model.matchDate)
 						</dd>
 						<dt>
-							@Html.DisplayNameFor(model => model.winnerID)
+							@Html.DisplayNameFor(model => model.winnerId)
 						</dt>
 						<dd>
-							@Html.DisplayFor(model => model.winnerID)
+							@{
+                                if (Model.winnerId == 0){
+                                    
+                                }
+                                else if (Model.winnerId == 1){
+                                    Html.DisplayFor(model => model.winnerId);
+                                }
+                                else if (Model.winnerId == 2){
+                                    Html.DisplayFor(model => model.winnerId);
+                                }
+                                else if (Model.winnerId == 3){
+                                    Html.Display("it was a draw!");
+                                }
+							}
 						</dd>
 						<dt>
-							@Html.DisplayNameFor(model => model.LOCATION1.name)
+							@Html.DisplayNameFor(model => model.LOCATION.name)
 						</dt>
 						<dd>
-							@Html.DisplayFor(model => model.LOCATION1.name)
+							@Html.DisplayFor(model => model.LOCATION.name)
 						</dd>
 						<dt>
 							@Html.DisplayNameFor(model => model.TEAM.name)
@@ -46,10 +59,10 @@
 							@Html.DisplayFor(model => model.TEAM1.name)
 						</dd>
 						<dt>
-							@Html.DisplayNameFor(model => model.TOURNAMENT1.sport)
+							@Html.DisplayNameFor(model => model.TOURNAMENT.sport)
 						</dt>
 						<dd>
-							@Html.DisplayFor(model => model.TOURNAMENT1.sport)
+							@Html.DisplayFor(model => model.TOURNAMENT.sport)
 						</dd>
 					</dl>
 				</div>

@@ -9,7 +9,7 @@
         <div class="box" style="height: 400px;">
             <div class="box-body">
                
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.teamID }, new { @class="btn btn-warning pull-right"})
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.teamId }, new { @class="btn btn-warning pull-right"})
                 <div class="fa fa-angle-left">
                     @Html.ActionLink("Back to List", "Index")
                 </div>
@@ -35,16 +35,16 @@
                             @Html.DisplayFor(model => model.grade)
                         </dd>
                       <dt>
-                            @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                            @Html.DisplayNameFor(model => model.managerId)
                         </dt>
                         @*<dd>
                             @Html.DisplayFor(model => model.AspNetUser.UserName)
                         </dd>*@
                         <dt>
-                            @Html.DisplayNameFor(model => model.managerID)
+                            @Html.DisplayNameFor(model => model.managerId)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.managerID)
+                            @Html.DisplayFor(model => model.managerId)
                         </dd>
                       
                       

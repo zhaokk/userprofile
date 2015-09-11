@@ -12,15 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OneOffAVAILABILITY
+    public partial class USERQUAL
     {
-        public int availabilityId { get; set; }
+        public int qualificationId { get; set; }
         public int refId { get; set; }
-        public System.DateTime startDate { get; set; }
-        public Nullable<bool> allDay { get; set; }
-        public bool timeOnOrOff { get; set; }
-        public string description { get; set; }
+        public Nullable<int> qualLevel { get; set; }
     
+        public virtual QUALIFICATION QUALIFICATION { get; set; }
         public virtual REFEREE REFEREE { get; set; }
     }
 }

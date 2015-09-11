@@ -13,7 +13,7 @@
                     @Html.ActionLink(" Back to List", "Index")
                 </div>
                 
-               @Html.ActionLink("Edit", "Edit", new { id = Model.qID }, new {@class="btn btn-warning pull-right" })
+               @Html.ActionLink("Edit", "Edit", new { id = Model.qualificationId }, new {@class="btn btn-warning pull-right" })
                 <hr />
                 <h4>QUALIFICATION</h4>
                 <dl class="dl-horizontal">
@@ -26,11 +26,11 @@
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.supDesc)
+                        @Html.DisplayNameFor(model => model.description)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.supDesc)
+                        @Html.DisplayFor(model => model.description)
                     </dd>
 
                     <dt>
