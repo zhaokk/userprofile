@@ -205,18 +205,95 @@ namespace userprofile.Controllers {
             }
         }
 
-        bool checkInitAvailability(int oID, int rID) {
-            return true; ///TESSSSSSSSSSSSSSSSTTTTTTTTTTTT
-            DateTime matchDateTime = offerStorage[oID].MATCH.matchDate;
-            var temp = db.OneOffAVAILABILITies.Find();
-            if (temp != null) {
+        bool containsOneOff(int oID, int rID) {
+            return containsOneOff(db.OFFERs.Find(oID).dateOfOffer, rID);
+        }
+
+        bool containsOneOff(DateTime matchDateTime, int rID) {
+            var temp = db.OneOffAVAILABILITies.Find(); //WRITE PRIMARY KEY FOR REFAVAILABILITY
+            if (temp == null)
+                return false;
+            else
+                return true;
+        }
+
+        bool checkOneOff(DateTime matchDateTime, int rID) {
+            try {
+                var temp = db.OneOffAVAILABILITies.Find();
                 if (temp.timeOnOrOff == true)
                     return true;
                 else
                     return false;
             }
-            else { //DO DAY
+            catch (SystemException a) {
+                //write stuff
                 return false;
+            }
+            
+        }
+
+        int getWeeklyAvailabilityForDay(DateTime dt, int rID) {
+            switch (dt.DayOfWeek) {
+                    case DayOfWeek.Sunday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).sunday;
+                    case DayOfWeek.Monday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).monday;
+                    case DayOfWeek.Tuesday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
+                    case DayOfWeek.Wednesday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
+                    case DayOfWeek.Thursday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).thursday;
+                    case DayOfWeek.Friday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).friday;
+                    case DayOfWeek.Saturday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).saturday;
+                    default:
+                        //DEBUG STUFF
+                        return 0;
+                }
+        }
+
+        bool checkWeeklyAvailabilityForMatch(int weeklyAvailability, DateTime matchDateTime) {
+            if (weeklyAvailability == 0) {
+                return false;
+            }
+            if (weeklyAvailability == 6) {
+                return true;
+            }
+            if (matchDateTime.TimeOfDay < new TimeSpan(8, 0, 0)) {
+                if (weeklyAvailability == 1 || weeklyAvailability == 4)
+                    return true;
+                else
+                    return false;
+            }
+            else if (matchDateTime.TimeOfDay < new TimeSpan(16, 0, 0)) {
+                if (weeklyAvailability == 2 || weeklyAvailability == 4 || weeklyAvailability == 5)
+                    return true;
+                else
+                    return false;
+            }
+            else {
+                if (weeklyAvailability == 3 || weeklyAvailability == 5)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        bool checkInitAvailability(int oID, int rID) {
+            return true; ///TESSSSSSSSSSSSSSSSTTTTTTTTTTTT
+            DateTime matchDateTime = offerStorage[oID].MATCH.matchDate;
+            
+            if (containsOneOff(matchDateTime,rID)) {
+                if (checkOneOff(matchDateTime,rID))
+                    return true;
+                else
+                    return false;
+            }
+            else { //Check Daily Availability
+                int weeklyAvailabilityForDay = getWeeklyAvailabilityForDay(matchDateTime,rID);
+                return checkWeeklyAvailabilityForMatch(weeklyAvailabilityForDay, matchDateTime);
             }
         }
 
