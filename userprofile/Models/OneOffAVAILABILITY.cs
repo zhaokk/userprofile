@@ -17,7 +17,6 @@ namespace userprofile.Models
         public int availabilityId { get; set; }
         public int refId { get; set; }
         public System.DateTime startDate { get; set; }
-        public Nullable<bool> allDay { get; set; }
         public bool timeOnOrOff { get; set; }
         public string description { get; set; }
     

@@ -18,10 +18,10 @@ namespace userprofile.Models
         public string type { get; set; }
         public int status { get; set; }
         public int matchID { get; set; }
-        public int player { get; set; }
+        public string player { get; set; }
         public System.DateTime expiryDate { get; set; }
-        public int active { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual MATCH MATCH { get; set; }
     }
 }

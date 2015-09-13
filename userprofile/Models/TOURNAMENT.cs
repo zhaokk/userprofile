@@ -24,11 +24,13 @@ namespace userprofile.Models
         public string name { get; set; }
         public System.DateTime startDate { get; set; }
         public string organizer { get; set; }
-        public int ageBracket { get; set; }
-        public int grade { get; set; }
+        public Nullable<int> ageBracket { get; set; }
+        public string grade { get; set; }
         public string sport { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
+        public int priority { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }

@@ -22,6 +22,7 @@
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.refId)
                         @Html.HiddenFor(model => model.userId)
+                        @Html.HiddenFor(model => model.status)
                         @*<div class="form-group">
                             @Html.LabelFor(model => model.availability, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -43,25 +44,19 @@
                                 @Html.ValidationMessageFor(model => model.sport)
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.prefAge, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.prefAge)
-                                @Html.ValidationMessageFor(model => model.prefAge)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.prefGrade, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.prefGrade)
-                                @Html.ValidationMessageFor(model => model.prefGrade)
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.maxGames, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.maxGames)
                                 @Html.ValidationMessageFor(model => model.maxGames)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.rating, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.rating)
+                                @Html.ValidationMessageFor(model => model.rating)
                             </div>
                         </div>
                         <div class="form-group">

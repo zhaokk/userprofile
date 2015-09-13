@@ -24,7 +24,7 @@ namespace userprofile.Models
         }
     
         public string name { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
     
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }

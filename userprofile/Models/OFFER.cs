@@ -17,7 +17,6 @@ namespace userprofile.Models
         public OFFER()
         {
             this.OFFERQUALs = new HashSet<OFFERQUAL>();
-            this.TYPEs = new HashSet<TYPE>();
             this.REFEREEs = new HashSet<REFEREE>();
         }
     
@@ -28,13 +27,14 @@ namespace userprofile.Models
         public int status { get; set; }
         public System.DateTime dateOfOffer { get; set; }
         public string declinedReason { get; set; }
-        public int active { get; set; }
+        public int priority { get; set; }
+        public string typeOfOffer { get; set; }
     
         public virtual MATCH MATCH { get; set; }
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual REFEREE REFEREE { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual ICollection<TYPE> TYPEs { get; set; }
+        public virtual TYPE TYPE { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }
 }

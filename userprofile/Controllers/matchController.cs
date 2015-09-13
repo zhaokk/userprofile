@@ -105,8 +105,8 @@ namespace userprofile.Controllers
 
 
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name", matchVM.createdMatch.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teambId);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamAId);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamBId);
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", matchVM.createdMatch.tournamentId);
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             return View(matchVM);
@@ -198,8 +198,8 @@ namespace userprofile.Controllers
                 return HttpNotFound();
             }
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teambId);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
             ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
             return View(match);
         }
@@ -218,8 +218,8 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamaId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teambId);
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
             ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
             return View(match);
         }

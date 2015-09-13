@@ -16,7 +16,7 @@ namespace userprofile.Models
     {
         public int qualificationId { get; set; }
         public int offerId { get; set; }
-        public Nullable<int> qualLevel { get; set; }
+        public int qualLevel { get; set; }
     
         public virtual OFFER OFFER { get; set; }
         public virtual QUALIFICATION QUALIFICATION { get; set; }

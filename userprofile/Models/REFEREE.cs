@@ -26,11 +26,10 @@ namespace userprofile.Models
         public int refId { get; set; }
         public Nullable<int> distTravel { get; set; }
         public string sport { get; set; }
-        public Nullable<int> prefAge { get; set; }
-        public Nullable<int> prefGrade { get; set; }
         public string userId { get; set; }
         public int maxGames { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
+        public int rating { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }

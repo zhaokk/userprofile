@@ -25,7 +25,7 @@ namespace userprofile.Models
         public string sport { get; set; }
         public string description { get; set; }
         public int qualificationLevel { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }

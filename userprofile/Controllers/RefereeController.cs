@@ -18,7 +18,8 @@ namespace userprofile.Controllers
         // GET: /REFEREE/
         public ActionResult Index()
         {
-            List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y=> y.QUALIFICATION)).ToList();
+            List<REFEREE> referees = db.REFEREEs.Where(s => s.status == 1).Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).ToList();
+
             List<SelectList> qualifications = new List<SelectList>();
 
             foreach (REFEREE reff in referees)
@@ -84,7 +85,7 @@ namespace userprofile.Controllers
         {
             ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-            ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qID", "name");
+            ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.quallist = new selectRefQuliViewModel(db);
             REFEREEqualViewModel rqvm = new REFEREEqualViewModel(db);
             return View(rqvm);
@@ -202,7 +203,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="refID,availability,distTravel,sport,prefAge,prefGrade,userId")] REFEREE referee)
+        public ActionResult Edit([Bind(Include="refID,availability,distTravel,sport,userId,status,maxGames,rating")] REFEREE referee)
         {
             if (ModelState.IsValid)
             {

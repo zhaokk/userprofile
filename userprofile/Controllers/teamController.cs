@@ -40,7 +40,7 @@ namespace userprofile.Controllers
         // GET: /team/Create
         public ActionResult Create()
         {
-            ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName");
+            ViewBag.managerID = new SelectList(db.AspNetUsers, "UserName", "UserName");
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
             return View();
         }

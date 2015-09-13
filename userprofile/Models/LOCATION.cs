@@ -29,7 +29,9 @@ namespace userprofile.Models
         public int phoneNum { get; set; }
         public string country { get; set; }
         public string state { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
+        public System.Data.Entity.Spatial.DbGeography geogCol1 { get; set; }
+        public string geogCol2 { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }

@@ -19,8 +19,11 @@ namespace userprofile.Models
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.Events = new HashSet<Event>();
+            this.INFRACTIONS = new HashSet<INFRACTION>();
             this.PLAYERs = new HashSet<PLAYER>();
             this.REFEREEs = new HashSet<REFEREE>();
+            this.TEAMs = new HashSet<TEAM>();
+            this.TOURNAMENTs = new HashSet<TOURNAMENT>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
@@ -38,6 +41,7 @@ namespace userprofile.Models
         public string country { get; set; }
         public int postcode { get; set; }
         public string street { get; set; }
+        public string city { get; set; }
         public string state { get; set; }
         public System.DateTime dob { get; set; }
         public bool isAdmin { get; set; }
@@ -48,13 +52,16 @@ namespace userprofile.Models
         public bool willingToShowDOB { get; set; }
         public bool willingToShowAddress { get; set; }
         public bool willingToshowEmail { get; set; }
-        public int active { get; set; }
+        public int status { get; set; }
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
+        public virtual ICollection<TEAM> TEAMs { get; set; }
+        public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }

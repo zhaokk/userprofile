@@ -23,14 +23,14 @@ namespace userprofile.Models
         public int matchId { get; set; }
         public System.DateTime matchDate { get; set; }
         public Nullable<int> locationId { get; set; }
-        public int teamaId { get; set; }
-        public int teambId { get; set; }
+        public int teamAId { get; set; }
+        public int teamBId { get; set; }
         public Nullable<int> teamAScore { get; set; }
         public Nullable<int> teamBScore { get; set; }
-        public Nullable<int> winnerId { get; set; }
+        public Nullable<int> status { get; set; }
         public int tournamentId { get; set; }
         public int matchLength { get; set; }
-        public int active { get; set; }
+        public int halfTimeDuration { get; set; }
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }

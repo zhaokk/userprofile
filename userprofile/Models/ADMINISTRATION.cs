@@ -17,5 +17,8 @@ namespace userprofile.Models
         public bool refsCanViewOthers { get; set; }
         public bool refsCanSeeOtherGames { get; set; }
         public int durationOfAlgorithm { get; set; }
+        public Nullable<System.DateTime> algorithmStartDate { get; set; }
+        public Nullable<System.DateTime> algorithmEndDate { get; set; }
+        public bool algorithmAll { get; set; }
     }
 }

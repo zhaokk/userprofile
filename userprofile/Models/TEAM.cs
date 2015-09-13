@@ -24,12 +24,14 @@ namespace userprofile.Models
     
         public int teamId { get; set; }
         public string name { get; set; }
-        public int ageBracket { get; set; }
-        public int grade { get; set; }
+        public Nullable<int> ageBracket { get; set; }
+        public string grade { get; set; }
         public string sport { get; set; }
         public string managerId { get; set; }
-        public int active { get; set; }
+        public string shortName { get; set; }
+        public int status { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual ICollection<MATCH> MATCHes1 { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }

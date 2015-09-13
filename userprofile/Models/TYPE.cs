@@ -14,11 +14,17 @@ namespace userprofile.Models
     
     public partial class TYPE
     {
+        public TYPE()
+        {
+            this.OFFERs = new HashSet<OFFER>();
+        }
+    
         public int typeId { get; set; }
-        public int offerId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public int priority { get; set; }
+        public int status { get; set; }
     
-        public virtual OFFER OFFER { get; set; }
+        public virtual ICollection<OFFER> OFFERs { get; set; }
     }
 }

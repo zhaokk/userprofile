@@ -12,7 +12,7 @@ namespace userprofile.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class Raoconnection : DbContext
     {
         public Raoconnection()

@@ -143,7 +143,7 @@ namespace userprofile.Controllers
                 if (model.Roles[1].Selected)
                 {
                     user.isPlayer = true;
-                    var roleMap = db.AspNetRoles.First(m => m.Name == "User"); //change to  == "Player"
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Player"); //change to  == "Player"
                     user.AspNetRoles.Add(roleMap);
 
                 }
@@ -157,7 +157,7 @@ namespace userprofile.Controllers
                 if (model.Roles[3].Selected)
                 {
                     user.isOrganizer = true;
-                    var roleMap = db.AspNetRoles.First(m => m.Name == "CanEdit"); //change to  == "Organizer"
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Organizer"); //change to  == "Organizer"
                     user.AspNetRoles.Add(roleMap);
                    
                 }
