@@ -315,6 +315,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\calendar\fullCalendar.css" />
     <Content Include="Content\css\calendar\fullCalendarPrint.css" />
+    <Content Include="Content\indexReferee.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\mycss.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
