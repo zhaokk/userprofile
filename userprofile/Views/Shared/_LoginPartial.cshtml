@@ -1,36 +1,36 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <li class="user-header">
-       
-        <p style="text-align:center">
-            
-                @Html.ActionLink("Manage My Account", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage",@styles="color:white"})
-               
-</p>
-        
-                   
-     </li>
+        <li class="user-header">
 
-    <li class="user-body">
-        
-        <div class="col-xs-12 text-center">@Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName() })</div>
-              
-        
-    </li>
+            <p style="text-align:center">
+
+                @Html.ActionLink("Manage My Account", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage", @styles = "color:white" })
+
+            </p>
 
 
+        </li>
 
-    <li class="user-footer">
-        <div class="col-xs-12 text-center btn btn-danger">
-            <a class="" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-        </div>
-       
-    </li>
+        <li class="user-body">
+
+            <div class="col-xs-12 text-center">@Html.Action("showhead_Icon", "Account", new { id = User.Identity.GetUserName() })</div>
+
+
+        </li>
+
+
+
+        <li class="user-footer">
+            <div class="col-xs-12 text-center btn btn-danger">
+                <a class="" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </div>
+
+        </li>
 
 
 
@@ -40,16 +40,16 @@
 else
 {
     <ul class="nav navbar-nav">
-       
+
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
-
 <style>
     .user-header > p > a {
-        color:white;
+        color: white;
     }
+
     .user-footer > div > a {
-        color:white;
+        color: white;
     }
 </style>

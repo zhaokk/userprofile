@@ -1,14 +1,11 @@
-﻿@* 
- This partial controls the top menu of the AdminLTE Template, being called automatically by _AdminLteLayout
-    TODO: All of the content in here is stand-in that must be replaced by the real behavior of your app
+﻿@*
+    This partial controls the top menu of the AdminLTE Template, being called automatically by _AdminLteLayout
+       TODO: All of the content in here is stand-in that must be replaced by the real behavior of your app
 *@
-
 @using Microsoft.AspNet.Identity
-
 @{
     ViewBag.Layout = null;
 }
-
 <header class="main-header">
     <!-- Logo -->
     <a href='@Url.Action("index", "Home")' class="logo"><b>RefereeAO</b></a>
@@ -217,19 +214,19 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                       @Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName() })    
-        
-        <span class="hidden-xs">Hello @User.Identity.GetUserName()</span>
-        </a>
+                        @Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName() })
+
+                        <span class="hidden-xs">Hello @User.Identity.GetUserName()</span>
+                    </a>
 
 
-        <ul class="dropdown-menu" style="width:150px;">
+                    <ul class="dropdown-menu" style="width:150px;">
 
-            @Html.Partial("_LoginPartial")
+                        @Html.Partial("_LoginPartial")
 
-        </ul>
-        </li>
-        </ul>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>

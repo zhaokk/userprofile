@@ -105,79 +105,83 @@
                     
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                    Match Date
-                                </th>
-                                @*<th>
-                                        @Html.DisplayNameFor(model => model.matchDate)
-                                    </th>*@
-                                @*<th>
-                                        @Html.DisplayNameFor(model => model.winnerID)
-                                    </th>*@
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.LOCATION1.name)*@
-                                    Location
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TEAM.name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TEAM1.name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.TOURNAMENT.sport)
-                                </th>
-								<th></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    <td>
-                                       
-                                        <a href="@Url.Action( "Details", new { id = item.matchId })">
-                                        @Html.DisplayFor(modelItem => item.matchDate)</a>
-                                       
-                                        @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-   
-                                        
-</td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.winnerID)
-                                        </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LOCATION.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM1.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
-										
-                                    </td>
-									<td>
-										
-									@if (User.IsInRole("Admin")) { 
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
-                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
-                                    
-                                    }</td>
-                                   
-                                </tr>
-                            }
-                        </tbody>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+                                    @*<th>
+                            @Html.DisplayNameFor(model => model.matchDate)
+                        </th>*@
+                                    @*<th>
+                            @Html.DisplayNameFor(model => model.winnerID)
+                        </th>*@
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.LOCATION1.name)*@
+                                        Location
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TEAM.name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TEAM1.name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TOURNAMENT.sport)
+                                    </th>
+                                    <th></th>
 
-                    </table>
-                </div><!-- /.box-body -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+
+                                    <a href="@Url.Action( "Details", new { id = item.matchId })">
+                                        @Html.DisplayFor(modelItem => item.matchDate)
+                                    </a>
+
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+
+
+                                </td>
+                                @*<td>
+                        @Html.DisplayFor(modelItem => item.winnerID)
+                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TEAM.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                                </td>
+                                <td>
+
+                                    @if (User.IsInRole("Admin")) {
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
+                                    @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+
+                                    }
+                                </td>
+
+                            </tr>
+                            }
+                            </tbody>
+
+                        </table>
+                    </div>
+                    </div><!-- /.box-body -->
             </div><!-- /.box -->
 
         </div><!-- /.col -->

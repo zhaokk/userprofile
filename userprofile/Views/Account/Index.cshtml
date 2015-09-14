@@ -30,59 +30,61 @@
             <div class="box-header">
             </div><!-- /.box-header -->
             <div class="box-body">
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.UserName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.LastName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Email)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td>
-
-                                    <a href="@Url.Action("UserRoles", new { id = item.UserName })">
-                                        @Html.DisplayFor(modelItem => item.UserName)
-                                    </a>
-                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-
-
-                                </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.winnerID)
-                                </td>*@
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FirstName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LastName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.UserName }, new { @class = "btn btn-danger pull-right" })*@
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.UserName }, new { @class = "btn btn-warning pull-right" })
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th></th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+
+                                <a href="@Url.Action("UserRoles", new { id = item.UserName })">
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </a>
+                                @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+
+
+                            </td>
+                            @*<td>
+                        @Html.DisplayFor(modelItem => item.winnerID)
+                    </td>*@
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Delete", "Delete", new { id = item.UserName }, new { @class = "btn btn-danger pull-right" })*@
+                                @Html.ActionLink("Edit", "Edit", new { id = item.UserName }, new { @class = "btn btn-warning pull-right" })
+                            </td>
+                        </tr>
                         }
-                    </tbody>
-                </table>
-            </div><!-- /.box-body -->
+                        </tbody>
+                    </table>
+                </div>
+                </div><!-- /.box-body -->
         </div><!-- /.box -->
 
     </div><!-- /.col -->

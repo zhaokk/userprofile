@@ -313,17 +313,17 @@
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
 
+                    <div class="table-responsive">
+                        <table class="table">
 
-                    <table class="table">
-
-                        @foreach (var aoffer in Model.acceptedOffers)
+                            @foreach (var aoffer in Model.acceptedOffers)
                         {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
+                        <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
                         }
 
-                    </table>
-
-                </div>
+                        </table>
+</div>
+                    </div>
             </div>
             <div class="box box-danger">
                 <div class="box-header with-border">
@@ -333,13 +333,15 @@
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
-                    <table class="table">
-                        @foreach (var aoffer in Model.declinedOffers)
-                        {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
-                        }
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            @foreach (var aoffer in Model.declinedOffers)
+                            {
+                                <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
+                            }
+                        </table>
+                        </div>
+                    </div>
             </div>
 
             </div>

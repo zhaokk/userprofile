@@ -100,35 +100,37 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                    Match Date
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var offer in @Model.acceptedOffers)
-                            {
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                    </td>
-                                    <td>
-                                        @offer.MATCH.matchDate
-                                    </td>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var offer in @Model.acceptedOffers)
+                            {
+                            <tr>
+                                <td>
+                                    @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                </td>
+                                <td>
+                                    @offer.MATCH.matchDate
+                                </td>
+                            </tr>
 
                             }
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
+                            </tbody>
+                        </table>
+                    </div>
+                    </div><!-- /.box-body -->
             </div>
 
         </div>
@@ -141,35 +143,37 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
-                    <table id="example1" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                    Match Date
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var offer in @Model.declinedOffers)
-                        {
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                    </td>
-                                    <td>
-                                        @offer.MATCH.matchDate
-                                    </td>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var offer in @Model.declinedOffers)
+                        {
+                            <tr>
+                                <td>
+                                    @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                </td>
+                                <td>
+                                    @offer.MATCH.matchDate
+                                </td>
+                            </tr>
 
                         }
-                        </tbody>
-                    </table>
-                </div><!-- /.box-body -->
+                            </tbody>
+                        </table>
+                    </div>
+                    </div><!-- /.box-body -->
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -220,15 +224,16 @@ if (window.addEventListener) { // Mozilla, Netscape, Firefox
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            @foreach (var match in @Model.matches)
+                            {
+                                <tr><td>@match.matchDate</td></tr>
 
-                    <table id="example2" class="table table-bordered table-hover">
-                        @foreach (var match in @Model.matches)
-                {
-                        <tr><td>@match.matchDate</td></tr>
-
-                }
-                    </table>
-                </div><!-- /.box-body -->
+                            }
+                        </table>
+                    </div>
+                    </div><!-- /.box-body -->
             </div>
         </div>
         </div>

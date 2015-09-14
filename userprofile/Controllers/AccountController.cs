@@ -326,7 +326,17 @@ namespace userprofile.Controllers
             var model=new logindetialViewModel(user);
             return View(model);
         }
-       
+
+        public ActionResult showhead_Icon(string id)
+        {
+            var db = new ApplicationDbContext();
+
+            var user = db.Users.First(u => u.UserName == id);
+            var model = new logindetialViewModel(user);
+            return View(model);
+        }
+
+
         //
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)

@@ -10,36 +10,36 @@
     }
 </style>
 
-<div class="col-lg-12">
-    <div class="box">
-        <div class="box-body" style="height:500px">
-          
-                @using (Html.BeginForm())
-                {
+<div class="col-md-12">
+    <div class="box-solid">
+        <div class="box-body">
+
+            @using (Html.BeginForm())
+            {
                 <div class="row col-md-12">
                     @foreach (var item in Model.offers)
                     {
 
-                        if (item.status == 5||item.status==4)
+                        if (item.status == 5 || item.status == 4)
                         {
                             <div class="well col-lg-4 col-md-12" id="@i" hidden>
                                 <div class="form-group">
                                     <p>Please select a Referee :</p>
                                     @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
                                     <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
-                                    </div>
-                                    <div class="form-group">
-                                        <p>The issue date of the offer is: </p>
-                                        <div class=" label label-default">N/A</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <p>The state of the offer is: </p>
-                                        <div class="label label-warning">@Html.DisplayFor(modelItem => item.status)</div>
-                                    </div>
-
-                                    @{j++;}
-
                                 </div>
+                                <div class="form-group">
+                                    <p>The issue date of the offer is: </p>
+                                    <div class=" label label-default">N/A</div>
+                                </div>
+                                <div class="form-group">
+                                    <p>The state of the offer is: </p>
+                                    <div class="label label-warning">@Html.DisplayFor(modelItem => item.status)</div>
+                                </div>
+
+                                @{j++;}
+
+                            </div>
 
                         }
                         else
@@ -86,48 +86,49 @@
                         }
                         i++;
                     }
-                    </div>
-         
-                    if (j == 0) { }
+                </div>
+                <div class="col-md-6" id="addnew">
+                    @if (j == 0) { }
                     else
                     {
 
-                        <div class="col-md-6" id="addnew">
-
-                            <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
 
 
-                        </div>
+                        <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
+
+
+
                     }
+
                     @Html.HiddenFor(model => model.mID)
                     <input type="text" id="flag" value="@j" hidden>
 
 
-    <div class="col-md-6">
-        <input onload="check()" type="submit" value="Create" class="btn btn-success pull-right" />
-    </div>
 
-                }
+                    <input onload="check()" type="submit" value="Create" class="btn btn-success pull-right" />
 
-            </div>
+                </div>
+            }
+
         </div>
     </div>
+</div>
 
-    <script>
-        var i = $("#flag").val();
+<script>
+    var i = $("#flag").val();
 
-        function newOffer() {
-            var j = 3 - i;
-            $("#" + j).show("slow", function () {
-                // Animation complete.
-            });
+    function newOffer() {
+        var j = 3 - i;
+        $("#" + j).show("slow", function () {
+            // Animation complete.
+        });
 
-            i--;
-            if (i < 1) {
+        i--;
+        if (i < 1) {
 
-                $("#addnew").css("display", "none");
-            }
+            $("#addnew").css("display", "none");
         }
+    }
 
 
-    </script>
+</script>
