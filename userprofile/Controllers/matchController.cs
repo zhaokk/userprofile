@@ -45,6 +45,7 @@ namespace userprofile.Controllers
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
+            ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             return View();
         }
 
@@ -56,8 +57,8 @@ namespace userprofile.Controllers
         public ActionResult Create( matchViewModel matchVM)
         {
 
-
-            matchVM.createdMatch.matchDate = (System.DateTime)matchVM.createdMatch.matchDate;
+            
+           // matchVM.createdMatch.matchDate = (System.DateTime)matchVM.createdMatch.matchDate;
             if (ModelState.IsValid)
             {
                 
@@ -65,16 +66,22 @@ namespace userprofile.Controllers
                 OFFER offer1 = new OFFER();
                 OFFER offer2 = new OFFER();
                 OFFER offer3 = new OFFER();
+                offer1.refId = offer2.refId = offer3.refId = 63699895;
                 offer1.status = offer2.status = offer3.status = 4;
                 offer1.SPORT1 = offer2.SPORT1 = offer3.SPORT1 = db.SPORTs.Find("Soccer");
                 switch (matchVM.offernum) { 
                     case 1:
-                        
+                        offer1.typeOfOffer = matchVM.type1;
+                        offer1.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer1, qualificationId = (int)matchVM.q1 ,qualLevel=(int)matchVM.ql1});
                         //offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         newMacth.OFFERs.Add(offer1);
+
                        break;
                     case 2:
-                        
+                       offer1.typeOfOffer = matchVM.type1;
+                       offer1.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer1, qualificationId = (int)matchVM.q1, qualLevel = (int)matchVM.ql1 });
+                       offer2.typeOfOffer = matchVM.type2;
+                       offer2.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer2, qualificationId = (int)matchVM.q2, qualLevel = (int)matchVM.ql2 });
                        // offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         
                         //offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
@@ -83,7 +90,12 @@ namespace userprofile.Controllers
 
                         break;
                     case 3:
-                        
+                                  offer1.typeOfOffer = matchVM.type1;
+                                  offer1.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer1, qualificationId = (int)matchVM.q1, qualLevel = (int)matchVM.ql1 });
+                       offer2.typeOfOffer = matchVM.type2;
+                       offer2.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer2, qualificationId = (int)matchVM.q2, qualLevel = (int)matchVM.ql2 });
+                       offer3.typeOfOffer = matchVM.type3;
+                       offer3.OFFERQUALs.Add(new OFFERQUAL() { OFFER = offer3, qualificationId = (int)matchVM.q3, qualLevel = (int)matchVM.ql3 });
                         //offer1.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));
                         
                         //offer2.QUALIFICATIONS.Add(db.QUALIFICATIONS.Find(matchVM.q1));

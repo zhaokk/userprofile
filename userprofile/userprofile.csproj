@@ -901,12 +901,10 @@
     <Content Include="Views\location\Index.cshtml" />
     <Content Include="Views\match\Create.cshtml" />
     <Content Include="Views\match\Delete.cshtml" />
-    <Content Include="Views\match\Details.cshtml" />
     <Content Include="Views\match\Edit.cshtml" />
     <Content Include="Views\match\Index.cshtml" />
     <Content Include="Views\offer\Create.cshtml" />
     <Content Include="Views\offer\Delete.cshtml" />
-    <Content Include="Views\offer\Details.cshtml" />
     <Content Include="Views\offer\Edit.cshtml" />
     <Content Include="Views\offer\Index.cshtml" />
     <Content Include="Views\Qualification\Create.cshtml" />
@@ -954,6 +952,7 @@
     <Content Include="Views\REFEREE\Availability.cshtml" />
     <Content Include="Views\Home\IndexforAd.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ResidentLoc.cshtml" />
+    <Content Include="Views\match\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
