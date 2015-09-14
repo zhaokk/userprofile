@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web;
 
 namespace userprofile.Models
@@ -43,6 +45,9 @@ namespace userprofile.Models
 
     public class RegisterViewModel
     {
+        public RegisterViewModel() {
+          
+        }
         
         public HttpPostedFileBase upload { get; set; }
         
@@ -88,14 +93,17 @@ namespace userprofile.Models
 
         public string Roles { get; set; }
         [Required]
-        public System.DateTime dob { get; set; }
+        public string dob { get; set; }
         //[Required]
         //public string street { get; set; }
 
         public REFEREEqualViewModel optionalRe { get; set; }
         public ResidentLoc residentLoc { get; set; }
         public ApplicationUser GetUser()
-        {
+        {      
+            
+
+            DateTime x = DateTime.ParseExact(this.dob, "dd/MM/yyyy", null);
             var user = new ApplicationUser()
             {
                 photoDir=this.photoDir,
@@ -104,7 +112,8 @@ namespace userprofile.Models
                 lastName = this.LastName,
                 email = this.Email,
                country = this.residentLoc.country,
-            dob = this.dob,
+               city=this.residentLoc.city,
+            dob = x,
            phoneNum =  this.phoneNum,
             state = this.residentLoc.state,
             street = this.residentLoc.street,
@@ -114,11 +123,14 @@ namespace userprofile.Models
             };
             return user;
         }
-        public RegisterViewModel() { }
+        
         public RegisterViewModel(Raoconnection db)
         {
             this.optionalRe = new REFEREEqualViewModel(db);
+            this.optionalRe.re = new REFEREE();
             this.residentLoc = new ResidentLoc();
+            this.optionalRe.re.rating = 0;
+            this.optionalRe.re.maxGames = 1;
         }
     }
     public class ResidentLoc {

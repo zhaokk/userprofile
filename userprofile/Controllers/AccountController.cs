@@ -252,6 +252,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
             var db = new Raoconnection();
             string location = @"~\userprofile\default.png";
             REFEREE newref=new REFEREE();
@@ -265,7 +266,9 @@ namespace userprofile.Controllers
 
             }
             model.photoDir = location;
-
+            
+               
+           
             if (ModelState.IsValid)
             {
                 var user = model.GetUser();
@@ -278,6 +281,7 @@ namespace userprofile.Controllers
                     switch (model.Roles) { 
                         case "Referee":
                             REFEREE refComeWithUser = model.optionalRe.re;
+                            
                             refComeWithUser.userId = storedUser.Id;
                             refComeWithUser.USERQUALs.Clear();
                             foreach (var qual in model.optionalRe.srqvm.quals)

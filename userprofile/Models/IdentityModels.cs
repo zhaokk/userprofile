@@ -34,6 +34,8 @@ namespace userprofile.Models
         public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
+        [Required]
+        public string city { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
