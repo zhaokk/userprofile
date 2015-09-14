@@ -111,6 +111,23 @@ namespace userprofile.Controllers
             rqvm.srqvm = srqvm;
             return View(rqvm);
         }
+        public ActionResult Createe( REFEREE re)
+        {
+
+
+
+            if (ModelState.IsValid)
+            {
+               
+                
+                db.REFEREEs.Add(re);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+           
+            return View();
+        }
         public ActionResult changequal(int? id)
         {
 

@@ -38,7 +38,7 @@ namespace userprofile
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap3.35/bootstrap.min.css",
                       "~/Content/site.css"));
             bundles.Add(new ScriptBundle("~/Scripts/jQueryUI").Include("~/Scripts/jquery-ui.min.js"));
         }

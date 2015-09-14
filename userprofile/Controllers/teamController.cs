@@ -17,6 +17,7 @@ namespace userprofile.Controllers
         // GET: /team/
         public ActionResult Index()
         {
+            
             var teams = db.TEAMs;
             ViewBag.breadcrumbs = "list of team";
             return View(teams.ToList());

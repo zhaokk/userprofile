@@ -289,6 +289,76 @@ namespace userprofile.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        public async Task<Boolean> createUserFromExcel(RegisterViewModel listofUser,string type)
+        {
+            Boolean result=false;
+            switch (type) { 
+                case"Referee":
+                   result=await createListOfReferee(listofUser);
+                    break;
+                default:
+                    break;
+            }
+            // If we got this far, something failed, redisplay form
+            return result;
+        }
+        public async Task<Boolean> createListOfReferee(RegisterViewModel model)
+        {
+            Boolean success = true;
+            var db = new Entities();
+            string location = @"~\userprofile\default.png";
+          
+
+                model.photoDir = location;
+
+                if (ModelState.IsValid)
+                {
+                    var user = model.GetUser();
+
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
+                        var idManager = new IdentityManager();
+                        switch (model.Roles)
+                        {
+                            case "Referee":
+                                REFEREE refComeWithUser = model.optionalRe.re;
+                                refComeWithUser.sport = "Soccor";
+                                refComeWithUser.ID = storedUser.Id;
+                              
+                                idManager.AddUserToRole(storedUser.Id, model.Roles);
+                                refComeWithUser.maxGames = 4;
+                                
+                             //   db.REFEREEs.Add(refComeWithUser);
+                              //  db.SaveChanges();
+                                var i = 0;
+                                break;
+                           
+                            default:
+                                success = false;
+                                break;
+
+
+                        }
+
+                        // await SignInAsync(user, isPersistent: false);
+
+                        
+                    }
+                    else
+                    {
+                        success = false; ;
+                    }
+                }
+                
+
+
+            
+            return success;
+            
+        }
+       
         public ActionResult showProfile(string id) { 
          var db=new ApplicationDbContext();
             

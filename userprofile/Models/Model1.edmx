@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="newSchemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="newSchemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -124,9 +124,9 @@
           <Property Name="offerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="mid" Type="int" Nullable="false" />
-          <Property Name="refID" Type="int" Nullable="false" />
+          <Property Name="refID" Type="int" />
           <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="dateOfOffer" Type="date" Nullable="false" />
+          <Property Name="dateOfOffer" Type="date" />
         </EntityType>
         <EntityType Name="OFFERQUAL">
           <Key>
@@ -171,7 +171,7 @@
           <Key>
             <PropertyRef Name="refID" />
           </Key>
-          <Property Name="refID" Type="int" Nullable="false" />
+          <Property Name="refID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="distTravel" Type="int" />
           <Property Name="sport" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="prefAge" Type="int" />
@@ -431,7 +431,7 @@ warning 6002: The table/view 'newSchema.sys.database_firewall_rules' does not ha
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_OFFER_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="0..1" />
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
@@ -795,8 +795,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITY" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="newSchemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -858,9 +857,9 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <NavigationProperty Name="Events" Relationship="Self.fk_EVENTS_USERS" FromRole="AspNetUsers" ToRole="Events" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.FK_REFEREE_USER" FromRole="AspNetUsers" ToRole="REFEREE" />
           <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="REFEREEs" Relationship="newSchemaModel.FK_REFEREE_USER" FromRole="AspNetUser" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -932,14 +931,14 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="offerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="mid" Type="Int32" Nullable="false" />
-          <Property Name="refID" Type="Int32" Nullable="false" />
+          <Property Name="refID" Type="Int32" />
           <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="dateOfOffer" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateOfOffer" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MATCH" Relationship="Self.fk_OFFER_MATCH" FromRole="OFFER" ToRole="MATCH" />
-          <NavigationProperty Name="REFEREE" Relationship="Self.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_OFFER_SPORT" FromRole="OFFER" ToRole="SPORT" />
           <NavigationProperty Name="TYPEs" Relationship="Self.FK_TYPE_OFFER" FromRole="OFFER" ToRole="TYPE" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.OFFERQUAL" FromRole="OFFER" ToRole="QUALIFICATIONS" />
+          <NavigationProperty Name="REFEREE" Relationship="newSchemaModel.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="OneOffAVAILABILITY">
           <Key>
@@ -952,7 +951,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="allDay" Type="Boolean" />
           <Property Name="timeOnOrOff" Type="Boolean" />
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="REFEREE" Relationship="Self.FK_TIMEOFF_USER" FromRole="OneOffAVAILABILITY" ToRole="REFEREE" />
+          <NavigationProperty Name="REFEREE" Relationship="newSchemaModel.FK_TIMEOFF_USER" FromRole="OneOffAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
@@ -976,25 +975,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="description" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_QUAL_SPORT" FromRole="QUALIFICATIONS" ToRole="SPORT" />
           <NavigationProperty Name="OFFERs" Relationship="Self.OFFERQUAL" FromRole="QUALIFICATIONS" ToRole="OFFER" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.USERQUAL" FromRole="QUALIFICATIONS" ToRole="REFEREE" />
-        </EntityType>
-        <EntityType Name="REFEREE">
-          <Key>
-            <PropertyRef Name="refID" />
-          </Key>
-          <Property Name="refID" Type="Int32" Nullable="false" />
-          <Property Name="distTravel" Type="Int32" />
-          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="prefAge" Type="Int32" />
-          <Property Name="prefGrade" Type="Int32" />
-          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="maxGames" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
-          <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
-          <NavigationProperty Name="OneOffAVAILABILITies" Relationship="Self.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
-          <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
-          <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
-          <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATIONS" />
+          <NavigationProperty Name="REFEREEs" Relationship="newSchemaModel.USERQUAL" FromRole="QUALIFICATION" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
@@ -1003,9 +984,9 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.fk_QUAL_SPORT" FromRole="SPORT" ToRole="QUALIFICATIONS" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
           <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_SPORT" FromRole="SPORT" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
+          <NavigationProperty Name="REFEREEs" Relationship="newSchemaModel.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="TEAM">
           <Key>
@@ -1059,7 +1040,7 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <Property Name="friday" Type="Int32" Nullable="false" />
           <Property Name="saturday" Type="Int32" Nullable="false" />
           <Property Name="sunday" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="REFEREE" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
+          <NavigationProperty Name="REFEREE" Relationship="newSchemaModel.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -1133,18 +1114,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PLAYER">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_REFEREE_USER">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="REFEREE">
               <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1233,18 +1202,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_OFFER_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refID" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="refID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_OFFER_SPORT">
           <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
@@ -1269,18 +1226,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TIMEOFF_USER">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="OneOffAVAILABILITY" Type="Self.OneOffAVAILABILITY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refID" />
-            </Principal>
-            <Dependent Role="OneOffAVAILABILITY">
-              <PropertyRef Name="refID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_PLAYER_TEAM">
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
           <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
@@ -1302,30 +1247,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             </Principal>
             <Dependent Role="QUALIFICATIONS">
               <PropertyRef Name="sport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_REFEREE_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="REFEREE">
-              <PropertyRef Name="sport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WEEKLYAVAILABILITY_USER">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
-          <End Role="WEEKLYAVAILABILITY" Type="Self.WEEKLYAVAILABILITY" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refID" />
-            </Principal>
-            <Dependent Role="WEEKLYAVAILABILITY">
-              <PropertyRef Name="refID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1365,10 +1286,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
         </Association>
-        <Association Name="USERQUAL">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-          <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
@@ -1382,7 +1299,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <EntitySet Name="OneOffAVAILABILITies" EntityType="Self.OneOffAVAILABILITY" />
           <EntitySet Name="PLAYERs" EntityType="Self.PLAYER" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
-          <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
           <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
           <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />
@@ -1408,10 +1324,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <AssociationSet Name="fk_PLAYER_USERNAME" Association="Self.fk_PLAYER_USERNAME">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="PLAYER" EntitySet="PLAYERs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_REFEREE_USER" Association="Self.FK_REFEREE_USER">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="REFEREE" EntitySet="REFEREEs" />
           </AssociationSet>
           <AssociationSet Name="FK_TEAM_MANAGER" Association="Self.FK_TEAM_MANAGER">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1441,10 +1353,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="MATCH" EntitySet="MATCHes" />
             <End Role="OFFER" EntitySet="OFFERs" />
           </AssociationSet>
-          <AssociationSet Name="fk_OFFER_refID" Association="Self.fk_OFFER_refID">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="OFFER" EntitySet="OFFERs" />
-          </AssociationSet>
           <AssociationSet Name="fk_OFFER_SPORT" Association="Self.fk_OFFER_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="OFFER" EntitySet="OFFERs" />
@@ -1453,10 +1361,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="OFFER" EntitySet="OFFERs" />
             <End Role="TYPE" EntitySet="TYPEs" />
           </AssociationSet>
-          <AssociationSet Name="FK_TIMEOFF_USER" Association="Self.FK_TIMEOFF_USER">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="OneOffAVAILABILITY" EntitySet="OneOffAVAILABILITies" />
-          </AssociationSet>
           <AssociationSet Name="fk_PLAYER_TEAM" Association="Self.fk_PLAYER_TEAM">
             <End Role="TEAM" EntitySet="TEAMs" />
             <End Role="PLAYER" EntitySet="PLAYERs" />
@@ -1464,14 +1368,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
           <AssociationSet Name="fk_QUAL_SPORT" Association="Self.fk_QUAL_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
-            <End Role="SPORT" EntitySet="SPORTs" />
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WEEKLYAVAILABILITY_USER" Association="Self.FK_WEEKLYAVAILABILITY_USER">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITies" />
           </AssociationSet>
           <AssociationSet Name="fk_TEAM_SPORT" Association="Self.fk_TEAM_SPORT">
             <End Role="SPORT" EntitySet="SPORTs" />
@@ -1493,12 +1389,115 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
             <End Role="TEAM" EntitySet="TEAMs" />
           </AssociationSet>
-          <AssociationSet Name="USERQUAL" Association="Self.USERQUAL">
+          <EntitySet Name="REFEREEs" EntityType="newSchemaModel.REFEREE" />
+          <AssociationSet Name="FK_REFEREE_USER" Association="newSchemaModel.FK_REFEREE_USER">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <AssociationSet Name="fk_OFFER_refID" Association="newSchemaModel.fk_OFFER_refID">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="OFFER" EntitySet="OFFERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIMEOFF_USER" Association="newSchemaModel.FK_TIMEOFF_USER">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="OneOffAVAILABILITY" EntitySet="OneOffAVAILABILITies" />
+          </AssociationSet>
+          <AssociationSet Name="fk_REFEREE_SPORT" Association="newSchemaModel.fk_REFEREE_SPORT">
+            <End Role="SPORT" EntitySet="SPORTs" />
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WEEKLYAVAILABILITY_USER" Association="newSchemaModel.FK_WEEKLYAVAILABILITY_USER">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="WEEKLYAVAILABILITY" EntitySet="WEEKLYAVAILABILITies" />
+          </AssociationSet>
+          <AssociationSet Name="USERQUAL" Association="newSchemaModel.USERQUAL">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="QUALIFICATION" EntitySet="QUALIFICATIONS" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="REFEREE">
+          <Key>
+            <PropertyRef Name="refID" />
+          </Key>
+          <Property Name="refID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="distTravel" Type="Int32" />
+          <Property Name="sport" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="prefAge" Type="Int32" />
+          <Property Name="prefGrade" Type="Int32" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="maxGames" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="newSchemaModel.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUser" />
+          <NavigationProperty Name="OFFERs" Relationship="newSchemaModel.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
+          <NavigationProperty Name="OneOffAVAILABILITies" Relationship="newSchemaModel.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
+          <NavigationProperty Name="SPORT1" Relationship="newSchemaModel.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
+          <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="newSchemaModel.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
+          <NavigationProperty Name="QUALIFICATIONS" Relationship="newSchemaModel.USERQUAL" FromRole="REFEREE" ToRole="QUALIFICATION" />
+        </EntityType>
+        <Association Name="FK_REFEREE_USER">
+          <End Type="newSchemaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REFEREE">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_OFFER_refID">
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="0..1" />
+          <End Type="newSchemaModel.OFFER" Role="OFFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refID" />
+            </Principal>
+            <Dependent Role="OFFER">
+              <PropertyRef Name="refID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIMEOFF_USER">
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="1" />
+          <End Type="newSchemaModel.OneOffAVAILABILITY" Role="OneOffAVAILABILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refID" />
+            </Principal>
+            <Dependent Role="OneOffAVAILABILITY">
+              <PropertyRef Name="refID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_REFEREE_SPORT">
+          <End Type="newSchemaModel.SPORT" Role="SPORT" Multiplicity="1" />
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPORT">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="REFEREE">
+              <PropertyRef Name="sport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WEEKLYAVAILABILITY_USER">
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="1" />
+          <End Type="newSchemaModel.WEEKLYAVAILABILITY" Role="WEEKLYAVAILABILITY" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refID" />
+            </Principal>
+            <Dependent Role="WEEKLYAVAILABILITY">
+              <PropertyRef Name="refID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USERQUAL">
+          <End Type="newSchemaModel.REFEREE" Role="REFEREE" Multiplicity="*" />
+          <End Type="newSchemaModel.QUALIFICATION" Role="QUALIFICATION" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1658,19 +1657,6 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="newSchemaModel.REFEREE">
-              <MappingFragment StoreEntitySet="REFEREE">
-                <ScalarProperty Name="refID" ColumnName="refID" />
-                <ScalarProperty Name="distTravel" ColumnName="distTravel" />
-                <ScalarProperty Name="sport" ColumnName="sport" />
-                <ScalarProperty Name="prefAge" ColumnName="prefAge" />
-                <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="maxGames" ColumnName="maxGames" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
             <EntityTypeMapping TypeName="newSchemaModel.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
@@ -1761,15 +1747,28 @@ warning 6035: The relationship 'fk_TOURNAMENT_MANAGER' has columns that are not 
               <ScalarProperty Name="teamID" ColumnName="teamID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="REFEREEs">
+            <EntityTypeMapping TypeName="newSchemaModel.REFEREE">
+              <MappingFragment StoreEntitySet="REFEREE">
+                <ScalarProperty Name="maxGames" ColumnName="maxGames" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="prefGrade" ColumnName="prefGrade" />
+                <ScalarProperty Name="prefAge" ColumnName="prefAge" />
+                <ScalarProperty Name="sport" ColumnName="sport" />
+                <ScalarProperty Name="distTravel" ColumnName="distTravel" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="USERQUAL" TypeName="newSchemaModel.USERQUAL" StoreEntitySet="USERQUAL">
+            <EndProperty Name="QUALIFICATION">
+              <ScalarProperty Name="qID" ColumnName="qID" />
+            </EndProperty>
             <EndProperty Name="REFEREE">
               <ScalarProperty Name="refID" ColumnName="ID" />
             </EndProperty>
-            <EndProperty Name="QUALIFICATIONS">
-              <ScalarProperty Name="qID" ColumnName="qID" />
-            </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

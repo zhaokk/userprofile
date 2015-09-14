@@ -37,12 +37,12 @@ namespace userprofile.Models
         public virtual DbSet<OneOffAVAILABILITY> OneOffAVAILABILITies { get; set; }
         public virtual DbSet<PLAYER> PLAYERs { get; set; }
         public virtual DbSet<QUALIFICATION> QUALIFICATIONS { get; set; }
-        public virtual DbSet<REFEREE> REFEREEs { get; set; }
         public virtual DbSet<SPORT> SPORTs { get; set; }
         public virtual DbSet<TEAM> TEAMs { get; set; }
         public virtual DbSet<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual DbSet<TYPE> TYPEs { get; set; }
         public virtual DbSet<WEEKLYAVAILABILITY> WEEKLYAVAILABILITies { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<REFEREE> REFEREEs { get; set; }
     }
 }

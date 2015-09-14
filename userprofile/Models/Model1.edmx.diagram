@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a397153c963f414fb4f3848da4b82881" Name="Diagram1">
+      <Diagram DiagramId="a397153c963f414fb4f3848da4b82881" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="newSchemaModel.AspNetRole" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="newSchemaModel.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.QUALIFICATION" Width="1.5" PointX="13.5" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="8.25" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.SPORT" Width="1.5" PointX="9" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.TEAM" Width="1.5" PointX="11.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="newSchemaModel.TOURNAMENT" Width="1.5" PointX="9" PointY="6" IsExpanded="true" />
@@ -29,7 +28,6 @@
         <AssociationConnector Association="newSchemaModel.fk_EVENTS_USERS" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_INFRACTION_PLAYER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_PLAYER_USERNAME" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_REFEREE_USER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.FK_TEAM_MANAGER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_INFRACTION_MATCH" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_MATCH_LOCATION" ManuallyRouted="false" />
@@ -37,20 +35,22 @@
         <AssociationConnector Association="newSchemaModel.fk_MATCH_TEAMB" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_MATCH_TOURNAMENT" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_OFFER_MATCH" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_OFFER_refID" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_OFFER_SPORT" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.FK_TYPE_OFFER" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_TIMEOFF_USER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_PLAYER_TEAM" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_QUAL_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_REFEREE_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_WEEKLYAVAILABILITY_USER" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_TEAM_SPORT" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.OFFERQUAL" ManuallyRouted="false" />
         <AssociationConnector Association="newSchemaModel.TEAMINS" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.USERQUAL" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="14.25" PointY="12.375" />
+        <AssociationConnector Association="newSchemaModel.FK_REFEREE_USER" />
+        <AssociationConnector Association="newSchemaModel.fk_OFFER_refID" />
+        <AssociationConnector Association="newSchemaModel.FK_TIMEOFF_USER" />
+        <AssociationConnector Association="newSchemaModel.fk_REFEREE_SPORT" />
+        <AssociationConnector Association="newSchemaModel.FK_WEEKLYAVAILABILITY_USER" />
+        <AssociationConnector Association="newSchemaModel.USERQUAL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
