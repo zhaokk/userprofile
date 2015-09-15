@@ -63,7 +63,7 @@ namespace userprofile.Controllers {
         Dictionary<int, Dictionary<int, bool>> matchClashes;
 
 
-        Entities db;
+        Raoconnection db;
         AlgorithmModel modelResult;
         int maxOffersFilled; //Max amount of offers that can be filled
         int currOffersFilled; //current number of offers filled
@@ -74,7 +74,7 @@ namespace userprofile.Controllers {
 
 
         void initGlobalVars() {
-            db = new Entities();
+            db = new Raoconnection();
             rand = new Random();
             dOffers = new Dictionary<int, val>();
             dReferees = new Dictionary<int, val>();
@@ -181,12 +181,12 @@ namespace userprofile.Controllers {
         void getOffersAndQualificationIDs() {
             foreach (var i in db.OFFERs) {
                 if (i.status == 4) {
-                    offerStorage.Add(i.offerID, i); //store offer by offerID
-                    foreach (var k in i.QUALIFICATIONS) {
-                        if (!qualificationRefStorage.ContainsKey(k.qID))
-                            qualificationRefStorage.Add(k.qID, new HashSet<int>()); //Make list of qualifications needed by all offers
+                    offerStorage.Add(i.offerId, i); //store offer by offerID
+                    foreach (var k in i.OFFERQUALs) {
+                        if (!qualificationRefStorage.ContainsKey(k.qualificationId))
+                            qualificationRefStorage.Add(k.qualificationId, new HashSet<int>()); //Make list of qualifications needed by all offers
                     }
-                    dOffers.Add(i.offerID, new val(1)); //store offer ID for use of main algorithm
+                    dOffers.Add(i.offerId, new val(1)); //store offer ID for use of main algorithm
                 }
             }
         }
@@ -194,11 +194,11 @@ namespace userprofile.Controllers {
         void fillRefereeByQualification() {
             foreach (var i in qualificationRefStorage) { //make all qualificationRefStorage[qID] have all referee id's with qualification
                 foreach (var j in db.REFEREEs) {
-                    foreach (var k in j.QUALIFICATIONS) {
-                        if (i.Key == k.qID) { //check level here later on
-                            i.Value.Add(j.refID); //adding refID to qualificationRefStorage[qID]
-                            if (!refereeStorage.ContainsKey(j.refID)) {
-                                refereeStorage.Add(j.refID, j);
+                    foreach (var k in j.USERQUALs) {
+                        if (i.Key == k.qualificationId) { //check level here later on
+                            i.Value.Add(j.refId); //adding refID to qualificationRefStorage[qID]
+                            if (!refereeStorage.ContainsKey(j.refId)) {
+                                refereeStorage.Add(j.refId, j);
                             }
                         }
                     }
@@ -310,10 +310,10 @@ namespace userprofile.Controllers {
         void addRefereesToOffers() {
             foreach (var i in offerStorage) {
                 HashSet<int> availableReferees = null;
-                foreach (var j in i.Value.QUALIFICATIONS) {
+                foreach (var j in i.Value.OFFERQUALs) {
                     if (availableReferees == null) {
                         availableReferees = new HashSet<int>();
-                        foreach (var k in qualificationRefStorage[j.qID]) {
+                        foreach (var k in qualificationRefStorage[j.qualificationId]) {
                             if (checkInitAvailability(i.Key, k)) {
 
                             }
@@ -323,7 +323,7 @@ namespace userprofile.Controllers {
                         HashSet<int> temp = availableReferees;
                         availableReferees = new HashSet<int>();
                         foreach (var k in temp) {
-                            if (qualificationRefStorage[j.qID].Contains(k)) {
+                            if (qualificationRefStorage[j.qualificationId].Contains(k)) {
                                 availableReferees.Add(k);
                             }
                         }
@@ -345,7 +345,7 @@ namespace userprofile.Controllers {
         }
 
         int calcTimeBufferBetweenGames(int i, int j) {
-            if (matchStorage[i].location == matchStorage[j].location) {
+            if (matchStorage[i].locationId == matchStorage[j].locationId) {
                 return 0;
             }
             else {
@@ -363,13 +363,13 @@ namespace userprofile.Controllers {
             int buffer = calcTimeBufferBetweenGames(i, j);
             if (matchStorage[i].matchDate.Date == matchStorage[j].matchDate.Date) {
                 if (matchStorage[i].matchDate < matchStorage[j].matchDate) {
-                    if (matchStorage[i].matchDate.AddMinutes(matchStorage[i].length + buffer) <= matchStorage[j].matchDate)
+                    if (matchStorage[i].matchDate.AddMinutes(matchStorage[i].matchLength + buffer) <= matchStorage[j].matchDate)
                         return false;
                     else
                         return true;
                 }
                 else if (matchStorage[i].matchDate > matchStorage[j].matchDate) {
-                    if (matchStorage[i].matchDate >= matchStorage[j].matchDate.AddMinutes(matchStorage[j].length + buffer))
+                    if (matchStorage[i].matchDate >= matchStorage[j].matchDate.AddMinutes(matchStorage[j].matchLength + buffer))
                         return false;
                     else
                         return true;
@@ -412,7 +412,7 @@ namespace userprofile.Controllers {
             foreach (var i in dReferees) {
                 foreach (var j in i.Value.available) {
                     foreach (var k in i.Value.available) {
-                        if (offerStorage[j.Key].MATCH.mID != offerStorage[j.Key].MATCH.mID) {
+                        if (offerStorage[j.Key].MATCH.matchId != offerStorage[j.Key].MATCH.matchId) {
                             calculateClash(j.Key, k.Key);
                         }
                     }
@@ -571,15 +571,23 @@ namespace userprofile.Controllers {
         }
 
         void setModel() {
-            modelResult = new AlgorithmModel(bestOffers.Count());
-            for (int i = 0; i < bestOffers.Count(); i++) {
-                foreach (var j in bestOffers[i]) {
-                    int rID;
-                    if (j.Value.assignedTo.Count() == 0)
-                        rID = -1;
-                    else
-                        rID = j.Value.assignedTo.First();
-                    modelResult.result[i].pairs.Add(new Models.pair(offerStorage[j.Key], refereeStorage[rID]));
+            try {
+                modelResult = new AlgorithmModel(bestOffers.Count());
+                for (int i = 0; i < bestOffers.Count(); i++) {
+                    foreach (var j in bestOffers[i]) {
+                        int rID;
+                        if (j.Value.assignedTo.Count() == 0)
+                            rID = -1;
+                        else
+                            rID = j.Value.assignedTo.First();
+                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID));
+                    }
+                }
+            }
+            catch (SystemException a) {
+                modelResult = new AlgorithmModel(1);
+                foreach (var i in llCompleted) {
+                    modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee));
                 }
             }
         }

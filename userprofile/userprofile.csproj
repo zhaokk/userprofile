@@ -953,6 +953,7 @@
     <Content Include="Views\Shared\EditorTemplates\ResidentLoc.cshtml" />
     <Content Include="Views\match\Details.cshtml" />
     <Content Include="Views\Algorithm\showTestResult.cshtml" />
+    <Content Include="Views\Algorithm\showresult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

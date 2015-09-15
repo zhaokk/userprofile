@@ -26,13 +26,13 @@ namespace userprofile.Models {
         }
     }
     public class pair {
-        public pair(OFFER offer, REFEREE referee) {
+        public pair(int offer, int referee) {
             this.refe = referee;
             this.offer = offer;
         }
         public pair() { }
-        public REFEREE refe { get; set; }
-        public OFFER offer { get; set; }
+        public int refe { get; set; }
+        public int offer { get; set; }
     }
 
 
