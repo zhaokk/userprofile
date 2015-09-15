@@ -165,6 +165,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
+    <Compile Include="Controllers\ExcelManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
@@ -851,6 +852,27 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Excel\17c0a4f5-2d53-4fa2-829d-5a4acd2598b6.xls" />
+    <Content Include="Excel\1e14ad68-4f27-4ea7-811f-67e0d4773d8a.xls" />
+    <Content Include="Excel\1e934581-ad5a-4348-97c3-829a699f48fc.xls" />
+    <Content Include="Excel\20d47bec-8df3-4d01-a7d9-35149504bde7.xls" />
+    <Content Include="Excel\30b6e894-4bd5-47f6-be1b-0b090df86902.xls" />
+    <Content Include="Excel\342b70ad-5f69-4c80-a761-8b6ffda2c2f3.xls" />
+    <Content Include="Excel\379c3190-84d4-45a1-9222-1012cb5be746.xls" />
+    <Content Include="Excel\4fd92e68-0930-4779-a9ed-3a07b0a53f5c.xls" />
+    <Content Include="Excel\5316547c-c100-4d6d-8278-c4df2a55ccc5.xls" />
+    <Content Include="Excel\54e3c636-fb32-47bb-8612-8ef297ae2fd4.xls" />
+    <Content Include="Excel\6418938e-0a6f-4559-90a1-3de9d892c3f2.xls" />
+    <Content Include="Excel\6f570ddc-9179-4e69-9700-a913dc5459d9.xls" />
+    <Content Include="Excel\6f6fe73f-f316-43d8-a4e3-17787c125f0f.xls" />
+    <Content Include="Excel\7554a8ad-b201-4031-b785-8e3b55580748.xls" />
+    <Content Include="Excel\7d0765b6-8185-4077-855b-86df33ed4f24.xls" />
+    <Content Include="Excel\825bf235-dc73-42da-9ef8-2cbaa5583ffc.xls" />
+    <Content Include="Excel\94b310b8-a3d7-46db-8d38-69c0a3ca48b0.xls" />
+    <Content Include="Excel\c7fd866e-e086-4853-9de9-173e0efdeb89.xls" />
+    <Content Include="Excel\cf46ad9d-faed-40cf-9a70-00ed9bc41261.xls" />
+    <Content Include="Excel\d62150f8-3eba-4843-8a40-bb21aded8616.xls" />
+    <Content Include="Excel\e0b9bd9e-1046-4e34-a68e-46c248799226.xls" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -984,7 +1006,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>21449</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
