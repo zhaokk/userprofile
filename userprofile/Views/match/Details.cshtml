@@ -1,55 +1,98 @@
 ﻿@model userprofile.Models.MATCH
 
 @{
-    ViewBag.Title = "Match Details";
+    ViewBag.Title = "Details";
 }
 
-<div class="row">
-    <div class="col-sm-12">
-		<div class="box">
-			<div class="box-body">
-				<p>
-					@Html.ActionLink("Edit", "Edit", new { id = Model.matchId }, new { @class = "btn btn-warning pull-right" })
-				</p>
-				<div class="fa fa-angle-left">
-					@Html.ActionLink("Back to List", "Index")
-					<hr />
-					<dl class="dl-horizontal">
-						<dt>
-							@Html.DisplayNameFor(model => model.matchDate)
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.matchDate)
-						</dd>
-						
-						<dt>
-							@Html.DisplayNameFor(model => model.LOCATION.name)
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.LOCATION.name)
-						</dd>
-						<dt>
-							@Html.DisplayNameFor(model => model.TEAM.name)
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.TEAM.name)
-						</dd>
-						<dt>
-							@Html.DisplayNameFor(model => model.TEAM1.name)
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.TEAM1.name)
-						</dd>
-						<dt>
-							@Html.DisplayNameFor(model => model.TOURNAMENT.sport)
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.TOURNAMENT.sport)
-						</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-        </div>
-    </div>
-                
+<h2>Details</h2>
+
+<div>
+    <h4>MATCH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.matchDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.matchDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.teamAScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teamAScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.teamBScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teamBScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.matchLength)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.matchLength)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.halfTimeDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.halfTimeDuration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LOCATION.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOCATION.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEAM.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEAM.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEAM1.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEAM1.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOURNAMENT.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOURNAMENT.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.matchId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -106,6 +106,22 @@
                                     @Html.ValidationMessageFor(model => model.optionalRe.re.sport)
                                 </div>
                             </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.optionalRe.re.maxGames, "maxgame", new { @class = "control-label col-md-2", value = "4" })
+                                <div class="col-md-10">
+
+                                    @Html.EditorFor(model=>model.optionalRe.re.maxGames)
+                                    @Html.ValidationMessageFor(model => model.optionalRe.re.maxGames)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.optionalRe.re.rating, "rating", new { @class = "control-label col-md-2",value="4" })
+                                <div class="col-md-10">
+
+                                    @Html.EditorFor(model => model.optionalRe.re.rating)
+                                    @Html.ValidationMessageFor(model => model.optionalRe.re.rating)
+                                </div>
+                            </div>
 
                             @*<div class="form-group">
                 @Html.LabelFor(model => model.optionalRe.re.ID, "ID", new { @class = "control-label col-md-2" })
@@ -168,6 +184,8 @@
             $('input[name="dob"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoApply: true,
+                startDate: '01/01/1991',
 
             },
             function (start, end, label) {
