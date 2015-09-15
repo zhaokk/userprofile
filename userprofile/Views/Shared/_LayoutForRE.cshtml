@@ -115,8 +115,9 @@
     </div>
 
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/Datatable.js")
-    @Styles.Render("~/Scripts/Datatable.css")
+    <script src='~/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js'></script>
+    <script src='~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.js'></script>
+    <link href="~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" />
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @*@Scripts.Render("~/bundles/jquery")*@
