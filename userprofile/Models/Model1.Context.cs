@@ -13,10 +13,10 @@ namespace userprofile.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class Raoconnection : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public Raoconnection()
+            : base("name=Raoconnection")
         {
         }
     
@@ -34,6 +34,7 @@ namespace userprofile.Models
         public virtual DbSet<LOCATION> LOCATIONs { get; set; }
         public virtual DbSet<MATCH> MATCHes { get; set; }
         public virtual DbSet<OFFER> OFFERs { get; set; }
+        public virtual DbSet<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual DbSet<OneOffAVAILABILITY> OneOffAVAILABILITies { get; set; }
         public virtual DbSet<PLAYER> PLAYERs { get; set; }
         public virtual DbSet<QUALIFICATION> QUALIFICATIONS { get; set; }
@@ -41,8 +42,8 @@ namespace userprofile.Models
         public virtual DbSet<TEAM> TEAMs { get; set; }
         public virtual DbSet<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual DbSet<TYPE> TYPEs { get; set; }
+        public virtual DbSet<USERQUAL> USERQUALs { get; set; }
         public virtual DbSet<WEEKLYAVAILABILITY> WEEKLYAVAILABILITies { get; set; }
-        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<REFEREE> REFEREEs { get; set; }
+        public virtual DbSet<ADMINISTRATION> ADMINISTRATIONs { get; set; }
     }
 }

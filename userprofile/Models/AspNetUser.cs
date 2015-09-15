@@ -14,7 +14,6 @@ namespace userprofile.Models
     
     public partial class AspNetUser
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUser()
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
@@ -23,11 +22,13 @@ namespace userprofile.Models
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.PLAYERs = new HashSet<PLAYER>();
             this.TEAMs = new HashSet<TEAM>();
+            this.TOURNAMENTs = new HashSet<TOURNAMENT>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.REFEREEs = new HashSet<REFEREE>();
         }
     
         public string Id { get; set; }
+        public Nullable<int> ffaNum { get; set; }
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
@@ -40,27 +41,27 @@ namespace userprofile.Models
         public string country { get; set; }
         public int postcode { get; set; }
         public string street { get; set; }
-        public int streetNumber { get; set; }
+        public string city { get; set; }
         public string state { get; set; }
         public System.DateTime dob { get; set; }
-        public Nullable<bool> isAdmin { get; set; }
-        public Nullable<bool> isOrganizer { get; set; }
-        public Nullable<bool> isReferee { get; set; }
-        public Nullable<bool> isPlayer { get; set; }
+        public bool isAdmin { get; set; }
+        public bool isOrganizer { get; set; }
+        public bool isReferee { get; set; }
+        public bool isPlayer { get; set; }
+        public bool willingToShowPhoneNum { get; set; }
+        public bool willingToShowDOB { get; set; }
+        public bool willingToShowAddress { get; set; }
+        public bool willingToshowEmail { get; set; }
+        public int status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<REFEREE> REFEREEs { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REFEREE> REFEREEs { get; set; }

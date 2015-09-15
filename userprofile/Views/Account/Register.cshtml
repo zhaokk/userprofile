@@ -107,17 +107,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.optionalRe.re.prefAge, new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.optionalRe.re.maxGames, "maxgame", new { @class = "control-label col-md-2", value = "4" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.optionalRe.re.prefAge)
-                                    @Html.ValidationMessageFor(model => model.optionalRe.re.prefAge)
+
+                                    @Html.EditorFor(model=>model.optionalRe.re.maxGames)
+                                    @Html.ValidationMessageFor(model => model.optionalRe.re.maxGames)
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.optionalRe.re.prefGrade, new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.optionalRe.re.rating, "rating", new { @class = "control-label col-md-2",value="4" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.optionalRe.re.prefGrade)
-                                    @Html.ValidationMessageFor(model => model.optionalRe.re.prefGrade)
+
+                                    @Html.EditorFor(model => model.optionalRe.re.rating)
+                                    @Html.ValidationMessageFor(model => model.optionalRe.re.rating)
                                 </div>
                             </div>
 
@@ -151,12 +153,6 @@
                         
                     </div>
                    
-                    @*<div class="form-group">
-                            @Html.LabelFor(m => m.streetNumber, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.streetNumber, new { @class = "form-control" })
-                            </div>
-                        </div>*@
 
 
                     
@@ -188,6 +184,8 @@
             $('input[name="dob"]').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoApply: true,
+                startDate: '01/01/1991',
 
             },
             function (start, end, label) {

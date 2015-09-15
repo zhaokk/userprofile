@@ -71,7 +71,7 @@
 @section Scripts{
     <script>
         $(function () { 
-            var availaArray = JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
+            var availaArray= JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
             $("td").each(function () {
                 
                 var col = $(this).parent().children().index($(this))-1;

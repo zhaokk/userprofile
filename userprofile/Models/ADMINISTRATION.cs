@@ -12,19 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TYPE
+    public partial class ADMINISTRATION
     {
-        public TYPE()
-        {
-            this.OFFERs = new HashSet<OFFER>();
-        }
-    
-        public int typeId { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public int priority { get; set; }
-        public int status { get; set; }
-    
-        public virtual ICollection<OFFER> OFFERs { get; set; }
+        public bool refsCanViewOthers { get; set; }
+        public bool refsCanSeeOtherGames { get; set; }
+        public int durationOfAlgorithm { get; set; }
+        public Nullable<System.DateTime> algorithmStartDate { get; set; }
+        public Nullable<System.DateTime> algorithmEndDate { get; set; }
+        public bool algorithmAll { get; set; }
     }
 }

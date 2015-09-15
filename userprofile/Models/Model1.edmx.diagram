@@ -4,53 +4,60 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a397153c963f414fb4f3848da4b82881" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="newSchemaModel.AspNetRole" Width="1.5" PointX="0.75" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.AspNetUser" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.Event" Width="1.5" PointX="5.25" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.INFRACTION" Width="1.5" PointX="8.25" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.LOCATION" Width="1.5" PointX="11.25" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.MATCH" Width="1.5" PointX="13.5" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.OFFER" Width="1.5" PointX="15.75" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.PLAYER" Width="1.5" PointX="8.25" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.QUALIFICATION" Width="1.5" PointX="13.5" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.SPORT" Width="1.5" PointX="9" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TEAM" Width="1.5" PointX="11.25" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TOURNAMENT" Width="1.5" PointX="9" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.TYPE" Width="1.5" PointX="18" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.WEEKLYAVAILABILITY" Width="1.5" PointX="8.25" PointY="25.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="newSchemaModel.database_firewall_rules" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="newSchemaModel.FK_AspNetUserClaims_dbo_User_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_AspNetUserLogins_dbo_User_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_EVENTS_USERS" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_INFRACTION_PLAYER" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_PLAYER_USERNAME" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_TEAM_MANAGER" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_INFRACTION_MATCH" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_MATCH_LOCATION" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_MATCH_TEAMA" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_MATCH_TEAMB" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_MATCH_TOURNAMENT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_OFFER_MATCH" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_OFFER_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.FK_TYPE_OFFER" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_PLAYER_TEAM" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_QUAL_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_TEAM_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.OFFERQUAL" ManuallyRouted="false" />
-        <AssociationConnector Association="newSchemaModel.TEAMINS" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="newSchemaModel.REFEREE" Width="1.5" PointX="14.25" PointY="12.375" />
-        <AssociationConnector Association="newSchemaModel.FK_REFEREE_USER" />
-        <AssociationConnector Association="newSchemaModel.fk_OFFER_refID" />
-        <AssociationConnector Association="newSchemaModel.FK_TIMEOFF_USER" />
-        <AssociationConnector Association="newSchemaModel.fk_REFEREE_SPORT" />
-        <AssociationConnector Association="newSchemaModel.FK_WEEKLYAVAILABILITY_USER" />
-        <AssociationConnector Association="newSchemaModel.USERQUAL" />
+      <Diagram DiagramId="da8cb9b8d65d490d9648ccbdf9421b17" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="test2Model.AspNetRole" Width="1.5" PointX="0.75" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.AspNetUser" Width="1.5" PointX="3" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.Event" Width="1.5" PointX="5.25" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.INFRACTION" Width="1.5" PointX="8.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.LOCATION" Width="1.5" PointX="11.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.MATCH" Width="1.5" PointX="13.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.OFFER" Width="1.5" PointX="15.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.OFFERQUAL" Width="1.5" PointX="18" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.PLAYER" Width="1.5" PointX="8.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.QUALIFICATION" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.REFEREE" Width="1.5" PointX="8.25" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.SPORT" Width="1.5" PointX="9" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.TEAM" Width="1.5" PointX="11.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.TOURNAMENT" Width="1.5" PointX="11.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.TYPE" Width="1.5" PointX="13.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.USERQUAL" Width="1.5" PointX="10.5" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.WEEKLYAVAILABILITY" Width="1.5" PointX="10.5" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="test2Model.ADMINISTRATION" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="test2Model.FK_AspNetUserClaims_dbo_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.FK_AspNetUserLogins_dbo_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_EVENTS_USERS" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_INFRACTION_PLAYER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_PLAYER_USERNAME" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.FK_REFEREE_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.FK_TEAM_MANAGER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_TOURNAMENT_MANAGER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_INFRACTION_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_MATCH_LOCATION" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_MATCH_TEAMA" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_MATCH_TEAMB" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_MATCH_TOURNAMENT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_OFFER_MATCH" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_OFFER_QUAL" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_OFFER_refID" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_OFFER_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_OFFER_TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_MATCH_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.FK_TIMEOFF_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_PLAYER_TEAM" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_QUAL_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_USER_QUAL" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_REFEREE_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.FK_WEEKLYAVAILABILITY_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_TEAM_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.fk_TOURNAMENT_SPORT" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.ALTERNATEOFFERS" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.TEAMINS" ManuallyRouted="false" />
+        <AssociationConnector Association="test2Model.WILLINGLOCATIONS" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

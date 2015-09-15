@@ -12,19 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TYPE
+    public partial class USERQUAL
     {
-        public TYPE()
-        {
-            this.OFFERs = new HashSet<OFFER>();
-        }
+        public int qualificationId { get; set; }
+        public int refId { get; set; }
+        public int qualLevel { get; set; }
     
-        public int typeId { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public int priority { get; set; }
-        public int status { get; set; }
-    
-        public virtual ICollection<OFFER> OFFERs { get; set; }
+        public virtual QUALIFICATION QUALIFICATION { get; set; }
+        public virtual REFEREE REFEREE { get; set; }
     }
 }

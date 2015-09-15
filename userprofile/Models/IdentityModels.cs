@@ -29,13 +29,13 @@ namespace userprofile.Models
         public int postcode { get; set; }
 
         [Required]
-        public int streetNumber { get; set; }
-        [Required]
         public string state { get; set; }
         [Required]
         public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
+        [Required]
+        public string city { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

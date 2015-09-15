@@ -9,7 +9,7 @@
         <div class="box">
 
             <div class="box-body">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.refID }, new {@class="btn btn-warning pull-right" })
+                @Html.ActionLink("Edit", "Edit", new { id = Model.refId }, new {@class="btn btn-warning pull-right" })
                 <div class="fa fa-angle-left">
 
                     @Html.ActionLink("Back to List", "Index")
@@ -30,16 +30,10 @@
                             @Html.DisplayFor(model => model.distTravel)
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.prefAge)
+                            @Html.DisplayNameFor(model => model.rating)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.prefAge)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.prefGrade)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.prefGrade)
+                            @Html.DisplayFor(model => model.rating)
                         </dd>
                         <dt>
                             @Html.DisplayNameFor(model => model.AspNetUser.UserName)

@@ -14,23 +14,25 @@ namespace userprofile.Models
     
     public partial class TOURNAMENT
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TOURNAMENT()
         {
             this.MATCHes = new HashSet<MATCH>();
             this.TEAMs = new HashSet<TEAM>();
         }
     
-        public int tID { get; set; }
+        public int tournamentId { get; set; }
         public string name { get; set; }
         public System.DateTime startDate { get; set; }
         public string organizer { get; set; }
+        public Nullable<int> ageBracket { get; set; }
+        public string grade { get; set; }
         public string sport { get; set; }
+        public int status { get; set; }
+        public int priority { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TEAM> TEAMs { get; set; }
     }
 }

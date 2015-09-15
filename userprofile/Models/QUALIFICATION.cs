@@ -14,22 +14,21 @@ namespace userprofile.Models
     
     public partial class QUALIFICATION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public QUALIFICATION()
         {
-            this.OFFERs = new HashSet<OFFER>();
-            this.REFEREEs = new HashSet<REFEREE>();
+            this.OFFERQUALs = new HashSet<OFFERQUAL>();
+            this.USERQUALs = new HashSet<USERQUAL>();
         }
     
-        public int qID { get; set; }
+        public int qualificationId { get; set; }
         public string name { get; set; }
         public string sport { get; set; }
         public string description { get; set; }
+        public int qualificationLevel { get; set; }
+        public int status { get; set; }
     
+        public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OFFER> OFFERs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REFEREE> REFEREEs { get; set; }
+        public virtual ICollection<USERQUAL> USERQUALs { get; set; }
     }
 }

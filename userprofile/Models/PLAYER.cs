@@ -14,12 +14,13 @@ namespace userprofile.Models
     
     public partial class PLAYER
     {
-        public int team { get; set; }
-        public string ID { get; set; }
+        public int teamId { get; set; }
+        public string userId { get; set; }
         public string position { get; set; }
         public Nullable<int> shirtNum { get; set; }
+        public int status { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual TEAM TEAM1 { get; set; }
+        public virtual TEAM TEAM { get; set; }
     }
 }

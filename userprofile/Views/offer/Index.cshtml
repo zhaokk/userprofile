@@ -18,11 +18,9 @@
             @Html.DisplayNameFor(model => model.dateOfOffer)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MATCH.mID)
+            @Html.DisplayNameFor(model => model.MATCH.matchId)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.REFEREE.availability)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.SPORT1.name)
         </th>
@@ -38,18 +36,16 @@
             @Html.DisplayFor(modelItem => item.dateOfOffer)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MATCH.mID)
+            @Html.DisplayFor(modelItem => item.MATCH.matchId)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.REFEREE.availability)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.SPORT1.name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.offerID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.offerID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.offerID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.offerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.offerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.offerId })
         </td>
     </tr>
 }

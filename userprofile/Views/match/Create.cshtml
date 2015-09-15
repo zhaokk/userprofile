@@ -32,40 +32,48 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.location, "location", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.locationId, "location", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("location", (SelectList)ViewBag.location, String.Empty, new { @Name = "createdMatch.location" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.location)
+                                @Html.DropDownList("location", (SelectList)ViewBag.locationId, String.Empty, new { @Name = "createdMatch.locationId" })
+                                @Html.ValidationMessageFor(model => model.createdMatch.locationId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamaID, "teamaID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamAId, "teamaID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.teamaID)
+                                @Html.ValidationMessageFor(model => model.createdMatch.teamAId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teambID, "teambID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamBId, "teambID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.teambID)
+                                @Html.ValidationMessageFor(model => model.createdMatch.teamBId)
                             </div>
                         </div>
+                  
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.winnerID, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.tournamentId, "tournament", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.createdMatch.winnerID)
-                                @Html.ValidationMessageFor(model => model.createdMatch.winnerID)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.tournament, "tournament", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournament, String.Empty, new { @Name = "createdMatch.tournament" })
+                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
                                 
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.createdMatch.matchLength, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.createdMatch.matchLength)
+                                @Html.ValidationMessageFor(model => model.createdMatch.matchLength)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.createdMatch.halfTimeDuration, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.createdMatch.halfTimeDuration)
+                                @Html.ValidationMessageFor(model => model.createdMatch.halfTimeDuration)
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,32 +91,80 @@
                             @Html.LabelFor(model => model.q1, "offer one qualification", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                            
+                        </div>
+                        <div class="form-group" id="ql1" hidden>
+                            @Html.LabelFor(model => model.ql1, "offer one qualification level", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                               @Html.EditorFor(model => model.ql1)
+                                @Html.ValidationMessageFor(model => model.ql1)
+                            </div>
+
+                        </div>
+                        <div class="form-group" id="t1" hidden>
+                            @Html.LabelFor(model => model.q1, "offer one type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type1" })
+                                @Html.ValidationMessageFor(model => model.type1)
+                            </div>
+                            </div>
+                            <div class="form-group" id="q2" hidden>
+                                @Html.LabelFor(model => model.q2, "offer two qualification", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
+                                    @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                                </div>
+                               
+                            </div>
+                        <div class="form-group" id="ql2" hidden>
+                            @Html.LabelFor(model => model.ql2, "offer two qualification level", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ql2)
+                                @Html.ValidationMessageFor(model => model.ql2)
+                            </div>
+
+                        </div>
+                        <div class="form-group" id="t2" hidden>
+                            @Html.LabelFor(model => model.q1, "offer two type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type2" })
+                                @Html.ValidationMessageFor(model => model.type2)
                             </div>
                         </div>
-                        <div class="form-group" id="q2" hidden>
-                            @Html.LabelFor(model => model.q2, "offer two qualification", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                               @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                            <div class="form-group" id="q3" hidden>
+                                @Html.LabelFor(model => model.q3, "offer three qualification", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
+                                    @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                                </div>
+                              
                             </div>
-                        </div>
-                        <div class="form-group" id="q3" hidden>
-                            @Html.LabelFor(model => model.q3, "offer three qualification", new { @class = "control-label col-md-2" })
+                        <div class="form-group" id="ql3" hidden>
+                            @Html.LabelFor(model => model.ql3, "offer three qualification level", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournament)
+                                @Html.EditorFor(model => model.ql3)
+                                @Html.ValidationMessageFor(model => model.ql3)
+                            </div>
+
+                        </div>
+                        <div class="form-group" id="t3" hidden>
+                            @Html.LabelFor(model => model.q3, "offer two type", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type3" })
+                                @Html.ValidationMessageFor(model => model.type3)
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-sm-1">
-                                <input type="submit" value="Create" id="newoffers" class="btn btn-block btn-success" />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-sm-1">
+                                    <input type="submit" value="Create" id="newoffers" class="btn btn-block btn-success" />
+                                </div>
+                            </div>
+                            <div id="offers">
                             </div>
                         </div>
-                        <div id="offers">
-                        </div>
-                    </div>
                  
                 }
 
@@ -142,6 +198,24 @@
                     $('#q3').hide("slow", function () {
 
                     });
+                    $('#ql1').show("slow", function () {
+
+                    });
+                    $('#ql2').hide("slow", function () {
+
+                    });
+                    $('#ql3').hide("slow", function () {
+
+                    });
+                    $('#t1').show("slow", function () {
+
+                    });
+                    $('#t2').hide("slow", function () {
+
+                    });
+                    $('#t3').hide("slow", function () {
+
+                    });
                     break;
                 case "2":
                     $('#q2').show("slow", function () {
@@ -153,6 +227,24 @@
                     $('#q3').hide("slow", function () {
 
                     });
+                    $('#ql2').show("slow", function () {
+
+                    });
+                    $('#ql1').show("slow", function () {
+
+                    });
+                    $('#ql3').hide("slow", function () {
+
+                    });
+                    $('#t2').show("slow", function () {
+
+                    });
+                    $('#t1').show("slow", function () {
+
+                    });
+                    $('#t3').hide("slow", function () {
+
+                    });
                     break;
                 case "3":
                     $('#q2').show("slow", function () {
@@ -162,6 +254,25 @@
 
                     });
                     $('#q3').show("slow", function () {
+
+                    });
+                    $('#ql2').show("slow", function () {
+
+                    });
+                    $('#ql1').show("slow", function () {
+
+                    });
+                    $('#ql3').show("slow", function () {
+
+                    });
+
+                    $('#t2').show("slow", function () {
+
+                    });
+                    $('#t1').show("slow", function () {
+
+                    });
+                    $('#t3').show("slow", function () {
 
                     });
                 default:
