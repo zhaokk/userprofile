@@ -28,10 +28,10 @@ namespace userprofile.Models {
     }
     public class pair {
         public pair(int offer, int referee,Raoconnection db) {
-            if (referee == 0)
+            if (referee == -1)
             {
                 this.refe = db.REFEREEs.Find(87784161);
-
+                this.offer = db.OFFERs.Find(offer);
             }
             else {
                 this.refe = db.REFEREEs.Find(referee);
