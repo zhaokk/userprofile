@@ -14,6 +14,7 @@ namespace userprofile.Models
     
     public partial class LOCATION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOCATION()
         {
             this.MATCHes = new HashSet<MATCH>();
@@ -33,7 +34,9 @@ namespace userprofile.Models
         public System.Data.Entity.Spatial.DbGeography geogCol1 { get; set; }
         public string geogCol2 { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATCH> MATCHes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }
 }

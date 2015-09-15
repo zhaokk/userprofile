@@ -4,9 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="test2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="rao4321Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ADMINISTRATION">
           <Key>
             <PropertyRef Name="refsCanViewOthers" />
@@ -301,6 +301,8 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
           <Property Name="refId" Type="int" Nullable="false" />
           <Property Name="locationId" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'rao4321.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="fk_ALTERNATEOFFERS_offID">
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="1" />
           <End Role="ALTERNATEOFFERS" Type="Self.ALTERNATEOFFERS" Multiplicity="*" />
@@ -733,7 +735,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="test2ModelStoreContainer">
+        <EntityContainer Name="rao4321ModelStoreContainer">
           <EntitySet Name="ALTERNATEOFFERS" EntityType="Self.ALTERNATEOFFERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -917,7 +919,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="test2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="rao4321Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -1596,7 +1598,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
           <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="*" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="test2Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1752,9 +1754,9 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="test2ModelStoreContainer" CdmEntityContainer="test2Entities">
+        <EntityContainerMapping StorageEntityContainer="rao4321ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="test2Model.AspNetRole">
+            <EntityTypeMapping TypeName="rao4321Model.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1762,7 +1764,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="test2Model.AspNetUserClaim">
+            <EntityTypeMapping TypeName="rao4321Model.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -1772,7 +1774,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="test2Model.AspNetUserLogin">
+            <EntityTypeMapping TypeName="rao4321Model.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
@@ -1781,7 +1783,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="test2Model.AspNetUser">
+            <EntityTypeMapping TypeName="rao4321Model.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ffaNum" ColumnName="ffaNum" />
@@ -1813,7 +1815,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="test2Model.Event">
+            <EntityTypeMapping TypeName="rao4321Model.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="owner" ColumnName="owner" />
@@ -1827,7 +1829,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INFRACTIONS">
-            <EntityTypeMapping TypeName="test2Model.INFRACTION">
+            <EntityTypeMapping TypeName="rao4321Model.INFRACTION">
               <MappingFragment StoreEntitySet="INFRACTIONS">
                 <ScalarProperty Name="infractionId" ColumnName="infractionId" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1839,7 +1841,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONs">
-            <EntityTypeMapping TypeName="test2Model.LOCATION">
+            <EntityTypeMapping TypeName="rao4321Model.LOCATION">
               <MappingFragment StoreEntitySet="LOCATION">
                 <ScalarProperty Name="locationId" ColumnName="locationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1857,7 +1859,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATCHes">
-            <EntityTypeMapping TypeName="test2Model.MATCH">
+            <EntityTypeMapping TypeName="rao4321Model.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
                 <ScalarProperty Name="matchId" ColumnName="matchId" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
@@ -1874,7 +1876,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="test2Model.OFFER">
+            <EntityTypeMapping TypeName="rao4321Model.OFFER">
               <MappingFragment StoreEntitySet="OFFER">
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
@@ -1889,7 +1891,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERQUALs">
-            <EntityTypeMapping TypeName="test2Model.OFFERQUAL">
+            <EntityTypeMapping TypeName="rao4321Model.OFFERQUAL">
               <MappingFragment StoreEntitySet="OFFERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
@@ -1898,7 +1900,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OneOffAVAILABILITies">
-            <EntityTypeMapping TypeName="test2Model.OneOffAVAILABILITY">
+            <EntityTypeMapping TypeName="rao4321Model.OneOffAVAILABILITY">
               <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
                 <ScalarProperty Name="availabilityId" ColumnName="availabilityId" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
@@ -1909,7 +1911,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
-            <EntityTypeMapping TypeName="test2Model.PLAYER">
+            <EntityTypeMapping TypeName="rao4321Model.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -1920,7 +1922,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QUALIFICATIONS">
-            <EntityTypeMapping TypeName="test2Model.QUALIFICATION">
+            <EntityTypeMapping TypeName="rao4321Model.QUALIFICATION">
               <MappingFragment StoreEntitySet="QUALIFICATIONS">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1932,7 +1934,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="test2Model.REFEREE">
+            <EntityTypeMapping TypeName="rao4321Model.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
@@ -1945,7 +1947,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
-            <EntityTypeMapping TypeName="test2Model.SPORT">
+            <EntityTypeMapping TypeName="rao4321Model.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1953,7 +1955,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMs">
-            <EntityTypeMapping TypeName="test2Model.TEAM">
+            <EntityTypeMapping TypeName="rao4321Model.TEAM">
               <MappingFragment StoreEntitySet="TEAM">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1967,7 +1969,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TOURNAMENTs">
-            <EntityTypeMapping TypeName="test2Model.TOURNAMENT">
+            <EntityTypeMapping TypeName="rao4321Model.TOURNAMENT">
               <MappingFragment StoreEntitySet="TOURNAMENT">
                 <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1982,7 +1984,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TYPEs">
-            <EntityTypeMapping TypeName="test2Model.TYPE">
+            <EntityTypeMapping TypeName="rao4321Model.TYPE">
               <MappingFragment StoreEntitySet="TYPE">
                 <ScalarProperty Name="typeId" ColumnName="typeId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1993,7 +1995,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="test2Model.USERQUAL">
+            <EntityTypeMapping TypeName="rao4321Model.USERQUAL">
               <MappingFragment StoreEntitySet="USERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
@@ -2002,7 +2004,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WEEKLYAVAILABILITies">
-            <EntityTypeMapping TypeName="test2Model.WEEKLYAVAILABILITY">
+            <EntityTypeMapping TypeName="rao4321Model.WEEKLYAVAILABILITY">
               <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="monday" ColumnName="monday" />
@@ -2016,7 +2018,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ADMINISTRATIONs">
-            <EntityTypeMapping TypeName="test2Model.ADMINISTRATION">
+            <EntityTypeMapping TypeName="rao4321Model.ADMINISTRATION">
               <MappingFragment StoreEntitySet="ADMINISTRATION">
                 <ScalarProperty Name="refsCanViewOthers" ColumnName="refsCanViewOthers" />
                 <ScalarProperty Name="refsCanSeeOtherGames" ColumnName="refsCanSeeOtherGames" />
@@ -2027,7 +2029,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="test2Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
+          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="rao4321Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
             <EndProperty Name="OFFER">
               <ScalarProperty Name="offerId" ColumnName="offerId" />
             </EndProperty>
@@ -2035,7 +2037,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
               <ScalarProperty Name="refId" ColumnName="refId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="test2Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="rao4321Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -2043,7 +2045,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TEAMINS" TypeName="test2Model.TEAMINS" StoreEntitySet="TEAMINS">
+          <AssociationSetMapping Name="TEAMINS" TypeName="rao4321Model.TEAMINS" StoreEntitySet="TEAMINS">
             <EndProperty Name="TOURNAMENT">
               <ScalarProperty Name="tournamentId" ColumnName="tournament" />
             </EndProperty>
@@ -2051,7 +2053,7 @@ warning 6002: The table/view 'test2.dbo.ADMINISTRATION' does not have a primary 
               <ScalarProperty Name="teamId" ColumnName="teamID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="test2Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
+          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="rao4321Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
             <EndProperty Name="LOCATION">
               <ScalarProperty Name="locationId" ColumnName="locationId" />
             </EndProperty>

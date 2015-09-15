@@ -14,6 +14,7 @@ namespace userprofile.Models
     
     public partial class OFFER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OFFER()
         {
             this.OFFERQUALs = new HashSet<OFFERQUAL>();
@@ -31,10 +32,12 @@ namespace userprofile.Models
         public string typeOfOffer { get; set; }
     
         public virtual MATCH MATCH { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual REFEREE REFEREE { get; set; }
         public virtual SPORT SPORT1 { get; set; }
         public virtual TYPE TYPE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }
 }

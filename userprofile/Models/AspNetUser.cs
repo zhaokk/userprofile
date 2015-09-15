@@ -14,6 +14,7 @@ namespace userprofile.Models
     
     public partial class AspNetUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUser()
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
@@ -21,10 +22,10 @@ namespace userprofile.Models
             this.Events = new HashSet<Event>();
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.PLAYERs = new HashSet<PLAYER>();
+            this.REFEREEs = new HashSet<REFEREE>();
             this.TEAMs = new HashSet<TEAM>();
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
             this.AspNetRoles = new HashSet<AspNetRole>();
-            this.REFEREEs = new HashSet<REFEREE>();
         }
     
         public string Id { get; set; }
@@ -54,16 +55,23 @@ namespace userprofile.Models
         public bool willingToshowEmail { get; set; }
         public int status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
-        public virtual ICollection<REFEREE> REFEREEs { get; set; }
-        public virtual ICollection<TEAM> TEAMs { get; set; }
-        public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TEAM> TEAMs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }

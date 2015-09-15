@@ -339,7 +339,7 @@ namespace userprofile.Controllers
         public async Task<Boolean> createListOfReferee(RegisterViewModel model)
         {
             Boolean success = true;
-            var db = new Entities();
+            var db = new Raoconnection();
             string location = @"~\userprofile\default.png";
           
 
@@ -359,7 +359,7 @@ namespace userprofile.Controllers
                             case "Referee":
                                 REFEREE refComeWithUser = model.optionalRe.re;
                                 refComeWithUser.sport = "Soccor";
-                                refComeWithUser.ID = storedUser.Id;
+                                refComeWithUser.userId = storedUser.Id;
                               
                                 idManager.AddUserToRole(storedUser.Id, model.Roles);
                                 refComeWithUser.maxGames = 4;

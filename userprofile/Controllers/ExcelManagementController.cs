@@ -60,7 +60,7 @@ namespace userprofile.Controllers
                     con.Dispose();
                    
                     var test = ds.Tables[0].Rows;
-                    using (Entities db=new Entities())
+                    using (Raoconnection db = new Raoconnection())
                     { switch (type)
                         {
                         case "sport":
@@ -84,16 +84,15 @@ namespace userprofile.Controllers
                               modelfromExcel.LastName = row["lastName"].ToString();
                               modelfromExcel.phoneNum = int.Parse(row["phoneNum"].ToString());
                               modelfromExcel.Email = row["email"].ToString();
-                              modelfromExcel.residentLoc.snum = int.Parse(row["streetNum"].ToString());
+                            
                               modelfromExcel.residentLoc.street = row["street"].ToString();
                               modelfromExcel.residentLoc.state = row["state"].ToString();
                               modelfromExcel.residentLoc.country = row["country"].ToString();
                               modelfromExcel.residentLoc.postcode = int.Parse(row["postcode"].ToString());
-                              modelfromExcel.dob = Convert.ToDateTime(row["dob"].ToString());
+                              modelfromExcel.dob = row["dob"].ToString();
                               modelfromExcel.Roles = "Referee";
                               modelfromExcel.optionalRe.re.distTravel = int.Parse(row["distTrave"].ToString());
-                              modelfromExcel.optionalRe.re.prefAge = int.Parse(row["prefAge"].ToString());
-                              modelfromExcel.optionalRe.re.prefGrade =int.Parse(row["prefGrade"].ToString());
+                            
                               modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
                               listuser.Add(modelfromExcel); 
                               new AccountController().createUserFromExcel(modelfromExcel, "Referee");
@@ -156,7 +155,7 @@ namespace userprofile.Controllers
                     con.Dispose();
                    
                     var test = ds.Tables[0].Rows;
-                    using (Entities db=new Entities())
+                    using (Raoconnection db=new Raoconnection())
                     { switch ("user")
                         {
                         case "sport":
@@ -184,23 +183,24 @@ namespace userprofile.Controllers
                               modelfromExcel.residentLoc = new ResidentLoc();
                               modelfromExcel.optionalRe = new REFEREEqualViewModel();
                               modelfromExcel.optionalRe.re = new REFEREE();
-                              modelfromExcel.residentLoc.snum = int.Parse(row["streetNum"].ToString());
+                             
                               modelfromExcel.residentLoc.street = row["street"].ToString();
                               modelfromExcel.residentLoc.state = row["state"].ToString();
                               modelfromExcel.residentLoc.country = row["country"].ToString();
                               modelfromExcel.residentLoc.postcode = int.Parse(row["postcode"].ToString());
-                              modelfromExcel.dob = Convert.ToDateTime(row["dob"].ToString());
+                              modelfromExcel.dob = row["dob"].ToString();
                               modelfromExcel.Roles = "Referee";
                               modelfromExcel.optionalRe.re.distTravel = int.Parse(row["distTravel"].ToString());
-                              modelfromExcel.optionalRe.re.prefAge = int.Parse(row["prefAge"].ToString());
-                              modelfromExcel.optionalRe.re.prefGrade =int.Parse(row["prefGrade"].ToString());
+                              
+                              
                               modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
                               new AccountController().createUserFromExcel(modelfromExcel, "Referee");
                               modelfromExcel.optionalRe.re.sport = "Soccer";
                               var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
-                              modelfromExcel.optionalRe.re.ID = storedUser;
+                              modelfromExcel.optionalRe.re.userId = storedUser;
                             
                               db.REFEREEs.Add(modelfromExcel.optionalRe.re);
+                              
                               db.SaveChanges();
                           }
                              

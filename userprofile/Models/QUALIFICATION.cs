@@ -14,6 +14,7 @@ namespace userprofile.Models
     
     public partial class QUALIFICATION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public QUALIFICATION()
         {
             this.OFFERQUALs = new HashSet<OFFERQUAL>();
@@ -27,8 +28,10 @@ namespace userprofile.Models
         public int qualificationLevel { get; set; }
         public int status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
     }
 }
