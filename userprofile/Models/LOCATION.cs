@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class LOCATION
     {
@@ -19,16 +20,25 @@ namespace userprofile.Models
             this.MATCHes = new HashSet<MATCH>();
             this.REFEREEs = new HashSet<REFEREE>();
         }
-    
+        [Display(Name = "Location Id")]
         public int locationId { get; set; }
+        [Display(Name = "Location")]
         public string name { get; set; }
+        [Display(Name = "Price")]
         public Nullable<double> price { get; set; }
+        [Display(Name = "Street")]
         public string street { get; set; }
+        [Display(Name = "City")]
         public string city { get; set; }
+        [Display(Name = "Postcode")]
         public int postcode { get; set; }
+        [Display(Name = "Phone Number")]
         public int phoneNum { get; set; }
+        [Display(Name = "Country")]
         public string country { get; set; }
+        [Display(Name = "State")]
         public string state { get; set; }
+        [Display(Name = "Status")]
         public int status { get; set; }
         public System.Data.Entity.Spatial.DbGeography geogCol1 { get; set; }
         public string geogCol2 { get; set; }

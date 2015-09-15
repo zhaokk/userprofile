@@ -1,6 +1,6 @@
 ﻿@model userprofile.Models.offersViewModels
 @{
-    ViewBag.Title = "manageOffer";
+    ViewBag.Title = "Manage Offer Page";
     int i = 0;
     int j = 0;
 }
@@ -105,7 +105,7 @@
 
 
 
-                    <input onload="check()" type="submit" value="Create" class="btn btn-success pull-right" />
+                    <input onload="check()" type="submit" value="Apply" class="btn btn-success pull-right" />
 
                 </div>
             }
@@ -126,7 +126,7 @@
         i--;
         if (i < 1) {
 
-            $("#addnew").css("display", "none");
+            $("#addnewoffer").css("display", "none");
         }
     }
 

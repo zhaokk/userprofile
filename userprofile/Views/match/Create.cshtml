@@ -24,7 +24,8 @@
                         @Html.ValidationSummary(true)
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.matchDate, new { @class = "control-label col-md-2" })
+                            <label class="control-label col-md-2">Match Date</label>
+                            
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.createdMatch.matchDate)
                                 @Html.ValidationMessageFor(model => model.createdMatch.matchDate)
@@ -32,14 +33,14 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.locationId, "location", new { @class = "control-label col-md-2" })
+                            <label class="control-label col-md-2">Location</label>
                             <div class="col-md-10">
                                 @Html.DropDownList("location", (SelectList)ViewBag.locationId, String.Empty, new { @Name = "createdMatch.locationId" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.locationId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamAId, "teamaID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamAId, "Home Team ID", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
@@ -47,7 +48,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamBId, "teambID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamBId, "Away Team Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.teamBId)
@@ -55,7 +56,7 @@
                         </div>
                   
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.tournamentId, "tournament", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
                                 
@@ -77,7 +78,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.offernum, "number of offer", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.offernum, "Number Of Offer", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 <select id="offernum" name="offernum">
                                     <option>        </option>
@@ -159,7 +160,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-sm-1">
-                                    <input type="submit" value="Create" id="newoffers" class="btn btn-block btn-success" />
+                                    <input type="submit" value="Create" id="newoffers" class="btn btn-success" />
                                 </div>
                             </div>
                             <div id="offers">

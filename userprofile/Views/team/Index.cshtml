@@ -31,18 +31,21 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.name)
+                                    Team Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ageBracket)
+                                   Age Group
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.grade)
+                                   Grade
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.managerId)
+                                    Manager Name
                                 </th>
 
+                                <th>
+                                    Manger ID
+                                </th>
                                 <th>
 
                                 </th>
@@ -71,6 +74,10 @@
                                 @Html.DisplayFor(modelItem => item.grade)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
+                                  @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.managerId)
                             </td>
 
@@ -84,12 +91,12 @@
                 </div>
                 </div><!-- /.box-body -->
         </div><!-- /.box -->
+        <div class="col-md-3">
 
-    </div><!-- /.col -->
-    <div class="col-md-3">
-
-        <div class="btn-group">
-            <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
+            <div class="btn-group">
+                <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
+            </div>
         </div>
-    </div>
+    </div><!-- /.col -->
+    
 </div><!-- /.row -->

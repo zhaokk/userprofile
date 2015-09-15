@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class MATCH
     {
@@ -21,15 +22,26 @@ namespace userprofile.Models
         }
     
         public int matchId { get; set; }
+
+        [Display(Name = "Match Date")]
         public System.DateTime matchDate { get; set; }
+        [Display(Name = "Location Id")]
         public Nullable<int> locationId { get; set; }
+        [Display(Name = "Home Team")]
         public int teamAId { get; set; }
+        [Display(Name = "Away Team")]
         public int teamBId { get; set; }
+        [Display(Name = "Home Team Score")]
         public Nullable<int> teamAScore { get; set; }
+        [Display(Name = "Away Team Score")]
         public Nullable<int> teamBScore { get; set; }
+        [Display(Name = "Status")]
         public Nullable<int> status { get; set; }
+        [Display(Name = "Tournament Id")]
         public int tournamentId { get; set; }
+        [Display(Name = "Match Duration")]
         public int matchLength { get; set; }
+        [Display(Name = "Half Time Duration")]
         public int halfTimeDuration { get; set; }
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }

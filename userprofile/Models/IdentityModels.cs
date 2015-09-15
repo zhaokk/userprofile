@@ -36,6 +36,8 @@ namespace userprofile.Models
         public string street { get; set; }
         [Required]
         public string city { get; set; }
+        [Required]
+        public int ffaNum { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

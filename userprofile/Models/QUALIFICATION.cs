@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class QUALIFICATION
     {
@@ -19,12 +20,18 @@ namespace userprofile.Models
             this.OFFERQUALs = new HashSet<OFFERQUAL>();
             this.USERQUALs = new HashSet<USERQUAL>();
         }
-    
+
+         [Display(Name = "Qualification Id")]
         public int qualificationId { get; set; }
+        [Display(Name = "Qualification")]
         public string name { get; set; }
+        [Display(Name = "Sport")]
         public string sport { get; set; }
+        [Display(Name = "Description")]
         public string description { get; set; }
+        [Display(Name = "Qualification Level")]
         public int qualificationLevel { get; set; }
+        [Display(Name = "Status")]
         public int status { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }

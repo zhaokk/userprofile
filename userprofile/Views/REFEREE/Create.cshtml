@@ -2,7 +2,7 @@
 
 @{
     
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Referee";
 }
 
 
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.re.sport, "sport", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.re.sport, "Sport", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
 
                                 @Html.DropDownList("sport", (SelectList)ViewBag.sport, new { @Name = "re.sport" })
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.re.userId, "userId", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.re.userId, "User Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("userId", (SelectList)ViewBag.ID, new { @Name = "re.userId" })
                                 @Html.ValidationMessageFor(model => model.re.userId)
@@ -61,9 +61,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <div class="control-label col-md-2">
-                                Select qual
-                            </div>
+                            
+                                <label class="control-label col-md-2">Select qual</label>
+                            
                             
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.srqvm.quals)

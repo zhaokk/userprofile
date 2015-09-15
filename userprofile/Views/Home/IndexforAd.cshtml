@@ -27,14 +27,14 @@
     var pieData = [
             {
                 value: @Model.acceptedOffers.Count(),
-                color:"#F7464A",
-                highlight: "#FF5A5E",
+                color:"#00CC66",
+                highlight: "#00FF99",
                 label: "acceptedOffers"
             },
             {
                 value: @Model.declinedOffers.Count(),
-                color: "#46BFBD",
-                highlight: "#5AD3D1",
+                color:"#F7464A",
+                highlight: "#FF5A5E",
                 label: "declinedOffers"
             },
             {
@@ -63,10 +63,7 @@
 </script>
 
 <section class="content-header">
-    <h1>
-        Calendar
-        <small>Control panel</small>
-    </h1>
+    
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 
@@ -75,54 +72,53 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-
-        <div class="col-md-6">
-            <div class="box box-success">
+        <div class="col-md-3">
+            <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">accepted offeres</h3>
+                    <h3 class="box-title">Offer State</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div><!-- /.box-header -->
-                <div class="box-body " style="display: block;">
-                    <div class="table-responsive">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                        Match Date
-                                    </th>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart"></canvas>
+                            </div><!-- ./chart-responsive -->
+                        </div><!-- /.col -->
+                    <div class="box-solid">
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <ul class="chart-legend clearfix" style="margin: 0 auto;">
+                                    <li><i class="fa fa-circle-o text-green"></i>Accepted Offers</li>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var offer in @Model.acceptedOffers)
-                            {
-                            <tr>
-                                <td>
-                                    @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                </td>
-                                <td>
-                                    @offer.MATCH.matchDate
-                                </td>
-                            </tr>
+                                    <li><i class="fa fa-circle-o text-yellow"></i>Pending Offers</li>
+                                    <li><i class="fa fa-circle-o text-red"></i>Declined Offers</li>
 
-                            }
-                            </tbody>
-                        </table>
+                                    <li><i class="fa fa-circle-o text-gray"></i>Offer Not Assigned</li>
+                                </ul>
+                            </div><!-- /.col -->
+                        </div>
                     </div>
-                    </div><!-- /.box-body -->
+                       
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+                <div class="box-footer no-padding">
+                    @*<ul class="nav nav-pills nav-stacked">
+                        <li><a href="#">United States of America <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                        <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
+                        <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                    </ul>*@
+                </div><!-- /.footer -->
             </div>
-
         </div>
-        <div class="col-md-6">
-            <div class="box box-warning">
+       
+        <div class="col-md-9">
+            <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">declined offeres</h3>
+                    <h3 class="box-title">Declined Offeres</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -163,47 +159,11 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
     <div class="row">
-        <div class="col-md-4">
+        
+        <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Browser Usage</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="chart-responsive">
-                                <canvas id="pieChart" height="155" width="227" style="width: 227px; height: 155px;"></canvas>
-                            </div><!-- ./chart-responsive -->
-                        </div><!-- /.col -->
-                        <div class="col-md-4">
-                            <ul class="chart-legend clearfix">
-                                <li><i class="fa fa-circle-o text-red"></i> acceptedOffers</li>
-
-                                <li><i class="fa fa-circle-o text-yellow"></i>pendingOffers</li>
-                                <li><i class="fa fa-circle-o text-aqua"></i>  declinedOffers</li>
-
-                                <li><i class="fa fa-circle-o text-gray"></i>offer not assigned</li>
-                            </ul>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.box-body -->
-                <div class="box-footer no-padding">
-                    @*<ul class="nav nav-pills nav-stacked">
-                            <li><a href="#">United States of America <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-                            <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
-                            <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-                        </ul>*@
-                </div><!-- /.footer -->
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">empty position </h3>
+                    <h3 class="box-title">Empty position </h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -249,6 +209,52 @@
                     </div>
                     </div><!-- /.box-body -->
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">accepted offeres</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var offer in @Model.acceptedOffers)
+                                {
+                                    <tr>
+                                        <td>
+                                            @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                        </td>
+                                        <td>
+                                            @offer.MATCH.matchDate
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div>
+
         </div>
     </div>
 </section><!-- /.content -->

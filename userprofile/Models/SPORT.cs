@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class SPORT
     {
@@ -22,8 +23,10 @@ namespace userprofile.Models
             this.TEAMs = new HashSet<TEAM>();
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
         }
-    
+
+        [Display(Name = "Sport")]
         public string name { get; set; }
+        [Display(Name = "Status")]
         public int status { get; set; }
     
         public virtual ICollection<OFFER> OFFERs { get; set; }

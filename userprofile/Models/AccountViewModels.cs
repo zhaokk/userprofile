@@ -150,6 +150,7 @@ namespace userprofile.Models
         // Allow Initialization with an instance of ApplicationUser:
         public EditUserViewModel(ApplicationUser user)
         {
+            this.ffaNum = user.ffaNum;
             this.UserName = user.UserName;
             this.FirstName = user.firstName;
             this.LastName = user.lastName;
@@ -166,6 +167,10 @@ namespace userprofile.Models
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "FFA Number")]
+        public int ffaNum { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
