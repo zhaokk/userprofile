@@ -50,22 +50,10 @@
                 
             </li>
             <li class=" treeview">
-                <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>User Management</span>
-                    <span class="label label-primary pull-right">2</span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href='@Url.Action("index", "account")'>
-    <i class="fa fa-th"></i> <span>User Management</span> <i class="fa fa-angle-left pull-right"></i>
-</a></li>
-                    <li><a href='@Url.Action("index", "REFEREE")'>
-    <i class="fa fa-user-plus"></i> <span>Referee Management</span> <i class="fa fa-angle-left pull-right"></i>
-</a></li>
-                    
-                </ul>
+                <a href='@Url.Action("index", "account")'>
 
-                
+                    <i class="fa fa-th"></i> <span>User Management</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
 
             </li>
             <li class=" treeview">
@@ -80,11 +68,11 @@
                 </a>
 
             </li>
-            @*<li class=" treeview">
+            <li class=" treeview">
                 <a href='@Url.Action("index", "REFEREE")'>
                     <i class="fa fa-user-plus"></i> <span>Referee Management</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
-            </li>*@
+            </li>
             <li class=" treeview">
                 <a href='@Url.Action("index", "Qualification")'>
                     <i class="fa fa-heart"></i> <span>Qualification</span> <i class="fa fa-angle-left pull-right"></i>
@@ -215,13 +203,3 @@
     </section>
     <!-- /.sidebar -->
 </aside>
-
-<script>
-    // load serialized from wherever you stored it, then ..
-    var deserialized = serialized.split("|");
-    $(deserialized).each(function () {
-        var node = tree.findByText(this);
-
-        tree.expand(node);
-    });
-</script>
