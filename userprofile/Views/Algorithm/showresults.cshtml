@@ -17,12 +17,12 @@
             @foreach (userprofile.Models.pair pair in solu.pairs) {
                 <tr>
                     <td>
-                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.mID })">
+                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
                             @pair.offer.MATCH.matchDate
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.ID })">
+                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.userId })">
                             @pair.refe.AspNetUser.lastName
                         </a>
                     </td>
