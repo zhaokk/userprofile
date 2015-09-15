@@ -580,14 +580,14 @@ namespace userprofile.Controllers {
                             rID = -1;
                         else
                             rID = j.Value.assignedTo.First();
-                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID));
+                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID,db));
                     }
                 }
             }
             catch (SystemException a) {
                 modelResult = new AlgorithmModel(1);
                 foreach (var i in llCompleted) {
-                    modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee));
+                    modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee,db));
                 }
             }
         }

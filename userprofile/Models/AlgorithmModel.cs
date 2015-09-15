@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using userprofile.Models;
 
 namespace userprofile.Models {
     public class AlgorithmModel {
@@ -26,13 +27,22 @@ namespace userprofile.Models {
         }
     }
     public class pair {
-        public pair(int offer, int referee) {
-            this.refe = referee;
-            this.offer = offer;
+        public pair(int offer, int referee,Raoconnection db) {
+            if (referee == 0)
+            {
+                this.refe = db.REFEREEs.Find(87784161);
+
+            }
+            else {
+                this.refe = db.REFEREEs.Find(referee);
+                this.offer = db.OFFERs.Find(offer);
+            }
+            
         }
         public pair() { }
-        public int refe { get; set; }
-        public int offer { get; set; }
+        public REFEREE refe { get; set; }
+        public OFFER offer { get; set; }
+
     }
 
 
