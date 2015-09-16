@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamAId, "Home Team ID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamAId, "Home Team Name", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
@@ -48,19 +48,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.teamBId, "Away Team Id", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.createdMatch.teamBId, "Away Team Name", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.teamBId)
-                            </div>
-                        </div>
-                  
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
-                                
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
                         <div class="form-group">
@@ -88,6 +79,17 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
+                                
+                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+                            </div>
+                        </div>
+                        
+                        
+                      
                         <div class="form-group" id="q1" hidden>
                             @Html.LabelFor(model => model.q1, "offer one qualification", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">

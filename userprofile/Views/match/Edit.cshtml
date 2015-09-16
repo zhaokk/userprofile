@@ -28,24 +28,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.locationId, "locationId", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.locationId, "Location Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("locationId")
                                 @Html.ValidationMessageFor(model => model.locationId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.teamaId, "teamaID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.teamAId, "Home Team Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.teamaId)
+                                @Html.ValidationMessageFor(model => model.teamAId)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.teambId, "teambID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.teamBId, "Home Team Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teambID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.teambId)
+                                @Html.ValidationMessageFor(model => model.teamBId)
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,15 +62,9 @@
                                 @Html.ValidationMessageFor(model => model.teamBScore)
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            @Html.LabelFor(model => model.winnerId, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.winnerId)
-                                @Html.ValidationMessageFor(model => model.winnerId)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.tournamentId, "tournamentId", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.tournamentId, "Tournament Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("tournamentId", String.Empty)
                                 @Html.ValidationMessageFor(model => model.tournamentId)

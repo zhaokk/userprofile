@@ -25,6 +25,7 @@ namespace userprofile.Models
         [Display(Name = "Location")]
         public string name { get; set; }
         [Display(Name = "Price")]
+        [Required(ErrorMessage = "Price is required")]
         public Nullable<double> price { get; set; }
         [Display(Name = "Street")]
         public string street { get; set; }

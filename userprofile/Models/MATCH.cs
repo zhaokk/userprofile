@@ -32,16 +32,22 @@ namespace userprofile.Models
         [Display(Name = "Away Team")]
         public int teamBId { get; set; }
         [Display(Name = "Home Team Score")]
+        [Required(ErrorMessage = "Team Score is required")]
         public Nullable<int> teamAScore { get; set; }
         [Display(Name = "Away Team Score")]
+        [Required(ErrorMessage = "Team Score is required")]
         public Nullable<int> teamBScore { get; set; }
+        [Required(ErrorMessage = "Status is required")]
         [Display(Name = "Status")]
         public Nullable<int> status { get; set; }
         [Display(Name = "Tournament Id")]
         public int tournamentId { get; set; }
+        
         [Display(Name = "Match Duration")]
+        [Required(ErrorMessage = "Match Duration is required")]
         public int matchLength { get; set; }
         [Display(Name = "Half Time Duration")]
+        [Required(ErrorMessage = "Half Time Duration is required")]
         public int halfTimeDuration { get; set; }
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }

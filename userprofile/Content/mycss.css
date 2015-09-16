@@ -3,26 +3,17 @@
 }
 
 @media only screen and (max-device-width: 480px) {
- .pagination>li:first-of-type a, .pagination>li:last-of-type a {
-    
-    width: 7em;
-}
 
-    .pagination > li:nth-child(2) {
-        display: none;
+
+         .pagination>li:first-of-type a, .pagination>li:last-of-type a {
+    display:none;
+    width: 7em;
+   
     }
-    .pagination > li:nth-child(3) {
-        display: none;
-    }
-    .pagination > li:nth-child(4) {
-        display: none;
-    }
-    .pagination > li:nth-child(5) {
-        display: none;
-    }
-    .pagination > li:nth-child(6) {
-        display: none;
-    }
+
+   
+    
+
 
     .per_page{
         display:none;

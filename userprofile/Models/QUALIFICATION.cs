@@ -22,6 +22,7 @@ namespace userprofile.Models
         }
 
          [Display(Name = "Qualification Id")]
+         [Required(ErrorMessage = "Qulification Id is required")]
         public int qualificationId { get; set; }
         [Display(Name = "Qualification")]
         public string name { get; set; }
