@@ -97,8 +97,22 @@ namespace userprofile.Controllers {
         }
 
         bool checkAvailable(int oID, int rID) { //check if this ref is available to referee this offer (mostly for conflicts timewise)
+            if (dReferees[rID].canAssign == dReferees[rID].assignedTo.Count()) { //referee is assigned to max
+                return false;
+            }
+            if (dOffers[oID].assignedTo.Count() == 1) {//already filled
+                return false;
+            }
             foreach (var i in dReferees[rID].assignedTo) {
-                if (matchClashes[i][oID] == true) {
+                if (offerStorage[i].matchId == offerStorage[oID].matchId)
+                    return false;
+                if (!matchClashes.ContainsKey(offerStorage[i].matchId)) {
+                    calculateClash(offerStorage[oID].matchId, offerStorage[i].matchId);
+                }
+                else if (!matchClashes[offerStorage[i].matchId].ContainsKey(offerStorage[oID].matchId)) {
+                    calculateClash(offerStorage[oID].matchId, offerStorage[i].matchId);
+                }
+                if (matchClashes[offerStorage[i].matchId][offerStorage[oID].matchId] == true) {
                     return false;
                 }
             }
@@ -107,6 +121,9 @@ namespace userprofile.Controllers {
 
         void setPairUnavailable(int oID, int rID) { //make combination of Offer/Ref unavailable
             bool canBeFilled = (dOffers[oID].available.Count() > 0);
+            if (!dOffers[oID].available.ContainsKey(rID)) {
+                return; //ALREADY REMOVED -> Most common cause is when it is the offer you assigned
+            }
             dOffers[oID].unavailable.Add(rID, dOffers[oID].available[rID]);
             dOffers[oID].available.Remove(rID);
             dReferees[rID].unavailable.Add(oID, dReferees[rID].available[oID]);
@@ -138,22 +155,34 @@ namespace userprofile.Controllers {
                     setRefereeUnavailable(rID);
                     return;
                 }
+                LinkedList<int> nuke = new LinkedList<int>();
                 foreach (var i in dReferees[rID].available) {
                     if (!checkAvailable(i.Key, rID)) {
-                        setPairUnavailable(oID, rID);
+                        nuke.AddLast(i.Key);//i.Key = oID
                     }
+                }
+                foreach (var i in nuke) {
+                    setPairUnavailable(i, rID);
                 }
             }
             else {
+                LinkedList<int> nuke = new LinkedList<int>();
                 foreach (var i in dOffers[oID].unavailable) {
                     if (checkAvailable(oID, i.Key)) {
-                        setPairAvailable(oID, i.Key);
+                        nuke.AddLast(i.Key);
                     }
                 }
+                foreach (var i in nuke) {
+                    setPairAvailable(oID, i);
+                }
+                nuke = new LinkedList<int>();
                 foreach (var i in dReferees[rID].unavailable) {
                     if (checkAvailable(i.Key, rID)) {
-                        setPairAvailable(i.Key, rID);
+                        nuke.AddLast(i.Key);
                     }
+                }
+                foreach (var i in nuke) {
+                    setPairAvailable(i, rID);
                 }
             }
         }
@@ -210,8 +239,9 @@ namespace userprofile.Controllers {
             return containsOneOff(db.OFFERs.Find(oID).dateOfOffer, rID);
         }
 
-        bool containsOneOff(DateTime matchDateTime, int rID) {
-            var temp = db.OneOffAVAILABILITies.Find(); //WRITE PRIMARY KEY FOR REFAVAILABILITY
+        bool containsOneOff(DateTime matchDateTime, int rID) { //REDO
+            return false;
+            var temp = db.OneOffAVAILABILITies.Find(rID); //WRITE PRIMARY KEY FOR REFAVAILABILITY
             if (temp == null)
                 return false;
             else
@@ -310,26 +340,39 @@ namespace userprofile.Controllers {
         void addRefereesToOffers() {
             foreach (var i in offerStorage) {
                 HashSet<int> availableReferees = null;
-                foreach (var j in i.Value.OFFERQUALs) {
-                    if (availableReferees == null) {
-                        availableReferees = new HashSet<int>();
-                        foreach (var k in qualificationRefStorage[j.qualificationId]) {
-                            if (checkInitAvailability(i.Key, k)) {
-
+                if (i.Value.OFFERQUALs.Count() > 0) {
+                    foreach (var j in i.Value.OFFERQUALs) {
+                        if (availableReferees == null) {
+                            availableReferees = new HashSet<int>();
+                            foreach (var k in qualificationRefStorage[j.qualificationId]) {
+                                if (checkInitAvailability(i.Key, k)) {
+                                    availableReferees.Add(k);
+                                }
                             }
                         }
-                    }
-                    else {
-                        HashSet<int> temp = availableReferees;
-                        availableReferees = new HashSet<int>();
-                        foreach (var k in temp) {
-                            if (qualificationRefStorage[j.qualificationId].Contains(k)) {
-                                availableReferees.Add(k);
+                        else {
+                            HashSet<int> temp = availableReferees;
+                            availableReferees = new HashSet<int>();
+                            foreach (var k in temp) {
+                                if (qualificationRefStorage[j.qualificationId].Contains(k)) {
+                                    availableReferees.Add(k);
+                                }
                             }
                         }
+                        if (availableReferees.Count() == 0) {
+                            break;
+                        }
                     }
-                    if (availableReferees.Count() == 0) {
-                        break;
+                }
+                else {
+                    availableReferees = new HashSet<int>();
+                    foreach (var j in db.REFEREEs) {
+                        if (!refereeStorage.ContainsKey(j.refId)) {
+                            refereeStorage.Add(j.refId, j);
+                        }
+                        if (checkInitAvailability(i.Key,j.refId)) {
+                            availableReferees.Add(j.refId);
+                        }
                     }
                 }
                 if (availableReferees.Count == 0) {
@@ -412,8 +455,8 @@ namespace userprofile.Controllers {
             foreach (var i in dReferees) {
                 foreach (var j in i.Value.available) {
                     foreach (var k in i.Value.available) {
-                        if (offerStorage[j.Key].MATCH.matchId != offerStorage[j.Key].MATCH.matchId) {
-                            calculateClash(j.Key, k.Key);
+                        if (offerStorage[j.Key].MATCH.matchId != offerStorage[k.Key].MATCH.matchId) {
+                            calculateClash(offerStorage[j.Key].MATCH.matchId, offerStorage[k.Key].MATCH.matchId);
                         }
                     }
                 }
@@ -428,14 +471,16 @@ namespace userprofile.Controllers {
         }
 
         void removeOffer(int oID) { //remove offer
-            foreach (var i in dOffers[oID].available) {
-                dReferees[i.Key].available.Remove(oID);
-                if (dReferees[i.Key].available.Count() == 0) {
-                    maxOffersFilled -= dReferees[i.Key].canAssign;
-                    dReferees.Remove(i.Key);
+            if (dOffers.ContainsKey(oID)) { //might've already been removed (other ref could have completed)
+                foreach (var i in dOffers[oID].available) {
+                    dReferees[i.Key].available.Remove(oID);
+                    if (dReferees[i.Key].available.Count() == 0) {
+                        maxOffersFilled -= dReferees[i.Key].canAssign;
+                        dReferees.Remove(i.Key);
+                    }
                 }
-            }
-            dOffers.Remove(oID);
+                dOffers.Remove(oID);
+            } 
         }
 
         public IEnumerable<TKey> UniqueRandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict) { //randomise order of dictionary
@@ -519,11 +564,11 @@ namespace userprofile.Controllers {
 
         void unassignRandom() {
             Random rand = new Random();
-            unassign(rand.Next(0, hFilledOffers.Count()));
+            unassign(hFilledOffers.ElementAt(rand.Next(0, hFilledOffers.Count())));
         }
 
         void saveState() {
-            bestOffers.Add(new Dictionary<int, val>(dOffers));
+             bestOffers.Add(new Dictionary<int, val>(dOffers));
             bestReferees.Add(new Dictionary<int, val>(dReferees));
         }
 
@@ -545,7 +590,7 @@ namespace userprofile.Controllers {
         }
 
         void performAlgorithm() {
-            for (currTemp = 0; currTemp < initTemp && currOffersFilled < maxOffersFilled; currTemp--) {
+            for (currTemp = 0; currTemp < initTemp && currOffersFilled < maxOffersFilled; currTemp++) {
                 long countAssign = calcOffersToReset();
                 for (long i = 0; i < countAssign; i++) {
                     unassignRandom();
@@ -572,8 +617,8 @@ namespace userprofile.Controllers {
 
         void setModel() {
             try {
-                modelResult = new AlgorithmModel(bestOffers.Count());
-                for (int i = 0; i < bestOffers.Count(); i++) {
+                modelResult = new AlgorithmModel(1);//bestOffers.Count()
+                for (int i = 0; i < 1; i++) {//bestOffers.Count()
                     foreach (var j in bestOffers[i]) {
                         int rID;
                         if (j.Value.assignedTo.Count() == 0)
