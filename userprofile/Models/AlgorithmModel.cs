@@ -30,10 +30,14 @@ namespace userprofile.Models {
         public pair(int offer, int referee,Raoconnection db) {
             if (referee == -1)
             {
+				offerid = offer;
+				this.refeid = -1;
                 this.refe = db.REFEREEs.Find(87784161);
                 this.offer = db.OFFERs.Find(offer);
             }
             else {
+				this.offerid = offer;
+				this.refeid = referee;
                 this.refe = db.REFEREEs.Find(referee);
                 this.offer = db.OFFERs.Find(offer);
             }
@@ -42,7 +46,8 @@ namespace userprofile.Models {
         public pair() { }
         public REFEREE refe { get; set; }
         public OFFER offer { get; set; }
-
+		public int refeid { get; set; }
+		public int offerid { get; set; }
     }
 
 
