@@ -96,68 +96,68 @@ namespace userprofile.Models
                 //}
 
 
-                moment = resolve(dayDb, moment);
+                moment = resolve(day,dayDb, moment);
             }
 
 
         }
-        public Boolean[][] resolve(int dayDb, Boolean[][] moment)
+        public Boolean[][] resolve(int day,int dayDb, Boolean[][] moment)
         {
             if (dayDb >= 8)
             {
-                moment[dayDb][0] = true;
+                moment[day][0] = true;
                 dayDb -= 8;
-                return digit2(dayDb, moment);
+                return digit2(day,dayDb, moment);
 
             }
             else
             {
-                moment[dayDb][0] = false;
-                return digit2(dayDb, moment);
+                moment[day][0] = false;
+                return digit2(day,dayDb, moment);
             }
 
         }
-        public Boolean[][] digit2(int dayDb, Boolean[][] moment)
+        public Boolean[][] digit2(int day,int dayDb, Boolean[][] moment)
         {
             if (dayDb >= 4)
             {
-                moment[dayDb][1] = true;
+                moment[day][1] = true;
                 dayDb -= 4;
-                return digit2(dayDb, moment);
+                return digit1(day,dayDb, moment);
             }
             else
             {
-                moment[dayDb][1] = false;
-                return digit2(dayDb, moment);
+                moment[day][1] = false;
+                return digit1(day,dayDb, moment);
             }
 
         }
-        public Boolean[][] digit1(int dayDb, Boolean[][] moment)
+        public Boolean[][] digit1(int day,int dayDb, Boolean[][] moment)
         {
             if (dayDb >= 2)
             {
-                moment[dayDb][2] = true;
+                moment[day][2] = true;
                 dayDb -= 2;
-                return digit1(dayDb, moment);
+                return digit0(day,dayDb, moment);
             }
             else
             {
-                moment[dayDb][2] = false;
-                return digit1(dayDb, moment);
+                moment[day][2] = false;
+                return digit0(day,dayDb, moment);
             }
 
         }
-        public Boolean[][] digit0(int dayDb, Boolean[][] moment)
+        public Boolean[][] digit0(int day,int dayDb, Boolean[][] moment)
         {
-            if (dayDb >= 2)
+            if (dayDb >= 1)
             {
-                moment[dayDb][3] = true;
-                dayDb -= 2;
+                moment[day][3] = true;
+                dayDb -= 1;
                 return moment;
             }
             else
             {
-                moment[dayDb][3] = false;
+                moment[day][3] = false;
                 return moment;
             }
 
@@ -205,20 +205,20 @@ namespace userprofile.Models
         public int setDb(Boolean[][] moment, int i)
         {
             var result = 0;
-            if (moment[i][3] = true)
+            if (moment[i][3] == true)
             {
                 result += 1;
 
             }
-            if (moment[i][2] = true)
+            if (moment[i][2] == true)
             {
                 result += 2;
             }
-            if (moment[i][1] = true)
+            if (moment[i][1] == true)
             {
                 result += 4;
             }
-            if (moment[i][0] = true)
+            if (moment[i][0] == true)
             {
                 result += 8;
             }
