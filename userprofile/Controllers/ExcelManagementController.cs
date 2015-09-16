@@ -104,20 +104,22 @@ namespace userprofile.Controllers
                                     modelfromExcel.residentLoc.state = row["state"].ToString();
                                     modelfromExcel.residentLoc.country = row["country"].ToString();
                                     modelfromExcel.residentLoc.postcode = int.Parse(row["postcode"].ToString());
+                                    modelfromExcel.ffaNum = int.Parse(row["ffanum"].ToString());
                                     modelfromExcel.dob = row["dob"].ToString();
                                     modelfromExcel.Roles = "Referee";
                                     modelfromExcel.optionalRe.re.distTravel = int.Parse(row["distTravel"].ToString());
-
+                                    modelfromExcel.residentLoc.city = row["city"].ToString();
 
                                     modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
-                                    new AccountController().createUserFromExcel(modelfromExcel, "Referee");
+                        
+                                    //new AccountController().createUserFromExcel(modelfromExcel, "Referee");
                                     modelfromExcel.optionalRe.re.sport = "Soccer";
-                                    var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
-                                    modelfromExcel.optionalRe.re.userId = storedUser;
+                                //    var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
+                              //      modelfromExcel.optionalRe.re.userId = storedUser;
 
-                                    db.REFEREEs.Add(modelfromExcel.optionalRe.re);
+                              //      db.REFEREEs.Add(modelfromExcel.optionalRe.re);
 
-                                    db.SaveChanges();
+                              //      db.SaveChanges();
                                 }
                              
 
@@ -142,6 +144,7 @@ namespace userprofile.Controllers
                 }
             }
         }
+
          public  void importXmll() {
 
             //var excel = Request.Files[0];
@@ -218,7 +221,7 @@ namespace userprofile.Controllers
                               
                               
                               modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
-                              new AccountController().createUserFromExcel(modelfromExcel, "Referee");
+                              //new AccountController().createUserFromExcel(modelfromExcel, "Referee");
                               modelfromExcel.optionalRe.re.sport = "Soccer";
                               var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
                               modelfromExcel.optionalRe.re.userId = storedUser;

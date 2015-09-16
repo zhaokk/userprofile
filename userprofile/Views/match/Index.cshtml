@@ -164,7 +164,7 @@
         ajax = new XMLHttpRequest();
         ajax.upload.addEventListener("progress", progressHandler, false);
         ajax.addEventListener("load", completeHandler, false);
-        ajax.open("POST", "/ExcelManagement/importXml");
+        ajax.open("POST", "/Account/importXml");
         ajax.send(formData);
     }
 

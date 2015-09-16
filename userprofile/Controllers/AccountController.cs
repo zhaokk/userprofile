@@ -10,6 +10,16 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using userprofile.Models;
 
+
+using System.Data;
+using System.Data.Entity;
+using System.IO;
+
+using System.Net;
+
+using System.Data.OleDb;
+
+
 namespace userprofile.Controllers
 {
     [Authorize]
@@ -355,20 +365,20 @@ namespace userprofile.Controllers
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
-        public async Task<Boolean> createUserFromExcel(RegisterViewModel listofUser, string type)
-        {
-            Boolean result = false;
-            switch (type)
-            {
-                case "Referee":
-                    result = await createListOfReferee(listofUser);
-                    break;
-                default:
-                    break;
-            }
-            // If we got this far, something failed, redisplay form
-            return result;
-        }
+        //public async Task<Boolean> createUserFromExcel(RegisterViewModel listofUser, string type)
+        //{
+        //    Boolean result = false;
+        //    switch (type)
+        //    {
+        //        case "Referee":
+        //           result= await createListOfReferee(listofUser);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    // If we got this far, something failed, redisplay form
+        //    return result;
+        //}
         public async Task<Boolean> createListOfReferee(RegisterViewModel model)
         {
             Boolean success = true;
@@ -381,9 +391,12 @@ namespace userprofile.Controllers
             if (ModelState.IsValid)
             {
                 var user = model.GetUser();
-
+                
+                    user.city = "wollongong";
+                
+                var j= 0;
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (true)
                 {
                     var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
                     var idManager = new IdentityManager();
@@ -510,6 +523,130 @@ namespace userprofile.Controllers
             }
             base.Dispose(disposing);
         }
+        public void importXml()
+        {
+
+            var excel = Request.Files[0];
+            string type = Request.Form["type"];
+
+            if (excel.ContentType == "application/vnd.ms-excel" || excel.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            {
+                try
+                {
+                    string fileName = Path.Combine(Server.MapPath("~/Excel"), Guid.NewGuid().ToString() + Path.GetExtension(excel.FileName));
+
+                    excel.SaveAs(fileName);
+                    String conString = " ";
+                    string ext = Path.GetExtension(excel.FileName);
+                    if (ext.ToLower() == ".xls")
+                    {
+                        conString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                    }
+                    else if (ext.ToLower() == ".xlsx")
+                    {
+                        conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    }
+                    string query = "select * from [Sheet1$]";
+                    OleDbConnection con = new OleDbConnection(conString);
+                    if (con.State == System.Data.ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    OleDbCommand cmd = new OleDbCommand(query, con);
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+
+                    da.Fill(ds);
+                    da.Dispose();
+                    con.Close();
+                    con.Dispose();
+                    if (System.IO.File.Exists(fileName))
+                    {
+                        System.IO.File.Delete(fileName);
+                    }
+
+                    var test = ds.Tables[0].Rows;
+                    using (Raoconnection db = new Raoconnection())
+                    {
+                        switch (type)
+                        {
+                            case "sport":
+                                foreach (DataRow row in ds.Tables[0].Rows)
+                                {
+                                    string newname = row["name"].ToString();
+                                    if (db.SPORTs.Find(newname) == null)
+                                    {
+                                        db.SPORTs.Add(new SPORT { name = newname });
+
+                                    }
+                                }
+                                break;
+                            case "user":
+                                RegisterViewModel modelfromExcel;
+                                List<RegisterViewModel> listuser = new List<RegisterViewModel>();
+                                foreach (DataRow row in ds.Tables[0].Rows)
+                                {
+                                    string username = row["UserName"].ToString();
+                                    modelfromExcel = new RegisterViewModel();
+                                    modelfromExcel.UserName = username;
+                                    modelfromExcel.Password = row["Password"].ToString();
+                                    modelfromExcel.ConfirmPassword = modelfromExcel.Password;
+                                    modelfromExcel.FirstName = row["firstName"].ToString();
+                                    modelfromExcel.LastName = row["lastName"].ToString();
+                                    modelfromExcel.phoneNum = int.Parse(row["phoneNum"].ToString());
+                                    modelfromExcel.Email = row["email"].ToString();
+                                    modelfromExcel.residentLoc = new ResidentLoc();
+                                    modelfromExcel.optionalRe = new REFEREEqualViewModel();
+                                    modelfromExcel.optionalRe.re = new REFEREE();
+                                    modelfromExcel.optionalRe.re.status = int.Parse(row["status"].ToString());
+                                    modelfromExcel.optionalRe.re.status = int.Parse(row["rating"].ToString());
+                                    modelfromExcel.residentLoc.street = row["street"].ToString();
+                                    modelfromExcel.residentLoc.state = row["state"].ToString();
+                                    modelfromExcel.residentLoc.country = row["country"].ToString();
+                                    modelfromExcel.residentLoc.postcode = int.Parse(row["postcode"].ToString());
+                                    modelfromExcel.ffaNum = int.Parse(row["ffanum"].ToString());
+                                    modelfromExcel.dob = row["dob"].ToString();
+                                    modelfromExcel.Roles = "Referee";
+                                    modelfromExcel.optionalRe.re.distTravel = int.Parse(row["distTravel"].ToString());
+                                    modelfromExcel.residentLoc.city = row["city"].ToString();
+
+                                    modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
+
+                                 //   this.createListOfReferee(modelfromExcel);
+                                    this.Register(modelfromExcel);
+                                    modelfromExcel.optionalRe.re.sport = "Soccer";
+                                    //    var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
+                                    //      modelfromExcel.optionalRe.re.userId = storedUser;
+
+                                    //      db.REFEREEs.Add(modelfromExcel.optionalRe.re);
+
+                                    //      db.SaveChanges();
+                                }
+
+
+                                break;
+                            default:
+                                break;
+                        }
+
+                        db.SaveChanges();
+                    }
+
+                    if (System.IO.File.Exists(fileName))
+                    {
+                        //  System.IO.File.Delete(fileName);
+                    }
+                }
+                catch (Exception)
+                {
+
+
+                    throw;
+                }
+            }
+        }
+
+       
 
         #region Helpers
         // Used for XSRF protection when adding external logins

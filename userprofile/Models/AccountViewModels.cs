@@ -53,7 +53,8 @@ namespace userprofile.Models
         
         public string photoDir { get; set; }
 
-    
+        [Required]
+        public int ffaNum { get; set; }
 
         [Required]
         [Display(Name = "User name")]
@@ -103,9 +104,10 @@ namespace userprofile.Models
         {      
             
 
-            DateTime x = DateTime.ParseExact(this.dob, "dd/MM/yyyy", null);
+           // DateTime x = DateTime.ParseExact(this.dob, "dd/MM/yyyy", null);
             var user = new ApplicationUser()
             {
+                ffaNum=this.ffaNum,
                 photoDir=this.photoDir,
                 UserName = this.UserName,
                 firstName = this.FirstName,
@@ -113,7 +115,7 @@ namespace userprofile.Models
                 email = this.Email,
                country = this.residentLoc.country,
                city=this.residentLoc.city,
-            dob = x,
+            dob = DateTime.Today,
            phoneNum =  this.phoneNum,
             state = this.residentLoc.state,
             street = this.residentLoc.street,
