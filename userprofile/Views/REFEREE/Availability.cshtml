@@ -6,7 +6,7 @@
 <h2>Availability</h2>
 <div id="note" class="callout callout-success" style="margin-bottom: 0!important;" hidden>
     <h4><i class="fa fa-info"></i> Note : The change has been saved!</h4>
-    
+
 </div>
 
 <div class="panel panel-default">
@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row">8-12</th>
+                <th scope="row">0-6</th>
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>mdo</td>
@@ -39,7 +39,17 @@
                 <td>mdo</td>
             </tr>
             <tr>
-                <th scope="row">12-16</th>
+                <th scope="row">6-12</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">12-18</th>
                 <td>Jacob</td>
                 <td>Thornton</td>
                 <td>fat</td>
@@ -49,7 +59,7 @@
                 <td>mdo</td>
             </tr>
             <tr>
-                <th scope="row">16-20</th>
+                <th scope="row">18-24</th>
                 <td>Larry</td>
                 <td>the Bird</td>
                 <td>twitter</td>
@@ -61,7 +71,7 @@
 
         </tbody>
     </table>
-    
+
 </div>
 <button type="button" class="btn btn-warning btn-lg" id="save">
     <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save changes
@@ -70,23 +80,23 @@
 
 @section Scripts{
     <script>
-        $(function () { 
-            var availaArray= JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
+        $(function () {
+            var availaArray = JSON.parse('@Html.Raw(Json.Encode(Model.moment))');
             $("td").each(function () {
-                
-                var col = $(this).parent().children().index($(this))-1;
+
+                var col = $(this).parent().children().index($(this)) - 1;
                 var row = $(this).parent().parent().children().index($(this).parent());
-                $(this).text(" " );
+                $(this).text(" ");
                 if (availaArray[col][row] == true) {
-                   // 
+                    //
                     $(this).css("background-color", "#00a65a");
-                   
+
                 } else {
 
                     $(this).css("background-color", "#dd4b39");
-                    
+
                 }
-           
+
             });
             $('td').click(function () {
                 var col = $(this).parent().children().index($(this)) - 1;
@@ -106,16 +116,16 @@
                     $("#note").hide("slow", function () {
 
                     });
-                   // $(this).css("background-color", "blue");
+                    // $(this).css("background-color", "blue");
                 }
             })
             $('#save').click(function () {
-                var WEEKLYAVAILABILITYViewModel = {  "moment": availaArray  };
+                var WEEKLYAVAILABILITYViewModel = { "moment": availaArray };
                 $.ajax({
                     url: "@Url.Content("~/REFEREE/Availability")",
                     data: JSON.stringify(WEEKLYAVAILABILITYViewModel),
-                type: 'POST',
-                contentType: 'application/json'
+                    type: 'POST',
+                    contentType: 'application/json'
                 });
                 $("#note").show("slow", function () {
 
@@ -123,11 +133,11 @@
             })
         })
     </script>
-    
+
     <style>
         table {
             table-layout: fixed;
             width: 200px;
         }
     </style>
-    }
+}
