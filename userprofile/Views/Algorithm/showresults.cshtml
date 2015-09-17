@@ -5,35 +5,105 @@
     var i = 0;
 }
 
-<h2>Index</h2>
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $("#example3").DataTable();
+        $("#example4").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
 
 <div>
+    @{ var counter = 0;}
     <h4>AlgorithmModel</h4>
     @foreach (userprofile.Models.solution solu in Model.result) {
-        i++;
+        
         <h2>SOLUTION @i</h2>
-        <table>
-            <tr><td>MatchDate</td><td>referName</td></tr>
-            @foreach (userprofile.Models.pair pair in solu.pairs) {
-                <tr>
-                    <td>
-                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
-                            @pair.offer.MATCH.matchDate
-							@pair.offerid
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-                            @pair.refe.AspNetUser.lastName
-							@pair.refeid
-                        </a>
-                    </td>
-                </tr>
-            }
-        </table>
+        
+        foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
+           <h1>@sortedmatch.match.matchDate</h1>
+            counter++;
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id=@("example"+counter) class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>offerid   </th>
+                                <th>offerqulaifaction   </th>
+                                <th>referee name   </th>
+                                <th>referee ID  </th>
+                                <th>referee qulifaction   </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (userprofile.Models.pair pair in sortedmatch.assigned) {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
+
+                                            @pair.offerid
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var q in pair.offer.OFFERQUALs)
+                                                {
+                                                <li>@q.QUALIFICATION.name</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+                                            @pair.refe.AspNetUser.lastName
 
 
-    }
-    <hr />
-    <dl class="dl-horizontal"></dl>
+                                        </a>
+                                    </td>
+                                    <td>
+
+
+                                        @pair.refeid
+
+
+                                    </td>
+                                    <td>
+
+
+
+                                        <ul>
+                                            @foreach (var q in pair.refe.USERQUALs)
+                                            {
+                                                <li>@q.QUALIFICATION.name</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td>
+
+                                        @*@pair.refe.WEEKLYAVAILABILITY.*@
+                                    </td>
+                                </tr>
+                                    }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+        }
+    }
+</div>
+        
+        
