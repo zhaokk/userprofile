@@ -12,25 +12,62 @@
     @foreach (userprofile.Models.solution solu in Model.result) {
         i++;
         <h2>SOLUTION @i</h2>
-        <table>
-            <tr><td>MatchDate</td><td>referName</td></tr>
-            @foreach (userprofile.Models.pair pair in solu.pairs) {
-                <tr>
-                    <td>
-                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
-                            @pair.offer.MATCH.matchDate
-							@pair.offerid
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-                            @pair.refe.AspNetUser.lastName
-							@pair.refeid
-                        </a>
-                    </td>
-                </tr>
+        
+            foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
+               <h1>@sortedmatch.match.matchDate</h1>
+                
+    <table style="border: 1px solid black;">
+        <tr><td>offerid   </td><td>offerqulaifaction   </td><td>referee name   </td><td>referee ID  </td><td>referee qulifaction   </td></tr>
+        @foreach (userprofile.Models.pair pair in sortedmatch.assigned)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
+                       
+                        @pair.offerid
+                    </a>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var q in pair.offer.OFFERQUALs)
+                        {
+                            <li>@q.QUALIFICATION.name</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+                        @pair.refe.AspNetUser.lastName
+                        
+                        
+                    </a>
+                </td>
+                <td>
+                   
+                        
+                        @pair.refeid
+
+                    
+                </td>
+                <td>
+
+
+                    
+                    <ul>
+                    @foreach (var q in pair.refe.USERQUALs) { 
+                    <li>@q.QUALIFICATION.name</li>
+                    }
+                        </ul>
+                </td>
+                <td>
+
+                    @*@pair.refe.WEEKLYAVAILABILITY.*@
+                </td>
+            </tr>
+        }
+    </table>
             }
-        </table>
+
 
 
     }

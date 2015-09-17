@@ -13,6 +13,7 @@ namespace userprofile.Controllers {
 
         public ActionResult showResults() {
             AssignReferees();
+            modelResult.sortResult();
             return View(modelResult);
         }
 
