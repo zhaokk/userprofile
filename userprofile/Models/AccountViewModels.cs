@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web;
 
 namespace userprofile.Models
@@ -28,13 +30,15 @@ namespace userprofile.Models
 
     public class LoginViewModel
     {
-        [Required]
+        
         [Display(Name = "User name")]
+        [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
 
-        [Required]
+        
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -43,6 +47,9 @@ namespace userprofile.Models
 
     public class RegisterViewModel
     {
+        public RegisterViewModel() {
+          
+        }
         
         public HttpPostedFileBase upload { get; set; }
         
@@ -50,8 +57,9 @@ namespace userprofile.Models
 
     
 
-        [Required]
+       
         [Display(Name = "User name")]
+        [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
 
         [Required]
@@ -65,37 +73,44 @@ namespace userprofile.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        
         [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First is required")]
         public string FirstName { get; set; }
 
-        [Required]
+       
         [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
-        [Required]        
+       
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required]
+       
+        [Required(ErrorMessage = "Phone number is required")]
         public int phoneNum { get; set; }
 
-        [Required]
-        public string country { get; set; }
+        //[Required]
+        //public string country { get; set; }
 
-        [Required]
-        public int postcode { get; set; }
+        //[Required]
+        //public int postcode { get; set; }
 
-        [Required]
-        public int streetNumber { get; set; }
-        [Required]
-        public string state { get; set; }
+
+
+        public string Roles { get; set; }
         [Required]
         public string dob { get; set; }
-        [Required]
-        public string street { get; set; }
-        
-     
+        //[Required]
+        //public string street { get; set; }
+
+        public REFEREEqualViewModel optionalRe { get; set; }
+        public ResidentLoc residentLoc { get; set; }
         public ApplicationUser GetUser()
-        {
+        {      
+            
+
+            DateTime x = DateTime.ParseExact(this.dob, "dd/MM/yyyy", null);
             var user = new ApplicationUser()
             {
                 photoDir=this.photoDir,
@@ -103,19 +118,38 @@ namespace userprofile.Models
                 firstName = this.FirstName,
                 lastName = this.LastName,
                 email = this.Email,
-               country = this.country,
-            dob = this.dob,
+               country = this.residentLoc.country,
+               city=this.residentLoc.city,
+            dob = x,
            phoneNum =  this.phoneNum,
-            state = this.state,
-            street = this.street,
-            streetNumber = this.streetNumber
+            state = this.residentLoc.state,
+            street = this.residentLoc.street,
+                postcode=this.residentLoc.postcode
 
 
             };
             return user;
         }
+        
+        public RegisterViewModel(Raoconnection db)
+        {
+            this.optionalRe = new REFEREEqualViewModel(db);
+            this.optionalRe.re = new REFEREE();
+            this.residentLoc = new ResidentLoc();
+            this.optionalRe.re.rating = 0;
+            this.optionalRe.re.maxGames = 1;
+        }
     }
+    public class ResidentLoc {
+        public string street { get; set; }
+        //public Nullable<int> snum { get; set; }
+        public string city { get; set; }
+        public int postcode { get; set; }
+      
+        public string state { get; set; }
 
+        public string country { get; set; }
+    }
     public class EditUserViewModel
     {
         public EditUserViewModel() { }
@@ -123,6 +157,7 @@ namespace userprofile.Models
         // Allow Initialization with an instance of ApplicationUser:
         public EditUserViewModel(ApplicationUser user)
         {
+            this.ffaNum = user.ffaNum;
             this.UserName = user.UserName;
             this.FirstName = user.firstName;
             this.LastName = user.lastName;
@@ -132,13 +167,17 @@ namespace userprofile.Models
             this.phoneNum = user.phoneNum;
             this.state = user.state;
             this.street = user.street;
-            this.streetNumber = user.streetNumber;
+            this.postcode = user.postcode;
         }
 
 
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "FFA Number")]
+        public int ffaNum { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
@@ -159,11 +198,9 @@ namespace userprofile.Models
         public int postcode { get; set; }
 
         [Required]
-        public int streetNumber { get; set; }
-        [Required]
         public string state { get; set; }
         [Required]
-        public string dob { get; set; }
+        public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
     }

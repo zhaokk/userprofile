@@ -4,8 +4,8 @@
     ViewBag.Title = "User Roles";
 }
 <div class="row">
-    <div class="col-sm-6">
-        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+    <div class="col-sm-12">
+        <div class="box">
             <div class="box-body">
                 <div class="fa fa-angle-left">
                     @Html.ActionLink(" Back to List", "Index")
@@ -20,20 +20,20 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true)
                         <div class="form-group">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 @Html.HiddenFor(model => model.UserName)
                             </div>
                         </div>
                         <h4>Select Role Assignments</h4>
 
                         <div class="form-group">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
 
                                 @Html.EditorFor(model => model.Roles)
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <input type="submit" value="Save" class="btn btn-success" />
                             </div>
                         </div>

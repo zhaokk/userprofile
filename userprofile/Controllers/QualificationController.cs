@@ -29,11 +29,15 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             QUALIFICATION qualification = db.QUALIFICATIONS.Find(id);
+            var refs = db.USERQUALs.Where(a => a.qualificationId == qualification.qualificationId).Include(m => m.REFEREE).ToList();
             if (qualification == null)
             {
                 return HttpNotFound();
             }
-            return View(qualification);
+
+            var combined = new Tuple<QUALIFICATION, List<USERQUAL>>(qualification, refs) { };
+            return View(combined);
+            //return View(qualification);
         }
 
         // GET: /qualification/Create
@@ -48,7 +52,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="qID,name,sport,supDesc")] QUALIFICATION qualification)
+        public ActionResult Create([Bind(Include = "qualificationId,name,sport,description")] QUALIFICATION qualification)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +73,7 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             QUALIFICATION qualification = db.QUALIFICATIONS.Find(id);
+            db.Entry(qualification).Reference(r => r.SPORT1).Load();
             if (qualification == null)
             {
                 return HttpNotFound();
@@ -82,11 +87,13 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="qID,name,sport,supDesc")] QUALIFICATION qualification)
+        public ActionResult Edit([Bind(Include = "qualificationId,name,sport,description,qualificationLevel")] QUALIFICATION qualification)
         {
             if (ModelState.IsValid)
             {
+                //qualification.SPORT1 = db.SPORTs.Find(qualification.sport);
                 db.Entry(qualification).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

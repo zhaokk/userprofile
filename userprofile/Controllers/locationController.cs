@@ -13,7 +13,7 @@ namespace userprofile.Controllers
     public class locationController : Controller
     {
         private Raoconnection db = new Raoconnection();
-
+       
         // GET: /location/
         public ActionResult Index()
         {
@@ -46,10 +46,11 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="lID,name,price,street,snum,city,postcode,phoneNum,state")] LOCATION location)
+        public ActionResult Create([Bind(Include="locationId,name,price,street,city,postcode,country,phoneNum,state")] LOCATION location)
         {
             if (ModelState.IsValid)
             {
+                location.country = "Australia"; //### should not hard code here, edit later on
                 db.LOCATIONs.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,10 +79,11 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="lID,name,price,street,snum,city,postcode,phoneNum,state")] LOCATION location)
+        public ActionResult Edit([Bind(Include = "locationId,name,price,street,city,country,postcode,phoneNum,state")] LOCATION location)
         {
             if (ModelState.IsValid)
             {
+                location.country = "Australia";
                 db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

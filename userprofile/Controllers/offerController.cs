@@ -39,8 +39,8 @@ namespace userprofile.Controllers
         // GET: /offer/Create
         public ActionResult Create()
         {
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID");
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability");
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId");
+            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "refID");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
             ViewBag.statusList = new List<SelectListItem>()
             {
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="offerID,sport,mid,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Create([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -69,8 +69,8 @@ namespace userprofile.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
+            ViewBag.refId = new SelectList(db.REFEREEs, "refID", "availability", offer.refId);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
@@ -87,8 +87,8 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
+            ViewBag.refId = new SelectList(db.REFEREEs, "refId", "refId", offer.refId);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
@@ -98,7 +98,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="offerID,sport,mid,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Edit([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -106,8 +106,8 @@ namespace userprofile.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.mid = new SelectList(db.MATCHes, "mID", "mID", offer.mid);
-            ViewBag.refID = new SelectList(db.REFEREEs, "refID", "availability", offer.refID);
+            ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
+            ViewBag.refId = new SelectList(db.REFEREEs, "refId", "availability", offer.refId);
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
@@ -136,6 +136,23 @@ namespace userprofile.Controllers
             db.OFFERs.Remove(offer);
             db.SaveChanges();
             return RedirectToAction("Index");
+        
+        }
+        public ActionResult Accept(int offerId)
+        {
+           OFFER accOffer=  db.OFFERs.First(o => o.offerId == offerId);
+           accOffer.status = 1;
+           db.Entry(accOffer).State = EntityState.Modified;
+             db.SaveChanges();
+             return RedirectToAction("index", "home");
+        
+        }
+        public ActionResult decline(int offerId) {
+            OFFER decOffer = db.OFFERs.First(o => o.offerId == offerId);
+            decOffer.status = 2;
+            db.Entry(decOffer).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("index", "home");
         }
 
         protected override void Dispose(bool disposing)

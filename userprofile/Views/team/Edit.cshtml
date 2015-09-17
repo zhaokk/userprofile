@@ -6,17 +6,22 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+        <div class="box">
             <div class="box-body">
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
-                        <h4>TEAM</h4>
+                       
                         <hr />
                         @Html.ValidationSummary(true)
-                        @Html.HiddenFor(model => model.teamID)
+                        @Html.HiddenFor(model => model.teamId)
+                        @Html.HiddenFor(model => model.sport)
+                        @Html.HiddenFor(model => model.SPORT1)
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -39,19 +44,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.managerID, "managerID", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.managerId, Model.managerId, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("managerID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.managerID)
+                                @Html.DropDownList("managerId")
+)
+                                @Html.ValidationMessageFor(model => model.managerId)
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.tournament, "tournament", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("tournament", String.Empty)
-                                @Html.ValidationMessageFor(model => model.tournament)
-                            </div>
-                        </div>
+                      
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Save" class="btn btn-success" />
@@ -63,6 +63,4 @@
         </div>
     </div>
 </div>
-            <div>
-                @Html.ActionLink("Back to List", "Index")
-            </div>
+            

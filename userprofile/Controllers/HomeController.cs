@@ -4,16 +4,43 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
+
     public class HomeController : Controller
     {
+        public Raoconnection db = new Raoconnection();
+        [Authorize]
         public ActionResult Index()
         {
-            return View();
-        }
+            var userID = User.Identity.GetUserId();
+           
+            // ICollection<OFFER> offers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs;
+            if (db.REFEREEs.FirstOrDefault( r => r.userId == userID) != null)
+            {
+                List<OFFER> alloffers = db.REFEREEs.FirstOrDefault(r => r.userId == userID).OFFERs.ToList();
+                
+                offerDataViewModel sortedOffer = new offerDataViewModel(alloffers);
+                return View(sortedOffer);
+            }
+            else if (User.IsInRole("Admin")) {
+                return RedirectToAction("IndexforAd", "home");
 
+                }
+            else
+            {
+                return View();
+            }
+
+        }
+        public ActionResult IndexforAd()
+        {
+
+            admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
+            return View(aOVM);
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -21,6 +48,10 @@ namespace userprofile.Controllers
             return View();
         }
 
+        public ActionResult Calendar() {
+            ViewBag.Message = "The Calendar";
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -34,40 +65,82 @@ namespace userprofile.Controllers
 
             //Get the Event1
             //You may get from the repository also
+            //if (User.IsInRole("Referee"))
+            //{
             var eventList = GetEvent();
 
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
+            // }
+            //  return null;
         }
 
         private List<Event> GetEvent()
         {
-            List<Event> eventList = new List<Event>();
-
-            Event newEvent = new Event
+            var db = new Raoconnection();
+              var userID = User.Identity.GetUserId();
+            if (User.Identity.IsAuthenticated&&db.REFEREEs.First(r => r.userId == userID)!=null)
             {
-                Id = 1,
-                title = "Eventt 1",
-                start = DateTime.Now,
-                end = DateTime.Now,
-                allDay = false
-            };
+                var i = 0;
+              
+                TimeSpan time = new TimeSpan(0, 1, 30, 0);
+                List<Event> eventList = new List<Event>();
+
+               
+             
+                List<OFFER> offers = db.REFEREEs.First(r => r.userId == userID).OFFERs.ToList();
+                foreach (OFFER offer in offers)
+                {
+
+                    Event newEvent = new Event
+                    {
+                        Id = i,
+                        title = "Match:" + i,
+                        start = offer.MATCH.matchDate,
+                        end = offer.MATCH.matchDate + time,
+                        allDay = false
+                    };
+                    eventList.Add(newEvent);
+                    i++;
+                }
 
 
-            eventList.Add(newEvent);
+                return eventList;
 
-            newEvent = new Event
+
+
+            }
+            else
             {
-                Id = 2,
-                title = "Event 3",
-                start = DateTime.Now,
-                end = DateTime.Now,
-                allDay = false
-            };
 
-            eventList.Add(newEvent);
+                List<Event> eventList = new List<Event>();
 
-            return eventList;
+                Event newEvent = new Event
+                {
+                    Id = 1,
+                    title = "Eventt 1",
+                    start = DateTime.Now,
+                    end = DateTime.Now,
+                    allDay = false
+                };
+
+
+                eventList.Add(newEvent);
+
+                newEvent = new Event
+                {
+                    Id = 2,
+                    title = "Event 3",
+                    start = DateTime.Now,
+                    end = DateTime.Now,
+                    allDay = false
+                };
+
+                eventList.Add(newEvent);
+
+                return eventList;
+            }
+
         }
 
         private static DateTime ConvertFromUnixTimestamp(double timestamp)
@@ -81,5 +154,41 @@ namespace userprofile.Controllers
             var i = Request["id"];
             return null;
         }
+        public ActionResult checkOffer()
+        {
+
+            var userID = User.Identity.GetUserId();
+            var db = new Raoconnection();
+            if (User.IsInRole("Referee"))
+            {
+                REFEREE refe = db.REFEREEs.First(r => r.userId == userID);
+
+                return View(refe.OFFERs);
+            }
+
+
+
+            return View();
+        }
+        [Authorize(Roles = "Referee")]
+        public ActionResult acceptOffer(int refeID)
+        {
+
+
+
+            return View();
+        }
+        [Authorize(Roles = "Referee")]
+        public ActionResult denyOffer(int refeID)
+        {
+
+            return View();
+        }
+
+
+
+
+
+
     }
 }

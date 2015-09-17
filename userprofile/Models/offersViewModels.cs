@@ -5,6 +5,7 @@ using System.Web;
 
 namespace userprofile.Models
 {
+    
     public class offersViewModels
     {
         public offersViewModels()
@@ -25,18 +26,19 @@ namespace userprofile.Models
                     for (int i = (3 - ma.OFFERs.Count()); i > 0; i--)
                     {
                         OFFER fakeOffer = new OFFER();
-                        fakeOffer.status = "dummy";
+                        fakeOffer.status = 5;
                         this.offers.Add(fakeOffer);
 
                     }
                 
                 }
             }
-            this.mID = ma.mID;
+            this.mID = ma.matchId;
         }
 
         public List<OFFER> offers { get; set; }
         public int mID { get; set; }
+        public int offerNumber { get; set; }
     }
 
     public class shortoffer
@@ -52,5 +54,17 @@ namespace userprofile.Models
     public string status {get;set;}
     
     }
-  
+    public class offerRefereeViewModels
+    {
+        public offerRefereeViewModels() { }
+        public offerRefereeViewModels(REFEREE refe){
+             this.offers = refe.OFFERs.ToList();
+
+
+    
+    }
+        public List<OFFER> offers { get; set; }
+    
+    
+    }
 }

@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="box" style="background-color:rgba(255, 255, 255,0.7)">
+        <div class="box">
             <div class="box-body">
                 @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/jqueryval")
@@ -24,7 +24,8 @@
                         <hr />
                         <h4>QUALIFICATION</h4>
                         @Html.ValidationSummary(true)
-                        @Html.HiddenFor(model => model.qID)
+                        @Html.HiddenFor(model => model.qualificationId)
+                        @Html.HiddenFor(model => model.SPORT1)
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
@@ -43,10 +44,17 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.supDesc, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.supDesc)
-                                @Html.ValidationMessageFor(model => model.supDesc)
+                                @Html.EditorFor(model => model.description)
+                                @Html.ValidationMessageFor(model => model.description)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.qualificationLevel, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.qualificationLevel)
+                                @Html.ValidationMessageFor(model => model.qualificationLevel)
                             </div>
                         </div>
 

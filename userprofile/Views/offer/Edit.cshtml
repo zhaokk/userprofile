@@ -15,7 +15,7 @@
         <h4>OFFER</h4>
         <hr />
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.offerID)
+        @Html.HiddenFor(model => model.offerId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.sport, "sport", new { @class = "control-label col-md-2" })
@@ -26,18 +26,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.mid, "mid", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.matchId, "mid", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("mid", String.Empty)
-                @Html.ValidationMessageFor(model => model.mid)
+                @Html.DropDownList("matchId", String.Empty)
+                @Html.ValidationMessageFor(model => model.matchId)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.refID, "refID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.refId, "refId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("refID", String.Empty)
-                @Html.ValidationMessageFor(model => model.refID)
+                @Html.ValidationMessageFor(model => model.refId)
             </div>
         </div>
 
