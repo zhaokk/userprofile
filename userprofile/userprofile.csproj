@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\ExcelManagementController.cs" />
+    <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Models\ADMINISTRATION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlgorithmModel.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -974,6 +976,8 @@
     <Content Include="Views\Shared\EditorTemplates\LOCATION.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ResidentLoc.cshtml" />
     <Content Include="Views\match\Details.cshtml" />
+    <Content Include="Views\Algorithm\showTestResult.cshtml" />
+    <Content Include="Views\Algorithm\showresults.cshtml" />
     <Content Include="Views\TYPEs\Create.cshtml" />
     <Content Include="Views\TYPEs\Delete.cshtml" />
     <Content Include="Views\TYPEs\Details.cshtml" />
