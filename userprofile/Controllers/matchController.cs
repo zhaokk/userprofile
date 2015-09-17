@@ -151,8 +151,17 @@ namespace userprofile.Controllers
                     refereesList.Add(sli);
 
                 }
+                var typelist = new List<SelectListItem>();
+                foreach (TYPE ty in db.TYPEs) {
+                    var tyele = new SelectListItem();
+                    tyele.Text = ty.name;
+                    tyele.Value = ty.name;
+                    typelist.Add(tyele);                    
+                }
+               // typelist.Select();
                 //var refereesLists = new SelectList(, db.REFEREEs.ToList().First(r => r.refID ==2));
                 ViewBag.referees = refereesList;
+                ViewBag.types = typelist;
                 refereesList.Select(x=>refereesList.First(r => r.Value == "2"));
                 offersViewModels offers = new offersViewModels(theMatch);
                 return View(offers);
@@ -168,19 +177,28 @@ namespace userprofile.Controllers
           var i=0;
             while(i<3){
                 string indexofid = "offer[" + i + "][ID]";
+                string offerType = "offer[" + i + "][typename]";
                 string indexofrefid = "offer[" + i + "][refID]";
                var offerID= Convert.ToInt32(Request[indexofid]);
                 int mid=Convert.ToInt32(Request["mID"]);
+                int status=Convert.ToInt32(Request["offer[" + i + "][status]"]);
+                string typename = Request[offerType];
               var stringrefID=  Request[indexofrefid];
+               
               if (stringrefID != "") {
                    var refID= Convert.ToInt32(Request[indexofrefid]) ;
                    if (offerID != 0)
                    {
                        OFFER of = db.OFFERs.First(o => o.offerId == offerID);
-                       if (of.refId != refID)
+                       
+                       if (of.refId != refID||of.typeOfOffer!=typename)
                        {
+                           of.typeOfOffer = typename;
                            of.refId = refID;
+                           if (of.refId != refID) { 
                            of.status = 3;
+                           }
+                           
                            db.Entry(of).State = EntityState.Modified;
 
                        }
@@ -189,11 +207,23 @@ namespace userprofile.Controllers
                        var newof = new OFFER();
                        newof.status =3;
                        newof.refId = refID;
+                       newof.typeOfOffer = typename;
                        newof.dateOfOffer = System.DateTime.Now;
                        newof.matchId = mid;
                        newof.sport = "soccer";
                        db.OFFERs.Add(newof);
                    }
+              }
+              else if (status == 4) {
+                  var newof = new OFFER();
+                  newof.status = 4;
+                  newof.typeOfOffer = typename;
+                  newof.refId = 63699895;
+                  newof.dateOfOffer = System.DateTime.Now;
+                  newof.matchId = mid;
+                  newof.sport = db.MATCHes.Find(mid).TOURNAMENT.sport;
+                  db.OFFERs.Add(newof);
+
               }
                 i++;
           }

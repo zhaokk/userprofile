@@ -9,7 +9,7 @@
         display: none;
     }
 </style>
-
+<div class="row">
 <div class="col-md-12">
     <div class="box-solid">
         <div class="box-body">
@@ -20,13 +20,21 @@
                     @foreach (var item in Model.offers)
                     {
 
-                        if (item.status == 5 || item.status == 4)
+                        if (item.status == 5 )
                         {
                             <div class="well col-lg-4 col-md-12" id="@i" hidden>
                                 <div class="form-group">
                                     <p>Please select a Referee :</p>
                                     @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.referees, "select one referees", new { @Name = "offer[" + i + "][refID]" })
-                                    <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+                                    <input type="text" value="@item.offerId"  name="offer[@i][ID]" hidden>
+                                </div>
+                                <div >
+                                    <input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
+                                </div>
+                                <div>
+                                    <p>Please select one offertype :</p>
+                                    @Html.DropDownList("types", (List<SelectListItem>)ViewBag.types, new { @Name = "offer[" + i + "][typename]" })
+
                                 </div>
                                 <div class="form-group">
                                     <p>The issue date of the offer is: </p>
@@ -48,6 +56,9 @@
                             <div class="well col-lg-4 col-md-12" id="@i">
                                 @Html.ActionLink("Delete", "Delete", "offer", new { id = item.offerId }, new { @class = "btn btn-danger pull-right" })
                                 <div class="form-group">
+                                    <div >
+                                        <input type="text" value="@item.status" name="offer[@i][status]" hidden>
+                                    </div>
                                     <p>Please select a Referee :</p>
                                     <select name="offer[@i][refID]">
                                         @foreach (var selection in ViewBag.referees)
@@ -66,7 +77,27 @@
                                         }
                                     </select>
                                 </div>
+                                <div>
+                                    <p>Please select one offertype :</p>
+                                  
+                                    <select name="offer[@i][typename]" class="required" id="type@(i)">
+                                        @foreach (var selection in ViewBag.types)
+                                        {
+                                            if (item.typeOfOffer.ToString() == selection.Value)
+                                            {
 
+                                                <option value="@selection.Value" selected>@selection.Text</option>
+
+                                            }
+                                            else
+                                            {
+
+                                                <option value="@selection.Value">@selection.Text</option>
+                                            }
+
+                                        }
+                                    </select>
+                                     </div>
                                 <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
 
                                 <div class="form-group">
@@ -113,6 +144,7 @@
         </div>
     </div>
 </div>
+    </div>
 
 <script>
     var i = $("#flag").val();
@@ -122,7 +154,8 @@
         $("#" + j).show("slow", function () {
             // Animation complete.
         });
-
+        $("#s" + j).val("4");
+        $
         i--;
         if (i < 1) {
 

@@ -38,6 +38,7 @@ namespace userprofile.Models
 
         public List<OFFER> offers { get; set; }
         public int mID { get; set; }
+        public int offerNumber { get; set; }
     }
 
     public class shortoffer
