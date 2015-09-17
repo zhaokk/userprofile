@@ -81,18 +81,24 @@
                                             @Html.DisplayFor(modelItem => item.winnerID)
                                         </td>*@
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LOCATION.name)
-                                    </td>
+                                        <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                            @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                        </a>
+</td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM.name)
-                                    </td>
+                                        <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                            @Html.DisplayFor(modelItem => item.TEAM.name)
+                                        </a>
+</td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM1.name)
-                                    </td>
+                                        <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                            @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                        </a>
+</td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
-										
-                                    </td>
+                                            @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+</td>
 									<td>
 										
 									@if (User.IsInRole("Admin")) { 

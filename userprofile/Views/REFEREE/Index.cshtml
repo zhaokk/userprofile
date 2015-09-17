@@ -96,6 +96,7 @@
                             </td>
                             <td>
                                 @Html.ActionLink("Delete", "Delete", new { id = item.refId }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.refId }, new { @class = "btn btn-warning pull-right" })
                             </td>
                         </tr>
                             counter++;
@@ -108,6 +109,7 @@
         <div class="col-md-3">
             <div class="btn-group">
                 <a class=" btn btn-block btn-success" href='@Url.Action("Create","REFEREE")'><b>Add a new referee</b></a>
+                
             </div>
         </div>
     </div><!-- /.col -->
