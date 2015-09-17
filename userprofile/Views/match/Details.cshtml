@@ -1,105 +1,164 @@
-﻿@model userprofile.Models.MATCH
-
+﻿@using userprofile.Models;
+@model Tuple<MATCH, List<OFFER>>
 @{
-    ViewBag.Title = "Match Details";
-}
 
+}
 
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.matchId }, new { @class = "btn btn-warning pull-right" })
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.matchId }, new { @class = "btn btn-warning pull-right" })
                 <div class="fa fa-angle-left">
                     @Html.ActionLink(" Back to List", "Index")
                 </div>
                 <hr />
-                
+
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => model.matchDate)
+                        @Html.DisplayNameFor(model => model.Item1.matchDate)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.matchDate)
+                        @Html.DisplayFor(model => model.Item1.matchDate)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.teamAScore)
+                        @Html.DisplayNameFor(model => model.Item1.teamAScore)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.teamAScore)
+                        @Html.DisplayFor(model => model.Item1.teamAScore)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.teamBScore)
+                        @Html.DisplayNameFor(model => model.Item1.teamBScore)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.teamBScore)
+                        @Html.DisplayFor(model => model.Item1.teamBScore)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.status)
+                        @Html.DisplayNameFor(model => model.Item1.status)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.status)
+                        @Html.DisplayFor(model => model.Item1.status)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.matchLength)
+                        @Html.DisplayNameFor(model => model.Item1.matchLength)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.matchLength)
+                        @Html.DisplayFor(model => model.Item1.matchLength)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.halfTimeDuration)
+                        @Html.DisplayNameFor(model => model.Item1.halfTimeDuration)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.halfTimeDuration)
+                        @Html.DisplayFor(model => model.Item1.halfTimeDuration)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.LOCATION.name)
+                        @Html.DisplayNameFor(model => model.Item1.LOCATION.name)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.LOCATION.name)
+                        @Html.DisplayFor(model => model.Item1.LOCATION.name)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.TEAM.name)
+                        @Html.DisplayNameFor(model => model.Item1.TEAM.name)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.TEAM.name)
+                        @Html.DisplayFor(model => model.Item1.TEAM.name)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.TEAM1.name)
+                        @Html.DisplayNameFor(model => model.Item1.TEAM1.name)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.TEAM1.name)
+                        @Html.DisplayFor(model => model.Item1.TEAM1.name)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.TOURNAMENT.name)
+                        @Html.DisplayNameFor(model => model.Item1.TOURNAMENT.name)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.TOURNAMENT.name)
+                        @Html.DisplayFor(model => model.Item1.TOURNAMENT.name)
                     </dd>
 
                 </dl>
             </div>
         </div>
-        
-       
-</div>
+
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>RefId</th>
+
+
+                                <th>
+
+                                    Type
+
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Item2)
+                            {
+
+                                if (item.refId == 63699895)
+                                {
+                                     <tr>
+                                        <td>
+                                            Pending assigning
+                                        </td>
+                                        <td>
+                                            @item.typeOfOffer
+                                        </td>
+                                        <td>
+                                            @item.status
+                                        </td>
+                                    </tr>
+                                }
+                                else { 
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
+                                                @item.refId
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.typeOfOffer
+                                        </td>
+                                        <td>
+                                            @item.status
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
