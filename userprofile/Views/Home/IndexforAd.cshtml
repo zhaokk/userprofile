@@ -177,6 +177,15 @@
                                     <th>
                                         Match Location
                                     </th>
+                                    <th>
+                                        Home Team
+                                    </th>
+                                    <th>
+                                        Away Team
+                                    </th>
+                                    <th>
+                                        Tournament name
+                                    </th>
 
                                 </tr>
                             </thead>
@@ -185,14 +194,34 @@
                             {
                             <tr>
                                 <td>
-                                    @match.matchId
+                                    <a href="@Url.Action( "Details","match", new { id = match.matchId })">
+                                        @match.matchId</a>
                                 </td>
 
                                 <td>
                                     @match.matchDate
                                 </td>
                                 <td>
-                                    @match.LOCATION.name
+                                   
+                                    <a href="@Url.Action("Details","location", new { id = match.locationId })">
+                                        @match.LOCATION.name
+                                    </a>
+                                </td>
+
+                                <td>
+                                   
+                                    <a href="@Url.Action("Details", "team", new { id = match.TEAM.teamId })">
+                                        @match.TEAM.name
+                                    </a>
+                                </td>
+                                <td>
+                                   
+                                    <a href="@Url.Action("Details", "team", new { id = match.TEAM1.teamId })">
+                                        @match.TEAM1.name
+                                    </a>
+                                </td>
+                                <td>
+                                    @match.TOURNAMENT.name
                                 </td>
                             </tr>
 
