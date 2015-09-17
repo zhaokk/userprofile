@@ -29,11 +29,15 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             QUALIFICATION qualification = db.QUALIFICATIONS.Find(id);
+            var refs = db.USERQUALs.Where(a => a.qualificationId == qualification.qualificationId).Include(m => m.REFEREE).ToList();
             if (qualification == null)
             {
                 return HttpNotFound();
             }
-            return View(qualification);
+
+            var combined = new Tuple<QUALIFICATION, List<USERQUAL>>(qualification, refs) { };
+            return View(combined);
+            //return View(qualification);
         }
 
         // GET: /qualification/Create
