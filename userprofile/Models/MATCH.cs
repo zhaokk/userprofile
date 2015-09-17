@@ -24,12 +24,16 @@ namespace userprofile.Models
         public int matchId { get; set; }
 
         [Display(Name = "Match Date")]
+        [Required(ErrorMessage = "Match Date required")]
         public System.DateTime matchDate { get; set; }
         [Display(Name = "Location Id")]
+        [Required(ErrorMessage = "Location is required")]
         public Nullable<int> locationId { get; set; }
         [Display(Name = "Home Team")]
+        [Required(ErrorMessage = "Home Team Name is required")]
         public int teamAId { get; set; }
         [Display(Name = "Away Team")]
+        [Required(ErrorMessage = "Away Team Name is required")]
         public int teamBId { get; set; }
         [Display(Name = "Home Team Score")]
         [Required(ErrorMessage = "Team Score is required")]
