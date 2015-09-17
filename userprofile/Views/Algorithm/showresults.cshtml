@@ -5,72 +5,104 @@
     var i = 0;
 }
 
-<h2>Index</h2>
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $("#example3").DataTable();
+        $("#example4").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
 
 <div>
+    @{ var counter = 0;}
     <h4>AlgorithmModel</h4>
     @foreach (userprofile.Models.solution solu in Model.result) {
-        i++;
+        
         <h2>SOLUTION @i</h2>
         
-            foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
-               <h1>@sortedmatch.match.matchDate</h1>
-                
-    <table style="border: 1px solid black;">
-        <tr><td>offerid   </td><td>offerqulaifaction   </td><td>referee name   </td><td>referee ID  </td><td>referee qulifaction   </td></tr>
-        @foreach (userprofile.Models.pair pair in sortedmatch.assigned)
-        {
-            <tr>
-                <td>
-                    <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
-                       
-                        @pair.offerid
-                    </a>
-                </td>
-                <td>
-                    <ul>
-                        @foreach (var q in pair.offer.OFFERQUALs)
-                        {
-                            <li>@q.QUALIFICATION.name</li>
-                        }
-                    </ul>
-                </td>
-                <td>
-                    <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-                        @pair.refe.AspNetUser.lastName
-                        
-                        
-                    </a>
-                </td>
-                <td>
-                   
-                        
-                        @pair.refeid
+        foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
+           <h1>@sortedmatch.match.matchDate</h1> 
+            counter++;
+        
+            <div class="col-sm-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id=@("example"+counter) class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                    <th>offerid   </th>
+                                    <th>offerqulaifaction   </th>
+                                    <th>referee name   </th>
+                                    <th>referee ID  </th>
+                                    <th>referee qulifaction   </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (userprofile.Models.pair pair in sortedmatch.assigned) {
+                                        <tr>
+                                            <td>
+                                                <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
 
-                    
-                </td>
-                <td>
+                                                    @pair.offerid
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    @foreach (var q in pair.offer.OFFERQUALs)
+                                                {
+                                                    <li>@q.QUALIFICATION.name</li>
+                                            }
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+                                                @pair.refe.AspNetUser.lastName
 
 
-                    
-                    <ul>
-                    @foreach (var q in pair.refe.USERQUALs) { 
-                    <li>@q.QUALIFICATION.name</li>
-                    }
-                        </ul>
-                </td>
-                <td>
+                                            </a>
+                                        </td>
+                                        <td>
 
-                    @*@pair.refe.WEEKLYAVAILABILITY.*@
-                </td>
-            </tr>
+
+                                            @pair.refeid
+
+
+                                        </td>
+                                        <td>
+
+
+
+                                            <ul>
+                                                @foreach (var q in pair.refe.USERQUALs)
+                                            {
+                                                    <li>@q.QUALIFICATION.name</li>
+                                            }
+                                            </ul>
+                                        </td>
+                                        <td>
+
+                                            @*@pair.refe.WEEKLYAVAILABILITY.*@
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </table>
-            }
-
-
-
     }
-    <hr />
-    <dl class="dl-horizontal"></dl>
 </div>
+        
+        
