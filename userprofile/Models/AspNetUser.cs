@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class AspNetUser
     {
@@ -26,23 +27,38 @@ namespace userprofile.Models
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
-    
+
+        [Required(ErrorMessage = "Id is required")]
         public string Id { get; set; }
+        [Required(ErrorMessage = "FFA number is required")]
         public Nullable<int> ffaNum { get; set; }
+        [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Password is required")]
         public string PasswordHash { get; set; }
+        [Required(ErrorMessage = "SecurityStamp is required")]
         public string SecurityStamp { get; set; }
+        [Required(ErrorMessage = "First name is required")]
         public string firstName { get; set; }
+        [Required(ErrorMessage = "last name is required")]
         public string lastName { get; set; }
+        [Required(ErrorMessage = "Phone number is required")]
         public Nullable<int> phoneNum { get; set; }
+        [Required(ErrorMessage = "Email is required")]
         public string email { get; set; }
         public string photoDir { get; set; }
         public string Discriminator { get; set; }
+        [Required(ErrorMessage = "Country is required")]
         public string country { get; set; }
+        [Required(ErrorMessage = "Postcode is required")]
         public int postcode { get; set; }
+        [Required(ErrorMessage = "Street is required")]
         public string street { get; set; }
+        [Required(ErrorMessage = "City is required")]
         public string city { get; set; }
+        [Required(ErrorMessage = "State is required")]
         public string state { get; set; }
+        [Required(ErrorMessage = "Date of birth is required")]
         public System.DateTime dob { get; set; }
         public bool isAdmin { get; set; }
         public bool isOrganizer { get; set; }

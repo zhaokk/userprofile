@@ -38,7 +38,7 @@
                             @Html.LabelFor(model => model.teamAId, "Home Team Id", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("teamaID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.teamAId)
+                                @Html.ValidationMessageFor(model => model.teamAId, null, new { @class = "redText" })
                             </div>
                         </div>
                         <div class="form-group">

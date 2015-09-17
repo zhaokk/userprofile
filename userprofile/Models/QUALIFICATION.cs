@@ -25,14 +25,18 @@ namespace userprofile.Models
          [Required(ErrorMessage = "Qulification Id is required")]
         public int qualificationId { get; set; }
         [Display(Name = "Qualification")]
+        [Required(ErrorMessage = "Qulification is required")]
         public string name { get; set; }
         [Display(Name = "Sport")]
+        [Required(ErrorMessage = "Sport is required")]
         public string sport { get; set; }
         [Display(Name = "Description")]
+        [Required(ErrorMessage = "Description is required")]
         public string description { get; set; }
         [Display(Name = "Qualification Level")]
         public int qualificationLevel { get; set; }
         [Display(Name = "Status")]
+        [Required(ErrorMessage = "Status is required")]
         public int status { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }

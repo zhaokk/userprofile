@@ -30,13 +30,15 @@ namespace userprofile.Models
 
     public class LoginViewModel
     {
-        [Required]
+        
         [Display(Name = "User name")]
+        [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
 
-        [Required]
+        
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -55,8 +57,9 @@ namespace userprofile.Models
 
     
 
-        [Required]
+       
         [Display(Name = "User name")]
+        [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
 
         [Required]
@@ -70,17 +73,21 @@ namespace userprofile.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        
         [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First is required")]
         public string FirstName { get; set; }
 
-        [Required]
+       
         [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
-        [Required]        
+       
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required]
+       
+        [Required(ErrorMessage = "Phone number is required")]
         public int phoneNum { get; set; }
 
         //[Required]

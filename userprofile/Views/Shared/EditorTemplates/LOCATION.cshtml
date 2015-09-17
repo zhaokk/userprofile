@@ -75,15 +75,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.name, new { @class = "control-label col-md-3" })
-                                            <div class="col-md-8">
+                                            @Html.LabelFor(model => model.name, "Stadium name", new { @class = "control-label col-md-5" })
+                                            <div class="col-md-6">
                                                 @Html.EditorFor(model => model.name)
                                                 @Html.ValidationMessageFor(model => model.name)
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.price, new { @class = "control-label col-md-3" })
-                                            <div class="col-md-8">
+                                            @Html.LabelFor(model => model.price, new { @class = "control-label col-md-5" })
+                                            <div class="col-md-6">
                                                 @Html.EditorFor(model => model.price)
                                                 @Html.ValidationMessageFor(model => model.price)
                                             </div>

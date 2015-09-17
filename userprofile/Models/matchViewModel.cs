@@ -24,8 +24,11 @@ namespace userprofile.Models
         public Nullable<int> ql3 { get; set; }
         [Display(Name = "Offers")]
         public List<OFFER> offers { get; set; }
+         [Required(ErrorMessage = "type1 is required")]
         public string type1 { get; set; }
+         [Required(ErrorMessage = "Type2 is required")]
         public string type2 { get; set; }
+         [Required(ErrorMessage = "Type3 is required")]
         public string type3 { get; set; }
         
     }

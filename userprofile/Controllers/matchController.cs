@@ -56,7 +56,12 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( matchViewModel matchVM)
         {
-
+            ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
+            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
+            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
+            ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             
            // matchVM.createdMatch.matchDate = (System.DateTime)matchVM.createdMatch.matchDate;
             if (ModelState.IsValid)
