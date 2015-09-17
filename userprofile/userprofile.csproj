@@ -984,6 +984,11 @@
     <Content Include="Views\SPORTs\Details.cshtml" />
     <Content Include="Views\SPORTs\Edit.cshtml" />
     <Content Include="Views\SPORTs\Index.cshtml" />
+    <Content Include="Views\REFEREE\Create.cshtml" />
+    <Content Include="Views\REFEREE\Delete.cshtml" />
+    <Content Include="Views\REFEREE\Details.cshtml" />
+    <Content Include="Views\REFEREE\Edit.cshtml" />
+    <Content Include="Views\REFEREE\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
