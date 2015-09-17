@@ -902,11 +902,6 @@
     <Content Include="Views\Qualification\Index.cshtml" />
     <Content Include="Views\REFEREE\changequal.cshtml" />
     <Content Include="Views\REFEREE\Cr.cshtml" />
-    <Content Include="Views\REFEREE\Create.cshtml" />
-    <Content Include="Views\REFEREE\Delete.cshtml" />
-    <Content Include="Views\REFEREE\Details.cshtml" />
-    <Content Include="Views\REFEREE\Edit.cshtml" />
-    <Content Include="Views\REFEREE\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LOCATION.cshtml" />
