@@ -29,78 +29,79 @@
         <h2>SOLUTION @i</h2>
         
         foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
-           <h1>@sortedmatch.match.matchDate</h1> 
+           <h1>@sortedmatch.match.matchDate</h1>
             counter++;
-        
-            <div class="col-sm-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <table id=@("example"+counter) class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                    <th>offerid   </th>
-                                    <th>offerqulaifaction   </th>
-                                    <th>referee name   </th>
-                                    <th>referee ID  </th>
-                                    <th>referee qulifaction   </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (userprofile.Models.pair pair in sortedmatch.assigned) {
-                                        <tr>
-                                            <td>
-                                                <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id=@("example"+counter) class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>offerid   </th>
+                                <th>offerqulaifaction   </th>
+                                <th>referee name   </th>
+                                <th>referee ID  </th>
+                                <th>referee qulifaction   </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (userprofile.Models.pair pair in sortedmatch.assigned) {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action( "Details","match", new { id = pair.offer.MATCH.matchId })">
 
-                                                    @pair.offerid
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <ul>
-                                                    @foreach (var q in pair.offer.OFFERQUALs)
+                                            @pair.offerid
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var q in pair.offer.OFFERQUALs)
                                                 {
-                                                    <li>@q.QUALIFICATION.name</li>
+                                                <li>@q.QUALIFICATION.name</li>
                                             }
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-                                                @pair.refe.AspNetUser.lastName
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+                                            @pair.refe.AspNetUser.lastName
 
 
-                                            </a>
-                                        </td>
-                                        <td>
+                                        </a>
+                                    </td>
+                                    <td>
 
 
-                                            @pair.refeid
+                                        @pair.refeid
 
 
-                                        </td>
-                                        <td>
+                                    </td>
+                                    <td>
 
 
 
-                                            <ul>
-                                                @foreach (var q in pair.refe.USERQUALs)
+                                        <ul>
+                                            @foreach (var q in pair.refe.USERQUALs)
                                             {
-                                                    <li>@q.QUALIFICATION.name</li>
+                                                <li>@q.QUALIFICATION.name</li>
                                             }
-                                            </ul>
-                                        </td>
-                                        <td>
+                                        </ul>
+                                    </td>
+                                    <td>
 
-                                            @*@pair.refe.WEEKLYAVAILABILITY.*@
-                                        </td>
-                                    </tr>
+                                        @*@pair.refe.WEEKLYAVAILABILITY.*@
+                                    </td>
+                                </tr>
                                     }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
         }
     }
 </div>
