@@ -173,7 +173,9 @@
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />
+    <Compile Include="Controllers\SPORTsController.cs" />
     <Compile Include="Controllers\teamController.cs" />
+    <Compile Include="Controllers\TYPEsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -972,6 +974,16 @@
     <Content Include="Views\Shared\EditorTemplates\LOCATION.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ResidentLoc.cshtml" />
     <Content Include="Views\match\Details.cshtml" />
+    <Content Include="Views\TYPEs\Create.cshtml" />
+    <Content Include="Views\TYPEs\Delete.cshtml" />
+    <Content Include="Views\TYPEs\Details.cshtml" />
+    <Content Include="Views\TYPEs\Edit.cshtml" />
+    <Content Include="Views\TYPEs\Index.cshtml" />
+    <Content Include="Views\SPORTs\Create.cshtml" />
+    <Content Include="Views\SPORTs\Delete.cshtml" />
+    <Content Include="Views\SPORTs\Details.cshtml" />
+    <Content Include="Views\SPORTs\Edit.cshtml" />
+    <Content Include="Views\SPORTs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

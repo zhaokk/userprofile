@@ -1,0 +1,49 @@
+﻿@model userprofile.Models.SPORT
+
+@{
+    ViewBag.Title = "Edit the sport";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to List", "Index")
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                       
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.name)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.status)
+                                @Html.ValidationMessageFor(model => model.status)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+             
+
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
+</div>
+</div>
+</div>
+</div>
