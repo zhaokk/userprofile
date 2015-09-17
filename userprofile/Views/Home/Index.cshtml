@@ -137,67 +137,67 @@
 
 
 @*<div class="row">
-        <div class="col-lg-3 col-xs-6">
-<!-- small box -->
-            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-                <div class="inner">
-                    <h3>
-                        News
-                    </h3>
-                    <p>
-                        New referee read more
-                    </p>
+            <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+                <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                    <div class="inner">
+                        <h3>
+                            News
+                        </h3>
+                        <p>
+                            New referee read more
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+                <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                    <div class="inner">
+                        <h3>
+                            90<sup style="font-size: 20px">%</sup>
+                        </h3>
+                        <p>
+                            Success Rate
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-<!-- small box -->
-            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-                <div class="inner">
-                    <h3>
-                        90<sup style="font-size: 20px">%</sup>
-                    </h3>
-                    <p>
-                        Success Rate
-                    </p>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+                <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
+                    <div class="inner">
+                        <h3>
+                            TIPS
+                        </h3>
+                        <p>
+                            How to use this website
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-<!-- small box -->
-            <div class="small-box" style="background-color:rgba(255, 255, 255,0.4)">
-                <div class="inner">
-                    <h3>
-                        TIPS
-                    </h3>
-                    <p>
-                        How to use this website
-                    </p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-<!-- small box -->
-        </div><!-- ./col -->
-    </div><!-- /.row -->*@
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+            </div><!-- ./col -->
+        </div><!-- /.row -->*@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -220,62 +220,66 @@
                     <div class="panel-group" id="accordion">
                         @foreach (var offer in @Model.pendingOffers)
                         {
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
-                                </h4>
-                            </div>
-                            <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="row alert alert-warning">
-                                        <div class="col-sm-12" style="text-align:center">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
+                                    </h4>
+                                </div>
+                                <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12" style="text-align:center">
+                                                @offer.MATCH.TOURNAMENT.name
+                                                </div>
+                                            </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-sm-12" style="text-align:center">
 
-                                            <p>
-                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
-                                                    match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
-                                                </a>
-                                            </p>
+                                                <p>
+                                                    match city:<a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
+                                                         @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
+                                                    </a>
+                                                </p>
+                                            </div>
                                         </div>
+                                        <div class="row">
+                                            <div class=" col-md-12" style="text-align:center">
+
+
+                                                <p>
+                                                    <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamId})">
+                                                        @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
+                                                    </a> vs 
+                                                    <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamId })">
+                                                        @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
+                                                    </a>
+                                                </p>
+                                            </div>
+                                           
+                                        </div>
+
+                                        <hr />
+
+
+
+                                        @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-success pull-right" })
+
+
                                     </div>
-                                    <div class="row alert alert-info" role="alert">
-                                        <div class=" col-sm-5" style="text-align:center">
-
-
-                                            <p>
-                                                <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamId})">
-                                                    @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
-                                                </a>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-2" style="text-align:center">vs</div>
-                                        <div class="col-sm-5" style="text-align:center">
-                                            <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamId })">
-                                                @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <hr />
-
-
-
-                                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-danger pull-right" })
-                                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-success pull-right" })
-
-
                                 </div>
                             </div>
-                        </div>
-                        accordionCounter++;
+                            accordionCounter++;
                         }
 
                     </div>
-                    
-                    </div>
+
+                </div>
 
 
-                    @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     @foreach (var offer in @Model.pendingOffers)
                     {
                     <div class="panel panel-default" style="margin-bottom:7px">
@@ -303,7 +307,7 @@
                     }
                     </div>*@
 
-                </div>
+            </div>
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">accepted offeres</h3>
@@ -342,7 +346,7 @@
                 </div>
             </div>
 
-            </div>
+        </div>
 
 
 
@@ -360,20 +364,20 @@
 
 
 
-           
 
 
 
 
-                <div class="col-md-8" id="theCanlendar">
-                    <div class="box box-body">
-                        <div class="box-body no-padding">
-                            <!-- THE CALENDAR -->
-                            <div id="calendar"></div>
-                        </div><!-- /.box-body -->
-                    </div><!-- /. box -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
+
+        <div class="col-md-8" id="theCanlendar">
+            <div class="box box-body">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 </section><!-- /.content -->
 
 <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/Content/indexReferee.css" />

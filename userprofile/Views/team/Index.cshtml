@@ -46,9 +46,12 @@
                                 <th>
                                     Manger ID
                                 </th>
-                                <th>
-
-                                </th>
+                               @if (User.IsInRole("Admin"))
+                               {
+                                <td>
+                                   
+                                </td>
+                               }
                             </tr>
                         </thead>
                         <tbody>
@@ -81,9 +84,14 @@
                                 @Html.DisplayFor(modelItem => item.managerId)
                             </td>
 
-                            <td>
-                                @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
-                            </td>
+                            
+@if (User.IsInRole("Admin"))
+{
+    <td>
+        @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
+    </td>
+}
+    
                         </tr>
                         }
                         </tbody>
@@ -92,10 +100,14 @@
                 </div><!-- /.box-body -->
         </div><!-- /.box -->
         <div class="col-md-3">
-
-            <div class="btn-group">
-                <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
-            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="btn-group">
+                    <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
+                </div>
+            }
+           
+           
         </div>
     </div><!-- /.col -->
     
