@@ -29,12 +29,15 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             MATCH match = db.MATCHes.Find(id);
+            var offers = db.OFFERs.Where(o => o.matchId == id).ToList();
            
             if (match == null)
             {
                 return HttpNotFound();
             }
-            return View(match);
+            var combined = new Tuple<MATCH, List<OFFER>>(match, offers) { };
+
+            return View(combined);
         }
 
         // GET: /match/Create

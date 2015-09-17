@@ -45,11 +45,15 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             REFEREE referee = db.REFEREEs.Find(id);
+            var matches = db.OFFERs.Where(o => o.refId == id).Include(m => m.MATCH).ToList();
             if (referee == null)
             {
                 return HttpNotFound();
             }
-            return View(referee);
+
+            var combined = new Tuple<REFEREE, List<OFFER>>(referee, matches) { };
+
+            return View(combined);
         }
 
         //// GET: /REFEREE/Create
