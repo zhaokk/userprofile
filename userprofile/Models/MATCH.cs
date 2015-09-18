@@ -36,12 +36,12 @@ namespace userprofile.Models
         [Required(ErrorMessage = "Away Team Name is required")]
         public int teamBId { get; set; }
         [Display(Name = "Home Team Score")]
-        [Required(ErrorMessage = "Team Score is required")]
+       
         public Nullable<int> teamAScore { get; set; }
         [Display(Name = "Away Team Score")]
-        [Required(ErrorMessage = "Team Score is required")]
+        
         public Nullable<int> teamBScore { get; set; }
-        [Required(ErrorMessage = "Status is required")]
+        
         [Display(Name = "Status")]
         public Nullable<int> status { get; set; }
         [Display(Name = "Tournament Id")]

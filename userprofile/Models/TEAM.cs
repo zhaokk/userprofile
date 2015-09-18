@@ -44,7 +44,7 @@ namespace userprofile.Models
          [Display(Name = "Short Name")]
         public string shortName { get; set; }
          [Display(Name = "Status")]
-         [Required(ErrorMessage = "Status is required")]
+      
         public int status { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
