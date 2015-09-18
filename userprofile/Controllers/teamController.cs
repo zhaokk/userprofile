@@ -79,7 +79,7 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.managerId = new SelectList(db.AspNetUsers, "UserName", "UserName", team.managerId);
+            ViewBag.managerId = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerId);
            
             return View(team);
         }
@@ -89,7 +89,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "teamId,name,ageBracket,grade,managerId,sport")] TEAM team)
+        public ActionResult Edit([Bind(Include = "teamId,name,ageBracket,grade,managerId,sport,shortName,status")] TEAM team)
         {
             if (ModelState.IsValid)
             {
