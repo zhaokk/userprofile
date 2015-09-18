@@ -50,6 +50,7 @@ namespace userprofile.Models
                     
                     }
                 }
+                sol.matchpair.Add(sortedcacche);
             
             }
         

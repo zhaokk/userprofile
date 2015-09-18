@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<userprofile.Models.TYPE>
 
 @{
-    ViewBag.Title = "Type of the offer";
+    ViewBag.Title = "Types of Offers";
 }
 <script type="text/javascript">
     $(function () {
@@ -29,20 +29,20 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            @*<th>
+                                Type ID
+                            </th>*@
                             <th>
                                 Name
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.typeId)
+                                Description
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.description)
+                                Priority
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.priority)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.status)
+                                Status
                             </th>
                             <th>
 
@@ -54,13 +54,15 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.typeId)
+                                    
+                                </td>
+                                    *@
                                 <td>
                                     <a href="@Url.Action("Details", new { id = item.name })">
                                         @Html.DisplayFor(modelItem => item.name)
                                     </a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.typeId)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.description)

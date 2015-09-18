@@ -314,6 +314,8 @@ namespace userprofile.Controllers {
         }
 
         bool checkInitAvailability(int oID, int rID) {
+            if (rID == 87784161)
+                return false;
             return true; ///TESSSSSSSSSSSSSSSSTTTTTTTTTTTT
             DateTime matchDateTime = offerStorage[oID].MATCH.matchDate;
             
@@ -535,8 +537,18 @@ namespace userprofile.Controllers {
                 foreach (var i in dReferees) {
                     if (i.Value.available.Count <= i.Value.canAssign) { //if the ref is available to referee all games the can be assigned
                         foreach (var k in i.Value.available) {
-                            llCompleted.AddLast(new pair(k.Key, i.Key)); //mark as completed
-                            nuke.AddLast(k.Key); //mark to remove the offer
+                            bool notDouble = true;
+                            foreach (var j in llCompleted) {
+                                if (j.offer == k.Key) {
+                                    notDouble = false;
+                                }
+
+                            }
+                            if (notDouble) {
+                                llCompleted.AddLast(new pair(k.Key, i.Key)); //mark as completed
+                                nuke.AddLast(k.Key); //mark to remove the offer
+                                break;
+                            }
                         }
                     }
                 }
@@ -555,6 +567,13 @@ namespace userprofile.Controllers {
 
             if (maxOffersFilled > dOffers.Count()) //if refs can fill more offers than there are
                 maxOffersFilled = dOffers.Count();
+
+            if (currOffersFilled > bestOffersFilled) {
+                bestOffersFilled = currOffersFilled;
+                bestOffers = new List<Dictionary<int, val>>();
+                bestReferees = new List<Dictionary<int, val>>();
+                saveState();
+            }
         }
 
         long calcOffersToReset() {
@@ -617,7 +636,7 @@ namespace userprofile.Controllers {
         }
 
         void setModel() {
-            try {
+            //try {
                 modelResult = new AlgorithmModel(1);//bestOffers.Count()
                 for (int i = 0; i < 1; i++) {//bestOffers.Count()
                     foreach (var j in bestOffers[i]) {
@@ -629,13 +648,13 @@ namespace userprofile.Controllers {
                         modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID,db));
                     }
                 }
-            }
-            catch (SystemException a) {
-                modelResult = new AlgorithmModel(1);
+            //}
+            //catch (SystemException a) {
+                //modelResult = new AlgorithmModel(1);
                 foreach (var i in llCompleted) {
                     modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee,db));
                 }
-            }
+            //}
         }
 
         public void AssignReferees() {
