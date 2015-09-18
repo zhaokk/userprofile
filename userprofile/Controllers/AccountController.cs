@@ -254,6 +254,8 @@ namespace userprofile.Controllers
         {
             
             var db = new Raoconnection();
+			ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+			RegisterViewModel RVM = new RegisterViewModel(db);
             string location = @"~\userprofile\default.png";
             REFEREE newref=new REFEREE();
             if (model.upload != null)
@@ -278,7 +280,7 @@ namespace userprofile.Controllers
                 {
                     var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
 					ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-					RegisterViewModel RVM = new RegisterViewModel(db);
+					
                     var idManager = new IdentityManager();
                     switch (model.Roles) { 
                         case "Referee":
