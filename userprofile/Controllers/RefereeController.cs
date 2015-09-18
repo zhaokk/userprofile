@@ -18,7 +18,7 @@ namespace userprofile.Controllers
         // GET: /REFEREE/
         public ActionResult Index()
         {
-            List<REFEREE> referees = db.REFEREEs.Where(s => s.status == 1).Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).ToList();
+            List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).ToList();
 
             List<SelectList> qualifications = new List<SelectList>();
 
