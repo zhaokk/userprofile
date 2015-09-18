@@ -89,32 +89,38 @@
                         </div>
                         
                         
-                      
-                        <div class="form-group" id="q1" hidden>
-                            @Html.LabelFor(model => model.q1, "offer one qualification", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
-                            </div>
-                            
-                        </div>
-                        <div class="form-group" id="ql1" hidden>
-                            @Html.LabelFor(model => model.ql1, "offer one qualification level", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                               @Html.EditorFor(model => model.ql1)
-                                @Html.ValidationMessageFor(model => model.ql1)
-                            </div>
+						<div class="form-group" id="t1" hidden>
+							@Html.LabelFor(model => model.q1, "Offer 1 Type", new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type1" })
+								@Html.ValidationMessageFor(model => model.type1)
+							</div>
+						</div>
+							<div class="form-group" id="q1" hidden>
+								@Html.LabelFor(model => model.q1, "Offer 1 Qualification", new { @class = "control-label col-md-2" })
+								<div class="col-md-10">
+									@Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
+									@Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+								</div>
+							</div>
+						<div class="form-group" id="ql1" hidden>
+							@Html.LabelFor(model => model.ql1, "Offer 1 Qualification Level", new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.ql1)
+								@Html.ValidationMessageFor(model => model.ql1)
+							</div>
+						</div>
+							
 
-                        </div>
-                        <div class="form-group" id="t1" hidden>
-                            @Html.LabelFor(model => model.q1, "offer one type", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type1" })
-                                @Html.ValidationMessageFor(model => model.type1)
-                            </div>
-                            </div>
+							<div class="form-group" id="t2" hidden>
+								@Html.LabelFor(model => model.q1, "Offer 2 Type", new { @class = "control-label col-md-2" })
+								<div class="col-md-10">
+									@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type2" })
+									@Html.ValidationMessageFor(model => model.type2)
+								</div>
+							</div>
                             <div class="form-group" id="q2" hidden>
-                                @Html.LabelFor(model => model.q2, "offer two qualification", new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.q2, "Offer 2 Qualification", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
                                     @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
@@ -122,22 +128,23 @@
                                
                             </div>
                         <div class="form-group" id="ql2" hidden>
-                            @Html.LabelFor(model => model.ql2, "offer two qualification level", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.ql2, "Offer 2 Qualification Level", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.ql2)
                                 @Html.ValidationMessageFor(model => model.ql2)
                             </div>
 
                         </div>
-                        <div class="form-group" id="t2" hidden>
-                            @Html.LabelFor(model => model.q1, "offer two type", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type2" })
-                                @Html.ValidationMessageFor(model => model.type2)
-                            </div>
-                        </div>
+
+						<div class="form-group" id="t3" hidden>
+							@Html.LabelFor(model => model.q3, "Offer 3 Type", new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type3" })
+								@Html.ValidationMessageFor(model => model.type3)
+							</div>
+						</div>
                             <div class="form-group" id="q3" hidden>
-                                @Html.LabelFor(model => model.q3, "offer three qualification", new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.q3, "Offer 3 Qualification", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
                                     @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
@@ -145,20 +152,14 @@
                               
                             </div>
                         <div class="form-group" id="ql3" hidden>
-                            @Html.LabelFor(model => model.ql3, "offer three qualification level", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.ql3, "Offer 3 Qualification Level", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.ql3)
                                 @Html.ValidationMessageFor(model => model.ql3)
                             </div>
 
                         </div>
-                        <div class="form-group" id="t3" hidden>
-                            @Html.LabelFor(model => model.q3, "offer two type", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type3" })
-                                @Html.ValidationMessageFor(model => model.type3)
-                            </div>
-                        </div>
+                        
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-sm-1">
