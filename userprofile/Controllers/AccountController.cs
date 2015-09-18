@@ -277,6 +277,8 @@ namespace userprofile.Controllers
                 if (result.Succeeded)
                 {
                     var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
+					ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+					RegisterViewModel RVM = new RegisterViewModel(db);
                     var idManager = new IdentityManager();
                     switch (model.Roles) { 
                         case "Referee":
@@ -310,7 +312,7 @@ namespace userprofile.Controllers
                     
                     }
                    
-                    await SignInAsync(user, isPersistent: false);
+                  //  await SignInAsync(user, isPersistent: false);
                     
                     return RedirectToAction("Index", "Account");
                 }
