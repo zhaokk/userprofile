@@ -21,34 +21,34 @@ namespace userprofile.Models
             this.REFEREEs = new HashSet<REFEREE>();
         }
         [Display(Name = "Location Id")]
-        [Required(ErrorMessage = "Location Id is required")]
+        //[Required(ErrorMessage = "Location Id is required")]
         public int locationId { get; set; }
         [Display(Name = "Location")]
-        [Required(ErrorMessage = "Location is required")]
+        //[Required(ErrorMessage = "Location is required")]
         public string name { get; set; }
         [Display(Name = "Price")]
-        [Required(ErrorMessage = "Price is required")]
+       // [Required(ErrorMessage = "Price is required")]
         public Nullable<double> price { get; set; }
         [Display(Name = "Street")]
-        [Required(ErrorMessage = "Street is required")]
+       // [Required(ErrorMessage = "Street is required")]
         public string street { get; set; }
         [Display(Name = "City")]
-        [Required(ErrorMessage = "City is required")]
+       // [Required(ErrorMessage = "City is required")]
         public string city { get; set; }
         [Display(Name = "Postcode")]
-        [Required(ErrorMessage = "Postcode is required")]
+       // [Required(ErrorMessage = "Postcode is required")]
         public int postcode { get; set; }
         [Display(Name = "Phone Number")]
-        [Required(ErrorMessage = "Phone Number is required")]
+        //[Required(ErrorMessage = "Phone Number is required")]
         public int phoneNum { get; set; }
         [Display(Name = "Country")]
-        [Required(ErrorMessage = "Conntry is required")]
+        //[Required(ErrorMessage = "Conntry is required")]
         public string country { get; set; }
         [Display(Name = "State")]
-        [Required(ErrorMessage = "State is required")]
+       // [Required(ErrorMessage = "State is required")]
         public string state { get; set; }
-        [Display(Name = "Status")]
-        [Required(ErrorMessage = "Status is required")]
+      
+       
         public int status { get; set; }
         public System.Data.Entity.Spatial.DbGeography geogCol1 { get; set; }
         public string geogCol2 { get; set; }
