@@ -24,26 +24,26 @@ namespace userprofile.Models
         }
 
         [Display(Name = "Team Id")]
-        [Required(ErrorMessage = "Team Id is required")]
+        //[Required(ErrorMessage = "Team Id is required")]
         public int teamId { get; set; }
          [Display(Name = "Team Name")]
-         [Required(ErrorMessage = "Team Name is required")]
+        // [Required(ErrorMessage = "Team Name is required")]
         public string name { get; set; }
          [Display(Name = "Age Group")]
-         [Required(ErrorMessage = "Age Group is required")]
+         //[Required(ErrorMessage = "Age Group is required")]
         public Nullable<int> ageBracket { get; set; }
          [Display(Name = "Grade")]
-         [Required(ErrorMessage = "Grade is required")]
+        // [Required(ErrorMessage = "Grade is required")]
         public string grade { get; set; }
          [Display(Name = "Sport")]
-         [Required(ErrorMessage = "Sport Id is required")]
+        // [Required(ErrorMessage = "Sport Id is required")]
         public string sport { get; set; }
          [Display(Name = "Manager Id")]
-         [Required(ErrorMessage = "Manager Id is required")]
+        // [Required(ErrorMessage = "Manager Id is required")]
         public string managerId { get; set; }
-         [Display(Name = "Short Name")]
+        // [Display(Name = "Short Name")]
         public string shortName { get; set; }
-         [Display(Name = "Status")]
+        // [Display(Name = "Status")]
       
         public int status { get; set; }
     
