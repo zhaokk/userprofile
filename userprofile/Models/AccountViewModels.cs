@@ -107,10 +107,10 @@ namespace userprofile.Models
         public REFEREEqualViewModel optionalRe { get; set; }
         public ResidentLoc residentLoc { get; set; }
         public ApplicationUser GetUser()
-        {      
-            
+        {
 
-            DateTime x = DateTime.ParseExact(this.dob, "dd/MM/yyyy", null);
+
+			DateTime x = DateTime.Now;
             var user = new ApplicationUser()
             {
                 photoDir=this.photoDir,

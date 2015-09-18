@@ -24,7 +24,7 @@ namespace userprofile.Models
         }
 
         [Display(Name = "Team Id")]
-        //[Required(ErrorMessage = "Team Id is required")]
+        [Required(ErrorMessage = "Team Id is required")]
         public int teamId { get; set; }
          [Display(Name = "Team Name")]
         // [Required(ErrorMessage = "Team Name is required")]
@@ -36,7 +36,7 @@ namespace userprofile.Models
         // [Required(ErrorMessage = "Grade is required")]
         public string grade { get; set; }
          [Display(Name = "Sport")]
-        // [Required(ErrorMessage = "Sport Id is required")]
+         [Required(ErrorMessage = "Sport Id is required")]
         public string sport { get; set; }
          [Display(Name = "Manager Id")]
         // [Required(ErrorMessage = "Manager Id is required")]
