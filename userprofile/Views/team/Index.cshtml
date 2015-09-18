@@ -43,9 +43,9 @@
                                     Manager Name
                                 </th>
 
-                                <th>
+                                @*<th>
                                     Manger ID
-                                </th>
+                                </th>*@
                                @if (User.IsInRole("Admin"))
                                {
                                 <th>
@@ -80,9 +80,9 @@
                                 @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
                                   @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
                             </td>
-                            <td>
+                            @*<td>
                                 @Html.DisplayFor(modelItem => item.managerId)
-                            </td>
+                            </td>*@
 
                             
 @if (User.IsInRole("Admin"))
