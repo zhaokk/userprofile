@@ -265,58 +265,78 @@ namespace userprofile.Controllers {
         }
 
         int getWeeklyAvailabilityForDay(DateTime dt, int rID) {
-            switch (dt.DayOfWeek) {
-                    case DayOfWeek.Sunday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).sunday;
-                    case DayOfWeek.Monday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).monday;
-                    case DayOfWeek.Tuesday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
-                    case DayOfWeek.Wednesday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
-                    case DayOfWeek.Thursday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).thursday;
-                    case DayOfWeek.Friday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).friday;
-                    case DayOfWeek.Saturday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).saturday;
-                    default:
-                        //DEBUG STUFF
-                        return 0;
-                }
+			try {
+				switch (dt.DayOfWeek) {
+					case DayOfWeek.Sunday:
+						return db.WEEKLYAVAILABILITies.Find(rID).sunday;
+					case DayOfWeek.Monday:
+						return db.WEEKLYAVAILABILITies.Find(rID).monday;
+					case DayOfWeek.Tuesday:
+						return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
+					case DayOfWeek.Wednesday:
+						return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
+					case DayOfWeek.Thursday:
+						return db.WEEKLYAVAILABILITies.Find(rID).thursday;
+					case DayOfWeek.Friday:
+						return db.WEEKLYAVAILABILITies.Find(rID).friday;
+					case DayOfWeek.Saturday:
+						return db.WEEKLYAVAILABILITies.Find(rID).saturday;
+					default:
+						//DEBUG STUFF
+						return 0;
+				}
+			}
+			catch {
+				return 0;
+			}
         }
 
         bool checkWeeklyAvailabilityForMatch(int weeklyAvailability, DateTime matchDateTime) {
             if (weeklyAvailability == 0) {
                 return false;
             }
-            if (weeklyAvailability == 6) {
-                return true;
-            }
-            if (matchDateTime.TimeOfDay < new TimeSpan(8, 0, 0)) {
-                if (weeklyAvailability == 1 || weeklyAvailability == 4)
-                    return true;
-                else
-                    return false;
-            }
-            else if (matchDateTime.TimeOfDay < new TimeSpan(16, 0, 0)) {
-                if (weeklyAvailability == 2 || weeklyAvailability == 4 || weeklyAvailability == 5)
-                    return true;
-                else
-                    return false;
-            }
-            else {
-                if (weeklyAvailability == 3 || weeklyAvailability == 5)
-                    return true;
-                else
-                    return false;
-            }
+			if (weeklyAvailability >= 8) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 8;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0)) {
+					return false;
+			}
+			if (weeklyAvailability >= 4) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 4;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0)) {
+				return false;
+			}
+			if (weeklyAvailability >= 2) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 2;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0)) {
+				return false;
+			}
+			if (weeklyAvailability >= 1) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 1;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0)) {
+				return false;
+			}
+			throw new SystemException();
         }
 
         bool checkInitAvailability(int oID, int rID) {
             if (rID == 87784161)
                 return false;
-            return true; ///TESSSSSSSSSSSSSSSSTTTTTTTTTTTT
             DateTime matchDateTime = offerStorage[oID].MATCH.matchDate;
             
             if (containsOneOff(matchDateTime,rID)) {
@@ -588,7 +608,10 @@ namespace userprofile.Controllers {
         }
 
         void saveState() {
-             bestOffers.Add(new Dictionary<int, val>(dOffers));
+            if (bestOffers.Count > 2) { // if there are 3 elements remove one before inserting
+                bestOffers.RemoveAt(rand.Next(0, 3));
+            }
+            bestOffers.Add(new Dictionary<int, val>(dOffers));
             bestReferees.Add(new Dictionary<int, val>(dReferees));
         }
 
@@ -636,25 +659,28 @@ namespace userprofile.Controllers {
         }
 
         void setModel() {
-            //try {
-                modelResult = new AlgorithmModel(1);//bestOffers.Count()
-                for (int i = 0; i < 1; i++) {//bestOffers.Count()
+            if (bestOffers != null) {
+                modelResult = new AlgorithmModel(bestOffers.Count);//bestOffers.Count()
+                for (int i = 0; i < bestOffers.Count; i++) {//bestOffers.Count()
                     foreach (var j in bestOffers[i]) {
                         int rID;
                         if (j.Value.assignedTo.Count() == 0)
                             rID = -1;
-                        else
+             			else
                             rID = j.Value.assignedTo.First();
-                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID,db));
+                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID, db));
                     }
+					foreach (var j in llCompleted) {
+						modelResult.result[i].pairs.Add(new Models.pair(j.offer, j.referee, db));
+					}
                 }
-            //}
-            //catch (SystemException a) {
-                //modelResult = new AlgorithmModel(1);
-                foreach (var i in llCompleted) {
-                    modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee,db));
-                }
-            //}
+            }
+			else {
+				modelResult = new AlgorithmModel(1);
+				foreach (var i in llCompleted) {
+					modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee, db));
+				}
+			}
         }
 
         public void AssignReferees() {
