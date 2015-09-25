@@ -94,7 +94,13 @@ namespace userprofile.Controllers {
             initTemp = 1000;
         }
         bool checkTabu(int oID, int rID) { //check if this is tabu
-            return false;
+			if (dOffers[oID].available[rID].tabu > 0) {
+				dOffers[oID].available[rID].tabu -= 1;
+				dReferees[oID].available[oID].tabu -= 1;
+				return true;
+			}
+			else
+				return false;
         }
 
         bool checkAvailable(int oID, int rID) { //check if this ref is available to referee this offer (mostly for conflicts timewise)
@@ -527,13 +533,23 @@ namespace userprofile.Controllers {
             hFilledOffers.Add(oID);
         }
 
+		long calcTabu(int oID) {
+			return (initTemp / ((initTemp - currTemp) / ((long)dOffers[oID].available.Count() + (long)dOffers[oID].unavailable.Count())));
+		}
+
+		void setTabu(int oID, int rID) {
+			int amount = (int)calcTabu(oID);
+			dOffers[oID].available[rID].tabu += amount;
+			dReferees[rID].available[oID].tabu += amount;
+		}
+
         void unassign(int oID) {
-            //SET TABU HERE
             int rID = dOffers[oID].assignedTo.First();
             hFilledOffers.Remove(oID);
             dOffers[oID].assignedTo.Remove(rID);
             dReferees[rID].assignedTo.Remove(oID);
             updateAvailability(false, oID, rID);
+			setTabu(oID, rID);
             currOffersFilled--;
         }
 
