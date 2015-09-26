@@ -65,11 +65,14 @@
     
 
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
+   
     <!-- Ionicons -->
-    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/ionicons.min.css" rel="stylesheet" type="text/css" />
+    
     <!-- Morris chart -->
     <link href="~/Scripts/AdminLTE/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
     <!-- jvectormap -->
@@ -128,7 +131,8 @@
     @*@Scripts.Render("~/bundles/jquery")*@
 
     
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    
+    <script src='~/Scripts/bootstrap.min.js'></script>
     <script src='~/Scripts/respond.js'></script>
     <!-- FastClick -->
     <script src='~/Scripts/AdminLTE/plugins/fastclick/fastclick.min.js'></script>
@@ -150,7 +154,7 @@
     <!-- ChartJS 1.0.1 -->
     <script src="~/Scripts/AdminLTE/plugins/chartjs/Chart.min.js" type="text/javascript"></script>
     @RenderSection("scripts", required: false)
-    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet" />
+    <link href="~/Content/google.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/Content/mycss.css" />
 </body>
 </html>
