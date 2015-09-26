@@ -172,6 +172,7 @@
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\matchController.cs" />
     <Compile Include="Controllers\offerController.cs" />
+    <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />
@@ -989,6 +990,11 @@
     <Content Include="Views\REFEREE\Details.cshtml" />
     <Content Include="Views\REFEREE\Edit.cshtml" />
     <Content Include="Views\REFEREE\Index.cshtml" />
+    <Content Include="Views\OneOffAVAILABILITies\Create.cshtml" />
+    <Content Include="Views\OneOffAVAILABILITies\Delete.cshtml" />
+    <Content Include="Views\OneOffAVAILABILITies\Details.cshtml" />
+    <Content Include="Views\OneOffAVAILABILITies\Edit.cshtml" />
+    <Content Include="Views\OneOffAVAILABILITies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

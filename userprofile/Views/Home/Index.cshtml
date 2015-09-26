@@ -18,7 +18,8 @@
                 // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
                 // it doesn't need to have a start or end
                 var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
+                    title: $.trim($(this).text()),
+                    stick:true// use the element's text as the event title
                 };
 
                 // store the Event Object in the DOM element so we can get to it later
@@ -54,12 +55,27 @@
                 week: 'week',
                 day: 'day'
             },
+      
+            eventDrop: function(event, delta, revertFunc) {
+
+                alert(event.title + " was dropped on " + event.start.format());
+
+                if (!confirm("Are you sure about this change?")) {
+                    revertFunc();
+                }
+
+            },
+            newnotavailable:function( date, jsEvent, ui ) {
+                alert(event.title + " was dropped on " + event.start.format());
+
+            },
             //Random default events
             events: "/home/getevents/",
             editable: true,
+            businessHours: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             drop: function (date, allDay) { // this function is called when something is dropped
-
+                alert("lol");
                 // retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
 
@@ -132,6 +148,7 @@
             //Remove event from text input
             $("#new-event").val("");
         });
+       
     });
 </script>
 
@@ -214,139 +231,196 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
+       
         <div class="col-md-4">
-            <div class="box box-default">
+            <div class="box box-success collapsed-box">
+
                 <div class="box-header with-border">
-                    <div class="panel-group" id="accordion">
-                        @foreach (var offer in @Model.pendingOffers)
-                        {
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
-                                    </h4>
-                                </div>
-                                <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-12" style="text-align:center">
-                                                @offer.MATCH.TOURNAMENT.name
+                    <h4 class="box-title">Drag new Unavailability</h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                        <div class="external-event bg-green">Party</div>
+                        <div class="external-event bg-yellow">Rest</div>
+                        <div class="external-event bg-aqua">Do homework</div>
+                        <div class="external-event bg-light-blue">Work on UI design</div>
+                        <div class="external-event bg-red">Sleep tight</div>
+                        <div class="checkbox">
+                            <label for="drop-remove">
+                                <input type="checkbox" id="drop-remove" />
+                                remove after drop
+                            </label>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+
+
+
+                <div class="box-body">
+                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                        <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                        <ul class="fc-color-picker" id="color-chooser">
+                            <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
+                            <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <div class="input-group">
+                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+                        <div class="input-group-btn">
+                            <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+
+                </div>
+            </div>
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <div class="panel-group" id="accordion">
+                            @foreach (var offer in @Model.pendingOffers)
+                            {
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
+                                        </h4>
+                                    </div>
+                                    <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-12" style="text-align:center">
+                                                    @offer.MATCH.TOURNAMENT.name
                                                 </div>
                                             </div>
-                                        <hr/>
-                                        <div class="row">
-                                            <div class="col-sm-12" style="text-align:center">
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-sm-12" style="text-align:center">
 
-                                                <p>
-                                                    match city:<a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
-                                                         @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
-                                                    </a>
-                                                </p>
+                                                    <p>
+                                                        match city:<a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
+                                                            @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
+                                                        </a>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class=" col-md-12" style="text-align:center">
+                                            <div class="row">
+                                                <div class=" col-md-12" style="text-align:center">
 
 
-                                                <p>
-                                                    <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamId})">
-                                                        @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
-                                                    </a> vs 
-                                                    <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamId })">
-                                                        @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
-                                                    </a>
-                                                </p>
+                                                    <p>
+                                                        <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM.teamId})">
+                                                            @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)
+                                                        </a> vs
+                                                        <a style="text-decoration:none" href="@Url.Action( "Details" ,"team", new { id = offer.MATCH.TEAM1.teamId })">
+                                                            @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)
+                                                        </a>
+                                                    </p>
+                                                </div>
+
                                             </div>
-                                           
+
+                                            <hr />
+
+
+
+                                            @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-danger pull-right" })
+                                            @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-success pull-right" })
+
+
                                         </div>
-
-                                        <hr />
-
-
-
-                                        @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-danger pull-right" })
-                                        @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerId }, new { @class = "btn btn-success pull-right" })
-
-
                                     </div>
                                 </div>
-                            </div>
-                            accordionCounter++;
-                        }
+                                accordionCounter++;
+                            }
+
+                        </div>
 
                     </div>
+
+
+                    @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @foreach (var offer in @Model.pendingOffers)
+                {
+                <div class="panel panel-default" style="margin-bottom:7px">
+                <div class="panel-heading" role="tab" id="@("heading" + accordionCounter)">
+                <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
+                @Html.DisplayFor(modelItem => offer.MATCH.matchDate)
+                </a>
+                </h4>
+                </div>
+                </div>
+                <div id="@("collapse" + accordionCounter)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)">
+                <div class="panel-body">
+                <ul>
+                <li>team1name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)</li>
+                <li>team2name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)</li>
+                <li>match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)</li>
+                @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-warning pull-right" })
+                @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-primary pull-right" })
+
+                </ul>
+                </div>
+                </div>
+                accordionCounter++;
+                }
+                </div>*@
 
                 </div>
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">accepted offeres</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body " style="display: block;">
 
 
-                @*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    @foreach (var offer in @Model.pendingOffers)
-                    {
-                    <div class="panel panel-default" style="margin-bottom:7px">
-                    <div class="panel-heading" role="tab" id="@("heading" + accordionCounter)">
-                    <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
-                    @Html.DisplayFor(modelItem => offer.MATCH.matchDate)
-                    </a>
-                    </h4>
+                        <table class="table">
+
+                            @foreach (var aoffer in Model.acceptedOffers)
+                            {
+                                <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
+                            }
+
+                        </table>
+
                     </div>
-                    </div>
-                    <div id="@("collapse" + accordionCounter)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)">
-                    <div class="panel-body">
-                    <ul>
-                    <li>team1name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM.name)</li>
-                    <li>team2name: @Html.DisplayFor(modelItem => offer.MATCH.TEAM1.name)</li>
-                    <li>match city: @Html.DisplayFor(modelItem => offer.MATCH.LOCATION1.city)</li>
-                    @Html.ActionLink("decline", "decline", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-warning pull-right" })
-                    @Html.ActionLink("accept", "accept", "offer", new { offerId = offer.offerID }, new { @class = "btn btn-primary pull-right" })
-
-                    </ul>
-                    </div>
-                    </div>
-                    accordionCounter++;
-                    }
-                    </div>*@
-
-            </div>
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">accepted offeres</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div><!-- /.box-header -->
-                <div class="box-body " style="display: block;">
-
-
-                    <table class="table">
-
-                        @foreach (var aoffer in Model.acceptedOffers)
-                        {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
-                        }
-
-                    </table>
-
                 </div>
-            </div>
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Declined offeres</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Declined offeres</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body " style="display: block;">
+                        <table class="table">
+                            @foreach (var aoffer in Model.declinedOffers)
+                            {
+                                <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
+                            }
+                        </table>
                     </div>
-                </div><!-- /.box-header -->
-                <div class="box-body " style="display: block;">
-                    <table class="table">
-                        @foreach (var aoffer in Model.declinedOffers)
-                        {
-                            <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
-                        }
-                    </table>
                 </div>
-            </div>
 
-        </div>
+            </div>
 
 
 
@@ -376,6 +450,7 @@
                     <div id="calendar"></div>
                 </div><!-- /.box-body -->
             </div><!-- /. box -->
+         
         </div><!-- /.col -->
     </div><!-- /.row -->
 </section><!-- /.content -->
