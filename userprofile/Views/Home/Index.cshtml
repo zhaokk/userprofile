@@ -58,16 +58,17 @@
       
             eventDrop: function(event, delta, revertFunc) {
 
-                alert(event.title + " was dropped on " + event.start.format());
+            //    alert(event.title + " was dropped on " + event.start.format());
 
-                if (!confirm("Are you sure about this change?")) {
-                    revertFunc();
-                }
+            //    if (!confirm("Are you sure about this change?")) {
+            //        revertFunc();
+            //    }
 
-            },
-            newnotavailable:function( date, jsEvent, ui ) {
-                alert(event.title + " was dropped on " + event.start.format());
-
+            //},
+            //newnotavailable:function( date, jsEvent, ui ) {
+            //    alert(event.title + " was dropped on " + event.start.format());
+                alert("current version does not support drag event");
+                revertFunc();
             },
             //Random default events
             events: "/home/getevents/",

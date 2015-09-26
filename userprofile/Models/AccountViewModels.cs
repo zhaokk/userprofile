@@ -90,6 +90,7 @@ namespace userprofile.Models
         [Required(ErrorMessage = "Phone number is required")]
         public int phoneNum { get; set; }
 
+
         //[Required]
         //public string country { get; set; }
 
@@ -121,6 +122,7 @@ namespace userprofile.Models
                country = this.residentLoc.country,
                city=this.residentLoc.city,
             dob = x,
+           
            phoneNum =  this.phoneNum,
             state = this.residentLoc.state,
             street = this.residentLoc.street,
