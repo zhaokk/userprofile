@@ -1,51 +1,74 @@
 ﻿@model IEnumerable<userprofile.Models.OneOffAVAILABILITY>
-
 @{
     ViewBag.Title = "Index";
 }
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+<div class="row">
 
-<h2>Index</h2>
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.startDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.timeOnOrOff)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.REFEREE.sport)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.startDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.timeOnOrOff)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.REFEREE.sport)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.availabilityId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.availabilityId }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id=item.availabilityId })
-        </td>
-    </tr>
-}
-
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.startDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.timeOnOrOff)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.REFEREE.sport)
+                                </th>
+                                <th></th>
+                            </tr>
+                        <thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.startDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.timeOnOrOff)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.REFEREE.sport)
+                                    </td>
+                                    <td>
+                                        @*@Html.ActionLink("Edit", "Edit", new { id=item.availabilityId }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.availabilityId }) |*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.availabilityId })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>
+</div>
