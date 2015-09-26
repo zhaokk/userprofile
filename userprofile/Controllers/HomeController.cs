@@ -103,8 +103,25 @@ namespace userprofile.Controllers
                     eventList.Add(newEvent);
                     i++;
                 }
+            //    eventList.Add(new Event() { start= System.DateTime.Now,
+            //                                end = System.DateTime.Now.AddDays(1),
+            //rendering= "background" });
+                List<OneOffAVAILABILITY> oneoffs = db.REFEREEs.First(r => r.userId == userID).OneOffAVAILABILITies.ToList();
+               
+                foreach (var oneoff in oneoffs){
+                    Event newEvent = new Event
+                    {
+                        Id = i,
+                        title =oneoff.description,
+                        start =oneoff.startDate,
+                        allDay = true,
+                    };
+                    eventList.Add(newEvent);
 
+                    i++;
+                }
 
+              
                 return eventList;
 
 
@@ -137,7 +154,7 @@ namespace userprofile.Controllers
                 };
 
                 eventList.Add(newEvent);
-
+                
                 return eventList;
             }
 
@@ -149,10 +166,27 @@ namespace userprofile.Controllers
             return origin.AddSeconds(timestamp);
         }
         [HttpPost]
-        public ActionResult AddEvent(Event newE)
+        public Boolean AddEvent(Event newE)
         {
-            var i = Request["id"];
-            return null;
+            var db = new Raoconnection();
+            var userID = User.Identity.GetUserId();
+          //  var refID=db.REFEREEs.First(r=>r.userId==userID).refId;
+            OneOffAVAILABILITY of=new OneOffAVAILABILITY(){
+                availabilityId=0,
+            refId=1000,
+            startDate=(System.DateTime)newE.start,
+            timeOnOrOff=false,
+            description=newE.title
+            };
+            if (ModelState.IsValid)
+            {
+              //  db.OneOffAVAILABILITies.Add(of);
+                db.OneOffAVAILABILITies.Add(of);
+                db.SaveChanges();
+                return true;
+            }
+            return true;
+            
         }
         public ActionResult checkOffer()
         {
