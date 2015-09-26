@@ -89,11 +89,11 @@
                 $(this).text(" ");
                 if (availaArray[col][row] == true) {
                     //
-                    $(this).css("background-color", "#00a65a");
+                    $(this).css("background-color", "#33AD5C");
 
                 } else {
 
-                    $(this).css("background-color", "#dd4b39");
+                    $(this).css("background-color", "#D65C33");
 
                 }
 
@@ -103,7 +103,7 @@
                 var row = $(this).parent().parent().children().index($(this).parent());
                 if (availaArray[col][row] == true) {
                     $(this).animate
-        ({ backgroundColor: "#dd4b39" }, 500);
+        ({ backgroundColor: "#D65C33" }, 500);
                     $("#note").hide("slow", function () {
 
                     });
@@ -112,7 +112,7 @@
                 } else {
                     availaArray[col][row] = true;
                     $(this).animate
-        ({ backgroundColor: "#00a65a" }, 500);
+        ({ backgroundColor: "#33AD5C" }, 500);
                     $("#note").hide("slow", function () {
 
                     });
