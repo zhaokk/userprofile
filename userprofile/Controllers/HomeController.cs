@@ -115,6 +115,7 @@ namespace userprofile.Controllers
                         title =oneoff.description,
                         start =oneoff.startDate,
                         allDay = true,
+                        backgroundColor = "rgb(221, 75, 57)" 
                     };
                     eventList.Add(newEvent);
 

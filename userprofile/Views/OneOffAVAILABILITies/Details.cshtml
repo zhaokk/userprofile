@@ -1,0 +1,50 @@
+﻿@model userprofile.Models.OneOffAVAILABILITY
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OneOffAVAILABILITY</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.startDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.timeOnOrOff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.timeOnOrOff)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.REFEREE.sport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.REFEREE.sport)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.availabilityId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
