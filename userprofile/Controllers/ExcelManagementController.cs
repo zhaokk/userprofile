@@ -101,6 +101,7 @@ namespace userprofile.Controllers
                                     modelfromExcel.optionalRe.re.status = int.Parse(row["status"].ToString());
                                     modelfromExcel.optionalRe.re.status = int.Parse(row["rating"].ToString());
                                     modelfromExcel.residentLoc.street = row["street"].ToString();
+                                    modelfromExcel.residentLoc.city = row["city"].ToString();
                                     modelfromExcel.residentLoc.state = row["state"].ToString();
                                     modelfromExcel.residentLoc.country = row["country"].ToString();
                                     modelfromExcel.residentLoc.postcode = int.Parse(row["postcode"].ToString());
@@ -112,12 +113,12 @@ namespace userprofile.Controllers
                                     modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
                                     new AccountController().createUserFromExcel(modelfromExcel, "Referee");
                                     modelfromExcel.optionalRe.re.sport = "Soccer";
-                                    var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
-                                    modelfromExcel.optionalRe.re.userId = storedUser;
+                                  //  var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
+                                    //modelfromExcel.optionalRe.re.userId = storedUser;
 
-                                    db.REFEREEs.Add(modelfromExcel.optionalRe.re);
+                                   // db.REFEREEs.Add(modelfromExcel.optionalRe.re);
 
-                                    db.SaveChanges();
+                                  //  db.SaveChanges();
                                 }
                              
 
