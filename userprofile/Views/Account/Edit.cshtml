@@ -33,6 +33,8 @@
 
                         <hr />
                         @Html.ValidationSummary(true)
+                       @if (User.IsInRole("Admin"))
+                        {
                         <div class="form-group">
                             @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -40,6 +42,7 @@
                                 @Html.ValidationMessageFor(model => model.UserName)
                             </div>
                         </div>
+                        }
                         <div class="form-group">
                             @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -76,14 +79,6 @@
                                 @Html.ValidationMessageFor(model => model.phoneNum)
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.dob, "Date of Birth", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.dob)
-                                @Html.ValidationMessageFor(model => model.dob)
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.country,"Country", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
