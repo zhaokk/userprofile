@@ -315,7 +315,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\calendar\fullCalendar.css" />
     <Content Include="Content\css\calendar\fullCalendarPrint.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\google.css" />
     <Content Include="Content\indexReferee.css" />
+    <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\mycss.css" />
     <Content Include="Content\Site.css" />
