@@ -89,15 +89,53 @@
                 </div>
                 </div><!-- /.box-body -->
         </div><!-- /.box -->
-        <div class="col-md-12">
+        <div class="col-md-3">
 
             <div class="btn-group">
+                <div class="btn btn-block btn-primary btn-file" id="buttongroup_import">
+                    <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Import Excel
+                    <input id="input-4" type="file" onchange="uploadFile();">
+                </div>
                 <a class=" btn btn-block btn-success" href='@Url.Action("Register","Account")'><b>Create New User</b></a>
             </div>
+            
         </div>
-    </div><!-- /.col -->
+        <div class="col-md-9">
+            <div class="well well-sm" id="myDiv" hidden>lol</div>
+        </div>
+        </div><!-- /.col -->
 
     
 </div><!-- /.row -->
 
+<script>
+
+
+    function uploadFile() {
+        //   myApp(); //show dialog
+        var file = document.getElementById('input-4').files[0];
+        var formData = new FormData();
+        formData.append("file_name", file);
+        formData.append("type", "user")
+        ajax = new XMLHttpRequest();
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                $("#myDiv").show();
+                document.getElementById("myDiv").innerHTML = ajax.responseText;
+            }
+        }
+
+        //   ajax.upload.addEventListener("progress", progressHandler, false);
+        //    ajax.addEventListener("load", completeHandler, false);
+        ajax.open("POST", "/ExcelManagement/importXml");
+        ajax.send(formData);
+
+    }
+
+
+
+
+
+</script>
 
