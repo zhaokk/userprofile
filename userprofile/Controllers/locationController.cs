@@ -48,16 +48,29 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="locationId,name,price,street,city,postcode,country,phoneNum,state")] LOCATION location)
         {
+            Boolean shouldFail = false;
             if (ModelState.IsValid)
             {
-                location.country = "Australia"; //### should not hard code here, edit later on
-                db.LOCATIONs.Add(location);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                //check that the name + address is unique
+            /*    if (!checkUnique(location.geogCol2, location.name))
+                {
+                    ModelState.AddModelError("Location", "this location alredy exists");
+                    shouldFail = true;
+                }
+                if (!shouldFail)
+                {*/
+                    location.country = "Australia"; //### should not hard code here, edit later on
+                    db.LOCATIONs.Add(location);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                //}
             }
 
             return View(location);
         }
+
+
 
         // GET: /location/Edit/5
         public ActionResult Edit(int? id)
@@ -81,14 +94,42 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "locationId,name,price,street,city,country,postcode,phoneNum,state")] LOCATION location)
         {
+            Boolean shouldFail = false;
             if (ModelState.IsValid)
             {
-                location.country = "Australia";
-                db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+     /*           var loc = db.LOCATIONs.Find(location.locationId);
+                //check to see if we've kept the old name or address
+                if (loc.name != location.name || loc.geogCol2 != location.geogCol2)
+                {
+                    //if the old is not being used, then it should not exist, so check that's the case
+                    if (!checkUnique(location.geogCol2, location.name))
+                    {
+                        ModelState.AddModelError("Location", "this location alredy exists");
+                        shouldFail = true;
+                    }
+                }
+
+                 if (!shouldFail)
+                 {*/
+                     location.country = "Australia";
+                     db.Entry(location).State = EntityState.Modified;
+                     db.SaveChanges();
+                     return RedirectToAction("Index");
+                // }
             }
             return View(location);
+        }
+
+        private Boolean checkUnique(String location, String name)
+        {
+
+            var db = new Raoconnection();
+
+            if (db.LOCATIONs.Any(user => user.name == name && user.geogCol2 == location))
+            {
+                return false; //found it, so it is not unique
+            }
+            return true; //didnt fint it, so it's unique
         }
 
         // GET: /location/Delete/5
