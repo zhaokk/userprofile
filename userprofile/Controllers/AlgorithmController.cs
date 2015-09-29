@@ -247,24 +247,27 @@ namespace userprofile.Controllers {
         }
 
         bool containsOneOff(DateTime matchDateTime, int rID) { //REDO
-            return false;
-            var temp = db.OneOffAVAILABILITies.Find(rID); //WRITE PRIMARY KEY FOR REFAVAILABILITY
-            if (temp == null)
-                return false;
-            else
-                return true;
+			try {
+				var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); //WRITE PRIMARY KEY FOR REFAVAILABILITY
+			    if (temp == null)
+				    return false;
+				else
+					return true;
+			}
+			catch {
+				return false;
+			}
         }
 
         bool checkOneOff(DateTime matchDateTime, int rID) {
             try {
-                var temp = db.OneOffAVAILABILITies.Find();
+                var temp = db.OneOffAVAILABILITies.Find(rID,matchDateTime.Date);
                 if (temp.timeOnOrOff == true)
                     return true;
                 else
                     return false;
             }
             catch (SystemException a) {
-                //write stuff
                 return false;
             }
             
