@@ -46,23 +46,47 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditUserViewModel model)
         {
+            Boolean shouldFail = false;
             if (ModelState.IsValid)
             {
                 var Db = new ApplicationDbContext();
                 var user = Db.Users.First(u => u.UserName == model.UserName);
-                // Update the user data:
-                user.firstName = model.FirstName;
-                user.lastName = model.LastName;
-                user.email = model.Email;
-                user.country = model.country;
 
-                user.dob = model.dob;
-                user.phoneNum = model.phoneNum;
-                user.state = model.state;
-                user.street = model.street;
-                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                await Db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (checkUsername(model.UserName) && user.UserName != model.UserName)
+                {
+                    ModelState.AddModelError("Username", "Username alredy exists");
+                    shouldFail = true;
+                }
+                if (checkEmail(model.Email) && user.email != model.Email)
+                {
+                    ModelState.AddModelError("Email", "Email already registered");
+                    shouldFail = true;
+                }
+                if (checkFFA(model.ffaNum) && user.ffaNum != model.ffaNum)
+                {
+                    ModelState.AddModelError("ffaNum", "FFA number alredy in system");
+                    shouldFail = true;
+                }
+
+                if (!shouldFail)
+                {
+
+
+
+                    // Update the user data:
+                    user.firstName = model.FirstName;
+                    user.lastName = model.LastName;
+                    user.email = model.Email;
+                    user.country = model.country;
+
+                    user.dob = model.dob;
+                    user.phoneNum = model.phoneNum;
+                    user.state = model.state;
+                    user.street = model.street;
+                    Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    await Db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
             // If we got this far something failed, redisplay form
             return View(model);
