@@ -898,6 +898,16 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="userprofile\admin.jpg" />
+    <Content Include="userprofile\default.png" />
+    <Content Include="userprofile\newUserAsReferee.jpg" />
+    <Content Include="userprofile\nimabi.jpg" />
+    <Content Include="userprofile\refereeuser.jpg" />
+    <Content Include="userprofile\sam.jpg" />
+    <Content Include="userprofile\test .jpg" />
+    <Content Include="userprofile\testusers.jpg" />
+    <Content Include="userprofile\zhaokk.jpg" />
+    <Content Include="userprofile\zhoakk.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1002,7 +1012,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="userprofile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -15,8 +15,11 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     @*Source Sans Pro from Google Fonts*@
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet" />
-    @*Bundle CSS, assuming includes Bootstrap CSS *@
-    @Styles.Render("~/Content/css")
+    @*Bundle CSS, assuming includes Bootstrap CSS*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+   
      @Scripts.Render("~/bundles/modernizr")
 
     <!-- Font Awesome Icons -->
@@ -40,14 +43,22 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    @Scripts.Render("~/bundles/modernizr")
-    <script src="/Scripts/jquery-2.1.4.min.js"></script>
+    <script src='~/Scripts/modernizr-2.6.2.js'></script>
+    
     <script src="/Scripts/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown();
         });
+
+        $(document).ready(function () {
+            $(".navbar-toggle").click(function (event) {
+               
+            });
+        });
     </script>
+
+
 </head>
 
 <body class="layout-top-nav skin-green">
@@ -114,12 +125,12 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     <script src='~/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js'></script>
     <script src='~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.js'></script>
     <link href="~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" />
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    @*<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
     @*@Scripts.Render("~/bundles/jquery")*@
     <!-- FastClick -->
     <script src='~/Scripts/AdminLTE/plugins/fastclick/fastclick.min.js'></script>
