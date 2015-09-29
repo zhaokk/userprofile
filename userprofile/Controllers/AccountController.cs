@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using userprofile.Models;
+using System.Reflection;
 
 namespace userprofile.Controllers
 {
@@ -252,7 +253,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            
+            Boolean shouldFail = false;
             var db = new Raoconnection();
 			ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
 			RegisterViewModel RVM = new RegisterViewModel(db);
@@ -268,62 +269,82 @@ namespace userprofile.Controllers
 
             }
             model.photoDir = location;
-            
-               
-           
+
+
+
             if (ModelState.IsValid)
             {
                 var user = model.GetUser();
-               
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+
+
+                if (checkUsername(user.UserName))
                 {
-                    var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
-					ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-					
-                    var idManager = new IdentityManager();
-                    switch (model.Roles) { 
-                        case "Referee":
-                            REFEREE refComeWithUser = model.optionalRe.re;
-                            
-                            refComeWithUser.userId = storedUser.Id;
-                            refComeWithUser.USERQUALs.Clear();
-                            foreach (var qual in model.optionalRe.srqvm.quals)
-                            {
-                                QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
-
-                                if (qual.Selected == true)
-                                {
-                                    USERQUAL newQual = new USERQUAL();
-                                    newQual.qualificationId = thequal.qualificationId;
-                                    refComeWithUser.USERQUALs.Add(newQual);
-                                }
-
-                            }
-                            idManager.AddUserToRole(storedUser.Id, model.Roles);
-                            refComeWithUser.maxGames = 4;
-                            db.REFEREEs.Add(refComeWithUser);
-                            db.SaveChanges();
-                            break;
-                        case "Admin":
-                            idManager.AddUserToRole(storedUser.Id, model.Roles);
-                            break;
-                        default:
-                            break;
-                    
-                    
-                    }
-                   
-                  //  await SignInAsync(user, isPersistent: false);
-                    
-                    return RedirectToAction("Index", "Account");
+                    ModelState.AddModelError("Username", "Username alredy exists");
+                    shouldFail = true;
                 }
-                else
+                if (checkEmail(user.email))
                 {
-                    AddErrors(result);
+                    ModelState.AddModelError("Email", "email already registered");
+                    shouldFail = true;
+                }
+                if (checkFFA(user.ffaNum))
+                {
+                    ModelState.AddModelError("ffaNum", "FFA number alredy in system");
+                    shouldFail = true;
+                }
+
+                if (!shouldFail)
+                {
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
+                        ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+
+                        var idManager = new IdentityManager();
+                        switch (model.Roles)
+                        {
+                            case "Referee":
+                                REFEREE refComeWithUser = model.optionalRe.re;
+
+                                refComeWithUser.userId = storedUser.Id;
+                                refComeWithUser.USERQUALs.Clear();
+                                foreach (var qual in model.optionalRe.srqvm.quals)
+                                {
+                                    QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
+
+                                    if (qual.Selected == true)
+                                    {
+                                        USERQUAL newQual = new USERQUAL();
+                                        newQual.qualificationId = thequal.qualificationId;
+                                        refComeWithUser.USERQUALs.Add(newQual);
+                                    }
+
+                                }
+                                idManager.AddUserToRole(storedUser.Id, model.Roles);
+                                refComeWithUser.maxGames = 4;
+                                db.REFEREEs.Add(refComeWithUser);
+                                db.SaveChanges();
+                                break;
+                            case "Admin":
+                                idManager.AddUserToRole(storedUser.Id, model.Roles);
+                                break;
+                            default:
+                                break;
+
+
+                        }
+
+                        //  await SignInAsync(user, isPersistent: false);
+
+                        return RedirectToAction("Index", "Account");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -333,6 +354,37 @@ namespace userprofile.Controllers
             var user=db.Users.First(u=>u.UserName==id);
             var model=new logindetialViewModel(user);
             return View(model);
+        }
+
+        private Boolean checkUsername(String name)
+        {
+            var db = new Raoconnection();
+
+            if (db.AspNetUsers.Any(user => user.UserName == name))
+            {
+                return true;
+            }
+            return false;
+        }
+        private Boolean checkFFA(int ffa)
+        {
+            var db = new Raoconnection();
+
+            if (db.AspNetUsers.Any(user => user.ffaNum == ffa))
+            {
+                return true;
+            }
+            return false;
+        }
+        private Boolean checkEmail(String email)
+        {
+            var db = new Raoconnection();
+
+            if (db.AspNetUsers.Any(user => user.email == email))
+            {
+                return true;
+            }
+            return false;
         }
 
         public ActionResult showhead_Icon(string id)
