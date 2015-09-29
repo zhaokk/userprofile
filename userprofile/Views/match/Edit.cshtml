@@ -23,7 +23,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.matchDate, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.matchDate)
+                               <input type="text" name="matchDate" value="@Model.matchDate">
                                 @Html.ValidationMessageFor(model => model.matchDate)
                             </div>
                         </div>
@@ -89,9 +89,11 @@
                                 $('input[name="matchDate"]').daterangepicker({
                                     singleDatePicker: true,
                                     timePicker: true,
+
+                                    timePicker24Hour:true,
                                     timePickerIncrement: 15,
                                     locale: {
-                                        format: 'MM/DD/YYYY h:mm A'
+                                        format: 'YYYY/MM/DD hh:mm:ss'
                                     }
                                 });
                             });

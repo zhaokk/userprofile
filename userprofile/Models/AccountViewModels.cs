@@ -83,6 +83,7 @@ namespace userprofile.Models
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
+        public Int32 ffa { get; set; }
        
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
@@ -126,7 +127,8 @@ namespace userprofile.Models
            phoneNum =  this.phoneNum,
             state = this.residentLoc.state,
             street = this.residentLoc.street,
-                postcode=this.residentLoc.postcode
+                postcode=this.residentLoc.postcode,
+                ffaNum=this.ffa
 
 
             };
@@ -179,7 +181,7 @@ namespace userprofile.Models
 
         [Required]
         [Display(Name = "FFA Number")]
-        public int ffaNum { get; set; }
+        public Int32 ffaNum { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
@@ -201,10 +203,11 @@ namespace userprofile.Models
 
         [Required]
         public string state { get; set; }
-        [Required]
+        
         public System.DateTime dob { get; set; }
         [Required]
         public string street { get; set; }
+
     }
 
     public class SelectUserRolesViewModel
