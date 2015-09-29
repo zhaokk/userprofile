@@ -173,7 +173,7 @@ namespace userprofile.Controllers
             var userID = User.Identity.GetUserId();
           //  var refID=db.REFEREEs.First(r=>r.userId==userID).refId;
             OneOffAVAILABILITY of=new OneOffAVAILABILITY(){
-                availabilityId=0,
+               
             refId=1000,
             startDate=(System.DateTime)newE.start,
             timeOnOrOff=false,

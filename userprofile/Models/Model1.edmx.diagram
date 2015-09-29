@@ -56,7 +56,7 @@
         <AssociationConnector Association="Raoconnection.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="Raoconnection.TEAMINS" ManuallyRouted="false" />
         <AssociationConnector Association="Raoconnection.WILLINGLOCATIONS" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Raoconnection.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="27.375" />
+        <EntityTypeShape EntityType="Raoconnection.OneOffAVAILABILITY" Width="1.5" PointX="10.5" PointY="27.5" />
         <AssociationConnector Association="Raoconnection.FK_TIMEOFF_USER" />
       </Diagram>
     </edmx:Diagrams>

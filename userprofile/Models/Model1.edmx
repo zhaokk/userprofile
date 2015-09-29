@@ -176,9 +176,9 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
         </EntityType>
         <EntityType Name="OneOffAVAILABILITY">
           <Key>
-            <PropertyRef Name="availabilityId" />
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="startDate" />
           </Key>
-          <Property Name="availabilityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="refId" Type="int" Nullable="false" />
           <Property Name="startDate" Type="date" Nullable="false" />
           <Property Name="timeOnOrOff" Type="bit" Nullable="false" />
@@ -1723,9 +1723,9 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
         </EntityContainer>
         <EntityType Name="OneOffAVAILABILITY">
           <Key>
-            <PropertyRef Name="availabilityId" />
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="startDate" />
           </Key>
-          <Property Name="availabilityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="refId" Type="Int32" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="timeOnOrOff" Type="Boolean" Nullable="false" />
@@ -2052,7 +2052,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
                 <ScalarProperty Name="timeOnOrOff" ColumnName="timeOnOrOff" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="availabilityId" ColumnName="availabilityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
