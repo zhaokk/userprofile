@@ -4,6 +4,21 @@
 
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -50,20 +65,28 @@
                     </dl>
                 </div>
                
+                
+
+
+
+</div>
+</div>
+
+        <div class="box">
+            <div class="box-body">
+
                 <div class="table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>MatchId</th>
-
+                                <th>Match Id</th>
 
                                 <th>
-
                                     Tournament
 
                                 </th>
                                 <th>
-                                    refType
+                                    referee Type
                                 </th>
                                 <th>
                                     Status
@@ -93,10 +116,9 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+       
 
-
-
-</div>
-</div>
 </div>
 </div>
