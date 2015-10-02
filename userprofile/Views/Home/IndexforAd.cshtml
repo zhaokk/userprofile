@@ -210,13 +210,15 @@
                             {
                             <tr>
                                 <td>
-                                    <a href="@Url.Action( "Details","match", new { id = match.matchId })">
-                                        @match.matchId</a>
+                                    
+                                        @match.matchId
                                 </td>
 
                                 <td>
-                                    @match.matchDate
-                                </td>
+                                    <a href="@Url.Action( "Details","match", new { id = match.matchId })">
+                                        @match.matchDate
+                                    </a>
+</td>
                                 <td>
                                    
                                     <a href="@Url.Action("Details","location", new { id = match.locationId })">
