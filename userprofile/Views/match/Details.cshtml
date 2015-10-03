@@ -150,14 +150,17 @@
                             @foreach (var item in Model.Item2)
                             {
 
-                                if (item.status == 4)
+                                if (item.status == 4 || item.status == 5)
                                 {
                                      <tr>
                                         <td>
                                             NULL
                                         </td>
-                                         <td> @item.REFEREE.AspNetUser.firstName
-                                        @item.REFEREE.AspNetUser.lastName</td>
+                                         <td> <a href="@Url.Action("Edit", "offer", new { id = item.offerId })">
+                                                  No referee set yet - placeholder for link to go to assigning a ref to this offer
+                                        </a>
+                                         
+                                         </td>
                                         <td>
                                             @item.typeOfOffer
                                         </td>
