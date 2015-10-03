@@ -28,7 +28,7 @@ namespace userprofile.Models
         [Display(Name = "Match Id")]
         public int matchId { get; set; }
         [Display(Name = "Referee Id")]
-        public int refId { get; set; }
+        public Nullable<int> refId { get; set; }
         [Display(Name = "Status")]
         public int status { get; set; }
         public System.DateTime dateOfOffer { get; set; }

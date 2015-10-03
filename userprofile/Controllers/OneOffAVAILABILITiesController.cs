@@ -95,13 +95,13 @@ namespace userprofile.Controllers
         }
 
         // GET: OneOffAVAILABILITies/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id,System.DateTime start)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OneOffAVAILABILITY oneOffAVAILABILITY = db.OneOffAVAILABILITies.Find(id);
+            OneOffAVAILABILITY oneOffAVAILABILITY = db.OneOffAVAILABILITies.Find(id,start);
             if (oneOffAVAILABILITY == null)
             {
                 return HttpNotFound();
@@ -112,9 +112,9 @@ namespace userprofile.Controllers
         // POST: OneOffAVAILABILITies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, System.DateTime start)
         {
-            OneOffAVAILABILITY oneOffAVAILABILITY = db.OneOffAVAILABILITies.Find(id);
+            OneOffAVAILABILITY oneOffAVAILABILITY = db.OneOffAVAILABILITies.Find(id,start);
             db.OneOffAVAILABILITies.Remove(oneOffAVAILABILITY);
             db.SaveChanges();
             return RedirectToAction("Index");

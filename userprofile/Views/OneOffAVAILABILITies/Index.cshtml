@@ -61,7 +61,7 @@
                                     <td>
                                         @*@Html.ActionLink("Edit", "Edit", new { id=item.availabilityId }) |
                         @Html.ActionLink("Details", "Details", new { id=item.availabilityId }) |*@
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.availabilityId })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.refId,start=item.startDate })
                                     </td>
                                 </tr>
                             }

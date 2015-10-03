@@ -1,4 +1,4 @@
-﻿@model userprofile.Models.matchViewModel
+﻿@model userprofile.Models.MmatchViewModel
 
 @{
     ViewBag.Title = "";
@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label class="control-label col-md-2">Match Date</label>
-                            
+
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.createdMatch.matchDate)
                                 @Html.ValidationMessageFor(model => model.createdMatch.matchDate)
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.createdMatch.teamAId, "Home Team Name", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                
+
                                 @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.teamAId)
                             </div>
@@ -71,105 +71,45 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.offernum, "Number Of Offer", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <select id="offernum" name="offernum">
-                                    <option>        </option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
+                                <input type="number" id="offernum" min="0" max="9" step="1">
                             </div>
+                            
+                        </div>
+                        <div hidden>
+                            @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @id = "q" })
+                            @Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @id = "type" })
+                        </div>
+                        <div class="form-group">
+                           <label class = "control-label col-md-2">
+
+                           </label>
+                            <div class=col-md-10 id="newoffers">
+                            </div>
+                       
+
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
-                                
+
                                 @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
                             </div>
                         </div>
-                        
-                        
-						<div class="form-group" id="t1" hidden>
-							@Html.LabelFor(model => model.q1, "Offer 1 Type", new { @class = "control-label col-md-2" })
-							<div class="col-md-10">
-								@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type1" })
-								@Html.ValidationMessageFor(model => model.type1)
-							</div>
-						</div>
-							<div class="form-group" id="q1" hidden>
-								@Html.LabelFor(model => model.q1, "Offer 1 Qualification", new { @class = "control-label col-md-2" })
-								<div class="col-md-10">
-									@Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q1" })
-									@Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
-								</div>
-							</div>
-						<div class="form-group" id="ql1" hidden>
-							@Html.LabelFor(model => model.ql1, "Offer 1 Qualification Level", new { @class = "control-label col-md-2" })
-							<div class="col-md-10">
-								@Html.EditorFor(model => model.ql1)
-								@Html.ValidationMessageFor(model => model.ql1)
-							</div>
-						</div>
-							
 
-							<div class="form-group" id="t2" hidden>
-								@Html.LabelFor(model => model.q1, "Offer 2 Type", new { @class = "control-label col-md-2" })
-								<div class="col-md-10">
-									@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type2" })
-									@Html.ValidationMessageFor(model => model.type2)
-								</div>
-							</div>
-                            <div class="form-group" id="q2" hidden>
-                                @Html.LabelFor(model => model.q2, "Offer 2 Qualification", new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q2" })
-                                    @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
-                                </div>
-                               
-                            </div>
-                        <div class="form-group" id="ql2" hidden>
-                            @Html.LabelFor(model => model.ql2, "Offer 2 Qualification Level", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.ql2)
-                                @Html.ValidationMessageFor(model => model.ql2)
-                            </div>
 
-                        </div>
 
-						<div class="form-group" id="t3" hidden>
-							@Html.LabelFor(model => model.q3, "Offer 3 Type", new { @class = "control-label col-md-2" })
-							<div class="col-md-10">
-								@Html.DropDownList("types", (SelectList)ViewBag.types, String.Empty, new { @Name = "type3" })
-								@Html.ValidationMessageFor(model => model.type3)
-							</div>
-						</div>
-                            <div class="form-group" id="q3" hidden>
-                                @Html.LabelFor(model => model.q3, "Offer 3 Qualification", new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownList("qualification", (SelectList)ViewBag.qualification, String.Empty, new { @Name = "q3" })
-                                    @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
-                                </div>
-                              
-                            </div>
-                        <div class="form-group" id="ql3" hidden>
-                            @Html.LabelFor(model => model.ql3, "Offer 3 Qualification Level", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.ql3)
-                                @Html.ValidationMessageFor(model => model.ql3)
-                            </div>
 
-                        </div>
-                        
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-sm-1">
-                                    <input type="submit" value="Create" id="newoffers" class="btn btn-success" />
-                                </div>
-                            </div>
-                            <div id="offers">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-sm-1">
+                                <input type="submit" value="Create" id="newoffers" class="btn btn-success" />
                             </div>
                         </div>
-                 
+                        <div id="offers">
+                        </div>
+                    </div>
+
                 }
 
             </div>
@@ -180,114 +120,68 @@
 @section scripts{
 
     <script>
+        var i = 0;
+        var offerbox = $("#newoffers");
+        var dropforQ = $("#q");
+        var dropforT = $("#type");
         $(function () {
             $('input[name="createdMatch.matchDate"]').daterangepicker({
                 singleDatePicker: true,
                 timePicker: true,
                 timePickerIncrement: 15,
                 locale: {
-                    format: 'MM/DD/YYYY h:mm A'
+                    format: 'DD/MM/YYYY h:mm A'
                 }
             });
         });
         $("#offernum").change(function () {
-            switch($(this).val()) {
-                case "1":
-                    $('#q1').show("slow", function () {
+            var offernum = $(this).val();
 
-                    });
-                    $('#q2').hide("slow", function () {
+            if (i == offernum) {
+                //do nothing
+            } else if (i < offernum) {
+                //add new offer
+                var more = offernum - i;
+                for (more; more > 0; more--) {
 
-                    });
-                    $('#q3').hide("slow", function () {
+                }
+                for (i; i < offernum; i++) {
+                    var newdiv = jQuery('<div/>', {
+                        id: 'offerdiv' + i,
+                        //   href: 'http://google.com',
+                        //   title: 'Become a Googler',
+                        //   rel: 'external',
+                        //   text: 'Go to Google!'
+                    })
+                    var newDFQ = dropforQ.clone();
+                    var newDFT = dropforT.clone();
 
-                    });
-                    $('#ql1').show("slow", function () {
+                    newDFQ.attr("name", "offers[" + i + "].q");
+                    newDFT.attr("name", "offers[" + i + "].type");
+                    selectLevel = "<input type='number' min=0 max=10 name='offers[" + i + "].level' >"
+                    newdiv.append(newDFQ);
+                    newdiv.append(newDFT);
+                    newdiv.append(selectLevel);
+                    newdiv.hide();
+                    var newofferhtml = "<div id=offerdiv" + i + ">" + newDFQ.html() + "</div>";
+                    //   var newofferhtml = "<div id=offerdiv" + i + ">lolo</div>";
+                    newdiv.appendTo(offerbox).show("normal");
 
-                    });
-                    $('#ql2').hide("slow", function () {
-
-                    });
-                    $('#ql3').hide("slow", function () {
-
-                    });
-                    $('#t1').show("slow", function () {
-
-                    });
-                    $('#t2').hide("slow", function () {
-
-                    });
-                    $('#t3').hide("slow", function () {
-
-                    });
-                    break;
-                case "2":
-                    $('#q2').show("slow", function () {
-
-                    });
-                    $('#q1').show("slow", function () {
-
-                    });
-                    $('#q3').hide("slow", function () {
-
-                    });
-                    $('#ql2').show("slow", function () {
-
-                    });
-                    $('#ql1').show("slow", function () {
-
-                    });
-                    $('#ql3').hide("slow", function () {
-
-                    });
-                    $('#t2').show("slow", function () {
-
-                    });
-                    $('#t1').show("slow", function () {
-
-                    });
-                    $('#t3').hide("slow", function () {
-
-                    });
-                    break;
-                case "3":
-                    $('#q2').show("slow", function () {
-
-                    });
-                    $('#q1').show("slow", function () {
-
-                    });
-                    $('#q3').show("slow", function () {
-
-                    });
-                    $('#ql2').show("slow", function () {
-
-                    });
-                    $('#ql1').show("slow", function () {
-
-                    });
-                    $('#ql3').show("slow", function () {
-
-                    });
-
-                    $('#t2').show("slow", function () {
-
-                    });
-                    $('#t1').show("slow", function () {
-
-                    });
-                    $('#t3').show("slow", function () {
-
-                    });
-                default:
-                    break;
-                   
+                    // offerbox.appendTo(newDFQ);
+                    //  offerbox.appendTo(dropforT);
+                }
+                i = $(this).val();
+            } else if (i > $(this).val()) {
+                for (i; i > offernum; i--) {
+                    //   $("#offerdiv" + (i - 1)).hide('slow', function () { $("#offerdiv" + (i - 1)).remove(); });
+                    $("#offerdiv" + (i - 1)).remove();
+                }
             }
         });
-      
 
 
 
 
-                             </script>
+
+    </script>
 }
