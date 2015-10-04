@@ -260,9 +260,19 @@ namespace userprofile.Controllers
         {
             var db = new Raoconnection();
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "name", "name");
             RegisterViewModel RVM = new RegisterViewModel(db);
             return View(RVM);
         }
+
+       public ActionResult RegisterNew()
+       {
+           var db = new Raoconnection();
+           ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+           ViewBag.tournament = new SelectList(db.TOURNAMENTs, "name", "name");
+           RegisterViewModel RVM = new RegisterViewModel(db);
+           return View(RVM);
+       }
         public ActionResult show()
         {
             var db = new ApplicationDbContext();

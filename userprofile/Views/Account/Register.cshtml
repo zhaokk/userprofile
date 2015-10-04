@@ -8,8 +8,16 @@
         <div class="box">
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
-                @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()                        
                 <div class="box-body">
+                   @{ bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                    if(val1){
+                     <p>yes</p>
+                    }
+                    else{
+                        <p>no</p>
+                    }
+                    }
                     <hr />
                     @*@Html.ValidationSummary()*@
                     <div class="row">

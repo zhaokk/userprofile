@@ -4,27 +4,12 @@
 
 }
 
-<script type="text/javascript">
-    $(function () {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
-    });
-</script>
-
-
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
 
             <div class="box-body">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.refId }, new {@class="btn btn-warning pull-right" })
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.refId }, new { @class = "btn btn-warning pull-right" })
                 <div class="fa fa-angle-left">
 
                     @Html.ActionLink("Back to List", "Index")
@@ -32,12 +17,28 @@
                 <div>
                     <hr />
                     <dl class="dl-horizontal">
-                        @*<dt>
-                            @Html.DisplayNameFor(model => model.availability)
+                        <dt>
+                            <b>Name</b>
+
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.availability)
-                        </dd>*@
+                            @Html.DisplayFor(model => model.Item1.AspNetUser.firstName)
+                            @Html.DisplayFor(model => model.Item1.AspNetUser.lastName)
+                        </dd>
+                        <dt>
+                            <b>Phone number</b>
+
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Item1.AspNetUser.phoneNum)
+                        </dd>
+                        <dt>
+                            <b>Email</b>
+
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Item1.AspNetUser.email)
+                        </dd>
                         <dt>
                             @Html.DisplayNameFor(model => model.Item1.distTravel)
                         </dt>
@@ -56,37 +57,23 @@
                         <dd>
                             @Html.DisplayFor(model => model.Item1.AspNetUser.UserName)
                         </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Item1.SPORT1.name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Item1.SPORT1.name)
-                        </dd>
                     </dl>
                 </div>
-               
-                
-
-
-
-</div>
-</div>
-
-        <div class="box">
-            <div class="box-body">
 
                 <div class="table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Match Id</th>
+                                <th>MatchId</th>
+
 
                                 <th>
+
                                     Tournament
 
                                 </th>
                                 <th>
-                                    referee Type
+                                    refType
                                 </th>
                                 <th>
                                     Status
@@ -116,9 +103,10 @@
                         </tbody>
                     </table>
                 </div>
+
+
+
             </div>
         </div>
-       
-
-</div>
+    </div>
 </div>

@@ -211,6 +211,7 @@ namespace userprofile.Controllers
         {
             if (ModelState.IsValid)
             {
+                referee.sport = "Soccer"; //remove this line when we remove sport from the referee table
                 db.Entry(referee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
