@@ -1,0 +1,149 @@
+﻿@model userprofile.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    @{ bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                     if (val1)
+                     {
+                        <p>yes</p>
+                     }
+                     else
+                     {
+                        <p>no</p>
+                     }
+                    }
+                    <hr />
+                    @*@Html.ValidationSummary()*@
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.UserName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                </div>
+                            </div>
+                            <div class="form-group row" >
+                                @Html.LabelFor(m => m.dob, new { @class = "col-md-2 control-label" })
+
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.dob)
+                                    @Html.ValidationMessageFor(model => model.dob)
+
+                                </div><div class="col-md-2 " id="dobinfor"></div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.FirstName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.LastName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Email)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.phoneNum, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.phoneNum, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.phoneNum)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ffa, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(m => m.ffa, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ffa)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(m => m.upload, new { @class = "col-md-2 control-label" })
+                                @Html.TextBoxFor(m => m.upload, new { type = "file", @class = "col-md-10" })
+
+                            </div>
+                        </div>
+                        @Html.EditorFor(m => m.residentLoc)
+
+                    </div>
+
+
+
+
+
+
+                    <div id="refereedetail">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-success" value="Register" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('input[name="dob"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                autoApply: true,
+                startDate: '01/01/1991',
+
+            },
+            function (start, end, label) {
+                var years = moment().diff(start, 'years');
+                $("#dobinfor").empty();
+                $("#dobinfor").append("<span class='label label-default'>" + years + "years old</span> ");
+
+            });
+        });
+</script>
+}

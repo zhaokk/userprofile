@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace userprofile.Controllers
 {
-    [Authorize]
+   
     public class AccountController : Controller
     {
 
@@ -283,7 +283,7 @@ namespace userprofile.Controllers
         // POST: /Account/Register
         [HttpPost]
      //   [Authorize(Roles = "Admin")]
-       [Authorize(Roles = "Admin")]
+      // [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

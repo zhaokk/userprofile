@@ -64,7 +64,9 @@
                             @Html.ValidationMessageFor(m => m.Password)
 
     <input  type="submit" value="Log in" class="login login-submit" />
-
+                                          <a href="@Url.Action( "RegisterNew","Account", new {})">
+                                            Register
+                                        </a>
                         @*<button type="submit" id="login-button">
                             Login
                         </button>*@

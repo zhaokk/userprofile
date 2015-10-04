@@ -45,10 +45,20 @@
 
     <div class="wrapper">
 
-        @Html.Partial("_AdminLteTopMenu")
-        <!-- Left side column. contains the logo and sidebar -->
-        @Html.Partial("_AdminLteLeftMenu")
-        <!-- Content Wrapper. Contains page content -->
+        @{ bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+         if (val1)
+         {
+                    @Html.Partial("_AdminLteTopMenu")
+                    <!-- Left side column. contains the logo and sidebar -->
+                    @Html.Partial("_AdminLteLeftMenu")
+                    <!-- Content Wrapper. Contains page content -->
+         }
+         else
+         {
+            <p>no</p>
+         }
+         }
+
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
