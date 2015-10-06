@@ -1,0 +1,178 @@
+﻿@using userprofile.Models;
+@model Tuple<AspNetUser>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                       @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-warning pull-right" })
+                    }
+                    else if (User.Identity.Name == Model.Item1.UserName)
+                    {
+                        <a class=" btn btn-block btn-success" href='@Url.Action("SelfEdit", "Account")'><b>Edit my details</b></a>
+                    }
+                }
+                
+                <div class="fa fa-angle-left">
+                    @Html.ActionLink(" Back to users", "Index")
+                </div>
+                <hr />
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Item1.UserName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.UserName)
+
+                    </dd>
+
+                    <dt>
+                        <b>Name </b>
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.firstName) @Html.DisplayFor(model => model.Item1.lastName)
+                    </dd>
+
+                    <dt>
+                        <b>ffa# if applicable</b>
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.ffaNum)
+
+                    </dd>
+                    
+                        @{
+                            if(Model.Item1.willingToshowEmail || User.IsInRole("Admin")){
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Item1.email)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Item1.email)
+                                </dd>
+                            }
+                        }
+                                        
+                        @{
+                            if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
+                            {
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Item1.phoneNum)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Item1.phoneNum)
+                                </dd>
+                            }
+                        }
+                  
+                        @{
+                            if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
+                            {
+                                <dt>
+                                    @Html.DisplayFor(model => model.Item1.dob)
+                                </dt>
+                                <dd>
+                                     @Html.DisplayFor(model => model.Item1.dob)
+                                </dd>
+                            }
+                        }
+                                       
+                </dl>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>Referee Id</th>
+                                <th>Referee Name</th>
+
+                                <th>
+
+                                    Type
+
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*foreach (var item in Model.Item2)
+                            {
+
+                                if (item.status == 4 || item.status == 5)
+                                {
+                                    <tr>
+                                        <td>
+                                            NULL
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Edit", "offer", new { id = item.offerId })">
+                                                No referee set yet - placeholder for link to go to assigning a ref to this offer
+                                            </a>
+
+                                        </td>
+                                        <td>
+                                            @item.typeOfOffer
+                                        </td>
+                                        <td>
+                                            @item.status
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
+                                                @item.refId
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.REFEREE.AspNetUser.firstName
+                                        @item.REFEREE.AspNetUser.lastName
+                                    </td>
+
+                                    <td>
+                                        @item.typeOfOffer
+                                    </td>
+                                    <td>
+                                        @item.status
+                                    </td>
+                                </tr>
+                                }
+                            }*@
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

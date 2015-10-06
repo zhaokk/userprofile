@@ -116,6 +116,26 @@ namespace userprofile.Controllers
             return View(model);
         }
 
+        public ActionResult Details(String id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            } 
+            var db = new Raoconnection();
+
+
+            var user = db.AspNetUsers.First(u => u.UserName == id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var combined = new Tuple<AspNetUser>(user) { };
+
+            return View(combined);
+        }
+
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

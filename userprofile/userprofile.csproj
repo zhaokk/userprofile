@@ -1051,6 +1051,7 @@
     <Content Include="Views\Shared\_LayoutForAnyone.cshtml" />
     <Content Include="Views\match\History.cshtml" />
     <Content Include="Views\Home\IndexForAnyone.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
