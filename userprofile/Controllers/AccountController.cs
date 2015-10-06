@@ -306,6 +306,7 @@ namespace userprofile.Controllers
 
 
 
+
             if (ModelState.IsValid)
             {
                 var user = model.GetUser();
@@ -371,10 +372,27 @@ namespace userprofile.Controllers
 
                         //  await SignInAsync(user, isPersistent: false);
 
-                        return RedirectToAction("Index", "Account");
+
+                        bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                     if (val1) //is logged in
+                     {
+                         return RedirectToAction("Index", "Account");
+                     }
+                     else //not logged in, log them in
+                     {
+                         LoginViewModel lvm = new LoginViewModel();
+                         lvm.Password = model.Password;
+                         lvm.UserName = model.UserName;
+                         lvm.RememberMe = true;
+                         await Login(lvm, "/Account/Index");
+                         //return RedirectToAction("Index", "Account");
+                     }
+
+                        
                     }
                     else
                     {
+                        System.Diagnostics.Debug.WriteLine(result.ToString());
                         AddErrors(result);
                     }
                 }
@@ -382,12 +400,23 @@ namespace userprofile.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        public ActionResult showProfile(string id) { 
-         var db=new ApplicationDbContext();
-            
-            var user=db.Users.First(u=>u.UserName==id);
-            var model=new logindetialViewModel(user);
-            return View(model);
+        public ActionResult showProfile(string id)
+        {
+            var db = new ApplicationDbContext();
+
+
+            bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (val1) //is logged in
+            {
+                var user = db.Users.First(u => u.UserName == id);
+                var model = new logindetialViewModel(user);
+                return View(model);
+            }
+            else //not logged in
+            {
+                
+            }
+            return View();
         }
 
         private Boolean checkUsername(String name)

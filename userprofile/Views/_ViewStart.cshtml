@@ -1,11 +1,18 @@
 ﻿@{
-    if (User.IsInRole("Admin")) { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }else
+    Boolean roleSet = false;
+    if (User.IsInRole("Admin")) { 
+        Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
+        roleSet = true;
+    }
     if (User.IsInRole("Referee"))
     {
        
         Layout = "~/Views/shared/_LayoutForRE.cshtml";
+        roleSet = true;
 
     }
-    else { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
+    if(!roleSet) { 
+        Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
+    }
     
 }

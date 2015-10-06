@@ -31,7 +31,7 @@ namespace userprofile.Controllers
                 }
             else
             {
-                return View();
+                return RedirectToAction("IndexForAnyone", "home");
             }
 
         }
@@ -41,6 +41,13 @@ namespace userprofile.Controllers
             admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
             return View(aOVM);
         }
+
+        public ActionResult IndexForAnyone()
+        {
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

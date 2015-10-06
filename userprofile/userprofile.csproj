@@ -1048,6 +1048,9 @@
     <Content Include="Views\OneOffAVAILABILITies\Index.cshtml" />
     <Content Include="Views\match\manageOffer2.cshtml" />
     <Content Include="Views\Account\RegisterNew.cshtml" />
+    <Content Include="Views\Shared\_LayoutForAnyone.cshtml" />
+    <Content Include="Views\match\History.cshtml" />
+    <Content Include="Views\Home\IndexForAnyone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

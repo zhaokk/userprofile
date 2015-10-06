@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Register";
 }
+@{  Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
+   
+}
 
 <div class="row">
     <div class="col-sm-12">
@@ -10,16 +13,6 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="box-body">
-                    @{ bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                     if (val1)
-                     {
-                        <p>yes</p>
-                     }
-                     else
-                     {
-                        <p>no</p>
-                     }
-                    }
                     <hr />
                     @*@Html.ValidationSummary()*@
                     <div class="row">
@@ -87,7 +80,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.ffa, new { @class = "col-md-2 control-label" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(m => m.ffa, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.ffa, new { @class = "form-control" , default_value = "5" })
                                     @Html.ValidationMessageFor(m => m.ffa)
                                 </div>
                             </div>

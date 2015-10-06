@@ -10,14 +10,6 @@
             {
                 @Html.AntiForgeryToken()                        
                 <div class="box-body">
-                   @{ bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                    if(val1){
-                     <p>yes</p>
-                    }
-                    else{
-                        <p>no</p>
-                    }
-                    }
                     <hr />
                     @*@Html.ValidationSummary()*@
                     <div class="row">
@@ -50,7 +42,7 @@
                     @Html.TextBoxFor(m => m.country, new { @class = "form-control" })
                 </div>
             </div>*@
-                        <div class="form-group row" hidden>
+                        <div class="form-group row" >
                             @Html.LabelFor(m => m.dob, new { @class = "col-md-2 control-label" })
 
                             <div class="col-md-10">

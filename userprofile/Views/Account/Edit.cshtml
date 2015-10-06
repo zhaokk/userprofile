@@ -7,7 +7,14 @@
         Layout = "~/Views/shared/_LayoutForRE.cshtml";
 
     }
-    else { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
+    else if(User.IsInRole("Admin"))
+    { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
+
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
+    }
+    
     ViewBag.Title = "Edit User Page";
 }
 

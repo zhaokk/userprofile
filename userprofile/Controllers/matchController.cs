@@ -14,10 +14,20 @@ namespace userprofile.Controllers
     {
         private Raoconnection db = new Raoconnection();
 
-        // GET: /match/
+        // default is upcoming matches
         public ActionResult Index()
         {
-            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT);
+            DateTime thisDay = DateTime.Today;
+
+            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate > thisDay);
+            return View(matches.ToList());
+        }
+
+        public ActionResult History()
+        {
+            DateTime thisDay = DateTime.Today;
+
+            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate < thisDay);
             return View(matches.ToList());
         }
 

@@ -22,6 +22,7 @@ namespace userprofile.Models
             this.USERQUALs = new HashSet<USERQUAL>();
             this.OFFERs1 = new HashSet<OFFER>();
             this.LOCATIONs = new HashSet<LOCATION>();
+           // this.rating = 0;
         }
 
         [Display(Name = "referee Id")]
