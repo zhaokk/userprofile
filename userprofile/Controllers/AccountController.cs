@@ -126,12 +126,13 @@ namespace userprofile.Controllers
 
 
             var user = db.AspNetUsers.First(u => u.UserName == id);
+            var playerIn = db.PLAYERs.Where(teams => teams.userId == user.Id).ToList();
 
             if (user == null)
             {
                 return HttpNotFound();
             }
-            var combined = new Tuple<AspNetUser>(user) { };
+            var combined = new Tuple<AspNetUser, List<PLAYER>>(user, playerIn) { };
 
             return View(combined);
         }
