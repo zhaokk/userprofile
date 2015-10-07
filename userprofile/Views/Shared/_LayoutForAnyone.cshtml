@@ -109,12 +109,12 @@
                             <li>@Html.ActionLink("Match list", "Index", "match")</li>
                             <li>@Html.ActionLink("Team list", "Index", "team")</li>
                             @{ bool someoneLoggedIn = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                               if (someoneLoggedIn) //if someone is logged in
+                             if (someoneLoggedIn) //if someone is logged in
                              {
                                 <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
                              }
-                             }
-                            
+                            }
+
                         </ul>
 
                     </div><!-- /.navbar-collapse -->
@@ -123,7 +123,7 @@
                         <ul class="nav navbar-nav">
                             @{ if (someoneLoggedIn)
                              {
-                                    <li class="dropdown user user-menu">
+                                <li class="dropdown user user-menu">
                                     <a href=" #" class="dropdown-toggle" data-toggle="dropdown">
                                         @Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName() })
                                         Hello @User.Identity.GetUserName()
@@ -137,14 +137,22 @@
                                     </ul>
                                 </li>
                              }
-                             else
-                             {
-                                <a href="@Url.Action( "RegisterNew","Account", new {})">
-                                            Register
-                                        </a>
-                                <a href="/">
-                                            login
-                                        </a>
+                               else
+                               {
+                                <li class="dropdown user user-menu">
+                                    <a href="@Url.Action( "Index","Home")">
+
+                                        Click here to login
+
+                                    </a>
+
+
+                                </li>
+
+                                @*<a href="@Url.Action( "RegisterNew","Account", new {})">
+                                    Register
+                                </a>
+                                *@
                              }
                             }
 
