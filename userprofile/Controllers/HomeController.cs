@@ -28,7 +28,10 @@ namespace userprofile.Controllers
             else if (User.IsInRole("Admin")) {
                 return RedirectToAction("IndexforAd", "home");
 
-                }
+            }
+            else if (User.IsInRole("Organizer")) {
+                return RedirectToAction("IndexforOrg", "home");
+            }
             else
             {
                 return RedirectToAction("IndexForAnyone", "home");
@@ -41,7 +44,13 @@ namespace userprofile.Controllers
             admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
             return View(aOVM);
         }
+        public ActionResult IndexforOrg()
+        {
+            var userID = User.Identity.GetUserId();
+            OrgViewModels orgVM = new OrgViewModels(db, userID);
+            return View(orgVM);
 
+        }
         public ActionResult IndexForAnyone()
         {
 

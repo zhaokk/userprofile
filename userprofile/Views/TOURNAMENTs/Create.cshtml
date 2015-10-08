@@ -26,6 +26,7 @@
             @Html.LabelFor(model => model.startDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.startDate)
+
                 @Html.ValidationMessageFor(model => model.startDate)
             </div>
         </div>
@@ -62,21 +63,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.status)
-                @Html.ValidationMessageFor(model => model.status)
-            </div>
-        </div>
+   
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.priority)
                 @Html.ValidationMessageFor(model => model.priority)
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -89,3 +84,16 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    $(function () {
+        $('input[name="startDate"]').daterangepicker({
+            singleDatePicker: true,
+            timePicker: false,
+            
+            locale: {
+                format: 'DD/MM/YYYY '
+            }
+        });
+    });
+
+</script>

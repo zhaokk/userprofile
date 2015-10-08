@@ -236,6 +236,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\OFFER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1042,9 +1043,11 @@
     <Content Include="Views\PLAYERs\Details.cshtml" />
     <Content Include="Views\PLAYERs\Edit.cshtml" />
     <Content Include="Views\PLAYERs\Index.cshtml" />
+    <Content Include="Views\Home\IndexforOrg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\" />
   </ItemGroup>
   <ItemGroup>

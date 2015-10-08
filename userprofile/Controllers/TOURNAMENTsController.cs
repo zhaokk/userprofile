@@ -52,6 +52,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "tournamentId,name,startDate,organizer,ageBracket,grade,sport,status,priority")] TOURNAMENT tOURNAMENT)
         {
+            tOURNAMENT.status = 1;
             if (ModelState.IsValid)
             {
                 db.TOURNAMENTs.Add(tOURNAMENT);
