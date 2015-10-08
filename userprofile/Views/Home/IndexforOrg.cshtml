@@ -1,1 +1,135 @@
-﻿
+﻿@model userprofile.Models.OrgViewModels
+@{
+    ViewBag.Title = "Home Page";
+    
+}
+
+
+    
+    @if (ViewBag.Massage != "")
+    {
+        <h1>@ViewBag.Massage</h1>
+    }
+    else {
+        
+<script>
+            $(function () {
+                $("#example3").DataTable();
+                $("#example1").DataTable();
+                $('#example2').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false
+                });
+            });
+</script>
+       
+    <section class="content">
+        <div class="row">
+            <div class="box-primary">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>
+                                        Tournament Name
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Organizer
+                                    </th>
+                                    <th>
+                                        Sport
+                                    </th>
+                                    <th>
+                                        Grade
+                                    </th>
+                                    <th>
+                                        Priority
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tournament in @Model.otherTs)
+                                {
+                                    <tr>
+                                        <th>
+                                           @tournament.name
+                                        </th>
+                                        
+                                        <th>
+                                            @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                           @tournament.organizer
+                                        </th>
+                                        <th>
+                                           @tournament.sport
+                                        </th>
+                                        <th>
+                                            @tournament.grade
+                                        </th>
+                                        <th>
+                                            @tournament.priority
+                                        </th>
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                           
+                            </table>
+
+                        </div>
+                            
+                    </div>
+                </div>
+
+</div>
+    </section><!-- /.content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+            

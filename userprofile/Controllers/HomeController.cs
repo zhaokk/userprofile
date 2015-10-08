@@ -47,9 +47,16 @@ namespace userprofile.Controllers
         public ActionResult IndexforOrg()
         {
             var userID = User.Identity.GetUserId();
-            OrgViewModels orgVM = new OrgViewModels(db, userID);
-            return View(orgVM);
-
+            if (db.TOURNAMENTs.FirstOrDefault(t => t.organizer == userID) == null) {
+                ViewBag.Massage = "you are not managing any tournament";
+                return View();
+            }
+         
+            else
+            {
+                OrgViewModels orgVM = new OrgViewModels(db, userID);
+                return View(orgVM);
+            }
         }
         public ActionResult IndexForAnyone()
         {
