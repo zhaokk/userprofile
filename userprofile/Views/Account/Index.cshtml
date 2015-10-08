@@ -54,12 +54,13 @@
                             <td>
 
                                 
-                                    @Html.DisplayFor(modelItem => item.UserName)
+                                    
                                 
-                                @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+                                <a href="@Url.Action("Details", new { id = item.UserName })">
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                    </a>
 
-
-                            </td>
+</td>
                             @*<td>
                         @Html.DisplayFor(modelItem => item.winnerID)
                     </td>*@
