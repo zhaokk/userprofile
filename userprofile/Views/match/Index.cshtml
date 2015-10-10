@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<userprofile.Models.MATCH>
 
 @{
-   
+
     ViewBag.Title = "Match Management";
-    
+
 }
 
 
@@ -22,19 +22,25 @@
 </script>
 
 
-   
-    <div class="row">
-        
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="table-responsive">
+
+<div class="row">
+
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>Match Length</th>
+
+                                <th>
+                                    Match ID
+
+                                </th>
                                 <th>
                                     @*@Html.DisplayNameFor(model => model.matchDate)*@
                                     Match Date
@@ -50,21 +56,27 @@
                                     Location
                                 </th>
                                 <th>
-                                       Home Team
-                                    
+                                    Age
                                 </th>
                                 <th>
-                                        Away Team
+                                    Grade
                                 </th>
                                 <th>
-                                        Sport
+                                    Home Team
+
+                                </th>
+                                <th>
+                                    Away Team
+                                </th>
+                                <th>
+                                    Sport
                                 </th>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <th></th>
                                 }
 
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -72,15 +84,21 @@
                             {
                                 <tr>
                                     <td>
-                                       
+                                        @Html.DisplayFor(modelItem => item.matchId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.matchLength)
+                                    </td>
+                                    <td>
+
                                         <a href="@Url.Action( "Details", new { id = item.matchId })">
-                                        @Html.DisplayFor(modelItem => item.matchDate)
-                                    </a>
-                                       
+                                            @Html.DisplayFor(modelItem => item.matchDate)
+                                        </a>
+
                                         @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-   
-                                        
-</td>
+
+
+                                    </td>
                                     @*<td>
                                             @Html.DisplayFor(modelItem => item.winnerID)
                                         </td>*@
@@ -88,70 +106,77 @@
                                         <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
                                             @Html.DisplayFor(modelItem => item.LOCATION.name)
                                         </a>
-</td>
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.ageBracket)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.grade)
+                                    </td>
                                     <td>
                                         <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
                                             @Html.DisplayFor(modelItem => item.TEAM.name)
                                         </a>
-</td>
+                                    </td>
                                     <td>
                                         <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
                                             @Html.DisplayFor(modelItem => item.TEAM1.name)
                                         </a>
-</td>
+                                    </td>
                                     <td>
-                                            @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
 
-</td>
-									
-										
-									@if (User.IsInRole("Admin"))
+                                    </td>
+
+
+                                    @if (User.IsInRole("Admin"))
                                     {
                                         <td>
                                             @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
                                             @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
                                         </td>
                                     }
-                              
-                                   
+
+
                                 </tr>
                             }
                         </tbody>
 
                     </table>
-                    </div>
-                </div><!-- /.box-body -->
-               
-            </div><!-- /.box -->
+                </div>
+            </div><!-- /.box-body -->
 
-        </div><!-- /.col -->
-		
-<div class="col-xs-6 col-sm-4">
-    @*<div class="progress progress-sm active" id="processbar" hidden>
-        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-            <span class="sr-only">40% Complete</span>
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+
+    <div class="col-xs-6 col-sm-4">
+        @*<div class="progress progress-sm active" id="processbar" hidden>
+                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete</span>
+                </div>
+            </div>*@
+        <div class="btn-group">
+            @*<div class="btn btn-block btn-primary btn-file" id="buttongroup_import">
+                    <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Import Excel
+                    <input id="input-4" type="file"  onchange="uploadFile();">
+                </div>*@
+
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class=" btn btn-block btn-success" href='@Url.Action("Create","match")'><b>Create New Match</b></a>
+            }
+
+            <a class=" btn btn-block btn-success" href='@Url.Action("History","match")'><b>Match History</b></a>
         </div>
-    </div>*@
-			<div class="btn-group">
-        @*<div class="btn btn-block btn-primary btn-file" id="buttongroup_import">
-            <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Import Excel
-            <input id="input-4" type="file"  onchange="uploadFile();">
-        </div>*@
+    </div>
 
+    <div class="col-xs-6">
 
-                @if (User.IsInRole("Admin"))
-                {
-				    <a class=" btn btn-block btn-success" href='@Url.Action("Create","match")'><b>Create New Match</b></a>
-                }
-
-                <a class=" btn btn-block btn-success" href='@Url.Action("History","match")'><b>Match History</b></a>
-			</div>
-		</div>
-  
-<div class="col-xs-6">
-
-</div>
-    </div><!-- /.row -->
+    </div>
+</div><!-- /.row -->
 
 <script>
     //$(document).on('ready', function () {
@@ -173,26 +198,24 @@
     //}
 
     function uploadFile() {
-     //   myApp(); //show dialog
+        //   myApp(); //show dialog
         var file = document.getElementById('input-4').files[0];
         var formData = new FormData();
         formData.append("file_name", file);
-        formData.append("type","user")
+        formData.append("type", "user")
         ajax = new XMLHttpRequest();
-        
-        ajax.onreadystatechange=function()
-        {
-            if (ajax.readyState == 4 && ajax.status == 200)
-            {
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
                 document.getElementById("myDiv").innerHTML = ajax.responseText;
             }
         }
 
-     //   ajax.upload.addEventListener("progress", progressHandler, false);
-    //    ajax.addEventListener("load", completeHandler, false);
+        //   ajax.upload.addEventListener("progress", progressHandler, false);
+        //    ajax.addEventListener("load", completeHandler, false);
         ajax.open("POST", "/ExcelManagement/importXml");
         ajax.send(formData);
-        
+
     }
 
     //function progressHandler(event) {
