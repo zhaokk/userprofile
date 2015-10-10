@@ -1,4 +1,5 @@
-﻿@using userprofile.Models;
+﻿@using userprofile.Models
+@using Microsoft.AspNet.Identity
 @model Tuple<AspNetUser, List<PLAYER>>
 
 
@@ -21,82 +22,115 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                @{
-                    if (User.IsInRole("Admin"))
-                    {
-                       @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-warning pull-right" })
-                    }
-                    else if (User.Identity.Name == Model.Item1.UserName)
-                    {
-                        <a class=" btn btn-block btn-success" href='@Url.Action("SelfEdit", "Account")'><b>Edit my details</b></a>
-                    }
-                }
-                
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to users", "Index")
-                </div>
                 <hr />
-
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Item1.UserName)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Item1.UserName)
-
-                    </dd>
-
-                    <dt>
-                        <b>Name </b>
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Item1.firstName) @Html.DisplayFor(model => model.Item1.lastName)
-                    </dd>
-
-                    <dt>
-                        <b>ffa# if applicable</b>
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Item1.ffaNum)
-
-                    </dd>
+                @{
+                    if (User.Identity.Name == Model.Item1.UserName)
                     
-                        @{
-                            if(Model.Item1.willingToshowEmail || User.IsInRole("Admin")){
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Item1.email)
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.Item1.email)
-                                </dd>
-                            }
-                        }
-                                        
-                        @{
-                            if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
+                    {
+                        
+                     @Html.ActionLink("Edit my details", "SelfEdit", "Account", new { @class = "btn btn-success pull-right" })
+                     @Html.ActionLink("Change password", "Manage", "Account", new { id = User.Identity.GetUserName() }, new { @class = "btn btn-warning pull-right" })
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+
+                     @Html.ActionLink("Change password", "Manage", "Account", new { id = User.Identity.GetUserName() }, new { @class = "btn btn-warning pull-right" })
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-info pull-right" })
+                    <div class="fa fa-angle-left">
+                        @Html.ActionLink(" Back to users", "Index")
+                    </div>
+                    }
+}
+                
+              
+               
+                <div class="row">
+                    <div class="col-lg-6">
+                        <dl class="dl-horizontal">
+                            @if (User.IsInRole("Admin"))
                             {
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Item1.phoneNum)
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>   UserRole
                                 </dt>
                                 <dd>
-                                    @Html.DisplayFor(model => model.Item1.phoneNum)
+                                   <span class="label label-success">Admin</span>
                                 </dd>
                             }
-                        }
-                  
-                        @{
-                            if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
+                            else if (User.IsInRole("Referee"))
                             {
-                                <dt>
-                                    @Html.DisplayFor(model => model.Item1.dob)
-                                </dt>
-                                <dd>
-                                     @Html.DisplayFor(model => model.Item1.dob)
-                                </dd>
+
+
                             }
-                        }
-                                       
-                </dl>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Item1.UserName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Item1.UserName)
+
+                            </dd>
+
+                            <dt>
+                                <b>Name </b>
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Item1.firstName) @Html.DisplayFor(model => model.Item1.lastName)
+                            </dd>
+
+                            <dt>
+                                <b>ffa# if applicable</b>
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Item1.ffaNum)
+
+                            </dd>
+
+                            @{
+                                if (Model.Item1.willingToshowEmail || User.IsInRole("Admin"))
+                                {
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Item1.email)
+                                    </dt>
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Item1.email)
+                                    </dd>
+                                }
+                            }
+
+                            @{
+                                if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
+                                {
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Item1.phoneNum)
+                                    </dt>
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Item1.phoneNum)
+                                    </dd>
+                                }
+                            }
+
+                            @{
+                                if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
+                                {
+                                    <dt>
+                                        @Html.DisplayFor(model => model.Item1.dob)
+                                    </dt>
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Item1.dob)
+                                    </dd>
+                                }
+                            }
+
+              
+
+                        </dl>
+                    </div>
+                        <div class="col-lg-6">
+                       
+                        </div>
+
+
+                        
+                    </div>
             </div>
         </div>
 
@@ -135,7 +169,7 @@
                                         </tr>
                                     }
                                 
-                                }
+                               
                             }
                         </tbody>
                     </table>

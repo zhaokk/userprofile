@@ -6,7 +6,7 @@
         @Html.AntiForgeryToken()
 
 
-
+   
         <div class="user-panel">
 
             <div class="pull-left image">
@@ -16,11 +16,13 @@
             </div>
 
             <div class="pull-left info">
-                <p>Hello @Html.ActionLink(User.Identity.GetUserName(), "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</p>
-                <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
-            </div>
+                <a href="@Url.Action("Details", new { id = User.Identity.GetUserName()})">
+                    <p>Hello @Html.ActionLink(User.Identity.GetUserName(), "Details", "Account", new { id = User.Identity.GetUserName() })</p>
+                </a>
+                    <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
+</div>
         </div>
-
+       
     }
 }
 else
