@@ -1,0 +1,91 @@
+﻿@model IEnumerable<userprofile.Models.PLAYER>
+
+@{
+    ViewBag.Title = "Players Detail";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+
+
+<div class="row">
+
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.position)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.shirtNum)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TEAM.name)
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.position)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.shirtNum)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TEAM.name)
+                                    </td>
+                                    <td>
+                                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+</div>
+</div>
+</div>
+        <div class="col-md-2">
+            @if (User.IsInRole("Admin"))
+            {
+                <a class=" btn btn-block btn-success" href='@Url.Action("Create","Player")'><b>Create New Player</b></a>
+            }
+        </div>
+</div>
+
+    
+   
+</div>
+
+
+
+    

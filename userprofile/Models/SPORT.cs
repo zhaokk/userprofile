@@ -11,27 +11,20 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class SPORT
     {
         public SPORT()
         {
-            this.OFFERs = new HashSet<OFFER>();
             this.QUALIFICATIONS = new HashSet<QUALIFICATION>();
-            this.REFEREEs = new HashSet<REFEREE>();
             this.TEAMs = new HashSet<TEAM>();
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
         }
-
-        [Display(Name = "Sport")]
+    
         public string name { get; set; }
-        [Display(Name = "Status")]
         public int status { get; set; }
     
-        public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual ICollection<QUALIFICATION> QUALIFICATIONS { get; set; }
-        public virtual ICollection<REFEREE> REFEREEs { get; set; }
         public virtual ICollection<TEAM> TEAMs { get; set; }
         public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
     }

@@ -18,11 +18,19 @@
 
                         <hr />
                         @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.sport)
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.name)
                                 @Html.ValidationMessageFor(model => model.name)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.shortName, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.shortName)
+                                @Html.ValidationMessageFor(model => model.shortName)
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,8 +53,7 @@
                                 @Html.DropDownList("managerId", String.Empty)
                                 @Html.ValidationMessageFor(model => model.managerId)
                             </div>
-                        </div>
-                      
+                        </div>                     
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Create" class="btn btn-success" />

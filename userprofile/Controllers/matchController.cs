@@ -10,7 +10,7 @@ using userprofile.Models;
 
 namespace userprofile.Controllers
 {
-    public class matchController : Controller
+    public class MatchController : Controller
     {
         private Raoconnection db = new Raoconnection();
 
@@ -19,7 +19,7 @@ namespace userprofile.Controllers
         {
             DateTime thisDay = DateTime.Today;
 
-            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate > thisDay);
+            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate > thisDay).Where(match => match.status >0);
             return View(matches.ToList());
         }
 
@@ -27,7 +27,7 @@ namespace userprofile.Controllers
         {
             DateTime thisDay = DateTime.Today;
 
-            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate < thisDay);
+            var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate < thisDay).Where(match => match.status > 0);
             return View(matches.ToList());
         }
 
@@ -50,13 +50,13 @@ namespace userprofile.Controllers
             return View(combined);
         }
 
-        // GET: /match/Create
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             return View();
@@ -67,41 +67,44 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create(MmatchViewModel matchVM)
         {
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             var param1 = this.Request.QueryString["offers"];
             // matchVM.createdMatch.matchDate = (System.DateTime)matchVM.createdMatch.matchDate;
             if (ModelState.IsValid)
             { 
-                MATCH newMacth = matchVM.createdMatch;
-                string matchsport=db.TOURNAMENTs.Find(newMacth.tournamentId).sport;
-                foreach (var newoffer in matchVM.offers) {
-                    OFFER nOffer = new OFFER();
-                    nOffer.sport = matchsport;
-                    nOffer.typeOfOffer = newoffer.type;
-                    nOffer.OFFERQUALs.Add(new OFFERQUAL() {qualificationId=newoffer.q,qualLevel=newoffer.level});
-                    nOffer.dateOfOffer = System.DateTime.Now;
-                    nOffer.status = 4;
-                    nOffer.refId = null;
-                    //                    Status
-                    //0 Deactivated/Cancelled
-                    //1 Referee Assigned & Pending
-                    //2 Referee Assigned & Accepted
-                    //3 Referee Assigned & Declined
-                    //4 Algorithm to Assign
-                    //5 Unassigned
 
-                    newMacth.OFFERs.Add(nOffer);
+                MATCH newMatch = matchVM.createdMatch;
+                newMatch.status = 1;
+                if (matchVM.offers != null && matchVM.offers.Length > 0)
+                { 
+                    foreach (var newoffer in matchVM.offers) {
+                        OFFER nOffer = new OFFER();
+                        nOffer.typeOfOffer = newoffer.type;
+                        nOffer.OFFERQUALs.Add(new OFFERQUAL() {qualificationId=newoffer.q,qualLevel=newoffer.level});
+                        nOffer.dateOfOffer = System.DateTime.Now;
+                        nOffer.status = 4;
+                        nOffer.refId = null;
+                        //                    Status
+                        //0 Deactivated/Cancelled
+                        //1 Referee Assigned & Pending
+                        //2 Referee Assigned & Accepted
+                        //3 Referee Assigned & Declined
+                        //4 Algorithm to Assign
+                        //5 Unassigned
+
+                        newMatch.OFFERs.Add(nOffer);
+                    }
                 }
-               
-             
-                db.MATCHes.Add(newMacth);
+
+                db.MATCHes.Add(newMatch);
 
                 //add exception catch here to skip return for date check
                 db.SaveChanges();
@@ -112,13 +115,14 @@ namespace userprofile.Controllers
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name", matchVM.createdMatch.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamBId);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", matchVM.createdMatch.tournamentId);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name", matchVM.createdMatch.tournamentId);
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             return View(matchVM);
         }
 
   
         [HttpGet]
+        [Authorize(Roles = "Admin,Organizer,Assignor")]
         public ActionResult manageOffer(int? id)
         {
             if (id != null)
@@ -164,6 +168,7 @@ namespace userprofile.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult manageOffer() {
           var i=0;
             while(i<3){
@@ -201,7 +206,6 @@ namespace userprofile.Controllers
                        newof.typeOfOffer = typename;
                        newof.dateOfOffer = System.DateTime.Now;
                        newof.matchId = mid;
-                       newof.sport = "soccer";
                        db.OFFERs.Add(newof);
                    }
               }
@@ -212,7 +216,6 @@ namespace userprofile.Controllers
                   newof.refId = 63699895;
                   newof.dateOfOffer = System.DateTime.Now;
                   newof.matchId = mid;
-                  newof.sport = db.MATCHes.Find(mid).TOURNAMENT.sport;
                   db.OFFERs.Add(newof);
 
               }
@@ -223,7 +226,7 @@ namespace userprofile.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin,Organizer")]
         [HttpGet]
         public ActionResult manageOffer2(int? id)
         {
@@ -278,6 +281,8 @@ namespace userprofile.Controllers
                 return RedirectToAction("index", "match");
             }
         }
+
+        [Authorize(Roles = "Admin,Organizer")]
         [HttpPost]
         public ActionResult manageOffer2()
         {
@@ -335,7 +340,6 @@ namespace userprofile.Controllers
                             newof.typeOfOffer = typename;
                             newof.dateOfOffer = System.DateTime.Now;
                             newof.matchId = mid;
-                            newof.sport = "soccer";
                             newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
                             db.OFFERs.Add(newof);
                         }
@@ -349,7 +353,6 @@ namespace userprofile.Controllers
                         newof.dateOfOffer = System.DateTime.Now;
                         newof.matchId = mid;
                         newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
-                        newof.sport = db.MATCHes.Find(mid).TOURNAMENT.sport;
                         db.OFFERs.Add(newof);
 
                     }
@@ -362,6 +365,7 @@ namespace userprofile.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,Organizer")]
         // GET: /match/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -377,7 +381,7 @@ namespace userprofile.Controllers
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "name", match.tournamentId);
             return View(match);
         }
 
@@ -386,7 +390,8 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "matchId,matchDate,locationId,teamaId,teambId,teamAScore,teamBScore,winnerId,tournamentId,matchLength")] MATCH match)
+        [Authorize(Roles = "Admin,Organizer")]
+        public ActionResult Edit([Bind(Include = "matchId,matchDate,locationId,teamaId,teambId,teamAScore,teamBScore,status,tournamentId,matchLength,halfTimeDuration,countsToDraw")] MATCH match)
         {
             if (ModelState.IsValid)
             {
@@ -397,11 +402,11 @@ namespace userprofile.Controllers
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "name", match.tournamentId);
             return View(match);
         }
 
-        // GET: /match/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -413,30 +418,29 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            if (match.OFFERs.Count() != 0) { 
-             ViewBag.error = "this match cant be delete because there are related offers";
-             return View(match);
-            }
             return View(match);
         }
 
-        // POST: /match/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             MATCH match = db.MATCHes.Find(id);
-            if (match.OFFERs.Count() == 0)
+
+            var offersToHide = db.OFFERs.Where(offer => offer.matchId == id);
+
+            foreach (OFFER offers in offersToHide)
             {
-                db.MATCHes.Remove(match);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                offers.status = 0;
+                db.Entry(offers).State = EntityState.Modified;
             }
-            else
-            {
-                ViewBag.error = "this match cant be delete because there are related offers";
-                return View(match);
-            }
+
+            match.status= 0;
+            db.Entry(match).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

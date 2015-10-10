@@ -17,7 +17,7 @@ namespace userprofile.Controllers
         // GET: /offer/
         public ActionResult Index()
         {
-            var offers = db.OFFERs.Include(o => o.MATCH).Include(o => o.REFEREE).Include(o => o.SPORT1);
+            var offers = db.OFFERs.Include(o => o.MATCH).Include(o => o.REFEREE).Where(offer => offer.status > 0);
             return View(offers.ToList());
         }
 
@@ -60,7 +60,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Create([Bind(Include = "offerID,matchId,refID,status,dateOfOffer,declinedReason,priority,status")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +71,6 @@ namespace userprofile.Controllers
 
             ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
             ViewBag.refId = new SelectList(db.REFEREEs, "refID", "availability", offer.refId);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
 
@@ -89,7 +88,6 @@ namespace userprofile.Controllers
             }
             ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
             ViewBag.refId = new SelectList(db.REFEREEs, "refId", "refId", offer.refId);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
 
@@ -98,7 +96,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "offerID,sport,matchId,refID,status,dateOfOffer")] OFFER offer)
+        public ActionResult Edit([Bind(Include = "offerID,matchId,refID,status,dateOfOffer,declinedReason,priority,status")] OFFER offer)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +106,6 @@ namespace userprofile.Controllers
             }
             ViewBag.matchId = new SelectList(db.MATCHes, "matchId", "matchId", offer.matchId);
             ViewBag.refId = new SelectList(db.REFEREEs, "refId", "availability", offer.refId);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", offer.sport);
             return View(offer);
         }
 
@@ -133,7 +130,8 @@ namespace userprofile.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             OFFER offer = db.OFFERs.Find(id);
-            db.OFFERs.Remove(offer);
+            offer.status = 0;
+            db.Entry(offer).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         

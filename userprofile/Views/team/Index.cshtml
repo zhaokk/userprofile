@@ -56,20 +56,15 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
-                        {
+                            {
                         <tr>
                             <td>
-
                                 <a href="@Url.Action("Details", new { id = item.teamId })">
                                     @Html.DisplayFor(modelItem => item.name)
                                 </a>
-                                @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
-
 
                             </td>
-                            @*<td>
-                        @Html.DisplayFor(modelItem => item.winnerID)
-                    </td>*@
+
                             <td>
                                 @Html.DisplayFor(modelItem => item.ageBracket)
                             </td>
@@ -80,17 +75,24 @@
                                 @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
                                   @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
                             </td>
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.managerId)
-                            </td>*@
 
                             
-@if (User.IsInRole("Admin"))
-{
-    <td>
-        @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
-    </td>
-}
+                        @{
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.teamId }, new { @class = "btn btn-warning pull-right" })
+
+                                    </td>
+                                }
+                                else if (User.Identity.Name == item.AspNetUser.UserName)
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.teamId }, new { @class = "btn btn-warning pull-right" })
+                                    </td>
+                                }
+                        }
     
                         </tr>
                         }

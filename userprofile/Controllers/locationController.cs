@@ -36,6 +36,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /location/Create
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create([Bind(Include="locationId,name,price,street,city,postcode,country,phoneNum,state")] LOCATION location)
         {
             Boolean shouldFail = false;
@@ -53,18 +55,19 @@ namespace userprofile.Controllers
             {
 
                 //check that the name + address is unique
-            /*    if (!checkUnique(location.geogCol2, location.name))
+                if (!checkUnique(location.geogCol2, location.name))
                 {
                     ModelState.AddModelError("Location", "this location alredy exists");
                     shouldFail = true;
                 }
                 if (!shouldFail)
-                {*/
-                    location.country = "Australia"; //### should not hard code here, edit later on
+                {
+                    //location.country = "Australia"; //### should not hard code here, edit later on
+                    location.status = 1;
                     db.LOCATIONs.Add(location);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                //}
+                }
             }
 
             return View(location);
@@ -73,6 +76,7 @@ namespace userprofile.Controllers
 
 
         // GET: /location/Edit/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,12 +96,13 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit([Bind(Include = "locationId,name,price,street,city,country,postcode,phoneNum,state")] LOCATION location)
         {
             Boolean shouldFail = false;
             if (ModelState.IsValid)
             {
-     /*           var loc = db.LOCATIONs.Find(location.locationId);
+                var loc = db.LOCATIONs.Find(location.locationId);
                 //check to see if we've kept the old name or address
                 if (loc.name != location.name || loc.geogCol2 != location.geogCol2)
                 {
@@ -110,12 +115,12 @@ namespace userprofile.Controllers
                 }
 
                  if (!shouldFail)
-                 {*/
+                 {
                      location.country = "Australia";
                      db.Entry(location).State = EntityState.Modified;
                      db.SaveChanges();
                      return RedirectToAction("Index");
-                // }
+                 }
             }
             return View(location);
         }
@@ -133,6 +138,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /location/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -148,6 +154,7 @@ namespace userprofile.Controllers
         }
 
         // POST: /location/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,5 +1,5 @@
 ﻿@using userprofile.Models;
-@model Tuple<AspNetUser, List<PLAYER>>
+@model Tuple<AspNetUser, List<PLAYER>, List<TEAM>, List<TOURNAMENT>>
 
 
 <script type="text/javascript">
@@ -104,6 +104,7 @@
         @if (Model.Item2.Count > 0)
         { //if there is no team data, don't display the table
 
+            <h1>Plays in these teams</h1>
         <div class="box">
             <div class="box-body">
                 <div class="table-responsive">
@@ -143,6 +144,132 @@
 
             </div>
         </div>    
+        }
+        @if (Model.Item3.Count > 0)
+        { //if there is no teamManagement data, don't display the table
+
+            <h1>Manages these teams</h1>
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tournament</th>
+                                    <th>Tournament Date</th>
+                                    <th>Sport</th>
+                                    <th>Team Name</th>
+                                    <th>grade</th>
+                                    <th>Age bracket</th>
+                                    <th>Points</th>
+                                    <th>Losses</th>
+                                    <th>Draws</th>
+                                    <th>Wins</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{foreach (var item in Model.Item3)
+                                {
+                                    foreach (var team in item.TEAMINS) //make sure to display all instances they play too
+                                    {
+                                        <tr>
+                                        <td>
+                                            <a href="@Url.Action("Details", "Tournament", new { id = team.tournament })">
+                                                @team.TOURNAMENT1.name
+                                            </a>
+
+                                        </td>
+                                        <td>
+                                                @team.TOURNAMENT1.startDate
+                                        </td>
+                                        <td>
+                                            @team.TOURNAMENT1.sport
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Details", "team", new { id = item.teamId })">
+                                                @item.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.grade
+                                        </td>
+                                        <td>
+                                            @item.ageBracket
+                                        </td>
+                                        <td>
+                                           @team.points
+                                        </td>
+                                        <td>
+                                            @team.losses
+                                        </td>
+                                        <td>
+                                            @team.draws
+                                        </td>
+                                        <td>
+                                            @team.wins
+                                        </td>
+                                    </tr>
+                                    }
+
+
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        }
+        @if (Model.Item4.Count > 0)
+        { //if there is no team data, don't display the table
+
+            <h1>Runs these tournaments</h1>
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tournament</th>
+                                    <th>Start Date</th>
+                                    <th>Grade</th>
+                                    <th>Age Bracket</th>
+                                    <th>Sport</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{foreach (var item in Model.Item4)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("Details", "Tournament", new { id = item.tournamentId })">
+                                                @item.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.startDate
+                                        </td>
+                                        <td>
+                                            @item.grade
+                                        </td>
+                                        <td>
+                                            @item.ageBracket
+                                        </td>
+                                        <td>
+                                            @item.sport
+                                        </td>
+                                    </tr>
+
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
         }
 
     </div>

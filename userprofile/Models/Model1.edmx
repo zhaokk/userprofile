@@ -4,19 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="test2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+      <Schema Namespace="dbv9Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ADMINISTRATION">
           <Key>
-            <PropertyRef Name="refsCanViewOthers" />
-            <PropertyRef Name="refsCanSeeOtherGames" />
-            <PropertyRef Name="durationOfAlgorithm" />
-            <PropertyRef Name="algorithmAll" />
+            <PropertyRef Name="Lock" />
           </Key>
+          <Property Name="Lock" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="refsCanViewOthers" Type="bit" Nullable="false" />
           <Property Name="refsCanSeeOtherGames" Type="bit" Nullable="false" />
-          <Property Name="durationOfAlgorithm" Type="int" Nullable="false" />
           <Property Name="algorithmStartDate" Type="date" />
           <Property Name="algorithmEndDate" Type="date" />
           <Property Name="algorithmAll" Type="bit" Nullable="false" />
@@ -35,25 +30,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClaimType" Type="nvarchar(max)" />
-          <Property Name="ClaimValue" Type="nvarchar(max)" />
-          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-          </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
@@ -84,14 +60,12 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="city" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="state" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="dob" Type="date" Nullable="false" />
-          <Property Name="isAdmin" Type="bit" Nullable="false" />
-          <Property Name="isOrganizer" Type="bit" Nullable="false" />
-          <Property Name="isReferee" Type="bit" Nullable="false" />
-          <Property Name="isPlayer" Type="bit" Nullable="false" />
+          <Property Name="gender" Type="int" />
           <Property Name="willingToShowPhoneNum" Type="bit" Nullable="false" />
           <Property Name="willingToShowDOB" Type="bit" Nullable="false" />
           <Property Name="willingToShowAddress" Type="bit" Nullable="false" />
           <Property Name="willingToshowEmail" Type="bit" Nullable="false" />
+          <Property Name="wantsToReceiveTexts" Type="bit" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Events">
@@ -132,7 +106,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="country" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="state" Type="nvarchar" MaxLength="255" />
           <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="geogCol1" Type="geography" />
+          <Property Name="geogCol1" Type="geography" Nullable="false" />
           <Property Name="geogCol2" Type="nvarchar(max)" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="MATCH">
@@ -150,15 +124,15 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="tournamentId" Type="int" Nullable="false" />
           <Property Name="matchLength" Type="int" Nullable="false" />
           <Property Name="halfTimeDuration" Type="int" Nullable="false" />
+          <Property Name="countsToDraw" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OFFER">
           <Key>
             <PropertyRef Name="offerId" />
           </Key>
           <Property Name="offerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="sport" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="matchId" Type="int" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="refId" Type="int" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="dateOfOffer" Type="date" Nullable="false" />
           <Property Name="declinedReason" Type="nvarchar(max)" />
@@ -212,7 +186,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </Key>
           <Property Name="refId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="distTravel" Type="int" />
-          <Property Name="sport" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="userId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="maxGames" Type="int" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
@@ -245,20 +218,38 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </Key>
           <Property Name="teamID" Type="int" Nullable="false" />
           <Property Name="tournament" Type="int" Nullable="false" />
+          <Property Name="currentPosition" Type="int" Nullable="false" />
+          <Property Name="points" Type="int" Nullable="false" />
+          <Property Name="wins" Type="int" Nullable="false" />
+          <Property Name="draws" Type="int" Nullable="false" />
+          <Property Name="losses" Type="int" Nullable="false" />
+          <Property Name="goalsFor" Type="int" Nullable="false" />
+          <Property Name="goalsAgainst" Type="int" Nullable="false" />
+          <Property Name="goalDraw" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TOURNAMENT">
           <Key>
             <PropertyRef Name="tournamentId" />
           </Key>
           <Property Name="tournamentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="startDate" Type="date" Nullable="false" />
           <Property Name="organizer" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ageBracket" Type="int" />
           <Property Name="grade" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="gender" Type="int" />
           <Property Name="sport" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="priority" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TOURNAMENTORGANIZERS">
+          <Key>
+            <PropertyRef Name="organizer" />
+            <PropertyRef Name="tournamentId" />
+          </Key>
+          <Property Name="organizer" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="tournamentId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -321,30 +312,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Principal>
             <Dependent Role="ALTERNATEOFFERS">
               <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUserClaims_dbo_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="User_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUserLogins_dbo_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -493,7 +460,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_OFFER_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="0..1" />
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
@@ -501,18 +468,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Principal>
             <Dependent Role="OFFER">
               <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_OFFER_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="sport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -560,18 +515,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               <PropertyRef Name="name" />
             </Principal>
             <Dependent Role="QUALIFICATIONS">
-              <PropertyRef Name="sport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_REFEREE_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="REFEREE">
               <PropertyRef Name="sport" />
             </Dependent>
           </ReferentialConstraint>
@@ -672,6 +615,30 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TOURNAMENTORGANIZERS_ORGANIZER">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TOURNAMENTORGANIZERS" Type="Self.TOURNAMENTORGANIZERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TOURNAMENTORGANIZERS">
+              <PropertyRef Name="organizer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TOURNAMENTORGANIZERS_TOURNAMENTID">
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
+          <End Role="TOURNAMENTORGANIZERS" Type="Self.TOURNAMENTORGANIZERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOURNAMENT">
+              <PropertyRef Name="tournamentId" />
+            </Principal>
+            <Dependent Role="TOURNAMENTORGANIZERS">
+              <PropertyRef Name="tournamentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_USER">
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
           <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
@@ -684,7 +651,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_USER_QUAL">
+        <Association Name="fk_USERQUAL">
           <End Role="QUALIFICATIONS" Type="Self.QUALIFICATIONS" Multiplicity="1" />
           <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -732,11 +699,10 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="test2ModelStoreContainer">
+        <EntityContainer Name="dbv9ModelStoreContainer">
+          <EntitySet Name="ADMINISTRATION" EntityType="Self.ADMINISTRATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ALTERNATEOFFERS" EntityType="Self.ALTERNATEOFFERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -753,20 +719,11 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <EntitySet Name="TEAM" EntityType="Self.TEAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEAMINS" EntityType="Self.TEAMINS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TOURNAMENT" EntityType="Self.TOURNAMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TOURNAMENTORGANIZERS" EntityType="Self.TOURNAMENTORGANIZERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERQUAL" EntityType="Self.USERQUAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEEKLYAVAILABILITY" EntityType="Self.WEEKLYAVAILABILITY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WILLINGLOCATIONS" EntityType="Self.WILLINGLOCATIONS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ADMINISTRATION" EntityType="Self.ADMINISTRATION" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ADMINISTRATION].[refsCanViewOthers] AS [refsCanViewOthers], 
-    [ADMINISTRATION].[refsCanSeeOtherGames] AS [refsCanSeeOtherGames], 
-    [ADMINISTRATION].[durationOfAlgorithm] AS [durationOfAlgorithm], 
-    [ADMINISTRATION].[algorithmStartDate] AS [algorithmStartDate], 
-    [ADMINISTRATION].[algorithmEndDate] AS [algorithmEndDate], 
-    [ADMINISTRATION].[algorithmAll] AS [algorithmAll]
-    FROM [dbo].[ADMINISTRATION] AS [ADMINISTRATION]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fk_ALTERNATEOFFERS_offID" Association="Self.fk_ALTERNATEOFFERS_offID">
             <End Role="OFFER" EntitySet="OFFER" />
             <End Role="ALTERNATEOFFERS" EntitySet="ALTERNATEOFFERS" />
@@ -774,14 +731,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <AssociationSet Name="fk_ALTERNATEOFFERS_refID" Association="Self.fk_ALTERNATEOFFERS_refID">
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="ALTERNATEOFFERS" EntitySet="ALTERNATEOFFERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserLogins_dbo_User_Id" Association="Self.FK_AspNetUserLogins_dbo_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUserRoles_dbo_Role_Id" Association="Self.FK_AspNetUserRoles_dbo_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -835,10 +784,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="OFFER" EntitySet="OFFER" />
           </AssociationSet>
-          <AssociationSet Name="fk_OFFER_SPORT" Association="Self.fk_OFFER_SPORT">
-            <End Role="SPORT" EntitySet="SPORT" />
-            <End Role="OFFER" EntitySet="OFFER" />
-          </AssociationSet>
           <AssociationSet Name="fk_OFFER_TYPE" Association="Self.fk_OFFER_TYPE">
             <End Role="TYPE" EntitySet="TYPE" />
             <End Role="OFFER" EntitySet="OFFER" />
@@ -854,10 +799,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <AssociationSet Name="fk_QUAL_SPORT" Association="Self.fk_QUAL_SPORT">
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
-            <End Role="SPORT" EntitySet="SPORT" />
-            <End Role="REFEREE" EntitySet="REFEREE" />
           </AssociationSet>
           <AssociationSet Name="FK_REFEREE_USER" Association="Self.FK_REFEREE_USER">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -891,11 +832,19 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="SPORT" EntitySet="SPORT" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
           </AssociationSet>
+          <AssociationSet Name="fk_TOURNAMENTORGANIZERS_ORGANIZER" Association="Self.fk_TOURNAMENTORGANIZERS_ORGANIZER">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TOURNAMENTORGANIZERS" EntitySet="TOURNAMENTORGANIZERS" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TOURNAMENTORGANIZERS_TOURNAMENTID" Association="Self.fk_TOURNAMENTORGANIZERS_TOURNAMENTID">
+            <End Role="TOURNAMENT" EntitySet="TOURNAMENT" />
+            <End Role="TOURNAMENTORGANIZERS" EntitySet="TOURNAMENTORGANIZERS" />
+          </AssociationSet>
           <AssociationSet Name="fk_USER" Association="Self.fk_USER">
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="USERQUAL" EntitySet="USERQUAL" />
           </AssociationSet>
-          <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
+          <AssociationSet Name="fk_USERQUAL" Association="Self.fk_USERQUAL">
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
             <End Role="USERQUAL" EntitySet="USERQUAL" />
           </AssociationSet>
@@ -912,10 +861,22 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="WILLINGLOCATIONS" EntitySet="WILLINGLOCATIONS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Raoconnection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="dbv9Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ADMINISTRATION">
+          <Key>
+            <PropertyRef Name="Lock" />
+          </Key>
+          <Property Name="Lock" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="refsCanViewOthers" Type="Boolean" Nullable="false" />
+          <Property Name="refsCanSeeOtherGames" Type="Boolean" Nullable="false" />
+          <Property Name="algorithmStartDate" Type="DateTime" Precision="0" />
+          <Property Name="algorithmEndDate" Type="DateTime" Precision="0" />
+          <Property Name="algorithmAll" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -923,27 +884,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserClaims_dbo_User_Id" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogin">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-          </Key>
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserLogins_dbo_User_Id" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -966,17 +906,13 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="city" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dob" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="isOrganizer" Type="Boolean" Nullable="false" />
-          <Property Name="isReferee" Type="Boolean" Nullable="false" />
-          <Property Name="isPlayer" Type="Boolean" Nullable="false" />
+          <Property Name="gender" Type="Int32" />
           <Property Name="willingToShowPhoneNum" Type="Boolean" Nullable="false" />
           <Property Name="willingToShowDOB" Type="Boolean" Nullable="false" />
           <Property Name="willingToShowAddress" Type="Boolean" Nullable="false" />
           <Property Name="willingToshowEmail" Type="Boolean" Nullable="false" />
+          <Property Name="wantsToReceiveTexts" Type="Boolean" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_AspNetUserClaims_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_AspNetUserLogins_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Events" Relationship="Self.fk_EVENTS_USERS" FromRole="AspNetUsers" ToRole="Events" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
@@ -984,6 +920,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <NavigationProperty Name="TEAMs" Relationship="Self.FK_TEAM_MANAGER" FromRole="AspNetUsers" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_MANAGER" FromRole="AspNetUsers" ToRole="TOURNAMENT" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="TOURNAMENTs1" Relationship="Self.TOURNAMENTORGANIZERS" FromRole="AspNetUsers" ToRole="TOURNAMENT" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1026,7 +963,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="country" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="geogCol1" Type="Geography" />
+          <Property Name="geogCol1" Type="Geography" Nullable="false" />
           <Property Name="geogCol2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_LOCATION" FromRole="LOCATION" ToRole="MATCH" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.WILLINGLOCATIONS" FromRole="LOCATION" ToRole="REFEREE" />
@@ -1046,6 +983,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="tournamentId" Type="Int32" Nullable="false" />
           <Property Name="matchLength" Type="Int32" Nullable="false" />
           <Property Name="halfTimeDuration" Type="Int32" Nullable="false" />
+          <Property Name="countsToDraw" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_MATCH" FromRole="MATCH" ToRole="INFRACTIONS" />
           <NavigationProperty Name="LOCATION" Relationship="Self.fk_MATCH_LOCATION" FromRole="MATCH" ToRole="LOCATION" />
           <NavigationProperty Name="TEAM" Relationship="Self.fk_MATCH_TEAMA" FromRole="MATCH" ToRole="TEAM" />
@@ -1058,9 +996,8 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <PropertyRef Name="offerId" />
           </Key>
           <Property Name="offerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="matchId" Type="Int32" Nullable="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="refId" Type="Int32" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="dateOfOffer" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="declinedReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1069,7 +1006,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <NavigationProperty Name="MATCH" Relationship="Self.fk_OFFER_MATCH" FromRole="OFFER" ToRole="MATCH" />
           <NavigationProperty Name="OFFERQUALs" Relationship="Self.fk_OFFER_QUAL" FromRole="OFFER" ToRole="OFFERQUAL" />
           <NavigationProperty Name="REFEREE" Relationship="Self.fk_OFFER_refID" FromRole="OFFER" ToRole="REFEREE" />
-          <NavigationProperty Name="SPORT1" Relationship="Self.fk_OFFER_SPORT" FromRole="OFFER" ToRole="SPORT" />
           <NavigationProperty Name="TYPE" Relationship="Self.fk_OFFER_TYPE" FromRole="OFFER" ToRole="TYPE" />
           <NavigationProperty Name="REFEREEs" Relationship="Self.ALTERNATEOFFERS" FromRole="OFFER" ToRole="REFEREE" />
         </EntityType>
@@ -1083,6 +1019,17 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="qualLevel" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OFFER" Relationship="Self.fk_OFFER_QUAL" FromRole="OFFERQUAL" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_MATCH_ID" FromRole="OFFERQUAL" ToRole="QUALIFICATIONS" />
+        </EntityType>
+        <EntityType Name="OneOffAVAILABILITY">
+          <Key>
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="startDate" />
+          </Key>
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="timeOnOrOff" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REFEREE" Relationship="Self.FK_TIMEOFF_USER" FromRole="OneOffAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="PLAYER">
           <Key>
@@ -1109,7 +1056,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OFFERQUALs" Relationship="Self.fk_MATCH_ID" FromRole="QUALIFICATIONS" ToRole="OFFERQUAL" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_QUAL_SPORT" FromRole="QUALIFICATIONS" ToRole="SPORT" />
-          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER_QUAL" FromRole="QUALIFICATIONS" ToRole="USERQUAL" />
+          <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USERQUAL" FromRole="QUALIFICATIONS" ToRole="USERQUAL" />
         </EntityType>
         <EntityType Name="REFEREE">
           <Key>
@@ -1117,19 +1064,17 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </Key>
           <Property Name="refId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="distTravel" Type="Int32" />
-          <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="maxGames" Type="Int32" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="rating" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_REFEREE_USER" FromRole="REFEREE" ToRole="AspNetUsers" />
           <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_refID" FromRole="REFEREE" ToRole="OFFER" />
-          <NavigationProperty Name="SPORT1" Relationship="Self.fk_REFEREE_SPORT" FromRole="REFEREE" ToRole="SPORT" />
+          <NavigationProperty Name="OneOffAVAILABILITies" Relationship="Self.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
           <NavigationProperty Name="USERQUALs" Relationship="Self.fk_USER" FromRole="REFEREE" ToRole="USERQUAL" />
           <NavigationProperty Name="WEEKLYAVAILABILITY" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="REFEREE" ToRole="WEEKLYAVAILABILITY" />
           <NavigationProperty Name="OFFERs1" Relationship="Self.ALTERNATEOFFERS" FromRole="REFEREE" ToRole="OFFER" />
           <NavigationProperty Name="LOCATIONs" Relationship="Self.WILLINGLOCATIONS" FromRole="REFEREE" ToRole="LOCATION" />
-          <NavigationProperty Name="OneOffAVAILABILITies" Relationship="Raoconnection.FK_TIMEOFF_USER" FromRole="REFEREE" ToRole="OneOffAVAILABILITY" />
         </EntityType>
         <EntityType Name="SPORT">
           <Key>
@@ -1137,9 +1082,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </Key>
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="OFFERs" Relationship="Self.fk_OFFER_SPORT" FromRole="SPORT" ToRole="OFFER" />
           <NavigationProperty Name="QUALIFICATIONS" Relationship="Self.fk_QUAL_SPORT" FromRole="SPORT" ToRole="QUALIFICATIONS" />
-          <NavigationProperty Name="REFEREEs" Relationship="Self.fk_REFEREE_SPORT" FromRole="SPORT" ToRole="REFEREE" />
           <NavigationProperty Name="TEAMs" Relationship="Self.fk_TEAM_SPORT" FromRole="SPORT" ToRole="TEAM" />
           <NavigationProperty Name="TOURNAMENTs" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="SPORT" ToRole="TOURNAMENT" />
         </EntityType>
@@ -1160,25 +1103,46 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <NavigationProperty Name="MATCHes1" Relationship="Self.fk_MATCH_TEAMB" FromRole="TEAM" ToRole="MATCH" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_TEAM" FromRole="TEAM" ToRole="PLAYER" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_TEAM_SPORT" FromRole="TEAM" ToRole="SPORT" />
-          <NavigationProperty Name="TOURNAMENTs" Relationship="Self.TEAMINS" FromRole="TEAM" ToRole="TOURNAMENT" />
+          <NavigationProperty Name="TEAMINS" Relationship="Self.FK_TEAMINS_TEAM" FromRole="TEAM" ToRole="TEAMINS" />
+        </EntityType>
+        <EntityType Name="TEAMIN">
+          <Key>
+            <PropertyRef Name="teamID" />
+            <PropertyRef Name="tournament" />
+          </Key>
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="tournament" Type="Int32" Nullable="false" />
+          <Property Name="currentPosition" Type="Int32" Nullable="false" />
+          <Property Name="points" Type="Int32" Nullable="false" />
+          <Property Name="wins" Type="Int32" Nullable="false" />
+          <Property Name="draws" Type="Int32" Nullable="false" />
+          <Property Name="losses" Type="Int32" Nullable="false" />
+          <Property Name="goalsFor" Type="Int32" Nullable="false" />
+          <Property Name="goalsAgainst" Type="Int32" Nullable="false" />
+          <Property Name="goalDraw" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TEAM" Relationship="Self.FK_TEAMINS_TEAM" FromRole="TEAMINS" ToRole="TEAM" />
+          <NavigationProperty Name="TOURNAMENT1" Relationship="Self.fk_TEAM_TOURNAMENT" FromRole="TEAMINS" ToRole="TOURNAMENT" />
         </EntityType>
         <EntityType Name="TOURNAMENT">
           <Key>
             <PropertyRef Name="tournamentId" />
           </Key>
           <Property Name="tournamentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="organizer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ageBracket" Type="Int32" />
           <Property Name="grade" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="Int32" />
           <Property Name="sport" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="priority" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.fk_TOURNAMENT_MANAGER" FromRole="TOURNAMENT" ToRole="AspNetUsers" />
           <NavigationProperty Name="MATCHes" Relationship="Self.fk_MATCH_TOURNAMENT" FromRole="TOURNAMENT" ToRole="MATCH" />
           <NavigationProperty Name="SPORT1" Relationship="Self.fk_TOURNAMENT_SPORT" FromRole="TOURNAMENT" ToRole="SPORT" />
-          <NavigationProperty Name="TEAMs" Relationship="Self.TEAMINS" FromRole="TOURNAMENT" ToRole="TEAM" />
+          <NavigationProperty Name="TEAMINS" Relationship="Self.fk_TEAM_TOURNAMENT" FromRole="TOURNAMENT" ToRole="TEAMINS" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.TOURNAMENTORGANIZERS" FromRole="TOURNAMENT" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -1199,7 +1163,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="qualificationId" Type="Int32" Nullable="false" />
           <Property Name="refId" Type="Int32" Nullable="false" />
           <Property Name="qualLevel" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_USER_QUAL" FromRole="USERQUAL" ToRole="QUALIFICATIONS" />
+          <NavigationProperty Name="QUALIFICATION" Relationship="Self.fk_USERQUAL" FromRole="USERQUAL" ToRole="QUALIFICATIONS" />
           <NavigationProperty Name="REFEREE" Relationship="Self.fk_USER" FromRole="USERQUAL" ToRole="REFEREE" />
         </EntityType>
         <EntityType Name="WEEKLYAVAILABILITY">
@@ -1216,44 +1180,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <Property Name="sunday" Type="Int32" Nullable="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
-        <EntityType Name="ADMINISTRATION">
-          <Key>
-            <PropertyRef Name="refsCanViewOthers" />
-            <PropertyRef Name="refsCanSeeOtherGames" />
-            <PropertyRef Name="durationOfAlgorithm" />
-            <PropertyRef Name="algorithmAll" />
-          </Key>
-          <Property Name="refsCanViewOthers" Type="Boolean" Nullable="false" />
-          <Property Name="refsCanSeeOtherGames" Type="Boolean" Nullable="false" />
-          <Property Name="durationOfAlgorithm" Type="Int32" Nullable="false" />
-          <Property Name="algorithmStartDate" Type="DateTime" Precision="0" />
-          <Property Name="algorithmEndDate" Type="DateTime" Precision="0" />
-          <Property Name="algorithmAll" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_AspNetUserClaims_dbo_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="User_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUserLogins_dbo_User_Id">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_EVENTS_USERS">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
@@ -1411,7 +1337,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_OFFER_refID">
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="0..1" />
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REFEREE">
@@ -1419,18 +1345,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Principal>
             <Dependent Role="OFFER">
               <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_OFFER_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="OFFER">
-              <PropertyRef Name="sport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1458,6 +1372,18 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TIMEOFF_USER">
+          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="1" />
+          <End Role="OneOffAVAILABILITY" Type="Self.OneOffAVAILABILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REFEREE">
+              <PropertyRef Name="refId" />
+            </Principal>
+            <Dependent Role="OneOffAVAILABILITY">
+              <PropertyRef Name="refId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_PLAYER_TEAM">
           <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
           <End Role="PLAYER" Type="Self.PLAYER" Multiplicity="*" />
@@ -1482,7 +1408,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_USER_QUAL">
+        <Association Name="fk_USERQUAL">
           <End Role="QUALIFICATIONS" Type="Self.QUALIFICATION" Multiplicity="1" />
           <End Role="USERQUAL" Type="Self.USERQUAL" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1491,18 +1417,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Principal>
             <Dependent Role="USERQUAL">
               <PropertyRef Name="qualificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_REFEREE_SPORT">
-          <End Role="SPORT" Type="Self.SPORT" Multiplicity="1" />
-          <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPORT">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="REFEREE">
-              <PropertyRef Name="sport" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1554,6 +1468,30 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TEAMINS_TEAM">
+          <End Role="TEAM" Type="Self.TEAM" Multiplicity="1" />
+          <End Role="TEAMINS" Type="Self.TEAMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEAM">
+              <PropertyRef Name="teamId" />
+            </Principal>
+            <Dependent Role="TEAMINS">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TEAM_TOURNAMENT">
+          <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="1" />
+          <End Role="TEAMINS" Type="Self.TEAMIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOURNAMENT">
+              <PropertyRef Name="tournamentId" />
+            </Principal>
+            <Dependent Role="TEAMINS">
+              <PropertyRef Name="tournament" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ALTERNATEOFFERS">
           <End Role="OFFER" Type="Self.OFFER" Multiplicity="*" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
@@ -1562,18 +1500,17 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <Association Name="TEAMINS">
+        <Association Name="TOURNAMENTORGANIZERS">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
           <End Role="TOURNAMENT" Type="Self.TOURNAMENT" Multiplicity="*" />
-          <End Role="TEAM" Type="Self.TEAM" Multiplicity="*" />
         </Association>
         <Association Name="WILLINGLOCATIONS">
           <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="*" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="test2Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Raoconnection2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADMINISTRATIONs" EntityType="Self.ADMINISTRATION" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTION" />
@@ -1581,24 +1518,17 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <EntitySet Name="MATCHes" EntityType="Self.MATCH" />
           <EntitySet Name="OFFERs" EntityType="Self.OFFER" />
           <EntitySet Name="OFFERQUALs" EntityType="Self.OFFERQUAL" />
+          <EntitySet Name="OneOffAVAILABILITies" EntityType="Self.OneOffAVAILABILITY" />
           <EntitySet Name="PLAYERs" EntityType="Self.PLAYER" />
           <EntitySet Name="QUALIFICATIONS" EntityType="Self.QUALIFICATION" />
           <EntitySet Name="REFEREEs" EntityType="Self.REFEREE" />
           <EntitySet Name="SPORTs" EntityType="Self.SPORT" />
           <EntitySet Name="TEAMs" EntityType="Self.TEAM" />
+          <EntitySet Name="TEAMINS" EntityType="Self.TEAMIN" />
           <EntitySet Name="TOURNAMENTs" EntityType="Self.TOURNAMENT" />
           <EntitySet Name="TYPEs" EntityType="Self.TYPE" />
           <EntitySet Name="USERQUALs" EntityType="Self.USERQUAL" />
           <EntitySet Name="WEEKLYAVAILABILITies" EntityType="Self.WEEKLYAVAILABILITY" />
-          <EntitySet Name="ADMINISTRATIONs" EntityType="Self.ADMINISTRATION" />
-          <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUserLogins_dbo_User_Id" Association="Self.FK_AspNetUserLogins_dbo_User_Id">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
           <AssociationSet Name="fk_EVENTS_USERS" Association="Self.fk_EVENTS_USERS">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Events" EntitySet="Events" />
@@ -1655,10 +1585,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="REFEREE" EntitySet="REFEREEs" />
             <End Role="OFFER" EntitySet="OFFERs" />
           </AssociationSet>
-          <AssociationSet Name="fk_OFFER_SPORT" Association="Self.fk_OFFER_SPORT">
-            <End Role="SPORT" EntitySet="SPORTs" />
-            <End Role="OFFER" EntitySet="OFFERs" />
-          </AssociationSet>
           <AssociationSet Name="fk_OFFER_TYPE" Association="Self.fk_OFFER_TYPE">
             <End Role="TYPE" EntitySet="TYPEs" />
             <End Role="OFFER" EntitySet="OFFERs" />
@@ -1666,6 +1592,10 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
           <AssociationSet Name="fk_MATCH_ID" Association="Self.fk_MATCH_ID">
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
             <End Role="OFFERQUAL" EntitySet="OFFERQUALs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIMEOFF_USER" Association="Self.FK_TIMEOFF_USER">
+            <End Role="REFEREE" EntitySet="REFEREEs" />
+            <End Role="OneOffAVAILABILITY" EntitySet="OneOffAVAILABILITies" />
           </AssociationSet>
           <AssociationSet Name="fk_PLAYER_TEAM" Association="Self.fk_PLAYER_TEAM">
             <End Role="TEAM" EntitySet="TEAMs" />
@@ -1675,13 +1605,9 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
           </AssociationSet>
-          <AssociationSet Name="fk_USER_QUAL" Association="Self.fk_USER_QUAL">
+          <AssociationSet Name="fk_USERQUAL" Association="Self.fk_USERQUAL">
             <End Role="QUALIFICATIONS" EntitySet="QUALIFICATIONS" />
             <End Role="USERQUAL" EntitySet="USERQUALs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_REFEREE_SPORT" Association="Self.fk_REFEREE_SPORT">
-            <End Role="SPORT" EntitySet="SPORTs" />
-            <End Role="REFEREE" EntitySet="REFEREEs" />
           </AssociationSet>
           <AssociationSet Name="fk_USER" Association="Self.fk_USER">
             <End Role="REFEREE" EntitySet="REFEREEs" />
@@ -1699,6 +1625,14 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="SPORT" EntitySet="SPORTs" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
           </AssociationSet>
+          <AssociationSet Name="FK_TEAMINS_TEAM" Association="Self.FK_TEAMINS_TEAM">
+            <End Role="TEAM" EntitySet="TEAMs" />
+            <End Role="TEAMINS" EntitySet="TEAMINS" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TEAM_TOURNAMENT" Association="Self.fk_TEAM_TOURNAMENT">
+            <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
+            <End Role="TEAMINS" EntitySet="TEAMINS" />
+          </AssociationSet>
           <AssociationSet Name="ALTERNATEOFFERS" Association="Self.ALTERNATEOFFERS">
             <End Role="OFFER" EntitySet="OFFERs" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
@@ -1707,78 +1641,43 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="TEAMINS" Association="Self.TEAMINS">
+          <AssociationSet Name="TOURNAMENTORGANIZERS" Association="Self.TOURNAMENTORGANIZERS">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TOURNAMENT" EntitySet="TOURNAMENTs" />
-            <End Role="TEAM" EntitySet="TEAMs" />
           </AssociationSet>
           <AssociationSet Name="WILLINGLOCATIONS" Association="Self.WILLINGLOCATIONS">
             <End Role="LOCATION" EntitySet="LOCATIONs" />
             <End Role="REFEREE" EntitySet="REFEREEs" />
           </AssociationSet>
-          <EntitySet Name="OneOffAVAILABILITies" EntityType="Raoconnection.OneOffAVAILABILITY" />
-          <AssociationSet Name="FK_TIMEOFF_USER" Association="Raoconnection.FK_TIMEOFF_USER">
-            <End Role="REFEREE" EntitySet="REFEREEs" />
-            <End Role="OneOffAVAILABILITY" EntitySet="OneOffAVAILABILITies" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="OneOffAVAILABILITY">
-          <Key>
-            <PropertyRef Name="refId" />
-            <PropertyRef Name="startDate" />
-          </Key>
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="timeOnOrOff" Type="Boolean" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="REFEREE" Relationship="Raoconnection.FK_TIMEOFF_USER" FromRole="OneOffAVAILABILITY" ToRole="REFEREE" />
-        </EntityType>
-        <Association Name="FK_TIMEOFF_USER">
-          <End Type="Raoconnection.REFEREE" Role="REFEREE" Multiplicity="1" />
-          <End Type="Raoconnection.OneOffAVAILABILITY" Role="OneOffAVAILABILITY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="REFEREE">
-              <PropertyRef Name="refId" />
-            </Principal>
-            <Dependent Role="OneOffAVAILABILITY">
-              <PropertyRef Name="refId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="test2ModelStoreContainer" CdmEntityContainer="test2Entities">
+        <EntityContainerMapping StorageEntityContainer="dbv9ModelStoreContainer" CdmEntityContainer="Raoconnection2">
+          <EntitySetMapping Name="ADMINISTRATIONs">
+            <EntityTypeMapping TypeName="dbv9Model.ADMINISTRATION">
+              <MappingFragment StoreEntitySet="ADMINISTRATION">
+                <ScalarProperty Name="Lock" ColumnName="Lock" />
+                <ScalarProperty Name="refsCanViewOthers" ColumnName="refsCanViewOthers" />
+                <ScalarProperty Name="refsCanSeeOtherGames" ColumnName="refsCanSeeOtherGames" />
+                <ScalarProperty Name="algorithmStartDate" ColumnName="algorithmStartDate" />
+                <ScalarProperty Name="algorithmEndDate" ColumnName="algorithmEndDate" />
+                <ScalarProperty Name="algorithmAll" ColumnName="algorithmAll" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="Raoconnection.AspNetRole">
+            <EntityTypeMapping TypeName="dbv9Model.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="Raoconnection.AspNetUserClaim">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="Raoconnection.AspNetUserLogin">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="Raoconnection.AspNetUser">
+            <EntityTypeMapping TypeName="dbv9Model.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ffaNum" ColumnName="ffaNum" />
@@ -1797,20 +1696,18 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="dob" ColumnName="dob" />
-                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
-                <ScalarProperty Name="isOrganizer" ColumnName="isOrganizer" />
-                <ScalarProperty Name="isReferee" ColumnName="isReferee" />
-                <ScalarProperty Name="isPlayer" ColumnName="isPlayer" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="willingToShowPhoneNum" ColumnName="willingToShowPhoneNum" />
                 <ScalarProperty Name="willingToShowDOB" ColumnName="willingToShowDOB" />
                 <ScalarProperty Name="willingToShowAddress" ColumnName="willingToShowAddress" />
                 <ScalarProperty Name="willingToshowEmail" ColumnName="willingToshowEmail" />
+                <ScalarProperty Name="wantsToReceiveTexts" ColumnName="wantsToReceiveTexts" />
                 <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="Raoconnection.Event">
+            <EntityTypeMapping TypeName="dbv9Model.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="owner" ColumnName="owner" />
@@ -1824,7 +1721,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INFRACTIONS">
-            <EntityTypeMapping TypeName="Raoconnection.INFRACTION">
+            <EntityTypeMapping TypeName="dbv9Model.INFRACTION">
               <MappingFragment StoreEntitySet="INFRACTIONS">
                 <ScalarProperty Name="infractionId" ColumnName="infractionId" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1836,7 +1733,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONs">
-            <EntityTypeMapping TypeName="Raoconnection.LOCATION">
+            <EntityTypeMapping TypeName="dbv9Model.LOCATION">
               <MappingFragment StoreEntitySet="LOCATION">
                 <ScalarProperty Name="locationId" ColumnName="locationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1854,7 +1751,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATCHes">
-            <EntityTypeMapping TypeName="Raoconnection.MATCH">
+            <EntityTypeMapping TypeName="dbv9Model.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
                 <ScalarProperty Name="matchId" ColumnName="matchId" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
@@ -1867,14 +1764,14 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
                 <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
                 <ScalarProperty Name="matchLength" ColumnName="matchLength" />
                 <ScalarProperty Name="halfTimeDuration" ColumnName="halfTimeDuration" />
+                <ScalarProperty Name="countsToDraw" ColumnName="countsToDraw" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="Raoconnection.OFFER">
+            <EntityTypeMapping TypeName="dbv9Model.OFFER">
               <MappingFragment StoreEntitySet="OFFER">
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
-                <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="matchId" ColumnName="matchId" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1886,7 +1783,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERQUALs">
-            <EntityTypeMapping TypeName="Raoconnection.OFFERQUAL">
+            <EntityTypeMapping TypeName="dbv9Model.OFFERQUAL">
               <MappingFragment StoreEntitySet="OFFERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
@@ -1894,8 +1791,18 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OneOffAVAILABILITies">
+            <EntityTypeMapping TypeName="dbv9Model.OneOffAVAILABILITY">
+              <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="timeOnOrOff" ColumnName="timeOnOrOff" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
-            <EntityTypeMapping TypeName="Raoconnection.PLAYER">
+            <EntityTypeMapping TypeName="dbv9Model.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -1906,7 +1813,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QUALIFICATIONS">
-            <EntityTypeMapping TypeName="Raoconnection.QUALIFICATION">
+            <EntityTypeMapping TypeName="dbv9Model.QUALIFICATION">
               <MappingFragment StoreEntitySet="QUALIFICATIONS">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1918,11 +1825,10 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="Raoconnection.REFEREE">
+            <EntityTypeMapping TypeName="dbv9Model.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
-                <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="maxGames" ColumnName="maxGames" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1931,7 +1837,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
-            <EntityTypeMapping TypeName="Raoconnection.SPORT">
+            <EntityTypeMapping TypeName="dbv9Model.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1939,7 +1845,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMs">
-            <EntityTypeMapping TypeName="Raoconnection.TEAM">
+            <EntityTypeMapping TypeName="dbv9Model.TEAM">
               <MappingFragment StoreEntitySet="TEAM">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1952,8 +1858,25 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TEAMINS">
+            <EntityTypeMapping TypeName="dbv9Model.TEAMIN">
+              <MappingFragment StoreEntitySet="TEAMINS">
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="tournament" ColumnName="tournament" />
+                <ScalarProperty Name="currentPosition" ColumnName="currentPosition" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="wins" ColumnName="wins" />
+                <ScalarProperty Name="draws" ColumnName="draws" />
+                <ScalarProperty Name="losses" ColumnName="losses" />
+                <ScalarProperty Name="goalsFor" ColumnName="goalsFor" />
+                <ScalarProperty Name="goalsAgainst" ColumnName="goalsAgainst" />
+                <ScalarProperty Name="goalDraw" ColumnName="goalDraw" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TOURNAMENTs">
-            <EntityTypeMapping TypeName="Raoconnection.TOURNAMENT">
+            <EntityTypeMapping TypeName="dbv9Model.TOURNAMENT">
               <MappingFragment StoreEntitySet="TOURNAMENT">
                 <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1961,6 +1884,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
                 <ScalarProperty Name="organizer" ColumnName="organizer" />
                 <ScalarProperty Name="ageBracket" ColumnName="ageBracket" />
                 <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="sport" ColumnName="sport" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="priority" ColumnName="priority" />
@@ -1968,7 +1892,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TYPEs">
-            <EntityTypeMapping TypeName="Raoconnection.TYPE">
+            <EntityTypeMapping TypeName="dbv9Model.TYPE">
               <MappingFragment StoreEntitySet="TYPE">
                 <ScalarProperty Name="typeId" ColumnName="typeId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1979,7 +1903,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="Raoconnection.USERQUAL">
+            <EntityTypeMapping TypeName="dbv9Model.USERQUAL">
               <MappingFragment StoreEntitySet="USERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
@@ -1988,7 +1912,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WEEKLYAVAILABILITies">
-            <EntityTypeMapping TypeName="Raoconnection.WEEKLYAVAILABILITY">
+            <EntityTypeMapping TypeName="dbv9Model.WEEKLYAVAILABILITY">
               <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="monday" ColumnName="monday" />
@@ -2001,19 +1925,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ADMINISTRATIONs">
-            <EntityTypeMapping TypeName="Raoconnection.ADMINISTRATION">
-              <MappingFragment StoreEntitySet="ADMINISTRATION">
-                <ScalarProperty Name="refsCanViewOthers" ColumnName="refsCanViewOthers" />
-                <ScalarProperty Name="refsCanSeeOtherGames" ColumnName="refsCanSeeOtherGames" />
-                <ScalarProperty Name="durationOfAlgorithm" ColumnName="durationOfAlgorithm" />
-                <ScalarProperty Name="algorithmStartDate" ColumnName="algorithmStartDate" />
-                <ScalarProperty Name="algorithmEndDate" ColumnName="algorithmEndDate" />
-                <ScalarProperty Name="algorithmAll" ColumnName="algorithmAll" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="Raoconnection.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
+          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="dbv9Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
             <EndProperty Name="OFFER">
               <ScalarProperty Name="offerId" ColumnName="offerId" />
             </EndProperty>
@@ -2021,7 +1933,7 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               <ScalarProperty Name="refId" ColumnName="refId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="Raoconnection.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="dbv9Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -2029,15 +1941,15 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TEAMINS" TypeName="Raoconnection.TEAMINS" StoreEntitySet="TEAMINS">
-            <EndProperty Name="TOURNAMENT">
-              <ScalarProperty Name="tournamentId" ColumnName="tournament" />
+          <AssociationSetMapping Name="TOURNAMENTORGANIZERS" TypeName="dbv9Model.TOURNAMENTORGANIZERS" StoreEntitySet="TOURNAMENTORGANIZERS">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="organizer" />
             </EndProperty>
-            <EndProperty Name="TEAM">
-              <ScalarProperty Name="teamId" ColumnName="teamID" />
+            <EndProperty Name="TOURNAMENT">
+              <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="Raoconnection.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
+          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="dbv9Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
             <EndProperty Name="LOCATION">
               <ScalarProperty Name="locationId" ColumnName="locationId" />
             </EndProperty>
@@ -2045,16 +1957,6 @@ warning 6002: The table/view 'rao4321.dbo.ADMINISTRATION' does not have a primar
               <ScalarProperty Name="refId" ColumnName="refId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="OneOffAVAILABILITies">
-            <EntityTypeMapping TypeName="Raoconnection.OneOffAVAILABILITY">
-              <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="timeOnOrOff" ColumnName="timeOnOrOff" />
-                <ScalarProperty Name="startDate" ColumnName="startDate" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

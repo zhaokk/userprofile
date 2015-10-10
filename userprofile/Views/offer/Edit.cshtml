@@ -18,14 +18,6 @@
         @Html.HiddenFor(model => model.offerId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.sport, "sport", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("sport", String.Empty)
-                @Html.ValidationMessageFor(model => model.sport)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.matchId, "mid", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("matchId", String.Empty)

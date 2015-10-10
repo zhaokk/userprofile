@@ -34,14 +34,19 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            return View(team);
+
+            var playerIn = db.PLAYERs.Where(teams => teams.teamId == id).ToList();
+
+            var combined = new Tuple<TEAM, List<PLAYER>>(team, playerIn) { };
+
+            return View(combined);
         }
 
         // GET: /team/Create
         public ActionResult Create()
         {
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name"); //need to pass tournamentId arround
             return View();
         }
 
@@ -50,14 +55,23 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,tournamentId")] TEAM team)
+        public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,shortName,status")] TEAM team)
         {
+            team.sport = "Soccer";
+            team.status = 1;
+
             if (ModelState.IsValid)
             {
-                team.sport = "Soccer";
+
+                // need to pass a tournament in here for adding to the team, create for now with default tournament
+                TOURNAMENT t = db.TOURNAMENTs.Find(1);
+                
+                var tins = new TEAMIN();
+                tins.tournament = t.tournamentId;
+                team.TEAMINS.Add(tins);
                 db.TEAMs.Add(team);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Team", new {Id = team.teamId });
             }
 
             ViewBag.managerId = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerId);
