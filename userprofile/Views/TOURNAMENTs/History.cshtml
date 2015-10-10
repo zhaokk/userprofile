@@ -1,0 +1,125 @@
+﻿@model IEnumerable<userprofile.Models.TOURNAMENT>
+
+@{
+    ViewBag.Title = "Tournament list";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<div class="row">
+
+    <div class="col-xs-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">tournmant history</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body " style="display: block;">
+                <div class="table-responsive">
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                    @Html.DisplayNameFor(model => model.name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.startDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ageBracket)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.grade)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.status)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.priority)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SPORT1.name)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action( "Details", new { id = item.tournamentId })">
+                                            @Html.DisplayFor(modelItem => item.name)
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.startDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ageBracket)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.grade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.priority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SPORT1.name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.tournamentId }) |
+                                    @if (User.IsInRole("Admin"))
+    {
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.tournamentId })
+                                    }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+
+</div>
+</div>
+<div class="btn-group">
+
+
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a class=" btn btn-block btn-success" href='@Url.Action("Create","TOURNAMENTs")'><b>Create New tournamants</b></a>
+    }
+
+    <a class=" btn btn-block btn-success" href='@Url.Action("History", "TOURNAMENTs")'><b>tournamants History</b></a>
+</div>

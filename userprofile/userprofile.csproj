@@ -236,6 +236,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\managerViewModels.cs" />
     <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\OFFER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -1048,6 +1049,8 @@
     <Content Include="Views\PLAYERs\Edit.cshtml" />
     <Content Include="Views\PLAYERs\Index.cshtml" />
     <Content Include="Views\Home\IndexforOrg.cshtml" />
+    <Content Include="Views\Home\IndexforManager.cshtml" />
+    <Content Include="Views\TOURNAMENTs\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
