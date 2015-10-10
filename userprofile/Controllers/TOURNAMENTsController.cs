@@ -21,6 +21,12 @@ namespace userprofile.Controllers
             var tOURNAMENTs = db.TOURNAMENTs.Include(t => t.AspNetUser).Include(t => t.SPORT1);
             return View(await tOURNAMENTs.ToListAsync());
         }
+        public ActionResult History() {
+            var oldTour = db.TOURNAMENTs.Where(d => d.status == 2).ToList();
+            return View(oldTour);
+        
+        
+        }
 
         // GET: TOURNAMENTs/Details/5
         public async Task<ActionResult> Details(int? id)
