@@ -419,9 +419,7 @@ else
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Name
-                                        </th>
+                                       
                                         <th>
                                             Tournament Name
                                         </th>
@@ -438,9 +436,7 @@ else
                                     @foreach (var offer in @Model.orgOVM.notassignedOffers)
                                     {
                                         <tr>
-                                            <td>
-                                                @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                            </td>
+                                           
                                             <td>
                                                 @offer.MATCH.TOURNAMENT.name
                                             </td>

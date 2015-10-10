@@ -4,6 +4,12 @@
         Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
         roleSet = true;
     }
+    if (User.IsInRole("Organizer"))
+    {
+        Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
+        roleSet = true;
+    }
+    
     if (User.IsInRole("Referee"))
     {
        

@@ -4,63 +4,261 @@
     ViewBag.Title = "Details";
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box" style="height: 300px;">
             <div class="box-body">
-               
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.teamId }, new { @class="btn btn-warning pull-right"})
+
+                @Html.ActionLink("Edit", "Edit", new { id = Model.teamId }, new { @class = "btn btn-warning pull-right" })
                 <div class="fa fa-angle-left">
                     @Html.ActionLink("Back to List", "Index")
                 </div>
-            <hr/>
-               
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.name)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.name)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.ageBracket)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.ageBracket)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.grade)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.grade)
-                        </dd>
-                        <dd>
-                            Short name
-                        </dd>
-                      <dt>
-                            Manger Name
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.AspNetUser.firstName)
-                            @Html.DisplayFor(model => model.AspNetUser.lastName)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.managerId)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.managerId)
-                        </dd>
-                        <dd>
-                            @Html.DisplayFor(model => model.shortName)
-                        </dd>
-                      
-                      
-                    </dl>
-                
-               
+                <hr />
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ageBracket)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ageBracket)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.grade)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.grade)
+                    </dd>
+                    <dd>
+                        Short name
+                    </dd>
+                    <dt>
+                        Manger Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AspNetUser.firstName)
+                        @Html.DisplayFor(model => model.AspNetUser.lastName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.managerId)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.managerId)
+                    </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.shortName)
+                    </dd>
+
+
+                </dl>
+
+
+            </div>
         </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                
+
+                                <th>
+                                    Match ID
+
+                                </th>
+                                <th>Match Length</th>
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                    Match Date
+                                </th>
+                                @*<th>
+                                        @Html.DisplayNameFor(model => model.matchDate)
+                                    </th>*@
+                                @*<th>
+                                        @Html.DisplayNameFor(model => model.winnerID)
+                                    </th>*@
+                                <th>
+                                    @*@Html.DisplayNameFor(model => model.LOCATION1.name)*@
+                                    Location
+                                </th>
+                                <th>
+                                    Age
+                                </th>
+                                <th>
+                                    Grade
+                                </th>
+                                <th>
+                                    Home Team
+
+                                </th>
+                                <th>
+                                    Away Team
+                                </th>
+                                <th>
+                                    Sport
+                                </th>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                <th>
+
+                                </th>
+                                }
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MATCHes)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.matchId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.matchLength)
+                                </td>
+                                <td>
+
+                                    <a href="@Url.Action( "Details","match", new { id = item.matchId })">
+                                        @Html.DisplayFor(modelItem => item.matchDate)
+                                    </a>
+
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.mID })*@
+
+
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.winnerID)
+                                    </td>*@
+                                <td>
+                                    <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                        @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                    </a>
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOURNAMENT.ageBracket)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOURNAMENT.grade)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                        @Html.DisplayFor(modelItem => item.TEAM.name)
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                        @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                                </td>
+
+
+                                @if (User.IsInRole("Admin"))
+                                    {
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
+                                        @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+                                    </td>
+                                    }
+
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-                    
-                
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="table-responsive">
+
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Position
+                                </th>
+                                <th>
+                                    Shirt Num
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PLAYERs)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.position)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.shirtNum)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.status)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Details","account" ,new { id = item.AspNetUser.UserName })">
+                                            @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
+                                            @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

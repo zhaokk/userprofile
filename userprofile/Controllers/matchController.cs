@@ -69,6 +69,11 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MmatchViewModel matchVM)
         {
+            if (User.IsInRole("Organizer")) { 
+                TOURNAMENT t = db.TOURNAMENTs.First(tt=>tt.AspNetUser.UserName==User.Identity.Name);
+                matchVM.createdMatch.tournamentId = t.tournamentId;
+                matchVM.createdMatch.TOURNAMENT = t;
+            }
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
