@@ -36,18 +36,22 @@ namespace userprofile.Controllers
                 return RedirectToAction("IndexforManager","home");
             
             }
-            else
+            else if (User.IsInRole("Player")) {
+                return RedirectToAction("IndexForPlayer", "home");
+            }else
             {
                 return RedirectToAction("IndexForAnyone", "home");
             }
 
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult IndexforAd()
         {
 
             admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
             return View(aOVM);
         }
+          [Authorize(Roles = "Organizer")]
         public ActionResult IndexforOrg()
         {
             var userID = User.Identity.GetUserId();
@@ -62,6 +66,7 @@ namespace userprofile.Controllers
                 return View(orgVM);
             }
         }
+        [Authorize(Roles = "Manager")]
         public ActionResult IndexforManager() {
             var userID = User.Identity.GetUserId();
             if (db.TEAMs.FirstOrDefault(t => t.managerId == userID) == null)
@@ -82,6 +87,31 @@ namespace userprofile.Controllers
 
             return View();
         }
+        [Authorize(Roles = "Player")]
+        public ActionResult IndexForPlayer()
+        {
+            List<MATCH> comingMatch=new List<MATCH>();
+            List<MATCH> passMatch=new List<MATCH>();
+            AspNetUser anu = db.AspNetUsers.First(u => u.UserName == User.Identity.Name);
+            var playerIn = db.PLAYERs.Where(teams => teams.userId == anu.Id).ToList();
+            PlayerViewModel pvm = new PlayerViewModel();
+            foreach(var oneplay in playerIn){
+            foreach(MATCH oneMatch in oneplay.TEAM.MATCHes){
+            int days= (int)(oneMatch.matchDate-System.DateTime.Now).TotalMinutes;
+                if(days>0){
+                comingMatch.Add(oneMatch);
+                }else{
+                passMatch.Add(oneMatch);
+                }
+            }
+            
+            }
+            pvm.comingMatch = comingMatch;
+            pvm.passMatch = passMatch;
+            pvm.playerlist = playerIn;
+            return View(pvm);
+        }
+        
 
         public ActionResult About()
         {

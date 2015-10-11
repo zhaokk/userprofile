@@ -945,7 +945,6 @@
     <Content Include="Views\Account\Web.config" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ViewStart.cshtml" />
     <Content Include="Views\AdminLte\Colors.cshtml" />
     <Content Include="Views\AdminLte\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -1048,12 +1047,15 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Home\IndexforOrg.cshtml" />
     <Content Include="Views\Home\IndexforManager.cshtml" />
-    <Content Include="Views\TOURNAMENTs\History.cshtml" />
+    <Content Include="Views\Tournament\History.cshtml" />
+    <Content Include="Views\Home\IndexForPlayer.cshtml" />
+    <Content Include="Views\Shared\_LayoutForPL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Helpers\" />
     <Folder Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\" />
+    <Folder Include="Views\TOURNAMENTs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

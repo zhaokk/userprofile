@@ -33,4 +33,14 @@ namespace userprofile.Models
 
         public admineOfferViewModel orgOVM { get; set; }
     }
+
+    public class PlayerViewModel
+    {
+
+        public List<PLAYER> playerlist { get; set; }
+        public List<MATCH> comingMatch { get; set; }
+
+        public List<MATCH> passMatch { get; set; }
+    
+    }
 }
