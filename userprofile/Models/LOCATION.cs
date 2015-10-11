@@ -52,6 +52,10 @@ namespace userprofile.Models
         public int status { get; set; }
         public System.Data.Entity.Spatial.DbGeography geogCol1 { get; set; }
         public string geogCol2 { get; set; }
+
+        public float Lat { get; set; }
+
+        public float Long { get; set; }
     
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
