@@ -259,6 +259,10 @@ namespace userprofile.Controllers {
 			}
         }
 
+		bool checkOneOff(int oID, int rID) {
+			return checkOneOff(db.OFFERs.Find(oID).dateOfOffer,rID);
+		}
+
         bool checkOneOff(DateTime matchDateTime, int rID) {
             try {
                 var temp = db.OneOffAVAILABILITies.Find(rID,matchDateTime.Date);
@@ -713,5 +717,42 @@ namespace userprofile.Controllers {
             //db.Entry(of).State = EntityState.Modified;
             //db.SaveChanges();
         }
+
+
+		public List<REFEREE> getAvailableRefereesForOffer(int oID) {
+			OFFER offer = db.OFFERs.Find(oID);
+			List<REFEREE> availableReferees = new List<REFEREE>();
+			List<KeyValuePair<int, int>> offerQuals = new List<KeyValuePair<int,int>>();
+			foreach (var i in offer.OFFERQUALs) {
+				offerQuals.Add(new KeyValuePair<int, int>(i.qualificationId, i.qualLevel));
+			}
+			foreach (var i in db.REFEREEs) {
+				bool refHasQualification = true;
+				foreach (var j in offerQuals) {
+					try {
+						db.USERQUALs.Find(j.Key,i.refId);
+					}
+					catch (SystemException a) {
+						refHasQualification = false;
+						break;
+					}
+				}
+				if (refHasQualification) {
+					//check if has a free slot to ref on that day (is currently reffing < maxGames)
+					
+					if (containsOneOff(offer.dateOfOffer,i.refId)) {
+						if (checkOneOff(offer.dateOfOffer,i.refId)) {
+							availableReferees.Add(i);
+						}
+					}
+					else {
+						if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer,i.refId),offer.dateOfOffer)) {
+							availableReferees.Add(i);
+						}
+					}
+				}
+			}
+			return availableReferees;
+		}
     }
 }
