@@ -25,13 +25,7 @@
             <div class="box-body">
                 <div class="fa fa-angle-left">
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink(" Back to List", "Index")}
-                    else
-                    {
-                        @Html.ActionLink(" Back to List", "Index", "Home")
-                    }
+                    
                 </div>
                 @using (Html.BeginForm())
                 {
