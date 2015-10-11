@@ -17,7 +17,7 @@ namespace userprofile.Controllers
         // GET: /sport/
         public ActionResult Index()
         {
-            return View(db.SPORTs.ToList());
+            return View(db.SPORTs.Where(sport => sport.status > 0).ToList());
         }
 
         // GET: /sport/Details/5
@@ -46,7 +46,8 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="name")] SPORT sport)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create([Bind(Include="name, status")] SPORT sport)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +60,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /sport/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -78,7 +80,8 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="name")] SPORT sport)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include="name,status")] SPORT sport)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +93,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /sport/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -105,12 +109,15 @@ namespace userprofile.Controllers
         }
 
         // POST: /sport/Delete/5
+         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
             SPORT sport = db.SPORTs.Find(id);
-            db.SPORTs.Remove(sport);
+
+            sport.status = 1;
+            db.Entry(sport).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

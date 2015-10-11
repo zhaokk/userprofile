@@ -32,6 +32,10 @@ namespace userprofile.Controllers
             else if (User.IsInRole("Organizer")) {
                 return RedirectToAction("IndexforOrg", "home");
             }
+            else if (User.IsInRole("Manager")) {
+                return RedirectToAction("IndexforManager","home");
+            
+            }
             else
             {
                 return RedirectToAction("IndexForAnyone", "home");
@@ -57,6 +61,21 @@ namespace userprofile.Controllers
                 OrgViewModels orgVM = new OrgViewModels(db, userID);
                 return View(orgVM);
             }
+        }
+        public ActionResult IndexforManager() {
+            var userID = User.Identity.GetUserId();
+            if (db.TEAMs.FirstOrDefault(t => t.managerId == userID) == null)
+            {
+                ViewBag.Massage = "you are not managing any tournamnet";
+                return View();
+            }
+            else {
+                managerViewModels mVM = new managerViewModels(db,userID);
+                return View(mVM);
+            }
+           
+
+        
         }
         public ActionResult IndexForAnyone()
         {

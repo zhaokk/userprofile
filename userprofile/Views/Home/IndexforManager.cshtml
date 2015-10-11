@@ -1,0 +1,87 @@
+﻿@model userprofile.Models.managerViewModels
+@{
+    ViewBag.Title = "IndexforManager";
+}
+@if (ViewBag.Massage != null)
+    {
+    <h1>@ViewBag.Massage</h1>
+    }
+else
+{
+    <script src="/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+    <link href="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+
+
+    <script>
+    $(function () {
+        $("#example3").DataTable();
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+
+
+    window.onload = function(){
+        var ctx = document.getElementById("pieChart").getContext("2d");
+        window.myPie = new Chart(ctx).Pie(pieData);
+    };
+
+
+
+    </script>
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                   teamid
+                </th>
+                <th>
+                    team name
+                </th>
+                <th>
+                   ageBracket
+                </th>
+                <th>
+                   grade
+                </th>
+                <th>
+                   sport
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var team in @Model.teams)
+            {
+                <tr>
+                    <td>
+                       @team.teamId
+                    </td>
+                    <td>
+                        @team.name
+                    </td>
+                    <td>
+
+                     @team.ageBracket
+                    </td>
+                    <td>
+
+                   @team.grade
+                    </td>
+                    <td>
+
+                       @team.sport
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}

@@ -171,16 +171,16 @@
     <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
-    <Compile Include="Controllers\matchController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
-    <Compile Include="Controllers\PLAYERsController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />
     <Compile Include="Controllers\SPORTsController.cs" />
     <Compile Include="Controllers\teamController.cs" />
-    <Compile Include="Controllers\TOURNAMENTsController.cs" />
+    <Compile Include="Controllers\TournamentController.cs" />
     <Compile Include="Controllers\TYPEsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -201,12 +201,6 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Event.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -221,6 +215,7 @@
     </Compile>
     <Compile Include="Models\MmatchViewModel.cs" />
     <Compile Include="Models\matchViewModel.cs" />
+    <Compile Include="Models\managerViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -236,20 +231,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\OFFER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OFFERQUAL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OneOffAVAILABILITY.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\MoffersViewModels.cs" />
     <Compile Include="Models\offersViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\offerDataViewModel.cs" />
-    <Compile Include="Models\OneOffAVAILABILITY.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PLAYER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -264,6 +259,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TEAM.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEAMIN.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TOURNAMENT.cs">
@@ -831,23 +829,6 @@
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\plugins\scayt\LICENSE.md" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\LICENSE.md" />
     <Content Include="Scripts\AdminLTE\plugins\ckeditor\CHANGES.md" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Content Include="Excel\17c0a4f5-2d53-4fa2-829d-5a4acd2598b6.xls" />
     <Content Include="Excel\1e14ad68-4f27-4ea7-811f-67e0d4773d8a.xls" />
     <Content Include="Excel\1e934581-ad5a-4348-97c3-829a699f48fc.xls" />
@@ -900,6 +881,23 @@
     <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\rao321.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\highlight.js" />
@@ -942,7 +940,6 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\show.cshtml" />
-    <Content Include="Views\Account\showProfile.cshtml" />
     <Content Include="Views\Account\UserRoles.cshtml" />
     <Content Include="Views\Account\Web.config" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -1036,19 +1033,20 @@
     <Content Include="Views\Home\IndexForAnyone.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\TOURNAMENTs\Create.cshtml" />
-    <Content Include="Views\TOURNAMENTs\Delete.cshtml" />
-    <Content Include="Views\TOURNAMENTs\Details.cshtml" />
-    <Content Include="Views\TOURNAMENTs\Edit.cshtml" />
-    <Content Include="Views\TOURNAMENTs\Index.cshtml" />
+    <Content Include="Views\Tournament\Create.cshtml" />
+    <Content Include="Views\Tournament\Delete.cshtml" />
+    <Content Include="Views\Tournament\Details.cshtml" />
+    <Content Include="Views\Tournament\Edit.cshtml" />
+    <Content Include="Views\Tournament\Index.cshtml" />
     <Content Include="Views\Account\showhead_Icon.cshtml" />
     <Content Include="Views\offer\Details.cshtml" />
-    <Content Include="Views\PLAYERs\Create.cshtml" />
-    <Content Include="Views\PLAYERs\Delete.cshtml" />
-    <Content Include="Views\PLAYERs\Details.cshtml" />
-    <Content Include="Views\PLAYERs\Edit.cshtml" />
-    <Content Include="Views\PLAYERs\Index.cshtml" />
+    <Content Include="Views\Player\Create.cshtml" />
+    <Content Include="Views\Player\Delete.cshtml" />
+    <Content Include="Views\Player\Details.cshtml" />
+    <Content Include="Views\Player\Edit.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Home\IndexforOrg.cshtml" />
+    <Content Include="Views\Home\IndexforManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

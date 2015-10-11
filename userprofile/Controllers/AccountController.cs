@@ -42,7 +42,7 @@ namespace userprofile.Controllers
         }
    
         [HttpPost]
-     //   [Authorize(Roles = "Admin")]
+     //   no authorise due to self edit
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditUserViewModel model)
         {
@@ -71,8 +71,6 @@ namespace userprofile.Controllers
                 if (!shouldFail)
                 {
 
-
-
                     // Update the user data:
                     user.firstName = model.FirstName;
                     user.lastName = model.LastName;
@@ -91,7 +89,7 @@ namespace userprofile.Controllers
             // If we got this far something failed, redisplay form
             return View(model);
         }
-     // [Authorize(Roles = "Admin")]
+
         public ActionResult SelfEdit()
         {
             var Db = new ApplicationDbContext();
@@ -100,10 +98,10 @@ namespace userprofile.Controllers
             
             return View("Edit",model);
         }
-     
 
 
-        [Authorize(Roles = "Admin")]
+
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(string id = null)
         {
             var Db = new ApplicationDbContext();
@@ -127,12 +125,14 @@ namespace userprofile.Controllers
 
             var user = db.AspNetUsers.First(u => u.UserName == id);
             var playerIn = db.PLAYERs.Where(teams => teams.userId == user.Id).ToList();
+            var managerOfteams = db.TEAMs.Where(teams => teams.managerId == user.Id).ToList();
+            List<TOURNAMENT> organizerOfTournaments = db.TOURNAMENTs.Where(t => t.AspNetUser.Id == id).ToList();
 
             if (user == null)
             {
                 return HttpNotFound();
             }
-            var combined = new Tuple<AspNetUser, List<PLAYER>>(user, playerIn) { };
+            var combined = new Tuple<AspNetUser, List<PLAYER>, List<TEAM>, List<TOURNAMENT>>(user, playerIn, managerOfteams, organizerOfTournaments) { };
 
             return View(combined);
         }
@@ -140,7 +140,7 @@ namespace userprofile.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult DeleteConfirmed(string id)
         {
             var Db = new ApplicationDbContext();
@@ -152,7 +152,9 @@ namespace userprofile.Controllers
                     System.IO.File.Delete(fullPath);
                 }
             }
-            Db.Users.Remove(user);
+            user.status = 0;
+
+            //Db.Entry(user).State = EntityState.Modified;
             Db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -166,7 +168,7 @@ namespace userprofile.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Organizer")]
         [ValidateAntiForgeryToken]
         public ActionResult UserRoles(SelectUserRolesViewModel model)
         {
@@ -181,29 +183,25 @@ namespace userprofile.Controllers
 
                 if (model.Roles[0].Selected)
                 {
-                    user.isAdmin = true;
                     var roleMap = db.AspNetRoles.First(m => m.Name=="Admin");
                     user.AspNetRoles.Add(roleMap);
 
                 }
                 if (model.Roles[1].Selected)
                 {
-                    user.isPlayer = true;
-                    var roleMap = db.AspNetRoles.First(m => m.Name == "Player"); //change to  == "Player"
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Player"); 
                     user.AspNetRoles.Add(roleMap);
 
                 }
                 if (model.Roles[2].Selected)
                 {
-                    user.isReferee = true;
                     var roleMap = db.AspNetRoles.First(m => m.Name == "Referee");
                     user.AspNetRoles.Add(roleMap);
 
                 }
                 if (model.Roles[3].Selected)
                 {
-                    user.isOrganizer = true;
-                    var roleMap = db.AspNetRoles.First(m => m.Name == "Organizer"); //change to  == "Organizer"
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Organizer"); 
                     user.AspNetRoles.Add(roleMap);
                    
                 }
@@ -301,11 +299,9 @@ namespace userprofile.Controllers
             return View(user);
         }
         //
-        // POST: /Account/Register
         [HttpPost]
-     //   [Authorize(Roles = "Admin")]
-      // [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
+        //handles self register, so no authenticate
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             Boolean shouldFail = false;
@@ -324,8 +320,6 @@ namespace userprofile.Controllers
 
             }
             model.photoDir = location;
-
-
 
 
             if (ModelState.IsValid)
@@ -391,8 +385,6 @@ namespace userprofile.Controllers
 
                         }
 
-                        //  await SignInAsync(user, isPersistent: false);
-
 
                         bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                      if (val1) //is logged in
@@ -424,7 +416,6 @@ namespace userprofile.Controllers
         public ActionResult showProfile(string id)
         {
             var db = new ApplicationDbContext();
-
 
             bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
             if (val1) //is logged in
@@ -531,7 +522,6 @@ namespace userprofile.Controllers
                     {
                         case "Referee":
                             REFEREE refComeWithUser = model.optionalRe.re;
-                            refComeWithUser.sport = "Soccor";
                             refComeWithUser.userId = storedUser.Id;
 
                             idManager.AddUserToRole(storedUser.Id, model.Roles);
@@ -549,18 +539,12 @@ namespace userprofile.Controllers
 
                     }
 
-                    // await SignInAsync(user, isPersistent: false);
-
-
                 }
                 else
                 {
                     success = false; ;
                 }
             }
-
-
-
 
             return success;
 

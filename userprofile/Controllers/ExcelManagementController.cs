@@ -143,7 +143,6 @@ namespace userprofile.Controllers
                                         fails++;
                                     }
 
-                                    modelfromExcel.optionalRe.re.sport = "Soccer";
                                     //  var storedUser = db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName).Id;
                                     //modelfromExcel.optionalRe.re.userId = storedUser;
 

@@ -22,20 +22,17 @@ namespace userprofile.Models
             this.USERQUALs = new HashSet<USERQUAL>();
             this.OFFERs1 = new HashSet<OFFER>();
             this.LOCATIONs = new HashSet<LOCATION>();
-           // this.rating = 0;
         }
 
-        [Display(Name = "referee Id")]
+        [Display(Name = "Referee Id")]
         public int refId { get; set; }
-        [Display(Name = "Travel Distance")]
+         [Display(Name = "Travel Distance")]
         public Nullable<int> distTravel { get; set; }
-        [Display(Name = "Sport")]
-        public string sport { get; set; }
         [Display(Name = "User Id")]
         public string userId { get; set; }
         [Display(Name = "Max Games")]
         public int maxGames { get; set; }
-        [Display(Name = "Status")]
+         [Display(Name = "Status")]
         public int status { get; set; }
         [Display(Name = "Rating")]
         public int rating { get; set; }
@@ -43,7 +40,6 @@ namespace userprofile.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
         public virtual ICollection<OneOffAVAILABILITY> OneOffAVAILABILITies { get; set; }
-        public virtual SPORT SPORT1 { get; set; }
         public virtual ICollection<USERQUAL> USERQUALs { get; set; }
         public virtual WEEKLYAVAILABILITY WEEKLYAVAILABILITY { get; set; }
         public virtual ICollection<OFFER> OFFERs1 { get; set; }

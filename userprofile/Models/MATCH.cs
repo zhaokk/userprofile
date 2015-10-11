@@ -20,9 +20,9 @@ namespace userprofile.Models
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.OFFERs = new HashSet<OFFER>();
         }
-    
-        public int matchId { get; set; }
 
+        [Display(Name = "Match Id")]
+        public int matchId { get; set; }
         [Display(Name = "Match Date")]
         [Required(ErrorMessage = "Match Date required")]
         public System.DateTime matchDate { get; set; }
@@ -36,23 +36,21 @@ namespace userprofile.Models
         [Required(ErrorMessage = "Away Team Name is required")]
         public int teamBId { get; set; }
         [Display(Name = "Home Team Score")]
-       
         public Nullable<int> teamAScore { get; set; }
         [Display(Name = "Away Team Score")]
-        
         public Nullable<int> teamBScore { get; set; }
-        
         [Display(Name = "Status")]
         public Nullable<int> status { get; set; }
         [Display(Name = "Tournament Id")]
         public int tournamentId { get; set; }
-        
         [Display(Name = "Match Duration")]
         [Required(ErrorMessage = "Match Duration is required")]
         public int matchLength { get; set; }
         [Display(Name = "Half Time Duration")]
         [Required(ErrorMessage = "Half Time Duration is required")]
         public int halfTimeDuration { get; set; }
+        [Display(Name = "Match counts towards point system")]
+        public bool countsToDraw { get; set; }
     
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }

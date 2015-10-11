@@ -17,7 +17,7 @@ namespace userprofile.Controllers
         // GET: /qualification/
         public ActionResult Index()
         {
-            var qualifications = db.QUALIFICATIONS.Include(q => q.SPORT1);
+            var qualifications = db.QUALIFICATIONS.Include(q => q.SPORT1).Where(qual => qual.status > 0);
             return View(qualifications.ToList());
         }
 

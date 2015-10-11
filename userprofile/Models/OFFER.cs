@@ -23,14 +23,13 @@ namespace userprofile.Models
 
         [Display(Name = "Offer Id")]
         public int offerId { get; set; }
-        [Display(Name = "Sport")]
-        public string sport { get; set; }
-        [Display(Name = "Match Id")]
+         [Display(Name = "Match Id")]
         public int matchId { get; set; }
         [Display(Name = "Referee Id")]
         public Nullable<int> refId { get; set; }
         [Display(Name = "Status")]
         public int status { get; set; }
+        [Display(Name = "Date offer made")]
         public System.DateTime dateOfOffer { get; set; }
         [Display(Name = "Declined Reason")]
         public string declinedReason { get; set; }
@@ -42,7 +41,6 @@ namespace userprofile.Models
         public virtual MATCH MATCH { get; set; }
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual REFEREE REFEREE { get; set; }
-        public virtual SPORT SPORT1 { get; set; }
         public virtual TYPE TYPE { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
     }

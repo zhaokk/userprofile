@@ -11,16 +11,22 @@ using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
-    public class REFEREEController : Controller
+    [Authorize(Roles = "Admin")]
+    public class RefereeController : Controller
     {
         private Raoconnection db = new Raoconnection();
 
         // GET: /REFEREE/
         public ActionResult Index()
         {
-            List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(r => r.SPORT1).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).ToList();
+            List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).Where(reff => reff.status == 1).ToList();
 
             List<SelectList> qualifications = new List<SelectList>();
+            List<int> numUpcomingMatches = new List<int>();
+            DateTime nextWeek = DateTime.Today;
+            nextWeek.AddDays(7);
+
+            
 
             foreach (REFEREE reff in referees)
             {
@@ -31,11 +37,17 @@ namespace userprofile.Controllers
                     sel.Add(new SelectListItem { Text = qual.QUALIFICATION.name, Value = qual.qualificationId.ToString() });
                 }
                 qualifications.Add(new SelectList(sel, "Value", "Text"));
+
+                //get the number of upcomming matches for that referee
+                int numMatches = db.OFFERs.Where(offer => offer.refId == reff.refId).Where(offer => offer.MATCH.matchDate > nextWeek).Where(offer => offer.status > 0).Count();
+                numUpcomingMatches.Add(numMatches);
+
             }
-            var combined = new Tuple<List<REFEREE>, List<SelectList>>(referees, qualifications) { };
+            var combined = new Tuple<List<REFEREE>, List<SelectList>, List<int>>(referees, qualifications, numUpcomingMatches) { };
 
             return View(combined);
         }
+
 
         // GET: /REFEREE/Details/5
         public ActionResult Details(int? id)
@@ -45,7 +57,7 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             REFEREE referee = db.REFEREEs.Find(id);
-            var matches = db.OFFERs.Where(o => o.refId == id).Include(m => m.MATCH).ToList();
+            var matches = db.OFFERs.Where(o => o.refId == id).Include(m => m.MATCH).Where( match => match.status > 0).ToList();
             if (referee == null)
             {
                 return HttpNotFound();
@@ -56,38 +68,11 @@ namespace userprofile.Controllers
             return View(combined);
         }
 
-        //// GET: /REFEREE/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
-        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-        //    ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qID", "name");
-        //    return View();
-        //}
-
-        //// POST: /REFEREE/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create( REFEREE referee)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.REFEREEs.Add(referee);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.ID = new SelectList(db.AspNetUsers, "re.Id", "UserName", referee.ID);
-        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
-        //    return View(referee);
-        //}
-
-        // GET: /REFEREE/Create
         public ActionResult Create()
         {
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
+
+
+            ViewBag.ID = new SelectList(db.AspNetUsers.Where(reff => reff.REFEREEs.Count == 0), "Id", "UserName");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
             ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.quallist = new selectRefQuliViewModel(db);
@@ -103,10 +88,9 @@ namespace userprofile.Controllers
         public ActionResult Create( selectRefQuliViewModel srqvm, REFEREE re)
         {
         
-
-
             if (ModelState.IsValid)
             {
+                re.status = 1;
                 re.USERQUALs.Clear();
                 if (srqvm.quals != null)
                 {
@@ -129,7 +113,6 @@ namespace userprofile.Controllers
             }
 
             ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", re.userId);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", re.sport);
             REFEREEqualViewModel rqvm = new REFEREEqualViewModel(db);
             rqvm.re = re;
             rqvm.srqvm = srqvm;
@@ -198,7 +181,6 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
             return View(referee);
         }
 
@@ -207,17 +189,15 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="refID,availability,distTravel,sport,userId,status,maxGames,rating")] REFEREE referee)
+        public ActionResult Edit([Bind(Include="refID,distTravel,userId,maxGames,status,rating")] REFEREE referee)
         {
             if (ModelState.IsValid)
             {
-                referee.sport = "Soccer"; //remove this line when we remove sport from the referee table
                 db.Entry(referee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName", referee.userId);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
             return View(referee);
         }
 
@@ -242,8 +222,9 @@ namespace userprofile.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             REFEREE referee = db.REFEREEs.Find(id);
-            referee.USERQUALs.Clear();
-            db.REFEREEs.Remove(referee);
+            //referee.USERQUALs.Clear();
+            referee.status = 0;
+            db.Entry(referee).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

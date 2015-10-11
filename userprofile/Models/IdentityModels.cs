@@ -38,6 +38,7 @@ namespace userprofile.Models
         public string city { get; set; }
         [Required]
         public int ffaNum { get; set; }
+        public int status { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

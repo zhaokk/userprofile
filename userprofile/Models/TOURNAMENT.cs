@@ -17,7 +17,8 @@ namespace userprofile.Models
         public TOURNAMENT()
         {
             this.MATCHes = new HashSet<MATCH>();
-            this.TEAMs = new HashSet<TEAM>();
+            this.TEAMINS = new HashSet<TEAMIN>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public int tournamentId { get; set; }
@@ -26,6 +27,7 @@ namespace userprofile.Models
         public string organizer { get; set; }
         public Nullable<int> ageBracket { get; set; }
         public string grade { get; set; }
+        public Nullable<int> gender { get; set; }
         public string sport { get; set; }
         public int status { get; set; }
         public int priority { get; set; }
@@ -33,6 +35,7 @@ namespace userprofile.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<MATCH> MATCHes { get; set; }
         public virtual SPORT SPORT1 { get; set; }
-        public virtual ICollection<TEAM> TEAMs { get; set; }
+        public virtual ICollection<TEAMIN> TEAMINS { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }
