@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
+    <Compile Include="Controllers\managerViewModels.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
@@ -210,12 +211,12 @@
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\managerViewModels.cs" />
     <Compile Include="Models\MATCH.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MmatchViewModel.cs" />
     <Compile Include="Models\matchViewModel.cs" />
-    <Compile Include="Models\managerViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -231,8 +232,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\managerViewModels.cs" />
-    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\OFFER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -242,11 +241,11 @@
     <Compile Include="Models\OneOffAVAILABILITY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\MoffersViewModels.cs" />
     <Compile Include="Models\offersViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\offerDataViewModel.cs" />
+    <Compile Include="Models\OrgViewModels.cs" />
     <Compile Include="Models\PLAYER.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
