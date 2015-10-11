@@ -24,8 +24,12 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.matchId }, new { @class = "btn btn-warning pull-right" })
-                @Html.ActionLink("Manage Offers", "manageOffer", new { id = Model.Item1.matchId }, new { @class = "btn bg-purple pull-right" })
+                @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.matchId }, new { @class = "btn btn-warning pull-right" })
+                    @Html.ActionLink("Manage Offers", "manageOffer", new { id = Model.Item1.matchId }, new { @class = "btn bg-purple pull-right" })
+                }
+                
                 <div class="fa fa-angle-left">
                     @Html.ActionLink(" Back to List", "Index")
                 </div>
