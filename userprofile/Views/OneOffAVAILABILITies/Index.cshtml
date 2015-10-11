@@ -28,20 +28,20 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.startDate)
+                                    Start Date
+                                   
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.timeOnOrOff)
+                                    Time on or off
+                                   
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.description)
+                                    Description
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.REFEREE.sport)
-                                </th>
+                                
                                 <th></th>
                             </tr>
-                        <thead>
+                        </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
@@ -55,12 +55,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.description)
                                     </td>
+                                    
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.REFEREE.sport)
-                                    </td>
-                                    <td>
-                                        @*@Html.ActionLink("Edit", "Edit", new { id=item.availabilityId }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.availabilityId }) |*@
+                                       
                                         @Html.ActionLink("Delete", "Delete", new { id = item.refId,start=item.startDate })
                                     </td>
                                 </tr>

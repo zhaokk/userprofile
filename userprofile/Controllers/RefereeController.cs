@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Referee")]
     public class RefereeController : Controller
     {
         private Raoconnection db = new Raoconnection();

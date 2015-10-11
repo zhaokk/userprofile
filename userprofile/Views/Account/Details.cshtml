@@ -22,19 +22,17 @@
         <div class="box">
             <div class="box-body">
                 @{
-                    if (User.IsInRole("Admin"))
+                    if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
                     {
                        @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-warning pull-right" })
                     }
                     else if (User.Identity.Name == Model.Item1.UserName)
                     {
-                        <a class=" btn btn-block btn-success" href='@Url.Action("SelfEdit", "Account")'><b>Edit my details</b></a>
+                        <a class=" btn btn-warning pull-right" href='@Url.Action("SelfEdit", "Account")'>Edit my details</a>
                     }
-                }
+}
                 
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to users", "Index")
-                </div>
+                
                 <hr />
 
                 <dl class="dl-horizontal">
