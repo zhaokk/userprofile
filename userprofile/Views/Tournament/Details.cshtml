@@ -90,6 +90,7 @@
         if (User.IsInRole("Admin"))
         {
             @Html.ActionLink("Edit", "Edit", new { id = Model.tournamentId })
+            @Html.ActionLink("Delete", "Delete", new { id = Model.tournamentId })
         }
     }
     @Html.ActionLink("List of tournaments", "Index")
