@@ -11,12 +11,12 @@ using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
-    [Authorize(Roles = "Admin,Referee")]
     public class RefereeController : Controller
     {
         private Raoconnection db = new Raoconnection();
 
         // GET: /REFEREE/
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Index()
         {
             List<REFEREE> referees = db.REFEREEs.Include(r => r.AspNetUser).Include(m => m.USERQUALs.Select(y => y.QUALIFICATION)).Where(reff => reff.status == 1).ToList();
@@ -50,6 +50,7 @@ namespace userprofile.Controllers
 
 
         // GET: /REFEREE/Details/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -68,6 +69,7 @@ namespace userprofile.Controllers
             return View(combined);
         }
 
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
 
@@ -85,6 +87,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create( selectRefQuliViewModel srqvm, REFEREE re)
         {
         
@@ -118,6 +121,7 @@ namespace userprofile.Controllers
             rqvm.srqvm = srqvm;
             return View(rqvm);
         }
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult changequal(int? id)
         {
 
@@ -137,6 +141,7 @@ namespace userprofile.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult changequal( selectRefQuliEditViewModel srqvm)
         {
 
@@ -169,6 +174,7 @@ namespace userprofile.Controllers
 
         }
         // GET: /REFEREE/Edit/5
+        [Authorize(Roles = "Admin,Organizer,Referee")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -189,6 +195,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer,Referee")]
         public ActionResult Edit([Bind(Include="refID,distTravel,userId,maxGames,status,rating")] REFEREE referee)
         {
             if (ModelState.IsValid)
@@ -202,6 +209,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /REFEREE/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -219,6 +227,7 @@ namespace userprofile.Controllers
         // POST: /REFEREE/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult DeleteConfirmed(int id)
         {
             REFEREE referee = db.REFEREEs.Find(id);
@@ -229,6 +238,7 @@ namespace userprofile.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+        [Authorize(Roles = "Admin,Organizer,Referee")]
         public ActionResult Availability() {
             var currentRefereeId= User.Identity.GetUserId();
             var refe= db.REFEREEs.First(rid=>rid.userId==currentRefereeId);
@@ -240,6 +250,7 @@ namespace userprofile.Controllers
             else return View(new WEEKLYAVAILABILITYViewModel());
         }
         [HttpPost]
+        [Authorize(Roles = "Admin,Organizer,Referee")]
         public ActionResult Availability(WEEKLYAVAILABILITYViewModel jsonData)
         {
             var currentRefereeId = User.Identity.GetUserId();

@@ -18,8 +18,8 @@ namespace userprofile.Controllers
         // GET: TOURNAMENTs
         public async Task<ActionResult> Index()
         {
-            var tOURNAMENTs = db.TOURNAMENTs.Include(t => t.AspNetUser).Include(t => t.SPORT1);
-            return View(await tOURNAMENTs.ToListAsync());
+            var tournament = db.TOURNAMENTs.Include(t => t.AspNetUser).Include(t => t.SPORT1).Where(tour => tour.status == 1);
+            return View(await tournament.ToListAsync());
         }
         public ActionResult History() {
             var oldTour = db.TOURNAMENTs.Where(d => d.status == 2).ToList();
@@ -35,12 +35,12 @@ namespace userprofile.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TOURNAMENT tOURNAMENT = await db.TOURNAMENTs.FindAsync(id);
-            if (tOURNAMENT == null)
+            TOURNAMENT tournament = await db.TOURNAMENTs.FindAsync(id);
+            if (tournament == null)
             {
                 return HttpNotFound();
             }
-            return View(tOURNAMENT);
+            return View(tournament);
         }
 
         // GET: TOURNAMENTs/Create
@@ -56,36 +56,38 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "tournamentId,name,startDate,organizer,ageBracket,grade,sport,status,priority")] TOURNAMENT tOURNAMENT)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Create([Bind(Include = "tournamentId,name,startDate,organizer,ageBracket,grade,sport,status,priority")] TOURNAMENT tournament)
         {
-            tOURNAMENT.status = 1;
+            tournament.status = 1;
             if (ModelState.IsValid)
             {
-                db.TOURNAMENTs.Add(tOURNAMENT);
+                db.TOURNAMENTs.Add(tournament);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tOURNAMENT.organizer);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tOURNAMENT.sport);
-            return View(tOURNAMENT);
+            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tournament.organizer);
+            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tournament.sport);
+            return View(tournament);
         }
 
         // GET: TOURNAMENTs/Edit/5
+        [Authorize(Roles = "Admin,Organizer")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TOURNAMENT tOURNAMENT = await db.TOURNAMENTs.FindAsync(id);
-            if (tOURNAMENT == null)
+            TOURNAMENT tournament = await db.TOURNAMENTs.FindAsync(id);
+            if (tournament == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tOURNAMENT.organizer);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tOURNAMENT.sport);
-            return View(tOURNAMENT);
+            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tournament.organizer);
+            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tournament.sport);
+            return View(tournament);
         }
 
         // POST: TOURNAMENTs/Edit/5
@@ -93,43 +95,51 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "tournamentId,name,startDate,organizer,ageBracket,grade,sport,status,priority")] TOURNAMENT tOURNAMENT)
+        [Authorize(Roles = "Admin,Organizer")]
+        public async Task<ActionResult> Edit([Bind(Include = "tournamentId,name,startDate,organizer,ageBracket,grade,sport,status,priority")] TOURNAMENT tournament)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tOURNAMENT).State = EntityState.Modified;
+                db.Entry(tournament).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tOURNAMENT.organizer);
-            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tOURNAMENT.sport);
-            return View(tOURNAMENT);
+            ViewBag.organizer = new SelectList(db.AspNetUsers, "Id", "UserName", tournament.organizer);
+            ViewBag.sport = new SelectList(db.SPORTs, "name", "name", tournament.sport);
+            return View(tournament);
         }
 
         // GET: TOURNAMENTs/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TOURNAMENT tOURNAMENT = await db.TOURNAMENTs.FindAsync(id);
-            if (tOURNAMENT == null)
+            TOURNAMENT tournament = await db.TOURNAMENTs.FindAsync(id);
+            if (tournament == null)
             {
                 return HttpNotFound();
             }
-            return View(tOURNAMENT);
+            return View(tournament);
         }
 
         // POST: TOURNAMENTs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            TOURNAMENT tOURNAMENT = await db.TOURNAMENTs.FindAsync(id);
-            db.TOURNAMENTs.Remove(tOURNAMENT);
+            TOURNAMENT tournament = await db.TOURNAMENTs.FindAsync(id);
+            
+
+            tournament.status = 0;
+            db.Entry(tournament).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+
+
         }
 
         protected override void Dispose(bool disposing)

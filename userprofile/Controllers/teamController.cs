@@ -43,6 +43,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Create
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName");
@@ -55,6 +56,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,shortName,status")] TEAM team)
         {
             team.sport = "Soccer";
@@ -80,6 +82,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Edit/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,6 +106,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit([Bind(Include = "teamId,name,ageBracket,grade,managerId,sport,shortName,status")] TEAM team)
         {
             if (ModelState.IsValid)
@@ -118,6 +122,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -135,6 +140,7 @@ namespace userprofile.Controllers
         // POST: /team/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult DeleteConfirmed(int id)
         {
             TEAM team = db.TEAMs.Find(id);
