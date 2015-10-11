@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class REFEREE
     {
@@ -22,12 +23,18 @@ namespace userprofile.Models
             this.OFFERs1 = new HashSet<OFFER>();
             this.LOCATIONs = new HashSet<LOCATION>();
         }
-    
+
+        [Display(Name = "Referee Id")]
         public int refId { get; set; }
+         [Display(Name = "Travel Distance")]
         public Nullable<int> distTravel { get; set; }
+        [Display(Name = "User Id")]
         public string userId { get; set; }
+        [Display(Name = "Max Games")]
         public int maxGames { get; set; }
+         [Display(Name = "Status")]
         public int status { get; set; }
+        [Display(Name = "Rating")]
         public int rating { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

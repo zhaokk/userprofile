@@ -11,6 +11,7 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class TEAM
     {
@@ -21,12 +22,19 @@ namespace userprofile.Models
             this.PLAYERs = new HashSet<PLAYER>();
             this.TEAMINS = new HashSet<TEAMIN>();
         }
-    
+
+        [Display(Name = "Team Id")]
+        [Required(ErrorMessage = "Team Id is required")]
         public int teamId { get; set; }
+        [Display(Name = "Team Name")]
         public string name { get; set; }
+        [Display(Name = "Age Group")]
         public Nullable<int> ageBracket { get; set; }
+        [Display(Name = "Grade")]
         public string grade { get; set; }
+        [Display(Name = "Sport")]
         public string sport { get; set; }
+         [Display(Name = "Manager Id")]
         public string managerId { get; set; }
         public string shortName { get; set; }
         public int status { get; set; }

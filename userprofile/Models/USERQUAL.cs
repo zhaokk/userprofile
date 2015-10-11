@@ -11,11 +11,15 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class USERQUAL
     {
+        [Display(Name = "Qualification Id")]
         public int qualificationId { get; set; }
+        [Display(Name = "Referee Id")]
         public int refId { get; set; }
+        [Display(Name = "Qualification Level")]
         public int qualLevel { get; set; }
     
         public virtual QUALIFICATION QUALIFICATION { get; set; }

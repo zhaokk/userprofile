@@ -68,38 +68,11 @@ namespace userprofile.Controllers
             return View(combined);
         }
 
-        //// GET: /REFEREE/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
-        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-        //    ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qID", "name");
-        //    return View();
-        //}
-
-        //// POST: /REFEREE/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create( REFEREE referee)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.REFEREEs.Add(referee);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.ID = new SelectList(db.AspNetUsers, "re.Id", "UserName", referee.ID);
-        //    ViewBag.sport = new SelectList(db.SPORTs, "name", "name", referee.sport);
-        //    return View(referee);
-        //}
-
-        // GET: /REFEREE/Create
         public ActionResult Create()
         {
-            ViewBag.ID = new SelectList(db.AspNetUsers, "Id", "UserName");
+
+
+            ViewBag.ID = new SelectList(db.AspNetUsers.Where(reff => reff.REFEREEs.Count == 0), "Id", "UserName");
             ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
             ViewBag.qualifaction = new MultiSelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.quallist = new selectRefQuliViewModel(db);
@@ -117,6 +90,7 @@ namespace userprofile.Controllers
         
             if (ModelState.IsValid)
             {
+                re.status = 1;
                 re.USERQUALs.Clear();
                 if (srqvm.quals != null)
                 {
