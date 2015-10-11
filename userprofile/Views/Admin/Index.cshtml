@@ -3,27 +3,11 @@
     ViewBag.Title = "Index";
 }
 
+
+
 <h2>Index</h2>
 
-<div class="col-sm-6 col-lg-4">
-    <h2 class="h4">Off Color</h2>
-    <p>
-        <input id="switch-offColor" type="checkbox" data-off-color="warning">
-    </p>
-    <p class="btn-group">
-        <div class="btn-group">
-            <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">Set &nbsp;<span class="caret"></span></button>
-            <div role="menu" class="dropdown-menu">
-                <li><a data-switch-set="offColor" data-switch-value="primary">Primary</a></li>
-                <li><a data-switch-set="offColor" data-switch-value="info">Info</a></li>
-                <li><a data-switch-set="offColor" data-switch-value="success">Success</a></li>
-                <li><a data-switch-set="offColor" data-switch-value="warning">Warning</a></li>
-                <li><a data-switch-set="offColor" data-switch-value="default">Default</a></li>
-            </div>
-        </div>
-        <button type="button" data-switch-get="offColor" class="btn btn-default">Get</button>
-    </p>
-</div>
+<input type="checkbox" name="my-checkbox" checked>
 @*<div>
     <a class="btn btn-default" href="@Url.Action( "showresults","Algorithm")">
         Algorithm
