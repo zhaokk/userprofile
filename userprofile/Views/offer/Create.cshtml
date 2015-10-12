@@ -16,13 +16,6 @@
         <hr />
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.sport, "sport", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("sport", String.Empty)
-                @Html.ValidationMessageFor(model => model.sport)
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.matchId, "matchId", new { @class = "control-label col-md-2" })

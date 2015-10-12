@@ -21,9 +21,6 @@
             @Html.DisplayNameFor(model => model.MATCH.matchId)
         </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.SPORT1.name)
-        </th>
         <th></th>
     </tr>
 
@@ -39,9 +36,6 @@
             @Html.DisplayFor(modelItem => item.MATCH.matchId)
         </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.SPORT1.name)
-        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.offerId }) |
             @Html.ActionLink("Details", "Details", new { id=item.offerId }) |

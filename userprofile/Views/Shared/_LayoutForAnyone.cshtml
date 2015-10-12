@@ -113,7 +113,8 @@
                             @{ bool someoneLoggedIn = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                              if (someoneLoggedIn) //if someone is logged in
                              {
-                                <li>@Html.ActionLink("EditMyProfile", "SelfEdit", "Account")</li>
+                                 <li>@Html.ActionLink("My Details", "Details","Account", new { id = User.Identity.GetUserName()}, null )</li>
+                               // <li>@Html.Action( "Details", "Account", new { id = User.Identity.GetUserName() })</li>
                              }
                             }
 
@@ -148,13 +149,7 @@
 
                                     </a>
 
-
                                 </li>
-
-                                @*<a href="@Url.Action( "RegisterNew","Account", new {})">
-                                    Register
-                                </a>
-                                *@
                              }
                             }
 

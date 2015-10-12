@@ -4,7 +4,7 @@
     ViewBag.Title = "Referee Management";
 }
 @using userprofile.Models;
-@model Tuple<List<REFEREE>, List<SelectList>>
+@model Tuple<List<REFEREE>, List<SelectList>, List<int>>
 
 
 
@@ -50,19 +50,18 @@
                                 <th>User name</th>
                                 <th>
                                     <span style="cursor:help;" title="Distance willing to travel">Travel distance</span>
-                                    
                                 </th>
-
                                 <th>
-
                                     Qualifications
-
                                 </th>
                                 <th>
-                                    Sport
+                                    Num upcomming matches
                                 </th>
                                 <th>
-
+                                    Max willing matches
+                                </th>
+                                <th>
+                                   
                                 </th>
                             </tr>
                         </thead>
@@ -89,11 +88,13 @@
                                 {
                                     <div>@temp.QUALIFICATION.name</div>
                                 }
-                                @*@Html.ListBox("Id", new SelectList(item.QUALIFICATIONS, "qID", "name"))*@
                             </td>
-                            <td>
-                                @item.SPORT1.name
-                            </td>
+                            <th>
+                               @Model.Item3[counter]
+                            </th>
+                            <th>
+                                @item.maxGames
+                            </th>
                             <td>
                                 @Html.ActionLink("Delete", "Delete", new { id = item.refId }, new { @class = "btn btn-danger pull-right" })
                                 @Html.ActionLink("Edit", "Edit", new { id = item.refId }, new { @class = "btn btn-warning pull-right" })

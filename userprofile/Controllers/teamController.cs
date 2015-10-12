@@ -34,14 +34,20 @@ namespace userprofile.Controllers
             {
                 return HttpNotFound();
             }
-            return View(team);
+
+            var playerIn = db.PLAYERs.Where(teams => teams.teamId == id).ToList();
+
+            var combined = new Tuple<TEAM, List<PLAYER>>(team, playerIn) { };
+
+            return View(combined);
         }
 
         // GET: /team/Create
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
             ViewBag.managerID = new SelectList(db.AspNetUsers, "Id", "UserName");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name"); //need to pass tournamentId arround
             return View();
         }
 
@@ -50,14 +56,24 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,tournamentId")] TEAM team)
+        [Authorize(Roles = "Admin,Organizer")]
+        public ActionResult Create([Bind(Include="teamId,name,ageBracket,grade,managerId,shortName,status")] TEAM team)
         {
+            team.sport = "Soccer";
+            team.status = 1;
+
             if (ModelState.IsValid)
             {
-                team.sport = "Soccer";
+
+                // need to pass a tournament in here for adding to the team, create for now with default tournament
+                TOURNAMENT t = db.TOURNAMENTs.Find(1);
+                
+                var tins = new TEAMIN();
+                tins.tournament = t.tournamentId;
+                team.TEAMINS.Add(tins);
                 db.TEAMs.Add(team);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Team", new {Id = team.teamId });
             }
 
             ViewBag.managerId = new SelectList(db.AspNetUsers, "Id", "UserName", team.managerId);
@@ -66,6 +82,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Edit/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,6 +106,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Edit([Bind(Include = "teamId,name,ageBracket,grade,managerId,sport,shortName,status")] TEAM team)
         {
             if (ModelState.IsValid)
@@ -104,6 +122,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Delete/5
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -121,6 +140,7 @@ namespace userprofile.Controllers
         // POST: /team/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Organizer")]
         public ActionResult DeleteConfirmed(int id)
         {
             TEAM team = db.TEAMs.Find(id);

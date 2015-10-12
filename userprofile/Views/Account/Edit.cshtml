@@ -1,19 +1,19 @@
 ﻿@model userprofile.Models.EditUserViewModel
 
 @{
-    if (User.IsInRole("Referee"))
-    {
+    //if (User.IsInRole("Referee"))
+    //{
 
-        Layout = "~/Views/shared/_LayoutForRE.cshtml";
+    //    Layout = "~/Views/shared/_LayoutForRE.cshtml";
 
-    }
-    else if(User.IsInRole("Admin"))
-    { Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
+    //}
+    //else if(User.IsInRole("Admin"))
+    //{ Layout = "~/Views/Shared/_AdminLteLayout.cshtml"; }
 
-    else
-    {
-        Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
-    }
+    //else
+    //{
+    //    Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
+    //}
     
     ViewBag.Title = "Edit User Page";
 }
@@ -23,22 +23,13 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-body">
-                <div class="fa fa-angle-left">
-
-                    @if (User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink(" Back to List", "Index")}
-                    else
-                    {
-                        @Html.ActionLink(" Back to List", "Index", "Home")
-                    }
-                </div>
+               
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal col-md-6">
-
+                        <h4>Edit user</h4>
                         <hr />
                         @Html.ValidationSummary(true)
                         @if (User.IsInRole("Admin"))

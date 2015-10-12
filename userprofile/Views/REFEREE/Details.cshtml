@@ -10,11 +10,9 @@
 
             <div class="box-body">
                 @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.refId }, new { @class = "btn btn-warning pull-right" })
-                <div class="fa fa-angle-left">
-
-                    @Html.ActionLink("Back to List", "Index")
-                </div>
+                
                 <div>
+                    <h4>Edit referee</h4>
                     <hr />
                     <dl class="dl-horizontal">
                         <dt>
@@ -64,7 +62,7 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>MatchId</th>
+                                <th>Match Id</th>
 
 
                                 <th>
@@ -73,7 +71,7 @@
 
                                 </th>
                                 <th>
-                                    refType
+                                    Referee Type
                                 </th>
                                 <th>
                                     Status

@@ -17,8 +17,6 @@ namespace userprofile.Models
     {
         public AspNetUser()
         {
-            this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
-            this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.Events = new HashSet<Event>();
             this.INFRACTIONS = new HashSet<INFRACTION>();
             this.PLAYERs = new HashSet<PLAYER>();
@@ -26,11 +24,10 @@ namespace userprofile.Models
             this.TEAMs = new HashSet<TEAM>();
             this.TOURNAMENTs = new HashSet<TOURNAMENT>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.TOURNAMENTs1 = new HashSet<TOURNAMENT>();
         }
 
-        [Required(ErrorMessage = "Id is required")]
         public string Id { get; set; }
-        [Required(ErrorMessage = "FFA number is required")]
         public Nullable<int> ffaNum { get; set; }
         [Required(ErrorMessage = "User name is required")]
         public string UserName { get; set; }
@@ -42,7 +39,6 @@ namespace userprofile.Models
         public string firstName { get; set; }
         [Required(ErrorMessage = "last name is required")]
         public string lastName { get; set; }
-        [Required(ErrorMessage = "Phone number is required")]
         public Nullable<int> phoneNum { get; set; }
         [Required(ErrorMessage = "Email is required")]
         public string email { get; set; }
@@ -60,18 +56,14 @@ namespace userprofile.Models
         public string state { get; set; }
         [Required(ErrorMessage = "Date of birth is required")]
         public System.DateTime dob { get; set; }
-        public bool isAdmin { get; set; }
-        public bool isOrganizer { get; set; }
-        public bool isReferee { get; set; }
-        public bool isPlayer { get; set; }
+        public Nullable<int> gender { get; set; }
         public bool willingToShowPhoneNum { get; set; }
         public bool willingToShowDOB { get; set; }
         public bool willingToShowAddress { get; set; }
         public bool willingToshowEmail { get; set; }
+        public bool wantsToReceiveTexts { get; set; }
         public int status { get; set; }
     
-        public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual ICollection<PLAYER> PLAYERs { get; set; }
@@ -79,5 +71,6 @@ namespace userprofile.Models
         public virtual ICollection<TEAM> TEAMs { get; set; }
         public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<TOURNAMENT> TOURNAMENTs1 { get; set; }
     }
 }
