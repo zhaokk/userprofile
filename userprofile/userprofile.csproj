@@ -1047,16 +1047,15 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Home\IndexforOrg.cshtml" />
     <Content Include="Views\Home\IndexforManager.cshtml" />
-    <Content Include="Views\TOURNAMENTs\History.cshtml" />
-    <Content Include="Views\Account\showProfile.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Tournament\History.cshtml" />
+    <Content Include="Views\Home\IndexForPlayer.cshtml" />
+    <Content Include="Views\Shared\_LayoutForPL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Helpers\" />
     <Folder Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\" />
+    <Folder Include="Views\TOURNAMENTs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

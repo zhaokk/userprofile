@@ -180,31 +180,71 @@ namespace userprofile.Controllers
                 var user = db.AspNetUsers.First(u => u.UserName == model.UserName);
                 idManager.ClearUserRoles(user.Id);
 
-
+                //admin
                 if (model.Roles[0].Selected)
                 {
                     var roleMap = db.AspNetRoles.First(m => m.Name=="Admin");
                     user.AspNetRoles.Add(roleMap);
 
                 }
+                else
+                {
+                    user.AspNetRoles.Remove(db.AspNetRoles.First(m => m.Name == "Admin"));
+                    db.SaveChanges();
+                }
+
+                //player
                 if (model.Roles[1].Selected)
                 {
                     var roleMap = db.AspNetRoles.First(m => m.Name == "Player"); 
                     user.AspNetRoles.Add(roleMap);
 
                 }
+                else
+                {
+                    user.AspNetRoles.Remove(db.AspNetRoles.First(m => m.Name == "Player"));
+                    db.SaveChanges();
+                }
+
+                //referee
                 if (model.Roles[2].Selected)
                 {
                     var roleMap = db.AspNetRoles.First(m => m.Name == "Referee");
                     user.AspNetRoles.Add(roleMap);
 
                 }
+                else
+                {
+                    user.AspNetRoles.Remove(db.AspNetRoles.First(m => m.Name == "referee"));
+                    db.SaveChanges();
+                }
+
+                //organizer
                 if (model.Roles[3].Selected)
                 {
                     var roleMap = db.AspNetRoles.First(m => m.Name == "Organizer"); 
                     user.AspNetRoles.Add(roleMap);
                    
                 }
+                else
+                {
+                    user.AspNetRoles.Remove(db.AspNetRoles.First(m => m.Name == "Organizer"));
+                    db.SaveChanges();
+                }
+
+                //organizer
+                if (model.Roles[4].Selected)
+                {
+                    var roleMap = db.AspNetRoles.First(m => m.Name == "Manager");
+                    user.AspNetRoles.Add(roleMap);
+
+                }
+                else
+                {
+                    user.AspNetRoles.Remove(db.AspNetRoles.First(m => m.Name == "Manager"));
+                    db.SaveChanges();
+                }
+
 
                 db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 int x = db.SaveChanges();

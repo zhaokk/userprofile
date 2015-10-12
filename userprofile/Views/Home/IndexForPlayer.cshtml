@@ -1,0 +1,233 @@
+﻿@model userprofile.Models.PlayerViewModel
+@{
+    ViewBag.Title = "IndexForPlayer";
+}
+
+<h2>IndexForPlayer</h2>
+<h1>Plays in these teams</h1>
+<div class="box">
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Position</th>
+                        <th>Shirt Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{foreach (var item in Model.playerlist)
+                    {
+
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Details", "team", new { id = item.teamId })">
+                                    @item.TEAM.name
+                                </a>
+
+                            </td>
+                            <td>
+                                @item.position
+                            </td>
+                            <td>
+                                @item.shirtNum
+                            </td>
+                        </tr>
+                    }
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+   
+<div class="box">
+    <div class="box-header">
+
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Home Team
+
+                        </th>
+                        <th>
+                            Away Team
+                        </th>
+                        <th>
+                            Sport
+                        </th>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Assignor") || User.IsInRole("Organizer")) //change to include tournament once implemented multiple tournaments
+                        {
+                            <th></th>
+                        }
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.comingMatch)
+                    {
+                        <tr>
+                            <td>
+
+                                <a href="@Url.Action( "Details", new { id = item.matchId })">
+                                    @Html.DisplayFor(modelItem => item.matchDate)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                    @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                    @Html.DisplayFor(modelItem => item.TEAM.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                    @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                            </td>
+
+                            @{
+                        if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+                        {
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+                            </td>
+                        }
+                        else if (User.IsInRole("Assignor"))
+                        {
+                            <td>
+                                @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+                            </td>
+                        }
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div><!-- /.box-body -->
+
+</div><!-- /.box -->
+<div class="box">
+    <div class="box-header">
+
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Home Team
+
+                        </th>
+                        <th>
+                            Away Team
+                        </th>
+                        <th>
+                            Sport
+                        </th>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Assignor") || User.IsInRole("Organizer")) //change to include tournament once implemented multiple tournaments
+                        {
+                            <th></th>
+                        }
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.passMatch)
+                    {
+                        <tr>
+                            <td>
+
+                                <a href="@Url.Action( "Details", new { id = item.matchId })">
+                                    @Html.DisplayFor(modelItem => item.matchDate)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                    @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                    @Html.DisplayFor(modelItem => item.TEAM.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                    @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                </a>
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                            </td>
+
+                            @{
+                        if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+                        {
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.matchId }, new { @class = "btn btn-danger pull-right" })
+                                @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+                            </td>
+                        }
+                        else if (User.IsInRole("Assignor"))
+                        {
+                            <td>
+                                @Html.ActionLink("manageOffer", "manageOffer", new { id = item.matchId }, new { @class = "btn btn-warning pull-right" })
+                            </td>
+                        }
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div><!-- /.box-body -->
+
+</div><!-- /.box -->
