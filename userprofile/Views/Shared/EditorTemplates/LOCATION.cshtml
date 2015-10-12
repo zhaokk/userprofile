@@ -66,10 +66,11 @@
                                         <div hidden="hidden" class="row form-group">
                                             <label class="col-sm-2 control-label">Country:</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="us3-country" disabled="disabled">
+                                               
+
                                             </div>
                                         </div>
-                                        
+                                       
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.price, new { @class = "control-label col-md-5" })
                                             <div class="col-md-6">
@@ -91,11 +92,11 @@
                     </div>
 
                     <div class="clearfix">&nbsp;</div>
-                    <div hidden="hidden" class="m-t-small">
+                    <div  class="m-t-small">
                         <label class="p-r-small col-sm-1 control-label">Lat.:</label>
-                        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lat" /></div>
+                        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lat" name="Lat" /></div>
                         <label class="p-r-small col-sm-2 control-label">Long.:</label>
-                        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lon" /></div>
+                        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lon" name="Long"/></div>
                     </div>
                     <div class="container-fluid">
                     </div>
@@ -114,6 +115,9 @@
             $('#us3-state').val(addressComponents.stateOrProvince);
             $('#us3-zip').val(addressComponents.postalCode);
             $('#us3-country').val(addressComponents.country);
+            $('')
+           
+
         }
         $('#us3').locationpicker({
 
@@ -123,7 +127,8 @@
                 latitudeInput: $('#us3-lat'),
                 longitudeInput: $('#us3-lon'),
                 radiusInput: $('#us3-radius'),
-                locationNameInput: $('#us3-address')
+                locationNameInput: $('#us3-address'),
+               
             },
             enableAutocomplete: true,
             onchanged: function (currentLocation, radius, isMarkerDropped) {

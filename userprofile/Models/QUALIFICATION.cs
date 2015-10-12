@@ -21,8 +21,8 @@ namespace userprofile.Models
             this.USERQUALs = new HashSet<USERQUAL>();
         }
 
-         [Display(Name = "Qualification Id")]
-         [Required(ErrorMessage = "Qulification Id is required")]
+        [Display(Name = "Qualification Id")]
+        [Required(ErrorMessage = "Qulification Id is required")]
         public int qualificationId { get; set; }
         [Display(Name = "Qualification")]
         [Required(ErrorMessage = "Qulification is required")]
@@ -36,7 +36,6 @@ namespace userprofile.Models
         [Display(Name = "Qualification Level")]
         public int qualificationLevel { get; set; }
         [Display(Name = "Status")]
-        [Required(ErrorMessage = "Status is required")]
         public int status { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }

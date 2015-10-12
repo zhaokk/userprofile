@@ -29,27 +29,60 @@
         <dt>
             @Html.DisplayNameFor(model => model.MATCH.matchId)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MATCH.matchId)
-        </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.REFEREE.availability)
+        <dt>
+            @Html.DisplayNameFor(model => model.typeOfOffer)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.REFEREE.availability)
-        </dd>*@
+            @Html.DisplayFor(model => model.typeOfOffer)
+        </dd>
+
+        <dd>
+            <a href="@Url.Action( "Details","Match", new { id = Model.matchId })">
+                @Html.DisplayFor(model => model.matchId)
+            </a>
+            
+        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SPORT1.name)
+            @Html.DisplayNameFor(model => model.MATCH.status)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SPORT1.name)
-        </dd>
+            @{
+                switch (Model.status)
+                {
+                    case 1:
+                        <p>Pending referee response</p>
+                        break;
+                    case 2:
+                        <p>Referee accepted</p>
+                        break;
+                    case 3:
+                        <p>Referee declined</p>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.declinedReason)
+                        </dt>
 
+                        <dd>
+                            @Html.DisplayFor(model => model.declinedReason)
+                        </dd>
+                        break;
+                    case 4:
+                        <p>Unassigned</p>
+                        break;
+                        
+                    case 5:
+                        <p>Awaiting auto assignment</p>
+                        break;
+                     
+                    default:
+                        <p>Shits broken yo</p>
+                        break;     
+                }   
+                
+            }
+        </dd>
     </dl>
 </div>
 <p>

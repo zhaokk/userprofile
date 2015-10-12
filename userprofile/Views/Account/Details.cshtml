@@ -1,6 +1,5 @@
-﻿@using userprofile.Models
-@using Microsoft.AspNet.Identity
-@model Tuple<AspNetUser, List<PLAYER>>
+﻿@using userprofile.Models;
+@model Tuple<AspNetUser, List<PLAYER>, List<TEAM>, List<TOURNAMENT>>
 
 
 <script type="text/javascript">
@@ -22,115 +21,80 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                <hr />
                 @{
-                    if (User.Identity.Name == Model.Item1.UserName)
-                    
+                    if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
                     {
-                        
-                     @Html.ActionLink("Edit my details", "SelfEdit", "Account", new { @class = "btn btn-success pull-right" })
-                     @Html.ActionLink("Change password", "Manage", "Account", new { id = User.Identity.GetUserName() }, new { @class = "btn btn-warning pull-right" })
+                       @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-warning pull-right" })
                     }
-                    else if (User.IsInRole("Admin"))
+                    else if (User.Identity.Name == Model.Item1.UserName)
                     {
-
-                     @Html.ActionLink("Change password", "Manage", "Account", new { id = User.Identity.GetUserName() }, new { @class = "btn btn-warning pull-right" })
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-info pull-right" })
-                    <div class="fa fa-angle-left">
-                        @Html.ActionLink(" Back to users", "Index")
-                    </div>
+                        <a class=" btn btn-warning pull-right" href='@Url.Action("SelfEdit", "Account")'>Edit my details</a>
                     }
-}
+                }
                 
-              
-               
-                <div class="row">
-                    <div class="col-lg-6">
-                        <dl class="dl-horizontal">
-                            @if (User.IsInRole("Admin"))
-                            {
+                
+                <hr />
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Item1.UserName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.UserName)
+
+                    </dd>
+
+                    <dt>
+                        <b>Name </b>
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.firstName) @Html.DisplayFor(model => model.Item1.lastName)
+                    </dd>
+
+                    <dt>
+                        <b>ffa# if applicable</b>
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item1.ffaNum)
+
+                    </dd>
+                    
+                        @{
+                            if(Model.Item1.willingToshowEmail || User.IsInRole("Admin")){
                                 <dt>
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>   UserRole
+                                    @Html.DisplayNameFor(model => model.Item1.email)
                                 </dt>
                                 <dd>
-                                   <span class="label label-success">Admin</span>
+                                    @Html.DisplayFor(model => model.Item1.email)
                                 </dd>
                             }
-                            else if (User.IsInRole("Referee"))
+                        }
+                                        
+                        @{
+                            if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
                             {
-
-
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Item1.phoneNum)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Item1.phoneNum)
+                                </dd>
                             }
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Item1.UserName)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Item1.UserName)
-
-                            </dd>
-
-                            <dt>
-                                <b>Name </b>
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Item1.firstName) @Html.DisplayFor(model => model.Item1.lastName)
-                            </dd>
-
-                            <dt>
-                                <b>ffa# if applicable</b>
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Item1.ffaNum)
-
-                            </dd>
-
-                            @{
-                                if (Model.Item1.willingToshowEmail || User.IsInRole("Admin"))
-                                {
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.Item1.email)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Item1.email)
-                                    </dd>
-                                }
+                        }
+                  
+                        @{
+                            if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
+                            {
+                                <dt>
+                                    @Html.DisplayFor(model => model.Item1.dob)
+                                </dt>
+                                <dd>
+                                     @Html.DisplayFor(model => model.Item1.dob)
+                                </dd>
                             }
-
-                            @{
-                                if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
-                                {
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.Item1.phoneNum)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Item1.phoneNum)
-                                    </dd>
-                                }
-                            }
-
-                            @{
-                                if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
-                                {
-                                    <dt>
-                                        @Html.DisplayFor(model => model.Item1.dob)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Item1.dob)
-                                    </dd>
-                                }
-                            }
-
-              
-
-                        </dl>
-                    </div>
-                        <div class="col-lg-6">
-                       
-                        </div>
-
-
-                        
-                    </div>
+                        }
+                                       
+                </dl>
             </div>
         </div>
 
@@ -138,12 +102,14 @@
         @if (Model.Item2.Count > 0)
         { //if there is no team data, don't display the table
 
+            <h1>Plays in these teams</h1>
         <div class="box">
             <div class="box-body">
                 <div class="table-responsive">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>Tournament Name</th>
                                 <th>Team Name</th>
                                 <th>Position</th>
                                 <th>Shirt Number</th>
@@ -152,8 +118,15 @@
                         <tbody>
                            @{foreach (var item in Model.Item2)
                             {
+                                foreach(var teamIns in item.TEAM.TEAMINS){
 
                                         <tr>
+                                            <td>
+                                                <a href="@Url.Action("Details", "team", new { id = teamIns.tournament })">
+                                                    @teamIns.TOURNAMENT1.name
+                                                </a>
+
+                                            </td>
                                             <td>
                                                 <a href="@Url.Action("Details", "team", new { id = item.teamId })">
                                                     @item.TEAM.name
@@ -167,16 +140,143 @@
                                                 @item.shirtNum
                                             </td>
                                         </tr>
-                                    }
+                                 }
+                             }
                                 
-                               
                             }
+                            
                         </tbody>
                     </table>
                 </div>
 
             </div>
         </div>    
+        }
+        @if (Model.Item3.Count > 0)
+        { //if there is no teamManagement data, don't display the table
+
+            <h1>Manages these teams</h1>
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tournament</th>
+                                    <th>Tournament Date</th>
+                                    <th>Sport</th>
+                                    <th>Team Name</th>
+                                    <th>grade</th>
+                                    <th>Age bracket</th>
+                                    <th>Points</th>
+                                    <th>Losses</th>
+                                    <th>Draws</th>
+                                    <th>Wins</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{foreach (var item in Model.Item3)
+                                {
+                                    foreach (var team in item.TEAMINS) //make sure to display all instances they play too
+                                    {
+                                        <tr>
+                                        <td>
+                                            <a href="@Url.Action("Details", "Tournament", new { id = team.tournament })">
+                                                @team.TOURNAMENT1.name
+                                            </a>
+
+                                        </td>
+                                        <td>
+                                                @team.TOURNAMENT1.startDate
+                                        </td>
+                                        <td>
+                                            @team.TOURNAMENT1.sport
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Details", "team", new { id = item.teamId })">
+                                                @item.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.grade
+                                        </td>
+                                        <td>
+                                            @item.ageBracket
+                                        </td>
+                                        <td>
+                                           @team.points
+                                        </td>
+                                        <td>
+                                            @team.losses
+                                        </td>
+                                        <td>
+                                            @team.draws
+                                        </td>
+                                        <td>
+                                            @team.wins
+                                        </td>
+                                    </tr>
+                                    }
+
+
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        }
+        @if (Model.Item4.Count > 0)
+        { //if there is no team data, don't display the table
+
+            <h1>Runs these tournaments</h1>
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tournament</th>
+                                    <th>Start Date</th>
+                                    <th>Grade</th>
+                                    <th>Age Bracket</th>
+                                    <th>Sport</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{foreach (var item in Model.Item4)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("Details", "Tournament", new { id = item.tournamentId })">
+                                                @item.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @item.startDate
+                                        </td>
+                                        <td>
+                                            @item.grade
+                                        </td>
+                                        <td>
+                                            @item.ageBracket
+                                        </td>
+                                        <td>
+                                            @item.sport
+                                        </td>
+                                    </tr>
+
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
         }
 
     </div>

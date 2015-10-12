@@ -18,7 +18,9 @@
 
     <li class="user-body">
         
-        <div class="col-xs-12 text-center">@Html.Action("showhead_Icon", "Account", new { id = User.Identity.GetUserName() })</div>
+        <div class="col-xs-12 text-center">
+        @Html.Action("showhead_Icon", "Account", new { id = User.Identity.GetUserName() })
+        </div>
               
         
     </li>

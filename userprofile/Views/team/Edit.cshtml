@@ -8,9 +8,7 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-body">
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to List", "Index")
-                </div>
+                
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
@@ -20,8 +18,8 @@
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.teamId)
+                        @Html.HiddenFor(model => model.status)
                         @Html.HiddenFor(model => model.sport)
-                        @Html.HiddenFor(model => model.SPORT1)
                         <div class="form-group">
                             @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -48,13 +46,6 @@
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.shortName)
                                 @Html.ValidationMessageFor(model => model.shortName)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.status, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.status)
-                                @Html.ValidationMessageFor(model => model.status)
                             </div>
                         </div>
                         <div class="form-group">

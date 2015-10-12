@@ -10,11 +10,13 @@
            
            
             <div class="box-body">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.locationId }, new { @class = "btn btn-warning pull-right" })
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to List", "Index")
-                </div>
-                    <hr />
+@if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
+                {
+                
+    @Html.ActionLink("Edit", "Edit", new { id = Model.locationId }, new { @class = "btn btn-warning pull-right" })
+}            
+    
+                    
                 <h3>Details Of Location</h3>
                     <dl class="dl-horizontal">
                         <dt>
