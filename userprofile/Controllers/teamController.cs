@@ -82,7 +82,7 @@ namespace userprofile.Controllers
         }
 
         // GET: /team/Edit/5
-        [Authorize(Roles = "Admin,Organizer")]
+        [Authorize(Roles = "Admin,Organizer,Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

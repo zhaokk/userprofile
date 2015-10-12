@@ -40,9 +40,7 @@ namespace userprofile.Controllers
                 return RedirectToAction("IndexForPlayer", "home");
             
             }
-            else if (User.IsInRole("Player")) {
-                return RedirectToAction("IndexForPlayer", "home");
-            }else
+           else
             {
                 return RedirectToAction("IndexForAnyone", "home");
             }
@@ -72,6 +70,8 @@ namespace userprofile.Controllers
         }
         [Authorize(Roles = "Manager")]
         public ActionResult IndexforManager() {
+            List<MATCH> comingMatch = new List<MATCH>();
+            List<MATCH> passMatch = new List<MATCH>();
             var userID = User.Identity.GetUserId();
             if (db.TEAMs.FirstOrDefault(t => t.managerId == userID) == null)
             {
@@ -79,18 +79,34 @@ namespace userprofile.Controllers
                 return View();
             }
             else {
-                managerViewModels mVM = new managerViewModels(db,userID);
-                return View(mVM);
+                managerViewModels managerVM = new managerViewModels();
+                 AspNetUser anu = db.AspNetUsers.First(u => u.UserName == User.Identity.Name);
+                List<TEAM> teams=db.TEAMs.Where(team=>team.managerId==anu.Id).ToList();
+                managerVM.teamManaging=teams;
+                foreach (TEAM team in teams) {
+                    foreach (MATCH oneMatch in team.MATCHes)
+                    {
+
+                        int days = (int)(oneMatch.matchDate - System.DateTime.Now).TotalMinutes;
+                        if (days > 0)
+                        {
+                            comingMatch.Add(oneMatch);
+                        }
+                        else
+                        {
+                            passMatch.Add(oneMatch);
+                        }
+                    }
+                }
+                managerVM.comingMatch = comingMatch;
+                managerVM.passMatch = passMatch;
+                return View(managerVM);
             }
            
 
         
         }
-        public ActionResult IndexForPlayer() {
-
-            return View();
-        }
-        
+      
         public ActionResult IndexForAnyone()
         {
 

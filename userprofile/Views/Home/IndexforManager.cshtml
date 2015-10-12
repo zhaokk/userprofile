@@ -36,52 +36,250 @@ else
 
 
     </script>
-    <table id="example1" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>
-                   teamid
-                </th>
-                <th>
-                    team name
-                </th>
-                <th>
-                   ageBracket
-                </th>
-                <th>
-                   grade
-                </th>
-                <th>
-                   sport
-                </th>
-               
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var team in @Model.teams)
-            {
-                <tr>
-                    <td>
-                       @team.teamId
-                    </td>
-                    <td>
-                        @team.name
-                    </td>
-                    <td>
 
-                     @team.ageBracket
-                    </td>
-                    <td>
+    <div class="row">
 
-                   @team.grade
-                    </td>
-                    <td>
+        <div class="col-xs-12">
+             <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">TEAM MANAGING</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Team Name
+                                    </th>
+                                    <th>
+                                        Age Group
+                                    </th>
+                                    <th>
+                                        Grade
+                                    </th>
+                                    
 
-                       @team.sport
-                    </td>
-                </tr>
+                     
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.teamManaging)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("Details", new { id = item.teamId })">
+                                                @Html.DisplayFor(modelItem => item.name)
+                                            </a>
 
-            }
-        </tbody>
-    </table>
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ageBracket)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.grade)
+                                        </td>
+                             
+
+
+                                 
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+
+            </div><!-- /.box -->
+
+        </div><!-- /.col -->
+
+
+        </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">upcoming matches</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Location
+                                    </th>
+                                    <th>
+                                        Home Team
+
+                                    </th>
+                                    <th>
+                                        Away Team
+                                    </th>
+                                    <th>
+                                        Sport
+                                    </th>
+                                
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.comingMatch)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            <a href="@Url.Action( "Details", new { id = item.matchId })">
+                                                @Html.DisplayFor(modelItem => item.matchDate)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                                @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                                @Html.DisplayFor(modelItem => item.TEAM.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                                @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                                        </td>
+
+                             
+
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+
+            </div><!-- /.box -->
+
+        </div><!-- /.col -->
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"> matche history</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Location
+                                    </th>
+                                    <th>
+                                        Home Team
+
+                                    </th>
+                                    <th>
+                                        Away Team
+                                    </th>
+                                    <th>
+                                        Sport
+                                    </th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.passMatch)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            <a href="@Url.Action( "Details", new { id = item.matchId })">
+                                                @Html.DisplayFor(modelItem => item.matchDate)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
+                                                @Html.DisplayFor(modelItem => item.LOCATION.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
+                                                @Html.DisplayFor(modelItem => item.TEAM.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
+                                                @Html.DisplayFor(modelItem => item.TEAM1.name)
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
+
+                                        </td>
+
+
+
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+
+            </div><!-- /.box -->
+
+        </div><!-- /.col -->
+
+
+    </div>
+
+
 }

@@ -26,5 +26,13 @@ namespace userprofile.Models
 
         public int level { get; set; }
     }
+   public class managerViewModels
+    {
+        public List<MATCH> comingMatch { get; set; }
+
+        public List<MATCH> passMatch { get; set; }
+
+        public List<TEAM> teamManaging { get; set; }
+    }
 
 }

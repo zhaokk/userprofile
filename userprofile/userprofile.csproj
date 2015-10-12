@@ -171,7 +171,6 @@
     <Compile Include="Controllers\AlgorithmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
-    <Compile Include="Controllers\managerViewModels.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
