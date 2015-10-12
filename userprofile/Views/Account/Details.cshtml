@@ -109,6 +109,7 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>Tournament Name</th>
                                 <th>Team Name</th>
                                 <th>Position</th>
                                 <th>Shirt Number</th>
@@ -117,8 +118,15 @@
                         <tbody>
                            @{foreach (var item in Model.Item2)
                             {
+                                foreach(var teamIns in item.TEAM.TEAMINS){
 
                                         <tr>
+                                            <td>
+                                                <a href="@Url.Action("Details", "team", new { id = teamIns.tournament })">
+                                                    @teamIns.TOURNAMENT1.name
+                                                </a>
+
+                                            </td>
                                             <td>
                                                 <a href="@Url.Action("Details", "team", new { id = item.teamId })">
                                                     @item.TEAM.name
@@ -132,6 +140,7 @@
                                                 @item.shirtNum
                                             </td>
                                         </tr>
+                                 }
                              }
                                 
                             }
