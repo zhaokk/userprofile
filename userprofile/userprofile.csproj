@@ -812,6 +812,8 @@
     <Content Include="Scripts\AdminLTE\plugins\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\sparkline\jquery.sparkline.js" />
     <Content Include="Scripts\AdminLTE\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Scripts\AdminLTE\plugins\switch\bootstrap-switch.css" />
+    <Content Include="Scripts\AdminLTE\plugins\switch\bootstrap-switch.js" />
     <Content Include="Scripts\AdminLTE\plugins\timepicker\bootstrap-timepicker.css" />
     <Content Include="Scripts\AdminLTE\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Scripts\AdminLTE\plugins\timepicker\bootstrap-timepicker.min.css" />
@@ -1047,6 +1049,7 @@
     <Content Include="Views\Home\IndexforOrg.cshtml" />
     <Content Include="Views\Home\IndexforManager.cshtml" />
     <Content Include="Views\TOURNAMENTs\History.cshtml" />
+    <Content Include="Views\Home\IndexForPlayer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

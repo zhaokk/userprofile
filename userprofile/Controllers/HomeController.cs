@@ -77,6 +77,7 @@ namespace userprofile.Controllers
 
         
         }
+        
         public ActionResult IndexForAnyone()
         {
 
