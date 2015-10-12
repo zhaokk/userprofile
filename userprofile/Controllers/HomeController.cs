@@ -34,6 +34,10 @@ namespace userprofile.Controllers
             }
             else if (User.IsInRole("Manager")) {
                 return RedirectToAction("IndexforManager","home");
+
+            }
+            else if (User.IsInRole("Player")) {
+                return RedirectToAction("IndexForPlayer", "home");
             
             }
             else
@@ -76,6 +80,10 @@ namespace userprofile.Controllers
            
 
         
+        }
+        public ActionResult IndexForPlayer() {
+
+            return View();
         }
         
         public ActionResult IndexForAnyone()
