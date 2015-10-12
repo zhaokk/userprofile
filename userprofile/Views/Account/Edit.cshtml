@@ -24,9 +24,10 @@
         <div class="box">
             <div class="box-body">
                 <div class="fa fa-angle-left">
-                   
-                    @if (User.IsInRole("Admin")) { 
-                    @Html.ActionLink(" Back to List", "Index")}
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink(" Back to List", "Index")}
                     else
                     {
                         @Html.ActionLink(" Back to List", "Index", "Home")
@@ -36,11 +37,11 @@
                 {
                     @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
+                    <div class="form-horizontal col-md-6">
 
                         <hr />
                         @Html.ValidationSummary(true)
-                       @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin"))
                         {
                         <div class="form-group">
                             @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
@@ -115,15 +116,19 @@
                                 @Html.ValidationMessageFor(model => model.postcode)
                             </div>
                         </div>
-                      
-                        
-                       
+
+
+
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Save" class="btn btn-success" />
                             </div>
                         </div>
+
+
                     </div>
+
+               
                 }
 
             </div>

@@ -41,7 +41,7 @@
                                     @Html.DisplayNameFor(model => model.status)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                   Name
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.TEAM.name)
@@ -63,10 +63,17 @@
                                         @Html.DisplayFor(modelItem => item.status)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                                        <a href="@Url.Action("Details","account" ,new { id = item.AspNetUser.UserName })">
+                                            @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
+                                            @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
+                                        </a>
+                                     
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM.name)
+                                        <a href="@Url.Action("Details","team", new { id = item.teamId })">
+                                            @Html.DisplayFor(modelItem => item.TEAM.name)
+                                        </a>
+                                       
                                     </td>
                                     <td>
                                         @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

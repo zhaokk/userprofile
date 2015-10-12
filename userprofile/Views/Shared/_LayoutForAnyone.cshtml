@@ -19,7 +19,8 @@
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/site.css" rel="stylesheet" />
-
+    <link href="~/Content/bootstrap-switch.css" rel="stylesheet" type="text/css" />
+    <script src='~/Scripts/bootstrap-switch.js'></script>
     @Scripts.Render("~/bundles/modernizr")
 
     <!-- Font Awesome Icons -->
@@ -83,6 +84,7 @@
             $('.dropdown-toggle').dropdown();
         });
 
+        $("[name='my-checkbox']").bootstrapSwitch();
 
     </script>
 

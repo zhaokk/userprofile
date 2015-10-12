@@ -56,7 +56,7 @@ namespace userprofile.Controllers
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             return View();
@@ -69,10 +69,15 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MmatchViewModel matchVM)
         {
+            if (User.IsInRole("Organizer")) { 
+                TOURNAMENT t = db.TOURNAMENTs.First(tt=>tt.AspNetUser.UserName==User.Identity.Name);
+                matchVM.createdMatch.tournamentId = t.tournamentId;
+                matchVM.createdMatch.TOURNAMENT = t;
+            }
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport");
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.types = new SelectList(db.TYPEs, "name", "name");
             var param1 = this.Request.QueryString["offers"];
@@ -112,7 +117,7 @@ namespace userprofile.Controllers
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name", matchVM.createdMatch.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamBId);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", matchVM.createdMatch.tournamentId);
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name", matchVM.createdMatch.tournamentId);
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             return View(matchVM);
         }
@@ -377,7 +382,7 @@ namespace userprofile.Controllers
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "name", match.tournamentId);
             return View(match);
         }
 
@@ -397,7 +402,7 @@ namespace userprofile.Controllers
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
             ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
             ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
-            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "sport", match.tournamentId);
+            ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "name", match.tournamentId);
             return View(match);
         }
 

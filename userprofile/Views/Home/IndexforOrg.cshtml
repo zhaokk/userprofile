@@ -1,93 +1,467 @@
 ﻿@model userprofile.Models.OrgViewModels
 @{
     ViewBag.Title = "Home Page";
-    
+
 }
 
 
-    
-    @if (ViewBag.Massage != "")
-    {
-        <h1>@ViewBag.Massage</h1>
-    }
-    else {
-        
-<script>
-            $(function () {
-                $("#example3").DataTable();
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false
-                });
+
+@if (ViewBag.Massage != null)
+{
+    <h1>@ViewBag.Massage</h1>
+    <h1>wwww</h1>
+}
+else
+{
+
+    <script>
+        $(function () {
+            $("#example3").DataTable();
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
             });
-</script>
-       
+        });
+        var pieData = [
+                {
+                    value: @Model.orgOVM.acceptedOffers.Count(),
+                    color:"#00CC66",
+                    highlight: "#00FF99",
+                    label: "acceptedOffers"
+                },
+                {
+                    value: @Model.orgOVM.declinedOffers.Count(),
+                    color:"#F7464A",
+                    highlight: "#FF5A5E",
+                    label: "declinedOffers"
+                },
+                {
+                    value: @Model.orgOVM.pendingOffers.Count(),
+                    color: "#FDB45C",
+                    highlight: "#FFC870",
+                    label: "pendingOffers"
+                },
+                {
+                    value: @Model.orgOVM.notassignedOffers.Count(),
+                    color: "#949FB1",
+                    highlight: "#A8B3C5",
+                    label: "notassignedOffers"
+                },
+
+
+        ];
+
+        window.onload = function(){
+            var ctx = document.getElementById("pieChart").getContext("2d");
+            window.myPie = new Chart(ctx).Pie(pieData);
+        };
+    </script>
+
     <section class="content">
         <div class="row">
-            <div class="box-primary">
+            <div class="col-md-12">
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            Location
+                                        </th>
+                                        <th>
+                                            Match Date
+                                        </th>
+                                        <th>
+                                            Match Id
+                                        </th>
+                                        <th>
+                                            Home team
+                                        </th>
+                                        <th>
+                                            Away team
+                                        </th>
+                                        <th>
+                                            Match Length
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tournament in @Model.majorT.MATCHes)
+                                {
+                                <tr>
+
+                                    <th>
+                                        @tournament.LOCATION.name
+                                    </th>
+                                    <th>
+                                        @tournament.matchDate
+                                    </th>
+                                    <th>
+                                        @tournament.matchId
+                                    </th>
+                                    <th>
+                                        @tournament.TEAM.name
+                                    </th>
+                                    <th>
+                                        @tournament.TEAM1.name
+                                    </th>
+                                    <th>
+                                        @tournament.matchLength
+                                    </th>
+
+
+                                </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                        @*<div class="table-responsive">
+
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Tournament Name
+                                </th>
+                                <th>
+                                    Html.DisplayNameFor(model => model.matchDate)
+                                    Organizer
+                                </th>
+                                <th>
+                                    Sport
+                                </th>
+                                <th>
+                                    Grade
+                                </th>
+                                <th>
+                                    Priority
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tournament in @Model.otherTs)
+                            {
+                                <tr>
+                                    <th>
+                                       @tournament.name
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.matchDate)
+                                       @tournament.organizer
+                                    </th>
+                                    <th>
+                                       @tournament.sport
+                                    </th>
+                                    <th>
+                                        @tournament.grade
+                                    </th>
+                                    <th>
+                                        @tournament.priority
+                                    </th>
+
+                                </tr>
+                            }
+                        </tbody>
+
+                        </table>
+
+                    </div>*@
+
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Offer State</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
                 <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart"></canvas>
+                            </div><!-- ./chart-responsive -->
+                        </div><!-- /.col -->
+
+                        <div class="col-md-4">
+                            <ul class="chart-legend clearfix">
+                                <li><i class="fa fa-circle-o text-green"></i>Accepted Offers</li>
+                                <li><i class="fa fa-circle-o text-yellow"></i>Pending Offers</li>
+                                <li><i class="fa fa-circle-o text-red"></i>Declined Offers</li>
+                                <li><i class="fa fa-circle-o text-gray"></i>Offer Not Assigned</li>
+                            </ul>
+                        </div><!-- /.col -->
+
+
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+                <div class="box-footer no-padding">
+                    @*<ul class="nav nav-pills nav-stacked">
+                        <li><a href="#">United States of America <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                        <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
+                        <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                    </ul>*@
+                </div><!-- /.footer -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Declined Offers</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body " style="display: block;">
                     <div class="table-responsive">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    
+                                    <th>
+                                        Name
+                                    </th>
                                     <th>
                                         Tournament Name
                                     </th>
                                     <th>
                                         @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                        Organizer
+                                        Match Date
                                     </th>
                                     <th>
-                                        Sport
-                                    </th>
-                                    <th>
-                                        Grade
-                                    </th>
-                                    <th>
-                                        Priority
+                                        Location
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var tournament in @Model.otherTs)
+                                @foreach (var offer in @Model.orgOVM.declinedOffers)
                                 {
                                     <tr>
-                                        <th>
-                                           @tournament.name
-                                        </th>
-                                        
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                           @tournament.organizer
-                                        </th>
-                                        <th>
-                                           @tournament.sport
-                                        </th>
-                                        <th>
-                                            @tournament.grade
-                                        </th>
-                                        <th>
-                                            @tournament.priority
-                                        </th>
-                                        
+                                        <td>
+                                            @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                        </td>
+                                        <td>
+                                            @offer.MATCH.TOURNAMENT.name
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
+                                                @offer.MATCH.matchDate
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
+                                                @offer.MATCH.LOCATION.name
+                                            </a>
+                                        </td>
                                     </tr>
+
                                 }
                             </tbody>
-                           
-                            </table>
-
-                        </div>
-                            
+                        </table>
                     </div>
-                </div>
+                </div><!-- /.box-body -->
+            </div>
+        </div><!-- /.col -->
 
-</div>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">accepted offers</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body " style="display: block;">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Tournament Name
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                        Match Date
+                                    </th>
+                                    <th>
+                                        Location
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var offer in @Model.orgOVM.acceptedOffers)
+                                {
+                                    <tr>
+                                        <td>
+                                            @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                        </td>
+                                        <td>
+                                            @offer.MATCH.TOURNAMENT.name
+                                        </td>
+                                        <td>
+
+                                            <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
+                                                @offer.MATCH.matchDate
+                                            </a>
+                                        </td>
+                                        <td>
+
+                                            <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
+                                                @offer.MATCH.LOCATION.name
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Pending Offers</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body " style="display: block;">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Tournament Name
+                                        </th>
+                                        <th>
+                                            @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                            Match Date
+                                        </th>
+                                        <th>
+                                            Location
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var offer in @Model.orgOVM.pendingOffers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+                                            </td>
+                                            <td>
+                                                @offer.MATCH.TOURNAMENT.name
+                                            </td>
+                                            <td>
+
+                                                <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
+                                                    @offer.MATCH.matchDate
+                                                </a>
+                                            </td>
+                                            <td>
+
+                                                <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
+                                                    @offer.MATCH.LOCATION.name
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Not assigned Offers</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body " style="display: block;">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                       
+                                        <th>
+                                            Tournament Name
+                                        </th>
+                                        <th>
+                                            @*@Html.DisplayNameFor(model => model.matchDate)*@
+                                            Match Date
+                                        </th>
+                                        <th>
+                                            Location
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var offer in @Model.orgOVM.notassignedOffers)
+                                    {
+                                        <tr>
+                                           
+                                            <td>
+                                                @offer.MATCH.TOURNAMENT.name
+                                            </td>
+                                            <td>
+
+                                                <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
+                                                    @offer.MATCH.matchDate
+                                                </a>
+                                            </td>
+                                            <td>
+
+                                                <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
+                                                    @offer.MATCH.LOCATION.name
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div>
+            </div>
+        </div>
     </section><!-- /.content -->
 
 
@@ -130,6 +504,6 @@
 
 
 
-    }
+}
 
-            
+
