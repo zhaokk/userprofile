@@ -16,8 +16,8 @@
             </div>
 
             <div class="pull-left info">
-                <a href="@Url.Action("Details", new { id = User.Identity.GetUserName()})">
-                    <p>Hello @Html.ActionLink(User.Identity.GetUserName(), "Details", "Account", new { id = User.Identity.GetUserName() })</p>
+                <a href="@Url.Action("Details","Account", new { id = User.Identity.GetUserName()})">
+                    <p>Hello @User.Identity.GetUserName()</p>
                 </a>
                     <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
 </div>

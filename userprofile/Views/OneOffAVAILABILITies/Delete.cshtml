@@ -1,56 +1,47 @@
 ﻿@model userprofile.Models.OneOffAVAILABILITY
-
 @{
     ViewBag.Title = "Delete";
 }
-
 <h2>Delete</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <h3>Are you sure you want to delete this?</h3>
+                <div>
+                    
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.startDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.startDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.timeOnOrOff)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.timeOnOrOff)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.description)
+                        </dd>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>OneOffAVAILABILITY</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.startDate)
-        </dt>
+                    </dl>
+                    @using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.startDate)
-        </dd>
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.timeOnOrOff)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.timeOnOrOff)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.REFEREE.sport)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.REFEREE.sport)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    </div>
     }
+                </div>
 </div>
+            </div>
+        </div>
+    </div>

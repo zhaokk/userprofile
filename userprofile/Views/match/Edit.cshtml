@@ -8,16 +8,14 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-body">
-                <div class="fa fa-angle-left">
-                    @Html.ActionLink(" Back to List", "Index")
-                </div>
+               
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
 
-                        <hr />
+                       
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.matchId)
                         @Html.HiddenFor(model => model.status)
