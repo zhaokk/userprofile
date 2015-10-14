@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * This code was written by David King (d@kingzown.com) for the express purpose of University of Wollongong's subject CSCI321 Major Project for the group CSCI321JG1 2015.
+ * Do not use or reference this code without David King's (d@kingzown.com) written permission.
+ * This code also includes references to work done by Kang Zhou, Glen Wiltshire, Chenhao Wei
+ * 
+ * If this code is used please include the following statement at the top of your program, and append to the credits:
+ * "This code is written by or contains reference to work done by David King, Kang Zhou, Glen Wiltshire and Chenhao Wei"
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -59,19 +69,6 @@ namespace userprofile.Controllers {
             }
 		}
 
-        /*class val {
-            public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
-            public HashSet<int> assignedTo; //what that offer/referee is assigned to (offer is always only 1)
-            public int canAssign; //How many offers the referee can be assigned to (offers will always be 1)
-
-            public val(int num) {
-                available = new Dictionary<int, Item>();
-                unavailable = new Dictionary<int, Item>();
-                assignedTo = new HashSet<int>();
-                canAssign = num;
-            }
-        }*/
-
         class Item {
             public int tabu; //At what temperature this item will not be tabu anymore
 
@@ -93,6 +90,7 @@ namespace userprofile.Controllers {
         Dictionary<int, Dictionary<int, bool>> matchClashes;
 		Dictionary<int, int> dGamesAvailableToRef;
 		DateTime dateCurrent, dateStart, dateEnd;
+		
 
         Raoconnection db;
         AlgorithmModel modelResult;
@@ -105,6 +103,7 @@ namespace userprofile.Controllers {
 
 
         void initGlobalVars() {
+			dateCurrent = new DateTime(2015, 1, 1);
             db = new Raoconnection();
             rand = new Random();
             dOffers = new Dictionary<int, offerInfo>();
@@ -260,7 +259,7 @@ namespace userprofile.Controllers {
         }
 
 		int countOffersAlreadyAssigned(int rID) {
-			return db.OFFERs.Where(o => o.REFEREE.refId == rID && o.MATCH.matchDate.Date == dateCurrent).Count();
+			return db.OFFERs.Where(o => (o.REFEREE.refId == rID) && DateTime.Compare(o.MATCH.matchDate,dateCurrent) >= 0 && DateTime.Compare(o.MATCH.matchDate,dateCurrent.AddDays(1)) <= 0).Count();
 		}
 
         void fillRefereeByQualification() {
@@ -334,7 +333,7 @@ namespace userprofile.Controllers {
 					case DayOfWeek.Saturday:
 						return db.WEEKLYAVAILABILITies.Find(rID).saturday;
 					default:
-						//DEBUG STUFF
+						//error
 						return 0;
 				}
 			}
@@ -772,16 +771,17 @@ namespace userprofile.Controllers {
 					}
 				}
 				if (refHasQualification) {
-					//check if has a free slot to ref on that day (is currently reffing < maxGames)
-					
-					if (containsOneOff(offer.dateOfOffer,i.refId)) {
-						if (checkOneOff(offer.dateOfOffer,i.refId)) {
-							availableReferees.Add(i);
+					if (countOffersAlreadyAssigned(i.refId) < i.maxGames) {
+
+						if (containsOneOff(offer.dateOfOffer, i.refId)) {
+							if (checkOneOff(offer.dateOfOffer, i.refId)) {
+								availableReferees.Add(i);
+							}
 						}
-					}
-					else {
-						if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer,i.refId),offer.dateOfOffer)) {
-							availableReferees.Add(i);
+						else {
+							if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer, i.refId), offer.dateOfOffer)) {
+								availableReferees.Add(i);
+							}
 						}
 					}
 				}
