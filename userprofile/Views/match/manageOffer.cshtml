@@ -1,4 +1,4 @@
-﻿@model userprofile.Models.offersViewModels
+﻿@model userprofile.Models.MoffersViewModels
 @{
     ViewBag.Title = "Manage Offer Page";
     int i = 0;
@@ -33,8 +33,13 @@
                                 </div>
                                 <div>
                                     <p>Please select one offertype :</p>
-                                    @Html.DropDownList("types", (List<SelectListItem>)ViewBag.types, new { @Name = "offer[" + i + "][typename]" })
+                                    @Html.DropDownList("types", (List<SelectListItem>)ViewBag.types, "select referee type", new { @Name = "offer[" + i + "][typename]" })
 
+                                </div>
+                                <div>
+                                    <p>Please select offer qualification :</p>
+                                    @Html.DropDownList("types", (List<SelectListItem>)ViewBag.qualification, "select qualification type", new { @Name = "offer[" + i + "][qualification]" })
+                                    <input type="number" min="0" max="9" name="offer[@i][qlevel]">
                                 </div>
                                 <div class="form-group">
                                     <p>The issue date of the offer is: </p>
@@ -61,10 +66,21 @@
                                     </div>
                                     <p>Please select a Referee :</p>
                                     <select name="offer[@i][refID]">
-                                        @foreach (var selection in ViewBag.referees)
-                                        {
-                                            if (item.refId.ToString() == selection.Value)
-                                            {
+                                       @if (item.refId == null||item.status==4)
+                                       {
+                                        <option value="">select one referees</option>
+                                           foreach (var selection in ViewBag.referees)
+                                           {
+                                            <option value="@selection.Value">@selection.Text</option>
+                                           }
+                                       }
+                                       else
+                                       {
+                                           foreach (var selection in ViewBag.referees)
+                                           {
+
+                                               if (item.refId.ToString() == selection.Value)
+                                               {
 
                                                 <option value="@selection.Value" selected>@selection.Text</option>
 
@@ -74,14 +90,17 @@
 
                                                 <option value="@selection.Value">@selection.Text</option>
                                             }
+                                           
+                                            
                                         }
+                                       }
                                     </select>
                                 </div>
                                 <div>
                                     <p>Please select one offertype :</p>
                                   
                                     <select name="offer[@i][typename]" class="required" id="type@(i)">
-                                        @foreach (var selection in ViewBag.types)
+                                        @foreach (var selection in (List<SelectListItem>)ViewBag.types)
                                         {
                                             if (item.typeOfOffer.ToString() == selection.Value)
                                             {
@@ -98,6 +117,29 @@
                                         }
                                     </select>
                                      </div>
+                                <div>
+                                    <p>Please select offer qualification :</p>
+                                    <select name="offer[@i][qualification]" class="required" id="qualification@(i)">
+                                        @foreach (var selection in (List<SelectListItem>)ViewBag.qualification)
+                                        {
+                                            if (item.OFFERQUALs.Count != 0)
+                                            {
+                                                if (item.OFFERQUALs.First().qualLevel.ToString() == selection.Value)
+                                                {
+
+                                                <option value="@selection.Value" selected>@selection.Text</option>
+
+                                            }
+                                            else
+                                            {
+
+                                                <option value="@selection.Value">@selection.Text</option>
+                                            }
+                                            }
+                                        }
+                                    </select>
+                                    <input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel">
+                                </div>
                                 <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
 
                                 <div class="form-group">
@@ -150,7 +192,7 @@
     var i = $("#flag").val();
 
     function newOffer() {
-        var j = 3 - i;
+        var j = 9 - i;
         $("#" + j).show("slow", function () {
             // Animation complete.
         });

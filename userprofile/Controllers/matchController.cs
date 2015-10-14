@@ -126,114 +126,11 @@ namespace userprofile.Controllers
         }
 
   
+     
+
+        [Authorize(Roles = "Admin,Organizer")]
         [HttpGet]
-        [Authorize(Roles = "Admin,Organizer,Assignor")]
         public ActionResult manageOffer(int? id)
-        {
-            if (id != null)
-            {
-                MATCH theMatch = db.MATCHes.First(m => m.matchId == id);
-                var refereesList = new List<SelectListItem>()
-                   {
-
-
-
-
-
-                   };
-            
-                foreach (REFEREE re in db.REFEREEs)
-                {
-                    var sli = new SelectListItem();
-                    sli.Text = re.AspNetUser.lastName +" "+ re.AspNetUser.firstName;
-                    sli.Value = re.refId.ToString();
-                    refereesList.Add(sli);
-
-                }
-                var typelist = new List<SelectListItem>();
-                foreach (TYPE ty in db.TYPEs) {
-                    var tyele = new SelectListItem();
-                    tyele.Text = ty.name;
-                    tyele.Value = ty.name;
-                    typelist.Add(tyele);                    
-                }
-               // typelist.Select();
-                //var refereesLists = new SelectList(, db.REFEREEs.ToList().First(r => r.refID ==2));
-                ViewBag.referees = refereesList;
-                ViewBag.types = typelist;
-
-                refereesList.Select(x=>refereesList.First(r => r.Value == "2"));
-                offersViewModels offers = new offersViewModels(theMatch);
-                return View(offers);
-
-            }
-            else {
-
-                return RedirectToAction("index", "match");
-            }
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin,Organizer")]
-        public ActionResult manageOffer() {
-          var i=0;
-            while(i<3){
-                string indexofid = "offer[" + i + "][ID]";
-                string offerType = "offer[" + i + "][typename]";
-                string indexofrefid = "offer[" + i + "][refID]";
-               var offerID= Convert.ToInt32(Request[indexofid]);
-                int mid=Convert.ToInt32(Request["mID"]);
-                int status=Convert.ToInt32(Request["offer[" + i + "][status]"]);
-                string typename = Request[offerType];
-              var stringrefID=  Request[indexofrefid];
-               
-              if (stringrefID != "") {
-                   var refID= Convert.ToInt32(Request[indexofrefid]) ;
-                   if (offerID != 0)
-                   {
-                       OFFER of = db.OFFERs.First(o => o.offerId == offerID);
-                       
-                       if (of.refId != refID||of.typeOfOffer!=typename)
-                       {
-                           of.typeOfOffer = typename;
-                           of.refId = refID;
-                           if (of.refId != refID) { 
-                           of.status = 3;
-                           }
-                           
-                           db.Entry(of).State = EntityState.Modified;
-
-                       }
-                   }
-                   else {
-                       var newof = new OFFER();
-                       newof.status =3;
-                       newof.refId = refID;
-                       newof.typeOfOffer = typename;
-                       newof.dateOfOffer = System.DateTime.Now;
-                       newof.matchId = mid;
-                       db.OFFERs.Add(newof);
-                   }
-              }
-              else if (status == 4) {
-                  var newof = new OFFER();
-                  newof.status = 4;
-                  newof.typeOfOffer = typename;
-                  newof.refId = 63699895;
-                  newof.dateOfOffer = System.DateTime.Now;
-                  newof.matchId = mid;
-                  db.OFFERs.Add(newof);
-
-              }
-                i++;
-          }
-            db.SaveChanges();
-            return RedirectToAction("Index");
-
-        }
-
-        [Authorize(Roles = "Admin,Organizer")]
-        [HttpGet]
-        public ActionResult manageOffer2(int? id)
         {
             if (id != null)
             {
@@ -289,7 +186,7 @@ namespace userprofile.Controllers
 
         [Authorize(Roles = "Admin,Organizer")]
         [HttpPost]
-        public ActionResult manageOffer2()
+        public ActionResult manageOffer()
         {
             var i = 0;
             while (i < 9)

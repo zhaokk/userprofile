@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -48,8 +49,9 @@ namespace userprofile.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Organizer")]
-        public ActionResult Create([Bind(Include="locationId,name,price,street,city,postcode,country,phoneNum,state")] LOCATION location)
+        public ActionResult Create([Bind(Include = "locationId,name,price,street,city,postcode,country,phoneNum,state,Lat,Long")] LOCATION location)
         {
+            location.geogCol1 = FunctionExtension.CreatePoint(location.Long, location.Lat);
             Boolean shouldFail = false;
             if (ModelState.IsValid)
             {
@@ -65,7 +67,22 @@ namespace userprofile.Controllers
                     //location.country = "Australia"; //### should not hard code here, edit later on
                     location.status = 1;
                     db.LOCATIONs.Add(location);
-                    db.SaveChanges();
+                    try { db.SaveChanges(); }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
+                    
                     return RedirectToAction("Index");
                 }
             }

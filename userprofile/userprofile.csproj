@@ -169,6 +169,7 @@
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\ExcelManagementController.cs" />
     <Compile Include="Controllers\AlgorithmController.cs" />
+    <Compile Include="Controllers\FunctionExtension.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
@@ -996,7 +997,6 @@
     <Content Include="Views\team\Index.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\match\manageOffer.cshtml" />
     <Content Include="Views\match\DeleteConfirmed.cshtml" />
     <Content Include="Views\Home\checkOffer.cshtml" />
     <Content Include="Views\Shared\_LayoutForRE.cshtml" />
@@ -1027,7 +1027,7 @@
     <Content Include="Views\OneOffAVAILABILITies\Details.cshtml" />
     <Content Include="Views\OneOffAVAILABILITies\Edit.cshtml" />
     <Content Include="Views\OneOffAVAILABILITies\Index.cshtml" />
-    <Content Include="Views\match\manageOffer2.cshtml" />
+    <Content Include="Views\match\manageOffer.cshtml" />
     <Content Include="Views\Account\RegisterNew.cshtml" />
     <Content Include="Views\Shared\_LayoutForAnyone.cshtml" />
     <Content Include="Views\match\History.cshtml" />
@@ -1056,7 +1056,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Helpers\" />
     <Folder Include="Scripts\AdminLTE\plugins\ckeditor\plugins\magicline\images\" />
-    <Folder Include="Views\TOURNAMENTs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
