@@ -31,8 +31,35 @@ namespace userprofile.Controllers {
                 offer = off;
             }
         }
+		class refInfo {
+			public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
+            public HashSet<int> assignedTo; //what that offer/referee is assigned to (offer is always only 1)
+            public int canAssign; //How many offers the referee can be assigned to (offers will always be 1)
+			public REFEREE actualRef;
 
-        class val {
+            public refInfo(int offersAvailableToRef, REFEREE i) {
+                available = new Dictionary<int, Item>();
+                unavailable = new Dictionary<int, Item>();
+                assignedTo = new HashSet<int>();
+				actualRef = i;
+				canAssign = offersAvailableToRef;
+            }
+		}
+
+		class offerInfo {
+			public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
+			public int assignedTo;
+			OFFER actualOffer;
+            
+			public offerInfo(OFFER i) {
+                available = new Dictionary<int, Item>();
+                unavailable = new Dictionary<int, Item>();
+				assignedTo = -1;
+				actualOffer = i;
+            }
+		}
+
+        /*class val {
             public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
             public HashSet<int> assignedTo; //what that offer/referee is assigned to (offer is always only 1)
             public int canAssign; //How many offers the referee can be assigned to (offers will always be 1)
@@ -43,7 +70,7 @@ namespace userprofile.Controllers {
                 assignedTo = new HashSet<int>();
                 canAssign = num;
             }
-        }
+        }*/
 
         class Item {
             public int tabu; //At what temperature this item will not be tabu anymore
@@ -53,23 +80,26 @@ namespace userprofile.Controllers {
             }
         }
 
-        Dictionary<int, val> dOffers, dReferees; //offers, referees
+        Dictionary<int, offerInfo> dOffers;
+		Dictionary<int,refInfo> dReferees; //offers, referees
         LinkedList<pair> llCompleted; //Best options for offers/referees
         HashSet<int> hFilledOffers, hCanBeFilledOffers;
-        Dictionary<int, HashSet<int>> qualificationRefStorage;
-        Dictionary<int, OFFER> offerStorage;
-        Dictionary<int, REFEREE> refereeStorage;
-        Dictionary<int, MATCH> matchStorage;
-        List<Dictionary<int, val>> bestOffers, bestReferees;
+        Dictionary<int, HashSet<int>> dQualificationRefStorage;
+        Dictionary<int, OFFER> dOfferStorage;
+        Dictionary<int, REFEREE> dRefereeStorage;
+        Dictionary<int, MATCH> dMatchStorage;
+        List<Dictionary<int, offerInfo>> bestOffers;
+		List<Dictionary<int, refInfo>> bestReferees;
         Dictionary<int, Dictionary<int, bool>> matchClashes;
-
+		Dictionary<int, int> dGamesAvailableToRef;
+		DateTime dateCurrent, dateStart, dateEnd;
 
         Raoconnection db;
         AlgorithmModel modelResult;
         int maxOffersFilled; //Max amount of offers that can be filled
         int currOffersFilled; //current number of offers filled
         long initTemp; //How many iterations of search to go through
-        long currTemp; //What current iteration (temperature it is
+        long currTemp; //What current iteration (temperature it is)
         int bestOffersFilled;
         Random rand;
 
@@ -77,43 +107,51 @@ namespace userprofile.Controllers {
         void initGlobalVars() {
             db = new Raoconnection();
             rand = new Random();
-            dOffers = new Dictionary<int, val>();
-            dReferees = new Dictionary<int, val>();
+            dOffers = new Dictionary<int, offerInfo>();
+            dReferees = new Dictionary<int, refInfo>();
             llCompleted = new LinkedList<pair>();
             hFilledOffers = new HashSet<int>();
             hCanBeFilledOffers = new HashSet<int>();
-            qualificationRefStorage = new Dictionary<int, HashSet<int>>();
-            offerStorage = new Dictionary<int, OFFER>();
-            refereeStorage = new Dictionary<int, REFEREE>();
-            matchStorage = new Dictionary<int, MATCH>();
+            dQualificationRefStorage = new Dictionary<int, HashSet<int>>();
+            dOfferStorage = new Dictionary<int, OFFER>();
+            dRefereeStorage = new Dictionary<int, REFEREE>();
+            dMatchStorage = new Dictionary<int, MATCH>();
             matchClashes = new Dictionary<int, Dictionary<int, bool>>();
+			dGamesAvailableToRef = new Dictionary<int, int>();
 
             bestOffersFilled = 0;
             maxOffersFilled = 0;
             currOffersFilled = 0;
             initTemp = 1000;
         }
-        bool checkTabu(int oID, int rID) { //check if this is tabu
-            return false;
+        
+		bool checkTabu(int oID, int rID) { //check if this is tabu
+			if (dOffers[oID].available[rID].tabu > 0) {
+				dOffers[oID].available[rID].tabu -= 1;
+				dReferees[oID].available[oID].tabu -= 1;
+				return true;
+			}
+			else
+				return false;
         }
 
         bool checkAvailable(int oID, int rID) { //check if this ref is available to referee this offer (mostly for conflicts timewise)
             if (dReferees[rID].canAssign == dReferees[rID].assignedTo.Count()) { //referee is assigned to max
                 return false;
             }
-            if (dOffers[oID].assignedTo.Count() == 1) {//already filled
+            if (dOffers[oID].assignedTo != -1) {//already filled
                 return false;
             }
             foreach (var i in dReferees[rID].assignedTo) {
-                if (offerStorage[i].matchId == offerStorage[oID].matchId)
+                if (dOfferStorage[i].matchId == dOfferStorage[oID].matchId) //if offers are on the same match
                     return false;
-                if (!matchClashes.ContainsKey(offerStorage[i].matchId)) {
-                    calculateClash(offerStorage[oID].matchId, offerStorage[i].matchId);
+                if (!matchClashes.ContainsKey(dOfferStorage[i].matchId)) {
+                    calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId);
                 }
-                else if (!matchClashes[offerStorage[i].matchId].ContainsKey(offerStorage[oID].matchId)) {
-                    calculateClash(offerStorage[oID].matchId, offerStorage[i].matchId);
+                else if (!matchClashes[dOfferStorage[i].matchId].ContainsKey(dOfferStorage[oID].matchId)) {
+                    calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId);
                 }
-                if (matchClashes[offerStorage[i].matchId][offerStorage[oID].matchId] == true) {
+                if (matchClashes[dOfferStorage[i].matchId][dOfferStorage[oID].matchId] == true) {
                     return false;
                 }
             }
@@ -211,25 +249,32 @@ namespace userprofile.Controllers {
         void getOffersAndQualificationIDs() {
             foreach (var i in db.OFFERs) {
                 if (i.status == 4) {
-                    offerStorage.Add(i.offerId, i); //store offer by offerID
+                    dOfferStorage.Add(i.offerId, i); //store offer by offerID
                     foreach (var k in i.OFFERQUALs) {
-                        if (!qualificationRefStorage.ContainsKey(k.qualificationId))
-                            qualificationRefStorage.Add(k.qualificationId, new HashSet<int>()); //Make list of qualifications needed by all offers
+                        if (!dQualificationRefStorage.ContainsKey(k.qualificationId))
+                            dQualificationRefStorage.Add(k.qualificationId, new HashSet<int>()); //Make list of qualifications needed by all offers
                     }
-                    dOffers.Add(i.offerId, new val(1)); //store offer ID for use of main algorithm
+                    dOffers.Add(i.offerId, new offerInfo(i)); //store offer ID for use of main algorithm
                 }
             }
         }
 
+		int countOffersAlreadyAssigned(int rID) {
+			return db.OFFERs.Where(o => o.REFEREE.refId == rID && o.MATCH.matchDate.Date == dateCurrent).Count();
+		}
+
         void fillRefereeByQualification() {
-            foreach (var i in qualificationRefStorage) { //make all qualificationRefStorage[qID] have all referee id's with qualification
+            foreach (var i in dQualificationRefStorage) { //make all qualificationRefStorage[qID] have all referee id's with qualification
                 foreach (var j in db.REFEREEs) {
                     foreach (var k in j.USERQUALs) {
-                        if (i.Key == k.qualificationId) { //check level here later on
-                            i.Value.Add(j.refId); //adding refID to qualificationRefStorage[qID]
-                            if (!refereeStorage.ContainsKey(j.refId)) {
-                                refereeStorage.Add(j.refId, j);
-                            }
+                        if (i.Key == k.qualificationId) {
+							if (!dRefereeStorage.ContainsKey(j.refId)) {
+								dRefereeStorage.Add(j.refId, j);
+								dGamesAvailableToRef.Add(j.refId, j.maxGames - countOffersAlreadyAssigned(j.refId));
+							}
+							if (dGamesAvailableToRef[j.refId] > 0)
+								i.Value.Add(j.refId); //adding refID to qualificationRefStorage[qID]
+                            
                         }
                     }
                 }
@@ -241,83 +286,110 @@ namespace userprofile.Controllers {
         }
 
         bool containsOneOff(DateTime matchDateTime, int rID) { //REDO
-            return false;
-            var temp = db.OneOffAVAILABILITies.Find(rID); //WRITE PRIMARY KEY FOR REFAVAILABILITY
-            if (temp == null)
-                return false;
-            else
-                return true;
+			try {
+				var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); //WRITE PRIMARY KEY FOR REFAVAILABILITY
+			    if (temp == null)
+				    return false;
+				else
+					return true;
+			}
+			catch {
+				return false;
+			}
         }
+
+		bool checkOneOff(int oID, int rID) {
+			return checkOneOff(db.OFFERs.Find(oID).dateOfOffer,rID);
+		}
 
         bool checkOneOff(DateTime matchDateTime, int rID) {
             try {
-                var temp = db.OneOffAVAILABILITies.Find();
+                var temp = db.OneOffAVAILABILITies.Find(rID,matchDateTime.Date);
                 if (temp.timeOnOrOff == true)
                     return true;
                 else
                     return false;
             }
             catch (SystemException a) {
-                //write stuff
                 return false;
             }
             
         }
 
         int getWeeklyAvailabilityForDay(DateTime dt, int rID) {
-            switch (dt.DayOfWeek) {
-                    case DayOfWeek.Sunday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).sunday;
-                    case DayOfWeek.Monday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).monday;
-                    case DayOfWeek.Tuesday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
-                    case DayOfWeek.Wednesday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
-                    case DayOfWeek.Thursday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).thursday;
-                    case DayOfWeek.Friday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).friday;
-                    case DayOfWeek.Saturday:
-                        return db.WEEKLYAVAILABILITies.Find(rID).saturday;
-                    default:
-                        //DEBUG STUFF
-                        return 0;
-                }
+			try {
+				switch (dt.DayOfWeek) {
+					case DayOfWeek.Sunday:
+						return db.WEEKLYAVAILABILITies.Find(rID).sunday;
+					case DayOfWeek.Monday:
+						return db.WEEKLYAVAILABILITies.Find(rID).monday;
+					case DayOfWeek.Tuesday:
+						return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
+					case DayOfWeek.Wednesday:
+						return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
+					case DayOfWeek.Thursday:
+						return db.WEEKLYAVAILABILITies.Find(rID).thursday;
+					case DayOfWeek.Friday:
+						return db.WEEKLYAVAILABILITies.Find(rID).friday;
+					case DayOfWeek.Saturday:
+						return db.WEEKLYAVAILABILITies.Find(rID).saturday;
+					default:
+						//DEBUG STUFF
+						return 0;
+				}
+			}
+			catch {
+				return 0;
+			}
         }
 
         bool checkWeeklyAvailabilityForMatch(int weeklyAvailability, DateTime matchDateTime) {
             if (weeklyAvailability == 0) {
                 return false;
             }
-            if (weeklyAvailability == 6) {
-                return true;
-            }
-            if (matchDateTime.TimeOfDay < new TimeSpan(8, 0, 0)) {
-                if (weeklyAvailability == 1 || weeklyAvailability == 4)
-                    return true;
-                else
-                    return false;
-            }
-            else if (matchDateTime.TimeOfDay < new TimeSpan(16, 0, 0)) {
-                if (weeklyAvailability == 2 || weeklyAvailability == 4 || weeklyAvailability == 5)
-                    return true;
-                else
-                    return false;
-            }
-            else {
-                if (weeklyAvailability == 3 || weeklyAvailability == 5)
-                    return true;
-                else
-                    return false;
-            }
+			if (weeklyAvailability >= 8) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 8;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0)) {
+					return false;
+			}
+			if (weeklyAvailability >= 4) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 4;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0)) {
+				return false;
+			}
+			if (weeklyAvailability >= 2) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 2;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0)) {
+				return false;
+			}
+			if (weeklyAvailability >= 1) {
+				if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0)) {
+					return true;
+				}
+				weeklyAvailability -= 1;
+			}
+			else if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0)) {
+				return false;
+			}
+			throw new SystemException();
         }
 
         bool checkInitAvailability(int oID, int rID) {
-            if (rID == 87784161)
-                return false;
-            return true; ///TESSSSSSSSSSSSSSSSTTTTTTTTTTTT
-            DateTime matchDateTime = offerStorage[oID].MATCH.matchDate;
+            //if (rID == 87784161)
+                //return false;
+            DateTime matchDateTime = dOfferStorage[oID].MATCH.matchDate;
             
             if (containsOneOff(matchDateTime,rID)) {
                 if (checkOneOff(matchDateTime,rID))
@@ -334,20 +406,20 @@ namespace userprofile.Controllers {
         void addInitialRefereesToOffer(int oID, int rID) {
             dOffers[oID].available.Add(rID, new Item());
             if (!dReferees.ContainsKey(rID)) {
-                dReferees.Add(rID, new val(4)); //refereeStorage[rID].maxGames
+                dReferees.Add(rID, new refInfo(dGamesAvailableToRef[rID],dRefereeStorage[rID])); //refereeStorage[rID].maxGames
                 maxOffersFilled += dReferees[rID].canAssign; //count what top number of offers to fill is
             }
             dReferees[rID].available.Add(oID, new Item());
         }
 
         void addRefereesToOffers() {
-            foreach (var i in offerStorage) {
+            foreach (var i in dOfferStorage) {
                 HashSet<int> availableReferees = null;
                 if (i.Value.OFFERQUALs.Count() > 0) {
                     foreach (var j in i.Value.OFFERQUALs) {
                         if (availableReferees == null) {
                             availableReferees = new HashSet<int>();
-                            foreach (var k in qualificationRefStorage[j.qualificationId]) {
+                            foreach (var k in dQualificationRefStorage[j.qualificationId]) {
                                 if (checkInitAvailability(i.Key, k)) {
                                     availableReferees.Add(k);
                                 }
@@ -357,7 +429,7 @@ namespace userprofile.Controllers {
                             HashSet<int> temp = availableReferees;
                             availableReferees = new HashSet<int>();
                             foreach (var k in temp) {
-                                if (qualificationRefStorage[j.qualificationId].Contains(k)) {
+                                if (dQualificationRefStorage[j.qualificationId].Contains(k)) {
                                     availableReferees.Add(k);
                                 }
                             }
@@ -370,8 +442,8 @@ namespace userprofile.Controllers {
                 else {
                     availableReferees = new HashSet<int>();
                     foreach (var j in db.REFEREEs) {
-                        if (!refereeStorage.ContainsKey(j.refId)) {
-                            refereeStorage.Add(j.refId, j);
+                        if (!dRefereeStorage.ContainsKey(j.refId)) {
+                            dRefereeStorage.Add(j.refId, j);
                         }
                         if (checkInitAvailability(i.Key,j.refId)) {
                             availableReferees.Add(j.refId);
@@ -391,7 +463,7 @@ namespace userprofile.Controllers {
         }
 
         int calcTimeBufferBetweenGames(int i, int j) {
-            if (matchStorage[i].locationId == matchStorage[j].locationId) {
+            if (dMatchStorage[i].locationId == dMatchStorage[j].locationId) {
                 return 0;
             }
             else {
@@ -400,22 +472,22 @@ namespace userprofile.Controllers {
         }
 
         bool calcMatchTimeClash(int i, int j) {
-            if (!matchStorage.ContainsKey(i)) {
-                matchStorage.Add(i, db.MATCHes.Find(i));
+            if (!dMatchStorage.ContainsKey(i)) {
+                dMatchStorage.Add(i, db.MATCHes.Find(i));
             }
-            if (!matchStorage.ContainsKey(j)) {
-                matchStorage.Add(j, db.MATCHes.Find(j));
+            if (!dMatchStorage.ContainsKey(j)) {
+                dMatchStorage.Add(j, db.MATCHes.Find(j));
             }
             int buffer = calcTimeBufferBetweenGames(i, j);
-            if (matchStorage[i].matchDate.Date == matchStorage[j].matchDate.Date) {
-                if (matchStorage[i].matchDate < matchStorage[j].matchDate) {
-                    if (matchStorage[i].matchDate.AddMinutes(matchStorage[i].matchLength + buffer) <= matchStorage[j].matchDate)
+            if (dMatchStorage[i].matchDate.Date == dMatchStorage[j].matchDate.Date) {
+                if (dMatchStorage[i].matchDate < dMatchStorage[j].matchDate) {
+                    if (dMatchStorage[i].matchDate.AddMinutes(dMatchStorage[i].matchLength + buffer) <= dMatchStorage[j].matchDate)
                         return false;
                     else
                         return true;
                 }
-                else if (matchStorage[i].matchDate > matchStorage[j].matchDate) {
-                    if (matchStorage[i].matchDate >= matchStorage[j].matchDate.AddMinutes(matchStorage[j].matchLength + buffer))
+                else if (dMatchStorage[i].matchDate > dMatchStorage[j].matchDate) {
+                    if (dMatchStorage[i].matchDate >= dMatchStorage[j].matchDate.AddMinutes(dMatchStorage[j].matchLength + buffer))
                         return false;
                     else
                         return true;
@@ -458,8 +530,8 @@ namespace userprofile.Controllers {
             foreach (var i in dReferees) {
                 foreach (var j in i.Value.available) {
                     foreach (var k in i.Value.available) {
-                        if (offerStorage[j.Key].MATCH.matchId != offerStorage[k.Key].MATCH.matchId) {
-                            calculateClash(offerStorage[j.Key].MATCH.matchId, offerStorage[k.Key].MATCH.matchId);
+                        if (dOfferStorage[j.Key].MATCH.matchId != dOfferStorage[k.Key].MATCH.matchId) {
+                            calculateClash(dOfferStorage[j.Key].MATCH.matchId, dOfferStorage[k.Key].MATCH.matchId);
                         }
                     }
                 }
@@ -500,20 +572,30 @@ namespace userprofile.Controllers {
         }
 
         public void assign(int oID, int rID) { // Assign referee to offer
-            dOffers[oID].assignedTo.Add(rID);
+            dOffers[oID].assignedTo = rID;
             dReferees[rID].assignedTo.Add(oID);
             updateAvailability(true, oID, rID);
             currOffersFilled++;
             hFilledOffers.Add(oID);
         }
 
+		long calcTabu(int oID) {
+			return (initTemp / ((initTemp - currTemp) / ((long)dOffers[oID].available.Count() + (long)dOffers[oID].unavailable.Count())));
+		}
+
+		void setTabu(int oID, int rID) {
+			int amount = (int)calcTabu(oID);
+			dOffers[oID].available[rID].tabu += amount;
+			dReferees[rID].available[oID].tabu += amount;
+		}
+
         void unassign(int oID) {
-            //SET TABU HERE
-            int rID = dOffers[oID].assignedTo.First();
+            int rID = dOffers[oID].assignedTo;
             hFilledOffers.Remove(oID);
-            dOffers[oID].assignedTo.Remove(rID);
+            dOffers[oID].assignedTo = -1;
             dReferees[rID].assignedTo.Remove(oID);
             updateAvailability(false, oID, rID);
+			setTabu(oID, rID);
             currOffersFilled--;
         }
 
@@ -570,8 +652,8 @@ namespace userprofile.Controllers {
 
             if (currOffersFilled > bestOffersFilled) {
                 bestOffersFilled = currOffersFilled;
-                bestOffers = new List<Dictionary<int, val>>();
-                bestReferees = new List<Dictionary<int, val>>();
+                bestOffers = new List<Dictionary<int, offerInfo>>();
+                bestReferees = new List<Dictionary<int, refInfo>>();
                 saveState();
             }
         }
@@ -588,15 +670,18 @@ namespace userprofile.Controllers {
         }
 
         void saveState() {
-             bestOffers.Add(new Dictionary<int, val>(dOffers));
-            bestReferees.Add(new Dictionary<int, val>(dReferees));
+            if (bestOffers.Count > 2) { // if there are 3 elements remove one before inserting
+                bestOffers.RemoveAt(rand.Next(0, 3));
+            }
+            bestOffers.Add(new Dictionary<int, offerInfo>(dOffers));
+            bestReferees.Add(new Dictionary<int, refInfo>(dReferees));
         }
 
         void resetState() {
             Random rand = new Random();
             int chooseState = rand.Next(0, bestReferees.Count());
-            dOffers = new Dictionary<int, val>(bestOffers[chooseState]);
-            dReferees = new Dictionary<int, val>(bestReferees[chooseState]);
+            dOffers = new Dictionary<int, offerInfo>(bestOffers[chooseState]);
+            dReferees = new Dictionary<int, refInfo>(bestReferees[chooseState]);
         }
 
         bool SimulatedAnnealing(int dif) {
@@ -621,8 +706,8 @@ namespace userprofile.Controllers {
                 }
                 if (currOffersFilled > bestOffersFilled) {
                     bestOffersFilled = currOffersFilled;
-                    bestOffers = new List<Dictionary<int, val>>();
-                    bestReferees = new List<Dictionary<int, val>>();
+                    bestOffers = new List<Dictionary<int, offerInfo>>();
+                    bestReferees = new List<Dictionary<int, refInfo>>();
                     saveState();
                 }
                 else if (currOffersFilled == bestOffersFilled) {
@@ -636,25 +721,23 @@ namespace userprofile.Controllers {
         }
 
         void setModel() {
-            //try {
-                modelResult = new AlgorithmModel(1);//bestOffers.Count()
-                for (int i = 0; i < 1; i++) {//bestOffers.Count()
+            if (bestOffers != null) {
+                modelResult = new AlgorithmModel(bestOffers.Count);//bestOffers.Count()
+                for (int i = 0; i < bestOffers.Count; i++) {//bestOffers.Count()
                     foreach (var j in bestOffers[i]) {
-                        int rID;
-                        if (j.Value.assignedTo.Count() == 0)
-                            rID = -1;
-                        else
-                            rID = j.Value.assignedTo.First();
-                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, rID,db));
+                        modelResult.result[i].pairs.Add(new Models.pair(j.Key, j.Value.assignedTo, db));
                     }
+					foreach (var j in llCompleted) {
+						modelResult.result[i].pairs.Add(new Models.pair(j.offer, j.referee, db));
+					}
                 }
-            //}
-            //catch (SystemException a) {
-                //modelResult = new AlgorithmModel(1);
-                foreach (var i in llCompleted) {
-                    modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee,db));
-                }
-            //}
+            }
+			else {
+				modelResult = new AlgorithmModel(1);
+				foreach (var i in llCompleted) {
+					modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee, db));
+				}
+			}
         }
 
         public void AssignReferees() {
@@ -668,5 +751,42 @@ namespace userprofile.Controllers {
             //db.Entry(of).State = EntityState.Modified;
             //db.SaveChanges();
         }
+
+
+		public List<REFEREE> getAvailableRefereesForOffer(int oID) {
+			OFFER offer = db.OFFERs.Find(oID);
+			List<REFEREE> availableReferees = new List<REFEREE>();
+			List<KeyValuePair<int, int>> offerQuals = new List<KeyValuePair<int,int>>();
+			foreach (var i in offer.OFFERQUALs) {
+				offerQuals.Add(new KeyValuePair<int, int>(i.qualificationId, i.qualLevel));
+			}
+			foreach (var i in db.REFEREEs) {
+				bool refHasQualification = true;
+				foreach (var j in offerQuals) {
+					try {
+						db.USERQUALs.Find(j.Key,i.refId);
+					}
+					catch (SystemException a) {
+						refHasQualification = false;
+						break;
+					}
+				}
+				if (refHasQualification) {
+					//check if has a free slot to ref on that day (is currently reffing < maxGames)
+					
+					if (containsOneOff(offer.dateOfOffer,i.refId)) {
+						if (checkOneOff(offer.dateOfOffer,i.refId)) {
+							availableReferees.Add(i);
+						}
+					}
+					else {
+						if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer,i.refId),offer.dateOfOffer)) {
+							availableReferees.Add(i);
+						}
+					}
+				}
+			}
+			return availableReferees;
+		}
     }
 }
