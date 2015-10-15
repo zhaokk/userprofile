@@ -1,9 +1,5 @@
-@model userprofile.Models.admineOfferViewModel
-@{
-    ViewBag.Title = "Home Page";
-
-
-}
+@using userprofile.Models;
+@model Tuple<admineOfferViewModel, List<String>>
 
 
 
@@ -27,25 +23,25 @@
     });
     var pieData = [
             {
-                value: @Model.acceptedOffers.Count(),
+                value: @Model.Item1.acceptedOffers.Count(),
                 color:"#00CC66",
                 highlight: "#00FF99",
                 label: "acceptedOffers"
             },
             {
-                value: @Model.declinedOffers.Count(),
+                value: @Model.Item1.declinedOffers.Count(),
                 color:"#F7464A",
                 highlight: "#FF5A5E",
                 label: "declinedOffers"
             },
             {
-                value: @Model.pendingOffers.Count(),
+                value: @Model.Item1.pendingOffers.Count(),
                 color: "#FDB45C",
                 highlight: "#FFC870",
                 label: "pendingOffers"
             },
             {
-                value: @Model.notassignedOffers.Count(),
+                value: @Model.Item1.notassignedOffers.Count(),
                 color: "#949FB1",
                 highlight: "#A8B3C5",
                 label: "notassignedOffers"
@@ -57,7 +53,36 @@
     window.onload = function(){
         var ctx = document.getElementById("pieChart").getContext("2d");
         window.myPie = new Chart(ctx).Pie(pieData);
+
+        if(parseInt(@Model.Item2[@Model.Item2.Count-1]) > 0){
+            $( ".label-warning" )
+            .html(@Model.Item2[@Model.Item2.Count-1]);
+        }
+        else{
+            $( ".label-warning" )
+            .html("");
+        }
+
+
+
+        @{int counter = 0;}
+        //clear the notifications
+        $(".menu").html("");
+        @{
+        for(int i=0; i< @Model.Item2.Count-1 ; i++){
+           <text>
+                addRowToMenu("@Model.Item2[i]");
+
+            </text>
+        }
+    }
+
+
     };
+
+    function addRowToMenu(thing){
+        $(".menu").append($('<li><a href="@Url.Action("Display", "Notifications", new { })"><i class="ion ion-ios-people info"></i>'+thing+'</a></li>'));
+    }
 
 
 
@@ -140,7 +165,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var offer in @Model.declinedOffers)
+                                @foreach (var offer in @Model.Item1.declinedOffers)
                             {
                             <tr>
                                 <td>
@@ -209,7 +234,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var match in @Model.matches)
+                                @foreach (var match in @Model.Item1.matches)
                             {
                             <tr>
                                 <td>
@@ -287,7 +312,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var offer in @Model.acceptedOffers)
+                                @foreach (var offer in @Model.Item1.acceptedOffers)
                                 {
                                     <tr>
                                         <td>

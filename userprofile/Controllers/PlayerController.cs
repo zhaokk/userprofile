@@ -131,6 +131,37 @@ namespace userprofile.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,Organizer,Manager")]
+        public ActionResult RejectRequest(String id, int? tid)
+        {
+            PLAYER player = db.PLAYERs.FirstOrDefault(play => play.teamId == tid && play.userId == id);
+
+            player.status = 6;
+            db.Entry(player).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
+        }
+
+        [Authorize(Roles = "Admin,Organizer,Manager")]
+        public ActionResult AcceptRequest(String id, int? tid)
+        {
+            PLAYER player = db.PLAYERs.FirstOrDefault(play => play.teamId == tid && play.userId == id);
+
+            player.status = 1;
+            db.Entry(player).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
+        }
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

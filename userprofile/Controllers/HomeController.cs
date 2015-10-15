@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics;
+using System.Data.Entity.Core.Objects;
 
 namespace userprofile.Controllers
 {
@@ -49,10 +51,43 @@ namespace userprofile.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult IndexforAd()
         {
+            List<String> notifications = getNotifications();
 
             admineOfferViewModel aOVM = new admineOfferViewModel(db.OFFERs.ToList());
-            return View(aOVM);
+
+            var combined = new Tuple<admineOfferViewModel, List<String>>(aOVM, notifications) { };
+
+            return View(combined);
+       }
+
+
+        /// <summary>
+        /// get all notifications for the user logged in
+        /// an admin really does not need to see anything here, just trying this out
+        /// -matches with no offers in the next 7 days
+        /// -offers with no referees
+        /// 
+        /// 
+        /// </summary>
+        /// <returns> notifications A list of strings that are "###  things are bad". last element is count of everything</returns>
+        public List<String> getNotifications()
+        {
+            List<String> notifications = new List<String>();
+            DateTime nextWeek = DateTime.Now;
+            String futureDate = nextWeek.ToShortDateString();
+            nextWeek = nextWeek.AddDays(7);
+
+            int matches = db.MATCHes.Where(match => match.OFFERs.Count == 0).Where(match => match.matchDate < nextWeek).Count();
+            int offers = db.OFFERs.Where(offer => offer.REFEREEs.Count == 0).Count();
+
+            notifications.Add("" + matches + " matches have no referee");
+            notifications.Add("" + offers + " offers dont have a referee");
+            notifications.Add("" + (matches + offers));
+
+            return notifications;
         }
+
+
           [Authorize(Roles = "Organizer")]
         public ActionResult IndexforOrg()
         {
