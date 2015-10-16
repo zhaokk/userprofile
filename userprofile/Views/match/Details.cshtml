@@ -120,9 +120,10 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Item1.TOURNAMENT.name)
-                    </dd>
-
+						<a href="@Url.Action( "Details","Tournament", new { id = Model.Item1.tournamentId })">
+							@Html.DisplayFor(model => model.Item1.TOURNAMENT.name)
+							</a>
+					</dd>
                 </dl>
             </div>
         </div>
@@ -134,7 +135,6 @@
                         <thead>
                             <tr>
 
-                                <th>Referee Id</th>
                                 <th>Referee Name</th>
 
                                 <th>
@@ -175,16 +175,16 @@
                                     <tr>
                                         <td>
                                             <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
-                                                @item.refId
+                                                @item.REFEREE.AspNetUser.firstName
+												@item.REFEREE.AspNetUser.lastName
                                             </a>
-                                        </td>
-                                        <td>@item.REFEREE.AspNetUser.firstName 
-                                            @item.REFEREE.AspNetUser.lastName
                                         </td>
 
                                         <td>
-                                            @item.typeOfOffer
-                                        </td>
+											<a href="@Url.Action( "Details","Types", new { id = item.typeOfOffer })">
+												@item.typeOfOffer
+											</a>
+										</td>
                                         <td>
                                             @item.status
                                         </td>
