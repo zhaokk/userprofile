@@ -29,19 +29,22 @@
                     else if (User.Identity.Name == Model.Item1.UserName)
                     {
                         <a class=" btn btn-warning pull-right" href='@Url.Action("SelfEdit", "Account")'>Edit my details</a>
-                    }
-                }
+					}
+					
+}
                 
                 
+                @foreach (var i in Model.Item1.AspNetRoles) {
+					@i.Name
+				}
+				
                 <hr />
-
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => model.Item1.UserName)
+                        Username
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Item1.UserName)
-
                     </dd>
 
                     <dt>
@@ -52,7 +55,7 @@
                     </dd>
 
                     <dt>
-                        <b>ffa# if applicable</b>
+                        <b>FFA#</b>
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Item1.ffaNum)
@@ -62,7 +65,7 @@
                         @{
                             if(Model.Item1.willingToshowEmail || User.IsInRole("Admin")){
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Item1.email)
+                                    Email
                                 </dt>
                                 <dd>
                                     @Html.DisplayFor(model => model.Item1.email)
@@ -74,7 +77,7 @@
                             if (Model.Item1.willingToShowPhoneNum || User.IsInRole("Admin"))
                             {
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Item1.phoneNum)
+                                    Phone Number
                                 </dt>
                                 <dd>
                                     @Html.DisplayFor(model => model.Item1.phoneNum)
@@ -86,13 +89,19 @@
                             if (Model.Item1.willingToShowDOB || User.IsInRole("Admin"))
                             {
                                 <dt>
-                                    @Html.DisplayFor(model => model.Item1.dob)
+                                    Date of Birth
                                 </dt>
                                 <dd>
                                      @Html.DisplayFor(model => model.Item1.dob)
                                 </dd>
                             }
                         }
+						<dt>
+							Gender
+						</dt>
+						<dd>
+							@Html.DisplayFor(model => model.Item1.gender)
+						</dd>
                                        
                 </dl>
             </div>
