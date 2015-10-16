@@ -19,8 +19,9 @@
                 <div class="row col-md-12">
                     @foreach (var item in Model.offers)
                     {
-
-                        if (item.status == 5 )
+						if (item.status == 0) { //don't show deleted offers
+						}
+                        else if (item.status == 5 )
                         {
                             <div class="well col-lg-4 col-md-12" id="@i" hidden>
                                 <div class="form-group">
