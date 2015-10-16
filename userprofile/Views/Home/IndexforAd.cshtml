@@ -30,25 +30,25 @@
                 value: @Model.acceptedOffers.Count(),
                 color:"#00CC66",
                 highlight: "#00FF99",
-                label: "acceptedOffers"
+                label: "Accepted Offers"
             },
             {
                 value: @Model.declinedOffers.Count(),
                 color:"#F7464A",
                 highlight: "#FF5A5E",
-                label: "declinedOffers"
+                label: "Declined Offers"
             },
             {
                 value: @Model.pendingOffers.Count(),
                 color: "#FDB45C",
                 highlight: "#FFC870",
-                label: "pendingOffers"
+                label: "Pending Offers"
             },
             {
                 value: @Model.notassignedOffers.Count(),
                 color: "#949FB1",
                 highlight: "#A8B3C5",
-                label: "notassignedOffers"
+                label: "Unassigned Offers"
             },
 
 
@@ -124,17 +124,17 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Name
+										Tournament Name
                                     </th>
                                     <th>
-                                        Tournament Name
-                                    </th>
-                                    <th>
-                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
                                         Match Date
                                     </th>
                                     <th>
-                                        Location
+                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
+										Name
+                                    </th>
+                                    <th>
+                                        Referee Type
                                     </th>
 
                                 </tr>
@@ -144,21 +144,24 @@
                             {
                             <tr>
                                 <td>
-                                    @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                </td>
-                                <td>
-                                    @offer.MATCH.TOURNAMENT.name
-                                </td>
+									<a href="@Url.Action( "Details","Tournament", new { id = offer.MATCH.tournamentId })">
+										@offer.MATCH.TOURNAMENT.name
+									</a>
+								</td>
                                 <td>
 
-                                    <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
+                                    <a href="@Url.Action( "Details","Match", new { id = offer.MATCH.matchId })">
                                         @offer.MATCH.matchDate
                                     </a>
                                 </td>
+								<td>
+									<a href="@Url.Action("Details","Referee", new {id = offer.refId})">
+										@offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+									</a>
+								</td>
                                 <td>
-
-                                    <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
-                                        @offer.MATCH.LOCATION.name
+                                    <a href="@Url.Action("Details","Types", new { id = offer.TYPE.name })">
+                                        @offer.typeOfOffer
                                     </a>
                                 </td>
                             </tr>
@@ -176,7 +179,7 @@
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Empty position </h3>
+                    <h3 class="box-title">Empty positions</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -186,9 +189,6 @@
                         <table id="example3" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>
-                                        Match ID
-                                    </th>
                                     <th>
                                         @*@Html.DisplayNameFor(model => model.matchDate)*@
                                         Match Date
@@ -212,11 +212,6 @@
                                 @foreach (var match in @Model.matches)
                             {
                             <tr>
-                                <td>
-                                    
-                                        @match.matchId
-                                </td>
-
                                 <td>
                                     <a href="@Url.Action( "Details","match", new { id = match.matchId })">
                                         @match.matchDate
@@ -242,8 +237,10 @@
                                     </a>
                                 </td>
                                 <td>
-                                    @match.TOURNAMENT.name
-                                </td>
+									<a href="@Url.Action( "Details","Tournament", new { id = match.tournamentId })">
+										@match.TOURNAMENT.name
+									</a>
+								</td>
                             </tr>
 
 
@@ -290,24 +287,27 @@
                                 @foreach (var offer in @Model.acceptedOffers)
                                 {
                                     <tr>
-                                        <td>
-                                            @offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
-                                        </td>
-                                        <td>
-                                            @offer.MATCH.TOURNAMENT.name
-                                        </td>
-                                        <td>
-                                           
-                                            <a href="@Url.Action( "Details","match", new { id = offer.MATCH.matchId })">
-                                                @offer.MATCH.matchDate
-                                            </a>
-                                        </td>
-                                        <td>
-                                           
-                                            <a href="@Url.Action("Details","location", new { id = offer.MATCH.locationId })">
-                                                @offer.MATCH.LOCATION.name
-                                            </a>
-                                        </td>
+										<td>
+											<a href="@Url.Action( "Details","Tournament", new { id = offer.MATCH.tournamentId })">
+												@offer.MATCH.TOURNAMENT.name
+											</a>
+										</td>
+										<td>
+
+											<a href="@Url.Action( "Details","Match", new { id = offer.MATCH.matchId })">
+												@offer.MATCH.matchDate
+											</a>
+										</td>
+										<td>
+											<a href="@Url.Action("Details","Referee", new {id = offer.refId})">
+												@offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+											</a>
+										</td>
+										<td>
+											<a href="@Url.Action("Details","Types", new { id = offer.TYPE.name })">
+												@offer.typeOfOffer
+											</a>
+										</td>
                                     </tr>
 
                                 }
