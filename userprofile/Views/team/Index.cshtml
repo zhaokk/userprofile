@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Team Management";
-    
+
 }
 
 
@@ -19,69 +19,209 @@
         });
     });
 </script>
-<div class="row">
-    
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Team Name
-                                </th>
-                                <th>
-                                   Age Group
-                                </th>
-                                <th>
-                                   Grade
-                                </th>
-                                <th>
-                                    Manager Name
-                                </th>
+@if (Session["tournamentID"] != null)
+{
+    <span class="label label-default">@Session["tournamentname"]</span>
+    <div class="row">
 
-                                @*<th>
-                                    Manger ID
-                                </th>*@
-                               @if (User.IsInRole("Admin"))
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Team Name
+                                    </th>
+                                    <th>
+                                        Current Position
+                                    </th>
+                                    <th>
+                                        points
+                                    </th>
+                                    <th>
+                                        Wins
+                                    </th>
+                                    <th>
+                                        Losses
+                                    </th>
+                                    <th>
+                                        Age Group
+                                    </th>
+                                    <th>
+                                        Grade
+                                    </th>
+                                    <th>
+                                        Manager Name
+                                    </th>
+
+                                    @*<th>
+                                            Manger ID
+                                        </th>*@
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <th>
+
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    foreach (var teamin in item.TEAMINS)
+                                    {
+                                        if (teamin.tournament == Int32.Parse(Session["tournamentID"] as string))
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="@Url.Action("Details", new { id = item.teamId })">
+                                                        @Html.DisplayFor(modelItem => item.name)
+                                                    </a>
+
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => teamin.currentPosition)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => teamin.points)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => teamin.wins)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => teamin.losses)
+
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ageBracket)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.grade)
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details", "account", new { id = item.AspNetUser.UserName })">
+                                                        @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
+                                                        @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
+                                                    </a>
+
+                                                </td>
+
+
+                                               
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.teamId }, new { @class = "btn btn-warning pull-right" })
+
+                                        </td>
+                                    }
+                                    else if (User.Identity.Name == item.AspNetUser.UserName)
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.teamId }, new { @class = "btn btn-warning pull-right" })
+                                        </td>
+                                    }
+                                                
+
+                                            </tr>
+                                        }
+                                    }
+                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+                                    <div class="col-md-3">
+                                        @if (User.IsInRole("Admin"))
+                {
+                                            <div class="btn-group">
+                                                <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
+                                            </div>
+                }
+
+
+                                    </div>
+                                </div><!-- /.col -->
+
+                            </div><!-- /.row -->
+
+                                  
+
+
+                                } else  {
+                                
+                              
+
+
+                                <div class="row">
+
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <div class="box-header">
+                                            </div><!-- /.box-header -->
+                                            <div class="box-body">
+                                                <div class="table-responsive">
+                                                    <table id="example2" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    Team Name
+                                                                </th>
+                                                                <th>
+                                                                    Age Group
+                                                                </th>
+                                                                <th>
+                                                                    Grade
+                                                                </th>
+                                                                <th>
+                                                                    Manager Name
+                                                                </th>
+
+                                                                @*<th>
+                                                                        Manger ID
+                                                                    </th>*@
+                                                                @if (User.IsInRole("Admin"))
                                {
-                                <th>
-                                   
-                                </th>
+                                                                    <th>
+
+                                                                    </th>
                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model)
                             {
-                        <tr>
-                            <td>
-                                <a href="@Url.Action("Details", new { id = item.teamId })">
-                                    @Html.DisplayFor(modelItem => item.name)
-                                </a>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="@Url.Action("Details", new { id = item.teamId })">
+                                                                            @Html.DisplayFor(modelItem => item.name)
+                                                                        </a>
 
-                            </td>
+                                                                    </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ageBracket)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.grade)
-                            </td>
-                            <td>
-                                <a href="@Url.Action("Details","account" ,new { id = item.AspNetUser.UserName })">
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
-                                    @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
-                                </a>
-                               
-                            </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.ageBracket)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.grade)
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="@Url.Action("Details","account" ,new { id = item.AspNetUser.UserName })">
+                                                                            @Html.DisplayFor(modelItem => item.AspNetUser.firstName)
+                                                                            @Html.DisplayFor(modelItem => item.AspNetUser.lastName)
+                                                                        </a>
 
-                            
-                        @{
-                                if (User.IsInRole("Admin"))
+                                                                    </td>
+
+
+                                                                  
+                                @if (User.IsInRole("Admin"))
                                 {
                                     <td>
                                         @Html.ActionLink("Delete", "Delete", new { id = item.teamId }, new { @class = "btn btn-danger pull-right" })
@@ -95,25 +235,26 @@
                                         @Html.ActionLink("Edit", "Edit", new { id = item.teamId }, new { @class = "btn btn-warning pull-right" })
                                     </td>
                                 }
+                                                                    
+
+                                                                </tr>
                         }
-    
-                        </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
-                </div><!-- /.box-body -->
-        </div><!-- /.box -->
-        <div class="col-md-3">
-            @if (User.IsInRole("Admin"))
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div><!-- /.box-body -->
+                                        </div><!-- /.box -->
+                                        <div class="col-md-3">
+                                            @if (User.IsInRole("Admin"))
             {
-                <div class="btn-group">
-                    <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
-                </div>
+                                                <div class="btn-group">
+                                                    <a class=" btn btn-block btn-success" href='@Url.Action("Create", "team")'><b>Create New Team</b></a>
+                                                </div>
             }
-           
-           
-        </div>
-    </div><!-- /.col -->
-    
-</div><!-- /.row -->
+
+
+                                        </div>
+                                    </div><!-- /.col -->
+
+                                </div><!-- /.row -->
+                                }

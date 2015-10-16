@@ -14,11 +14,28 @@ namespace userprofile.Controllers
     public class TournamentController : Controller
     {
         private Raoconnection db = new Raoconnection();
-
+         [HttpPost]
+        public string  TournamentSelected(string tournamentID)
+        {
+            if (tournamentID == "")
+            {
+                Session["tournamentID"] = null;
+                Session["tournamentname"] = null;
+            }
+            else { 
+                Session["tournamentID"] = tournamentID;
+                int tid = Int32.Parse(tournamentID);
+            Session["tournamentname"] = db.TOURNAMENTs.Find(tid).name;
+               }
+           return ("tournamentID has change to"+ tournamentID);
+        }
         // GET: TOURNAMENTs
         public async Task<ActionResult> Index()
         {
+            ViewBag.session = Session["tournamentID"] as string;
             var tournament = db.TOURNAMENTs.Include(t => t.AspNetUser).Include(t => t.SPORT1).Where(tour => tour.status == 1);
+            ViewBag.TournamentList = new SelectList(db.TOURNAMENTs, "tournamentId", "name", Session["tournamentID"]);
+            
             return View(await tournament.ToListAsync());
         }
         public ActionResult History() {

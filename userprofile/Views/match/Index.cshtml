@@ -22,7 +22,10 @@
 </script>
 
 
-   
+   @if (Session["tournamentID"] != null)
+   {
+    <span class="label label-default">@Session["tournamentname"]</span>
+   }
     <div class="row">
         
         <div class="col-xs-12">

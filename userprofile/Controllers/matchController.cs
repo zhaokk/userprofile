@@ -20,7 +20,28 @@ namespace userprofile.Controllers
             DateTime thisDay = DateTime.Today;
 
             var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate > thisDay).Where(match => match.status >0);
-            return View(matches.ToList());
+            List<MATCH> matchlist=matches.ToList();
+            List<MATCH> matchintournament=new List<MATCH>();
+
+            if (Session["tournamentID"] != null)
+            {
+                string tid = Session["tournamentID"] as string;
+                int tournamentID =Int32.Parse(tid);
+                foreach (var match in matchlist)
+                {
+                    if (match.tournamentId == tournamentID)
+                    {
+                        matchintournament.Add(match);
+
+                    }
+                }
+
+            }
+            else {
+                matchintournament = matchlist;
+            
+            }
+            return View(matchintournament);
         }
 
         public ActionResult History()

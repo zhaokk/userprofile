@@ -19,7 +19,31 @@ namespace userprofile.Controllers
         {
             var teams = db.TEAMs;
             ViewBag.breadcrumbs = "list of team";
-            return View(teams.ToList());
+            List<TEAM> teamlist = teams.ToList();
+            List<TEAM> teamintournament = new List<TEAM>();
+            if (Session["tournamentID"] != null)
+            {
+                string tid = Session["tournamentID"] as string;
+                int tournamentID = Int32.Parse(tid);
+                foreach (var team in teamlist)
+                {
+                    foreach (var teamin in team.TEAMINS) {
+                        if (teamin.tournament == tournamentID)
+                        {
+                            teamintournament.Add(team);
+                        }
+                    
+                    }
+               
+                }
+
+            }
+            else
+            {
+                teamintournament = teamlist;
+
+            }
+            return View(teamintournament);
         }
 
         // GET: /team/Details/5

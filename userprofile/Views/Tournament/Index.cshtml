@@ -22,7 +22,18 @@
 </p>*@
 
 <div class="row">
+    <div class="col-xs-12">
 
+        <h1>Select one tournament you want to View</h1>
+        <div class="form-group">
+            
+            <div class="col-md-10">
+                @Html.DropDownList("TournamentList", String.Empty)
+                
+            </div>
+        </div>
+        <br/>
+    </div>
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header with-border">
@@ -124,3 +135,19 @@
 
     <a class=" btn btn-block btn-success" href='@Url.Action("History", "Tournament")'><b>tournamants History</b></a>
 </div>
+<script>
+    $("#TournamentList").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("TournamentSelected", "Tournament")",
+           
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({'tournamentID':$(this).val()}),
+        success: function (data) { alert(data); },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+
+    })
+    </script>

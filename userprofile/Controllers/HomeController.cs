@@ -14,7 +14,8 @@ namespace userprofile.Controllers
         public Raoconnection db = new Raoconnection();
         [Authorize]
         public ActionResult Index()
-        {
+        { 
+            
             var userID = User.Identity.GetUserId();
            
             // ICollection<OFFER> offers = db.REFEREEs.FirstOrDefault(r => r.ID == userID).OFFERs;
