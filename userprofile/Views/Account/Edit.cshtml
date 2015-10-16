@@ -29,9 +29,15 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal col-md-6">
-                        <h4>Edit user</h4>
+                        <h4>Edit user: </h4>
                         <hr />
                         @Html.ValidationSummary(true)
+						<div class="form-group">
+							Roles:
+							<div class="col-md-10">
+								
+							</div>
+						</div>
                         @if (User.IsInRole("Admin"))
                         {
                         <div class="form-group">
