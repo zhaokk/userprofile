@@ -26,6 +26,13 @@ namespace userprofile.Controllers {
 			modelResult.sortResult();
 			return View(modelResult);
 		}
+        [HttpPost]
+        public ActionResult showResults(Boolean assignAll, System.DateTime startDate, System.DateTime endDate) {
+
+            AssignReferees();
+            modelResult.sortResult();
+            return View(modelResult);
+        }
 
 		public ActionResult Index() {
 
