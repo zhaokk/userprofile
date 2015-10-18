@@ -28,7 +28,8 @@ namespace userprofile.Controllers {
 		}
         [HttpPost]
         public ActionResult showResults(Boolean assignAll, System.DateTime startDate, System.DateTime endDate) {
-
+			dateStart = startDate;
+			dateEnd = endDate;
             AssignReferees();
             modelResult.sortResult();
             return View(modelResult);
@@ -760,11 +761,13 @@ namespace userprofile.Controllers {
 		}
 
 		public void AssignReferees() {
-			initGlobalVars();
-			fillSets();
-			initChecks();
-			performAlgorithm();
-			setModel();
+			for (dateCurrent = dateStart; dateStart <= dateEnd; dateCurrent = dateCurrent.AddDays(1)) {
+				initGlobalVars();
+				fillSets();
+				initChecks();
+				performAlgorithm();
+				setModel();
+			}
 
 
 			//db.Entry(of).State = EntityState.Modified;
