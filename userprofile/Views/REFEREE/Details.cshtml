@@ -19,10 +19,13 @@
                             <b>Name</b>
 
                         </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Item1.AspNetUser.firstName)
-                            @Html.DisplayFor(model => model.Item1.AspNetUser.lastName)
-                        </dd>
+							<dd>
+								<a href="@Url.Action("Details", "Account", new { id = Model.Item1.AspNetUser.UserName})">
+									@Html.DisplayFor(model => model.Item1.AspNetUser.firstName)
+									@Html.DisplayFor(model => model.Item1.AspNetUser.lastName)
+									(@Html.DisplayFor(model => model.Item1.AspNetUser.UserName))
+								</a>
+							</dd>
                         <dt>
                             <b>Phone number</b>
 
@@ -49,12 +52,6 @@
                         <dd>
                             @Html.DisplayFor(model => model.Item1.rating)
                         </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Item1.AspNetUser.UserName)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Item1.AspNetUser.UserName)
-                        </dd>
                     </dl>
                 </div>
 
@@ -62,7 +59,7 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Match Id</th>
+                                <th>Match Date</th>
 
 
                                 <th>
@@ -84,11 +81,11 @@
                                 <tr>
                                     <td>
                                         <a href="@Url.Action( "Details","match", new { id = item.matchId })">
-                                            @item.matchId
+                                            @item.MATCH.matchDate
                                         </a>
                                     </td>
                                     <td>
-                                        @item.MATCH.tournamentId
+                                        @item.MATCH.TOURNAMENT.name
                                     </td>
                                     <td>
                                         @item.typeOfOffer

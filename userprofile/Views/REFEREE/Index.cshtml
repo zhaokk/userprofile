@@ -47,7 +47,7 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>User name</th>
+                                <th>Name</th>
                                 <th>
                                     <span style="cursor:help;" title="Distance willing to travel">Travel distance</span>
                                 </th>
@@ -55,10 +55,10 @@
                                     Qualifications
                                 </th>
                                 <th>
-                                    Num upcomming matches
+                                    # Upcoming Matches
                                 </th>
                                 <th>
-                                    Max willing matches
+                                    # Possible Matches
                                 </th>
                                 <th>
                                    
@@ -72,7 +72,9 @@
                         <tr>
                             <td>
                                 <a href="@Url.Action("Details", new { id = item.refId })">
-                                    @item.AspNetUser.UserName
+									@item.AspNetUser.firstName
+									@item.AspNetUser.lastName
+                                    (@item.AspNetUser.UserName)
                                 </a>
                             </td>
                             <td>
