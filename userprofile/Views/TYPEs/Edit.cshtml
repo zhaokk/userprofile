@@ -1,14 +1,14 @@
 ﻿@model userprofile.Models.TYPE
 
 @{
-    ViewBag.Title = "Edit the type";
+    ViewBag.Title = "Edit Type";
 }
 
 <div class="row">
     <div class="col-sm-12">
         <div class="box">
             <div class="box-body">
-                
+                <h4>@Model.name</h4>
                 <hr/>
                 @using (Html.BeginForm())
                 {
