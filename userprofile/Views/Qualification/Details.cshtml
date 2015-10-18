@@ -31,7 +31,12 @@
                     <dd>
                         @Html.DisplayFor(model => model.Item1.description)
                     </dd>
-
+					<dt>
+						Levels
+					</dt>
+					<dd>
+						@Html.DisplayFor(mode => Model.Item1.qualificationLevel)
+					</dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.Item1.SPORT1.name)
                     </dt>
@@ -39,7 +44,12 @@
                     <dd>
                         @Html.DisplayFor(model => model.Item1.SPORT1.name)
                     </dd>
-
+					<dt>
+						# Referees
+					</dt>
+					<dd>
+						@Model.Item2.Count()
+					</dd>
                 </dl>
 
 

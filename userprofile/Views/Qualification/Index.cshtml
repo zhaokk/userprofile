@@ -88,9 +88,15 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.description)
                                 </th>
+								<th>
+									Max Level
+								</th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.SPORT1.name)
                                 </th>
+								<th>
+									# Referees
+								</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -113,9 +119,15 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.description)
                             </td>
+							<td>
+								@Html.DisplayFor(modelItem => item.qualificationLevel)
+							</td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.SPORT1.name)
                             </td>
+							<td>
+								
+							</td>
                             <td>
                                 @Html.ActionLink("Delete", "Delete", new { id = item.qualificationId }, new { @class = "btn btn-danger pull-right" })
                             </td>
