@@ -30,6 +30,7 @@ namespace userprofile.Controllers {
         public ActionResult showResults(Boolean assignAll, System.DateTime startDate, System.DateTime endDate) {
 			dateStart = startDate;
 			dateEnd = endDate;
+
             AssignReferees();
             modelResult.sortResult();
             return View(modelResult);
@@ -113,7 +114,6 @@ namespace userprofile.Controllers {
 		int maxPriorityFilled;
 
 		void initGlobalVars() {
-			dateCurrent = new DateTime(2015, 1, 1);
 			db = new Raoconnection();
 			rand = new Random();
 			dOffers = new Dictionary<int, offerInfo>();
@@ -260,7 +260,7 @@ namespace userprofile.Controllers {
 
 		void getOffersAndQualificationIDs() {
 			foreach (var i in db.OFFERs) {
-				if (i.status == 4) {
+				if (i.status == 5) {
 					dOfferStorage.Add(i.offerId, i); //store offer by offerID
 					foreach (var k in i.OFFERQUALs) {
 						if (!dQualificationRefStorage.ContainsKey(k.qualificationId))
@@ -273,7 +273,8 @@ namespace userprofile.Controllers {
 		}
 
 		int countOffersAlreadyAssigned(int rID) {
-			return db.OFFERs.Where(o => (o.REFEREE.refId == rID) && DateTime.Compare(o.MATCH.matchDate, dateCurrent) >= 0 && DateTime.Compare(o.MATCH.matchDate, dateCurrent.AddDays(1)) <= 0).Count();
+			//return db.OFFERs.Where(o => (o.REFEREE.refId == rID) && DateTime.Compare(o.MATCH.matchDate, dateCurrent) >= 0 && DateTime.Compare(o.MATCH.matchDate, dateCurrent.AddDays(1)) <= 0).Count();
+			return db.OFFERs.Where(o => o.refId == rID && (o.status == 1 || o.status == 3) && o.dateOfOffer == dateCurrent).Count();
 		}
 
 		void fillRefereeByQualification() {
@@ -761,7 +762,7 @@ namespace userprofile.Controllers {
 		}
 
 		public void AssignReferees() {
-			for (dateCurrent = dateStart; dateStart <= dateEnd; dateCurrent = dateCurrent.AddDays(1)) {
+			for (dateCurrent = dateStart; dateCurrent <= dateEnd; dateCurrent = dateCurrent.AddDays(1)) {
 				initGlobalVars();
 				fillSets();
 				initChecks();
