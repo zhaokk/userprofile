@@ -16,7 +16,9 @@ namespace userprofile.Controllers
 
         // default is upcoming matches
         public ActionResult Index()
-        {
+        {   
+
+
             DateTime thisDay = DateTime.Today;
 
             var matches = db.MATCHes.Include(m => m.LOCATION).Include(m => m.TEAM).Include(m => m.TEAM1).Include(m => m.TOURNAMENT).Where(match => match.matchDate > thisDay).Where(match => match.status >0);

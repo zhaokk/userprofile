@@ -82,8 +82,14 @@
 
                 // we need to copy it, so that multiple events don't have a reference to the same object
                 var copiedEventObject = $.extend({}, originalEventObject);
-
+                //check weather the user is modifying the past
+                
+                if (!date.isAfter(moment())) {
+                    alert("you cant change the availability in the pass");
+                    return;
+                }
                 // assign it the date that was reported
+              
                 copiedEventObject.start = date;
                 copiedEventObject.allDay = allDay;
                 copiedEventObject.backgroundColor = $(this).css("background-color");
