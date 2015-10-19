@@ -66,9 +66,10 @@
     <input  type="submit" value="Log in" class="login login-submit" />
 
     <input type="button" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
-   
+                       @Html.ActionLink("API", "Index", "Help", new { area = "" }, null)
 
-   
+
+
 
 
                         @*<button type="submit" id="login-button">
