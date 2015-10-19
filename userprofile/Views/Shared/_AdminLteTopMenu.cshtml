@@ -9,6 +9,56 @@
     ViewBag.Layout = null;
 }
 
+<script>
+
+
+    $.ajax({
+        // edit to add steve's suggestion.
+        //url: "/ControllerName/ActionName",
+        url: "/home/getJsonNotifications",
+        success: function (data) {
+            // your data could be a View or Json or what ever you returned in your action method 
+            // parse your data here
+            addNotifications(data)
+        }
+    });
+
+    function addNotifications(thing) {
+        var somethingSet = false;
+
+        var obj = jQuery.parseJSON(thing);
+        if(parseInt(obj[obj.length-1]) > 0){
+            $( ".label-warning" )
+            .html(obj[obj.length-1]);
+        }
+        else{
+            $( ".label-warning" )
+            .html("");
+        }
+
+        //clear the notifications
+        $(".menu").html("");
+
+        for (i = 0; i < obj.length - 1 ; i++) {
+            if (obj[i].charAt(0) != "0") {
+                addRowToMenu(obj[i]);
+                somethingSet = true;
+            }
+        }
+
+        //if nothing was set in the notifications, everything is good
+        if (!somethingSet) {
+            addRowToMenu("Everything is good!");
+        }
+
+    }
+
+    function addRowToMenu(thing) {
+        $(".menu").append($('<li><a href="@Url.Action("Display", "Notifications", new { })"><i class="ion ion-ios-people info"></i>' + thing + '</a></li>'));
+    }
+
+</script>
+
 <header class="main-header">
     <!-- Logo -->
     <a href='@Url.Action("index", "Home")' class="logo"><b>RefereeAO</b></a>
@@ -40,7 +90,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">View all</a></li>
+                        <li class="footer"><a href="@Url.Action("Display", "Notifications", new { })">View all</a></li>
                     </ul>
                 </li>
                         

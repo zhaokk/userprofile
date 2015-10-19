@@ -7,6 +7,8 @@ using userprofile.Models;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics;
 using System.Data.Entity.Core.Objects;
+using Newtonsoft.Json;
+
 
 namespace userprofile.Controllers
 {
@@ -77,16 +79,25 @@ namespace userprofile.Controllers
             String futureDate = nextWeek.ToShortDateString();
             nextWeek = nextWeek.AddDays(7);
 
+
+            //referee rejected offer 3 
             int matches = db.MATCHes.Where(match => match.OFFERs.Count == 0).Where(match => match.matchDate < nextWeek).Count();
+
             int offers = db.OFFERs.Where(offer => offer.REFEREEs.Count == 0).Count();
+            int rejectedOffers = db.OFFERs.Where(offer => offer.status == 3).Count(); //rejected status == 3
 
             notifications.Add("" + matches + " matches have no referee");
             notifications.Add("" + offers + " offers dont have a referee");
-            notifications.Add("" + (matches + offers));
+            notifications.Add("" + rejectedOffers + " referees have rejected offers");
+            notifications.Add("" + (matches + offers + rejectedOffers));
 
             return notifications;
         }
 
+        public String getJsonNotifications()
+        {
+            return JsonConvert.SerializeObject(getNotifications());
+        }
 
           [Authorize(Roles = "Organizer")]
         public ActionResult IndexforOrg()

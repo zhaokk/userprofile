@@ -134,7 +134,7 @@ namespace userprofile.Controllers
         {
             if (id != null)
             {
-                MATCH theMatch = db.MATCHes.First(m => m.matchId == id);
+                MATCH theMatch = db.MATCHes.First(match => match.matchId == id && match.status > 0);
                 var refereesList = new List<SelectListItem>()
                 {
 

@@ -53,36 +53,9 @@
     window.onload = function(){
         var ctx = document.getElementById("pieChart").getContext("2d");
         window.myPie = new Chart(ctx).Pie(pieData);
-
-        if(parseInt(@Model.Item2[@Model.Item2.Count-1]) > 0){
-            $( ".label-warning" )
-            .html(@Model.Item2[@Model.Item2.Count-1]);
-        }
-        else{
-            $( ".label-warning" )
-            .html("");
-        }
-
-
-
-        @{int counter = 0;}
-        //clear the notifications
-        $(".menu").html("");
-        @{
-        for(int i=0; i< @Model.Item2.Count-1 ; i++){
-           <text>
-                addRowToMenu("@Model.Item2[i]");
-
-            </text>
-        }
-    }
-
-
+       
     };
 
-    function addRowToMenu(thing){
-        $(".menu").append($('<li><a href="@Url.Action("Display", "Notifications", new { })"><i class="ion ion-ios-people info"></i>'+thing+'</a></li>'));
-    }
 
 
 
