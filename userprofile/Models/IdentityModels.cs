@@ -73,6 +73,7 @@ namespace userprofile.Models
         {
             var um = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.UserValidator = new UserValidator<ApplicationUser>(um) { AllowOnlyAlphanumericUserNames = false };
             var idResult = um.Create(user, password);
             return idResult.Succeeded;
         }
@@ -82,6 +83,7 @@ namespace userprofile.Models
         {
             var um = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.UserValidator = new UserValidator<ApplicationUser>(um) { AllowOnlyAlphanumericUserNames = false };
             var idResult = um.AddToRole(userId, roleName);
             return idResult.Succeeded;
         }
@@ -91,6 +93,7 @@ namespace userprofile.Models
         {
             var um = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.UserValidator = new UserValidator<ApplicationUser>(um) { AllowOnlyAlphanumericUserNames = false };
             var user = um.FindById(userId);
             var currentRoles = new List<IdentityUserRole>();
             currentRoles.AddRange(user.Roles);
@@ -99,5 +102,13 @@ namespace userprofile.Models
                 um.RemoveFromRole(userId, role.Role.Name);
             }
         }
+
+		public bool RemoveUserFromRole(string userId, string roleName) {
+			var um = new UserManager<ApplicationUser>(
+				new UserStore<ApplicationUser>(new ApplicationDbContext()));
+			um.UserValidator = new UserValidator<ApplicationUser>(um) { AllowOnlyAlphanumericUserNames = false };
+			var idResult = um.RemoveFromRole(userId, roleName);
+			return idResult.Succeeded;
+		}
     }
 }
