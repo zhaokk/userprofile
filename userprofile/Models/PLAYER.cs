@@ -22,7 +22,5 @@ namespace userprofile.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual TEAM TEAM { get; set; }
-
- 
     }
 }

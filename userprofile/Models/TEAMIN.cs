@@ -14,21 +14,6 @@ namespace userprofile.Models
     
     public partial class TEAMIN
     {
-
-        public TEAMIN()
-        {
-            this.currentPosition = 0;
-            this.draws = 0;
-            this.goalDraw = 0;
-            this.goalsAgainst = 0;
-            this.goalsFor = 0;
-            this.draws = 0;
-            this.wins = 0;
-            this.losses = 0;
-            this.status = 1;
-            this.points = 0;
-         }
-
         public int teamID { get; set; }
         public int tournament { get; set; }
         public int currentPosition { get; set; }

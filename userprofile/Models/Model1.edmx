@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dbv9Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Raoconnection.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ADMINISTRATION">
           <Key>
             <PropertyRef Name="Lock" />
@@ -24,12 +24,38 @@
           <Property Name="offerId" Type="int" Nullable="false" />
           <Property Name="refId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="APIKEY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="userId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
@@ -312,6 +338,42 @@
             </Principal>
             <Dependent Role="ALTERNATEOFFERS">
               <PropertyRef Name="refId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_apikey_aspnetuser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="APIKEY" Type="Self.APIKEY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="APIKEY">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserClaims_dbo_User_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserLogins_dbo_User_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -699,10 +761,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="dbv9ModelStoreContainer">
+        <EntityContainer Name="RaoconnectionStoreContainer">
           <EntitySet Name="ADMINISTRATION" EntityType="Self.ADMINISTRATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ALTERNATEOFFERS" EntityType="Self.ALTERNATEOFFERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APIKEY" EntityType="Self.APIKEY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
@@ -731,6 +796,18 @@
           <AssociationSet Name="fk_ALTERNATEOFFERS_refID" Association="Self.fk_ALTERNATEOFFERS_refID">
             <End Role="REFEREE" EntitySet="REFEREE" />
             <End Role="ALTERNATEOFFERS" EntitySet="ALTERNATEOFFERS" />
+          </AssociationSet>
+          <AssociationSet Name="fk_apikey_aspnetuser" Association="Self.fk_apikey_aspnetuser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="APIKEY" EntitySet="APIKEY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserLogins_dbo_User_Id" Association="Self.FK_AspNetUserLogins_dbo_User_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUserRoles_dbo_Role_Id" Association="Self.FK_AspNetUserRoles_dbo_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -865,7 +942,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="dbv9Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Raoconnection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ADMINISTRATION">
           <Key>
             <PropertyRef Name="Lock" />
@@ -877,6 +954,14 @@
           <Property Name="algorithmEndDate" Type="DateTime" Precision="0" />
           <Property Name="algorithmAll" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="APIKEY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.fk_apikey_aspnetuser" FromRole="APIKEY" ToRole="AspNetUsers" />
+        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -884,6 +969,27 @@
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserClaims_dbo_User_Id" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserLogins_dbo_User_Id" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -913,6 +1019,9 @@
           <Property Name="willingToshowEmail" Type="Boolean" Nullable="false" />
           <Property Name="wantsToReceiveTexts" Type="Boolean" Nullable="false" />
           <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="APIKEYs" Relationship="Self.fk_apikey_aspnetuser" FromRole="AspNetUsers" ToRole="APIKEY" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_AspNetUserClaims_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_AspNetUserLogins_dbo_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Events" Relationship="Self.fk_EVENTS_USERS" FromRole="AspNetUsers" ToRole="Events" />
           <NavigationProperty Name="INFRACTIONS" Relationship="Self.fk_INFRACTION_PLAYER" FromRole="AspNetUsers" ToRole="INFRACTIONS" />
           <NavigationProperty Name="PLAYERs" Relationship="Self.fk_PLAYER_USERNAME" FromRole="AspNetUsers" ToRole="PLAYER" />
@@ -1180,6 +1289,42 @@
           <Property Name="sunday" Type="Int32" Nullable="false" />
           <NavigationProperty Name="REFEREE" Relationship="Self.FK_WEEKLYAVAILABILITY_USER" FromRole="WEEKLYAVAILABILITY" ToRole="REFEREE" />
         </EntityType>
+        <Association Name="fk_apikey_aspnetuser">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="APIKEY" Type="Self.APIKEY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="APIKEY">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserClaims_dbo_User_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserLogins_dbo_User_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_EVENTS_USERS">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
@@ -1508,9 +1653,12 @@
           <End Role="LOCATION" Type="Self.LOCATION" Multiplicity="*" />
           <End Role="REFEREE" Type="Self.REFEREE" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Raoconnection2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ADMINISTRATIONs" EntityType="Self.ADMINISTRATION" />
+          <EntitySet Name="APIKEYs" EntityType="Self.APIKEY" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="INFRACTIONS" EntityType="Self.INFRACTION" />
@@ -1529,6 +1677,18 @@
           <EntitySet Name="TYPEs" EntityType="Self.TYPE" />
           <EntitySet Name="USERQUALs" EntityType="Self.USERQUAL" />
           <EntitySet Name="WEEKLYAVAILABILITies" EntityType="Self.WEEKLYAVAILABILITY" />
+          <AssociationSet Name="fk_apikey_aspnetuser" Association="Self.fk_apikey_aspnetuser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="APIKEY" EntitySet="APIKEYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserClaims_dbo_User_Id" Association="Self.FK_AspNetUserClaims_dbo_User_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserLogins_dbo_User_Id" Association="Self.FK_AspNetUserLogins_dbo_User_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
           <AssociationSet Name="fk_EVENTS_USERS" Association="Self.fk_EVENTS_USERS">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Events" EntitySet="Events" />
@@ -1655,9 +1815,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="dbv9ModelStoreContainer" CdmEntityContainer="Raoconnection2">
+        <EntityContainerMapping StorageEntityContainer="RaoconnectionStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="ADMINISTRATIONs">
-            <EntityTypeMapping TypeName="dbv9Model.ADMINISTRATION">
+            <EntityTypeMapping TypeName="Raoconnection.ADMINISTRATION">
               <MappingFragment StoreEntitySet="ADMINISTRATION">
                 <ScalarProperty Name="Lock" ColumnName="Lock" />
                 <ScalarProperty Name="refsCanViewOthers" ColumnName="refsCanViewOthers" />
@@ -1668,16 +1828,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="APIKEYs">
+            <EntityTypeMapping TypeName="Raoconnection.APIKEY">
+              <MappingFragment StoreEntitySet="APIKEY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="dbv9Model.AspNetRole">
+            <EntityTypeMapping TypeName="Raoconnection.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="Raoconnection.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="Raoconnection.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="dbv9Model.AspNetUser">
+            <EntityTypeMapping TypeName="Raoconnection.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ffaNum" ColumnName="ffaNum" />
@@ -1707,7 +1894,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="dbv9Model.Event">
+            <EntityTypeMapping TypeName="Raoconnection.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="owner" ColumnName="owner" />
@@ -1721,7 +1908,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INFRACTIONS">
-            <EntityTypeMapping TypeName="dbv9Model.INFRACTION">
+            <EntityTypeMapping TypeName="Raoconnection.INFRACTION">
               <MappingFragment StoreEntitySet="INFRACTIONS">
                 <ScalarProperty Name="infractionId" ColumnName="infractionId" />
                 <ScalarProperty Name="type" ColumnName="type" />
@@ -1733,7 +1920,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONs">
-            <EntityTypeMapping TypeName="dbv9Model.LOCATION">
+            <EntityTypeMapping TypeName="Raoconnection.LOCATION">
               <MappingFragment StoreEntitySet="LOCATION">
                 <ScalarProperty Name="locationId" ColumnName="locationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1751,7 +1938,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATCHes">
-            <EntityTypeMapping TypeName="dbv9Model.MATCH">
+            <EntityTypeMapping TypeName="Raoconnection.MATCH">
               <MappingFragment StoreEntitySet="MATCH">
                 <ScalarProperty Name="matchId" ColumnName="matchId" />
                 <ScalarProperty Name="matchDate" ColumnName="matchDate" />
@@ -1769,7 +1956,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERs">
-            <EntityTypeMapping TypeName="dbv9Model.OFFER">
+            <EntityTypeMapping TypeName="Raoconnection.OFFER">
               <MappingFragment StoreEntitySet="OFFER">
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
                 <ScalarProperty Name="matchId" ColumnName="matchId" />
@@ -1783,7 +1970,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OFFERQUALs">
-            <EntityTypeMapping TypeName="dbv9Model.OFFERQUAL">
+            <EntityTypeMapping TypeName="Raoconnection.OFFERQUAL">
               <MappingFragment StoreEntitySet="OFFERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="offerId" ColumnName="offerId" />
@@ -1792,7 +1979,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OneOffAVAILABILITies">
-            <EntityTypeMapping TypeName="dbv9Model.OneOffAVAILABILITY">
+            <EntityTypeMapping TypeName="Raoconnection.OneOffAVAILABILITY">
               <MappingFragment StoreEntitySet="OneOffAVAILABILITY">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
@@ -1802,7 +1989,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PLAYERs">
-            <EntityTypeMapping TypeName="dbv9Model.PLAYER">
+            <EntityTypeMapping TypeName="Raoconnection.PLAYER">
               <MappingFragment StoreEntitySet="PLAYER">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -1813,7 +2000,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QUALIFICATIONS">
-            <EntityTypeMapping TypeName="dbv9Model.QUALIFICATION">
+            <EntityTypeMapping TypeName="Raoconnection.QUALIFICATION">
               <MappingFragment StoreEntitySet="QUALIFICATIONS">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1825,7 +2012,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="REFEREEs">
-            <EntityTypeMapping TypeName="dbv9Model.REFEREE">
+            <EntityTypeMapping TypeName="Raoconnection.REFEREE">
               <MappingFragment StoreEntitySet="REFEREE">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="distTravel" ColumnName="distTravel" />
@@ -1837,7 +2024,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SPORTs">
-            <EntityTypeMapping TypeName="dbv9Model.SPORT">
+            <EntityTypeMapping TypeName="Raoconnection.SPORT">
               <MappingFragment StoreEntitySet="SPORT">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1845,7 +2032,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMs">
-            <EntityTypeMapping TypeName="dbv9Model.TEAM">
+            <EntityTypeMapping TypeName="Raoconnection.TEAM">
               <MappingFragment StoreEntitySet="TEAM">
                 <ScalarProperty Name="teamId" ColumnName="teamId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1859,7 +2046,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEAMINS">
-            <EntityTypeMapping TypeName="dbv9Model.TEAMIN">
+            <EntityTypeMapping TypeName="Raoconnection.TEAMIN">
               <MappingFragment StoreEntitySet="TEAMINS">
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="tournament" ColumnName="tournament" />
@@ -1876,7 +2063,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TOURNAMENTs">
-            <EntityTypeMapping TypeName="dbv9Model.TOURNAMENT">
+            <EntityTypeMapping TypeName="Raoconnection.TOURNAMENT">
               <MappingFragment StoreEntitySet="TOURNAMENT">
                 <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1892,7 +2079,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TYPEs">
-            <EntityTypeMapping TypeName="dbv9Model.TYPE">
+            <EntityTypeMapping TypeName="Raoconnection.TYPE">
               <MappingFragment StoreEntitySet="TYPE">
                 <ScalarProperty Name="typeId" ColumnName="typeId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1903,7 +2090,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERQUALs">
-            <EntityTypeMapping TypeName="dbv9Model.USERQUAL">
+            <EntityTypeMapping TypeName="Raoconnection.USERQUAL">
               <MappingFragment StoreEntitySet="USERQUAL">
                 <ScalarProperty Name="qualificationId" ColumnName="qualificationId" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
@@ -1912,7 +2099,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WEEKLYAVAILABILITies">
-            <EntityTypeMapping TypeName="dbv9Model.WEEKLYAVAILABILITY">
+            <EntityTypeMapping TypeName="Raoconnection.WEEKLYAVAILABILITY">
               <MappingFragment StoreEntitySet="WEEKLYAVAILABILITY">
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="monday" ColumnName="monday" />
@@ -1925,7 +2112,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="dbv9Model.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
+          <AssociationSetMapping Name="ALTERNATEOFFERS" TypeName="Raoconnection.ALTERNATEOFFERS" StoreEntitySet="ALTERNATEOFFERS">
             <EndProperty Name="OFFER">
               <ScalarProperty Name="offerId" ColumnName="offerId" />
             </EndProperty>
@@ -1933,7 +2120,7 @@
               <ScalarProperty Name="refId" ColumnName="refId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="dbv9Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="Raoconnection.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -1941,7 +2128,7 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TOURNAMENTORGANIZERS" TypeName="dbv9Model.TOURNAMENTORGANIZERS" StoreEntitySet="TOURNAMENTORGANIZERS">
+          <AssociationSetMapping Name="TOURNAMENTORGANIZERS" TypeName="Raoconnection.TOURNAMENTORGANIZERS" StoreEntitySet="TOURNAMENTORGANIZERS">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="organizer" />
             </EndProperty>
@@ -1949,7 +2136,7 @@
               <ScalarProperty Name="tournamentId" ColumnName="tournamentId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="dbv9Model.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
+          <AssociationSetMapping Name="WILLINGLOCATIONS" TypeName="Raoconnection.WILLINGLOCATIONS" StoreEntitySet="WILLINGLOCATIONS">
             <EndProperty Name="LOCATION">
               <ScalarProperty Name="locationId" ColumnName="locationId" />
             </EndProperty>

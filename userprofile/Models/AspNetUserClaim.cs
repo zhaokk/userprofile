@@ -12,13 +12,13 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USERQUAL
+    public partial class AspNetUserClaim
     {
-        public int qualificationId { get; set; }
-        public int refId { get; set; }
-        public int qualLevel { get; set; }
+        public int Id { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+        public string User_Id { get; set; }
     
-        public virtual QUALIFICATION QUALIFICATION { get; set; }
-        public virtual REFEREE REFEREE { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

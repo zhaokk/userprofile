@@ -12,13 +12,11 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USERQUAL
+    public partial class APIKEY
     {
-        public int qualificationId { get; set; }
-        public int refId { get; set; }
-        public int qualLevel { get; set; }
+        public string ID { get; set; }
+        public string userId { get; set; }
     
-        public virtual QUALIFICATION QUALIFICATION { get; set; }
-        public virtual REFEREE REFEREE { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

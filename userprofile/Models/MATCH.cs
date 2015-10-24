@@ -12,8 +12,10 @@ namespace userprofile.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
-    public partial class MATCH
+    using System.Runtime.Serialization;
+
+    [Serializable]
+    public partial class MATCH : ISerializable
     {
         public MATCH()
         {
@@ -51,12 +53,34 @@ namespace userprofile.Models
         public int halfTimeDuration { get; set; }
         [Display(Name = "Match counts towards point system")]
         public bool countsToDraw { get; set; }
-    
+
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }
         public virtual TEAM TEAM { get; set; }
         public virtual TEAM TEAM1 { get; set; }
         public virtual TOURNAMENT TOURNAMENT { get; set; }
         public virtual ICollection<OFFER> OFFERs { get; set; }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("MatchId", matchId);
+            info.AddValue("matchDate", matchDate);
+            if (locationId != null)
+            {
+                info.AddValue("locationId", locationId);
+            }
+
+            info.AddValue("teamAId", teamAId);
+            info.AddValue("teamBId", teamBId);
+
+            info.AddValue("teamAScore", teamAScore);
+            info.AddValue("teamBScore", teamBScore);
+            info.AddValue("status", status);
+            info.AddValue("tournamentId", tournamentId);
+            info.AddValue("matchLength", matchLength);
+            info.AddValue("halfTimeDuration", halfTimeDuration);
+            info.AddValue("countsToDraw", countsToDraw);
+        }
+
     }
 }

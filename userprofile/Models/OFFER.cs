@@ -11,7 +11,6 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class OFFER
     {
@@ -20,22 +19,14 @@ namespace userprofile.Models
             this.OFFERQUALs = new HashSet<OFFERQUAL>();
             this.REFEREEs = new HashSet<REFEREE>();
         }
-
-        [Display(Name = "Offer Id")]
+    
         public int offerId { get; set; }
-         [Display(Name = "Match Id")]
         public int matchId { get; set; }
-        [Display(Name = "Referee Id")]
         public Nullable<int> refId { get; set; }
-        [Display(Name = "Status")]
         public int status { get; set; }
-        [Display(Name = "Date offer made")]
         public System.DateTime dateOfOffer { get; set; }
-        [Display(Name = "Declined Reason")]
         public string declinedReason { get; set; }
-        [Display(Name = "Priority")]
         public int priority { get; set; }
-        [Display(Name = "Type Of Offer")]
         public string typeOfOffer { get; set; }
     
         public virtual MATCH MATCH { get; set; }
