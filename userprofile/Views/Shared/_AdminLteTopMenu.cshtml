@@ -28,11 +28,11 @@
 
         var obj = jQuery.parseJSON(thing);
         if(parseInt(obj[obj.length-1]) > 0){
-            $( ".label-warning" )
+            $(".notification")
             .html(obj[obj.length-1]);
         }
         else{
-            $( ".label-warning" )
+            $(".notification")
             .html("");
         }
 
@@ -76,7 +76,7 @@
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">  </span>
+                        <span class="label label-warning notification">  </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!--<li class="header">You have 10 notifications</li>-->

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace userprofile.Models
 {
@@ -10,23 +11,28 @@ namespace userprofile.Models
     {
         public MoffersViewModels()
         {
-        
+            screeneddropdown = new List<List<SelectListItem>>();
         }
         public MoffersViewModels(MATCH ma)
         {
+            screeneddropdown = new List<List<SelectListItem>>();
             this.offers = new List<OFFER>();
             if (ma.OFFERs != null) {
                 foreach (OFFER of in ma.OFFERs)
                 {
-                    this.offers.Add(of);
+                    
+                    if (of.status != 0) {   //not show delete offer
+                        this.offers.Add(of);
+                    }
+                  
 
                 }
-                if (ma.OFFERs.Count() != 9)
+                if (offers.Count() != 9)
                 {
-                    for (int i = (9 - ma.OFFERs.Count()); i > 0; i--)
+                    for (int i = (9 - offers.Count()); i > 0; i--)
                     {
                         OFFER fakeOffer = new OFFER();
-                        fakeOffer.status = 5;
+                        fakeOffer.status = 6;
                         this.offers.Add(fakeOffer);
 
                     }
@@ -38,6 +44,7 @@ namespace userprofile.Models
 
         public List<OFFER> offers { get; set; }
         public int mID { get; set; }
+        public List<List<SelectListItem>> screeneddropdown { get; set; }
         public int offerNumber { get; set; }
     }
 

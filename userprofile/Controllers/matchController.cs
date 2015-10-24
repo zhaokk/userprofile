@@ -45,7 +45,194 @@ namespace userprofile.Controllers
             }
             return View(matchintournament);
         }
+   
+        public List<REFEREE> getAvailableRefereesForOffer(int oID)
+        {
+            OFFER offer = db.OFFERs.Find(oID);
+            List<REFEREE> availableReferees = new List<REFEREE>();
+            List<KeyValuePair<int, int>> offerQuals = new List<KeyValuePair<int, int>>();
 
+            if (offer.OFFERQUALs==null) {
+
+                foreach (var i in db.REFEREEs)
+                {
+                    if (containsOneOff(offer.dateOfOffer, i.refId))
+                    {
+                        if (checkOneOff(offer.dateOfOffer, i.refId))
+                        {
+                            availableReferees.Add(i);
+                        }
+                    }
+                    else
+                    {
+                        if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer, i.refId), offer.dateOfOffer))
+                        {
+                            availableReferees.Add(i);
+                        }
+                    }
+                }
+            }
+            else {
+                foreach (var i in offer.OFFERQUALs)
+                {
+                    offerQuals.Add(new KeyValuePair<int, int>(i.qualificationId, i.qualLevel));
+                }
+                foreach (var i in db.REFEREEs)
+                {
+                    bool refHasQualification = true;
+                    foreach (var j in offerQuals)
+                    {
+                        try
+                        {
+                            db.USERQUALs.Find(j.Key, i.refId);
+                        }
+                        catch (SystemException a)
+                        {
+                            refHasQualification = false;
+                            break;
+                        }
+                    }
+                    if (refHasQualification)
+                    {
+                        //check if has a free slot to ref on that day (is currently reffing < maxGames)
+
+                        if (containsOneOff(offer.dateOfOffer, i.refId))
+                        {
+                            if (checkOneOff(offer.dateOfOffer, i.refId))
+                            {
+                                availableReferees.Add(i);
+                            }
+                        }
+                        else
+                        {
+                            if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer, i.refId), offer.dateOfOffer))
+                            {
+                                availableReferees.Add(i);
+                            }
+                        }
+                    }
+                }
+            }
+      
+            return availableReferees;
+        }
+        bool containsOneOff(DateTime matchDateTime, int rID)
+        { //REDO
+            try
+            {
+                var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); //WRITE PRIMARY KEY FOR REFAVAILABILITY
+                if (temp == null)
+                    return false;
+                else
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        int getWeeklyAvailabilityForDay(DateTime dt, int rID)
+        {
+            try
+            {
+                switch (dt.DayOfWeek)
+                {
+                    case DayOfWeek.Sunday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).sunday;
+                    case DayOfWeek.Monday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).monday;
+                    case DayOfWeek.Tuesday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).tuesday;
+                    case DayOfWeek.Wednesday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).wednesday;
+                    case DayOfWeek.Thursday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).thursday;
+                    case DayOfWeek.Friday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).friday;
+                    case DayOfWeek.Saturday:
+                        return db.WEEKLYAVAILABILITies.Find(rID).saturday;
+                    default:
+                        //error
+                        return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        bool checkOneOff(DateTime matchDateTime, int rID)
+        {
+            try
+            {
+                var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date);
+                if (temp.timeOnOrOff == true)
+                    return true;
+                else
+                    return false;
+            }
+            catch (SystemException a)
+            {
+                return false;
+            }
+
+        }
+        bool checkWeeklyAvailabilityForMatch(int weeklyAvailability, DateTime matchDateTime)
+        {
+            if (weeklyAvailability == 0)
+            {
+                return false;
+            }
+            if (weeklyAvailability >= 8)
+            {
+                if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0))
+                {
+                    return true;
+                }
+                weeklyAvailability -= 8;
+            }
+            else if (matchDateTime.TimeOfDay < new TimeSpan(6, 0, 0))
+            {
+                return false;
+            }
+            if (weeklyAvailability >= 4)
+            {
+                if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0))
+                {
+                    return true;
+                }
+                weeklyAvailability -= 4;
+            }
+            else if (matchDateTime.TimeOfDay < new TimeSpan(12, 0, 0))
+            {
+                return false;
+            }
+            if (weeklyAvailability >= 2)
+            {
+                if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0))
+                {
+                    return true;
+                }
+                weeklyAvailability -= 2;
+            }
+            else if (matchDateTime.TimeOfDay < new TimeSpan(18, 0, 0))
+            {
+                return false;
+            }
+            if (weeklyAvailability >= 1)
+            {
+                if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0))
+                {
+                    return true;
+                }
+                weeklyAvailability -= 1;
+            }
+            else if (matchDateTime.TimeOfDay < new TimeSpan(24, 0, 0))
+            {
+                return false;
+            }
+            throw new SystemException();
+        }
         public ActionResult History()
         {
             DateTime thisDay = DateTime.Today;
@@ -167,6 +354,7 @@ namespace userprofile.Controllers
 
                 };
 
+
                 foreach (REFEREE re in db.REFEREEs)
                 {
                     var sli = new SelectListItem();
@@ -197,6 +385,21 @@ namespace userprofile.Controllers
                 ViewBag.qualification = qlist;
                 refereesList.Select(x => refereesList.First(r => r.Value == "2"));
                 MoffersViewModels offers = new MoffersViewModels(theMatch);
+                int i = 0;
+                foreach (var aoffer in offers.offers) {
+                    if (aoffer.status != 1 && aoffer.status != 0 && aoffer.status != 6)
+                    {
+                        var screenedList = new List<SelectListItem>();
+                        
+                    foreach(REFEREE re in getAvailableRefereesForOffer(aoffer.offerId)){
+                        var sli = new SelectListItem();
+                        sli.Text = re.AspNetUser.lastName + " " + re.AspNetUser.firstName;
+                        sli.Value = re.refId.ToString();
+                        screenedList.Add(sli);
+                    }
+                    offers.screeneddropdown.Add(screenedList);
+                    }
+                }
                 return View(offers);
 
             }
@@ -218,71 +421,165 @@ namespace userprofile.Controllers
                 string offerType = "offer[" + i + "][typename]";
                 string indexofrefid = "offer[" + i + "][refID]";
                 string offerqualification = "offer[" + i + "][qualification]";
-                string qualificationlevel="offer[" + i + "][[qlevel]";
-                var offerID = Convert.ToInt32(Request[indexofid]);
-                int mid = Convert.ToInt32(Request["mID"]);
-                int status = Convert.ToInt32(Request["offer[" + i + "][status]"]);
-                string typename = Request[offerType];
-                var stringrefID = Request[indexofrefid];
+                string qualificationlevel = "offer[" + i + "][[qlevel]";
+                  int mid = Convert.ToInt32(Request["mID"]);
+                 int status = Convert.ToInt32(Request["offer[" + i + "][status]"]);
+                 string typename = Request[offerType];
+                 var stringrefID = Request[indexofrefid];
                 var stringq=Request[offerqualification];
-                if (stringq == "" || Request[qualificationlevel] == "")
-                {
+                 var offerID=0;
+                 OFFER of=new OFFER() ;
+                 switch (status) { 
+                     case 1:
+                          offerID = Convert.ToInt32(Request[indexofid]);
+                         of = db.OFFERs.Find(offerID);
+                         if(of.status!=status){
+                          db.Entry(of).State = EntityState.Modified;
+                         }
+                         break;
+                     case 0:
+                         offerID = Convert.ToInt32(Request[indexofid]);
+                         of = db.OFFERs.Find(offerID);
+                         of.status = 0;
+                         db.Entry(of).State = EntityState.Modified;
+                         break;
+                     case 6:
+                         if (typename == "")
+                         {
+                             //not valid offer
+                         }
+                         else {
+                             of.typeOfOffer = typename;
+                             of.status=4;
+                             of.dateOfOffer = System.DateTime.Today;
+                             of.matchId = mid;
+                             if (stringq != "")
+                             {
+                                 if (Request[qualificationlevel] != "")
+                                 {
+                                     of.OFFERQUALs.Add(new OFFERQUAL { qualLevel = Convert.ToInt32(Request[qualificationlevel]), qualificationId = Convert.ToInt32(Request[offerqualification]) });
 
-                }
-                else
-                {
-                    var offerQ = Convert.ToInt32(Request[offerqualification]);
-                    var qLevel = Convert.ToInt32(Request[qualificationlevel]);
+                                 }
+                                 else
+                                 {
+                                     of.OFFERQUALs.Add(new OFFERQUAL { qualLevel = 10, qualificationId = Convert.ToInt32(Request[offerqualification]) });
+                                 }
+                             }
+                             else { 
+                             }
+                             db.OFFERs.Add(of);
+
+                         }
+                         break;
+                     default:
+                          offerID = Convert.ToInt32(Request[indexofid]);
+                          of = db.OFFERs.Find(offerID);
+                          if (of.status==status&&status==5) { 
+                          //nothing Changed
+                          }
+                          else if (of.status != status && status == 5) {
+                              of.status = 5;
+                              db.Entry(of).State = EntityState.Modified;
+                          }
+                          else if (Request[indexofrefid] == ""&&of.refId!=null) {
+
+                              of.status = 4;
+                              db.Entry(of).State = EntityState.Modified;
+                          }
+                          else if (Request[indexofrefid] == "" && of.refId == null&&of.status!=4) {
+                              of.status = 4;
+                              db.Entry(of).State = EntityState.Modified;
+
+                          }
+                          else if (Request[indexofrefid] == "" && of.refId == null && of.status == 4)
+                          {
+                              //do nothing
+
+                          }
+                          else if (of.refId != Convert.ToInt32(Request[indexofrefid])) { 
+                          //set to pending
+                              of.status = 3;
+                              of.refId = Convert.ToInt32(Request[indexofrefid]);
+                              db.Entry(of).State = EntityState.Modified;
+                          }
+                       
+                          break;
+
+                 }
+                 
 
 
-                    if (stringrefID != "")
-                    {
-                        var refID = Convert.ToInt32(Request[indexofrefid]);
-                        if (offerID != 0)
-                        {
-                            OFFER of = db.OFFERs.First(o => o.offerId == offerID);
+///////////////////////////////////////////////////////////////////////////////
+                //string indexofid = "offer[" + i + "][ID]";
+                //string offerType = "offer[" + i + "][typename]";
+                //string indexofrefid = "offer[" + i + "][refID]";
+                //string offerqualification = "offer[" + i + "][qualification]";
+                //string qualificationlevel="offer[" + i + "][[qlevel]";
+                //var offerID = Convert.ToInt32(Request[indexofid]);
+                //int mid = Convert.ToInt32(Request["mID"]);
+                //int status = Convert.ToInt32(Request["offer[" + i + "][status]"]);
+                //string typename = Request[offerType];
+                //var stringrefID = Request[indexofrefid];
+                //var stringq=Request[offerqualification];
+                //if (typename=="")
+                //{
 
-                            if (of.refId != refID || of.typeOfOffer != typename)
-                            {
-                                of.typeOfOffer = typename;
-                                of.refId = refID;
-                                of.OFFERQUALs.Clear();
-                                of.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
-                                if (of.refId != refID)
-                                {
-                                    of.status = 3;
-                                }
+                //}
+                //else
+                //{
+                //    var offerQ = Convert.ToInt32(Request[offerqualification]);
+                //    var qLevel = Convert.ToInt32(Request[qualificationlevel]);
 
-                                db.Entry(of).State = EntityState.Modified;
 
-                            }
-                        }
-                        else
-                        {
-                            var newof = new OFFER();
-                            newof.status = 3;
-                            newof.refId = refID;
-                            newof.typeOfOffer = typename;
-                            newof.dateOfOffer = System.DateTime.Now;
-                            newof.matchId = mid;
-                            newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
-                            db.OFFERs.Add(newof);
-                        }
-                    }
-                    else if (status == 4)
-                    {
-                        var newof = new OFFER();
-                        newof.status = 4;
-                        newof.typeOfOffer = typename;
-                        newof.refId = 63699895;
-                        newof.dateOfOffer = System.DateTime.Now;
-                        newof.matchId = mid;
-                        newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
-                        db.OFFERs.Add(newof);
+                //    if (stringrefID != "")
+                //    {
+                //        var refID = Convert.ToInt32(Request[indexofrefid]);
+                //        if (offerID != 0)
+                //        {
+                //            OFFER of = db.OFFERs.First(o => o.offerId == offerID);
 
-                    }
+                //            if (of.refId != refID || of.typeOfOffer != typename)
+                //            {
+                //                of.typeOfOffer = typename;
+                //                of.refId = refID;
+                //                of.OFFERQUALs.Clear();
+                //                of.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
+                //                if (of.refId != refID)
+                //                {
+                //                    of.status = 3;
+                //                }
 
-                }
+                //                db.Entry(of).State = EntityState.Modified;
+
+                //            }
+                //        }
+                //        else
+                //        {
+                //            var newof = new OFFER();
+                //            newof.status = 3;
+                //            newof.refId = refID;
+                //            newof.typeOfOffer = typename;
+                //            newof.dateOfOffer = System.DateTime.Now;
+                //            newof.matchId = mid;
+                //            newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
+                //            db.OFFERs.Add(newof);
+                //        }
+                //    }
+                //    else if (status == 4)
+                //    {
+                //        var newof = new OFFER();
+                //        newof.status = 4;
+                //        newof.typeOfOffer = typename;
+                //        newof.refId = 63699895;
+                //        newof.dateOfOffer = System.DateTime.Now;
+                //        newof.matchId = mid;
+                //        newof.OFFERQUALs.Add(new OFFERQUAL() { qualificationId = offerQ, qualLevel = qLevel });
+                //        db.OFFERs.Add(newof);
+
+                //    }
+
+                //}
+                /////////////////////////////////////////////////////
                 i++;
             }
             db.SaveChanges();

@@ -56,6 +56,7 @@ namespace userprofile.Controllers
         {
             if (ModelState.IsValid)
             {
+                qualification.status = 1;
                 db.QUALIFICATIONS.Add(qualification);
                 db.SaveChanges();
                 return RedirectToAction("Index");
