@@ -193,19 +193,41 @@
                                 {
                                      <tr>
                                         <td>
-                                            NULL
+                                            Unassigned
                                         </td>
-                                         <td> <a href="@Url.Action("Edit", "offer", new { id = item.offerId })">
-                                                  No referee set yet - placeholder for link to go to assigning a ref to this offer
-                                        </a>
-                                         
-                                         </td>
+                                        <td> 
+											@item.typeOfOffer
+											@if (item.OFFERQUALs.Count() != 0) {
+												@:Required Quals: 
+												foreach (var i in item.OFFERQUALs) {
+													@i.QUALIFICATION.name
+													@i.qualLevel
+												}
+											}                   
+                                        </td>
                                         <td>
-                                            @item.typeOfOffer
+                                            @switch (item.status) {
+												case 1:
+													@:Accepted
+													break;
+												case 2:
+												@:Declined
+													break;
+												case 3:
+												@:Pending
+													break;
+												case 4:
+												@:Unassigned
+													break;
+												case 5:
+												@:Smart Assign
+													break;
+												default:
+												@:ERROR!
+													break;
+											}
                                         </td>
-                                        <td>
-                                            @item.status
-                                        </td>
+
                                     </tr>
                                 }
                                 else { 
