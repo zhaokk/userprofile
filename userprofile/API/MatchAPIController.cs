@@ -66,7 +66,16 @@ namespace userprofile.Controllers
 
                             foreach (var referee in user.REFEREEs.ElementAt(0).OFFERs)
                             {
-                                matches.AddRange(db.MATCHes.Where(match => match.status == 1).Where(match => match.matchId == referee.matchId).ToList());
+                                var tempMatches = db.MATCHes.Include(match => match.TOURNAMENT).Where(match => match.status == 1).Where(match => match.matchId == referee.matchId).ToList()
+
+
+                                foreach (var match in tempMatches)
+                                {
+                                    match.tournamentName = match.TOURNAMENT.name;
+                                }
+
+
+                                matches.AddRange(tempMatches);
                             }
 
                             if (matches.Count > 0)
@@ -81,7 +90,12 @@ namespace userprofile.Controllers
                         case "Player":
                                 var playerMatches = new List<MATCH>();
                                 foreach(var player in user.PLAYERs){
-                                    playerMatches.AddRange(db.MATCHes.Where(match => match.status == 1).Where(match => match.teamAId == player.teamId || match.teamBId == player.teamId).ToList());
+                                    var tempMatches = db.MATCHes.Where(match => match.status == 1).Where(match => match.teamAId == player.teamId || match.teamBId == player.teamId).ToList()
+                                    foreach (var match in tempMatches)
+                                    {
+                                        match.tournamentName = match.TOURNAMENT.name;
+                                    }
+                                    playerMatches.AddRange(tempMatches);
                                 }
 
                                 if (playerMatches.Count > 0)
@@ -133,6 +147,7 @@ namespace userprofile.Controllers
                 {
                     return NotFound();
                 }
+                match.tournamentName = match.TOURNAMENT.name;
                 return Ok(match);
             }
 

@@ -10,9 +10,10 @@
 namespace userprofile.Models
 {
     using System;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
-    
-    public partial class OFFER
+
+    public partial class OFFER : ISerializable
     {
         public OFFER()
         {
@@ -28,11 +29,33 @@ namespace userprofile.Models
         public string declinedReason { get; set; }
         public int priority { get; set; }
         public string typeOfOffer { get; set; }
+
+        public System.DateTime dateOfMatch { get; set; }
+
+        public String nameOfLocation { get; set; }
     
         public virtual MATCH MATCH { get; set; }
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual REFEREE REFEREE { get; set; }
         public virtual TYPE TYPE { get; set; }
         public virtual ICollection<REFEREE> REFEREEs { get; set; }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("offerId", offerId);
+            info.AddValue("matchId", matchId);
+            if (refId != null)
+            {
+                info.AddValue("refId", refId);
+            }
+
+            info.AddValue("dateOfOffer", dateOfOffer);
+            info.AddValue("declinedReason", declinedReason);
+            info.AddValue("dateOfMatch", dateOfMatch);
+            info.AddValue("nameOfLocation", nameOfLocation);
+
+        }
+
     }
+
 }

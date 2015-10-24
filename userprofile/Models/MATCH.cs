@@ -53,6 +53,7 @@ namespace userprofile.Models
         public int halfTimeDuration { get; set; }
         [Display(Name = "Match counts towards point system")]
         public bool countsToDraw { get; set; }
+        public String tournamentName { get; set; }
 
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }
@@ -80,6 +81,7 @@ namespace userprofile.Models
             info.AddValue("matchLength", matchLength);
             info.AddValue("halfTimeDuration", halfTimeDuration);
             info.AddValue("countsToDraw", countsToDraw);
+            info.AddValue("tournamentName", tournamentName);
         }
 
     }

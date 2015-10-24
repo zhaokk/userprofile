@@ -172,8 +172,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\AcceptedOffersController.cs" />
     <Compile Include="API\AuthenticationController.cs" />
     <Compile Include="API\MatchAPIController.cs" />
+    <Compile Include="API\PendingOffersController.cs" />
+    <Compile Include="API\RejectedOffersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
