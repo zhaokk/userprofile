@@ -17,27 +17,19 @@ using userprofile.Models.Serializable;
 namespace userprofile.Controllers
 {
     /// <summary>
-    /// The match api controller
+    /// Deals with match related things
     /// 
-    /// to use the first variable needs to be the api key for the account you want information about
-    /// 
-    /// 
-    /// To get upcomming matches of intrest:
-    /// /api/MatchApi/*api-key*
-    /// This will return matches that you referee or play in
-    /// 
-    /// To get a specific match details:
-    /// /api/MatchApi/*api-key*?id=*match-id*
-    /// This will return a single object that is the match you want
-    /// 
-    /// To modify a match:
+    /// {id} is an api key
     /// 
     /// </summary>
     public class MatchApiController : ApiController
     {
         private Raoconnection db = new Raoconnection();
 
-        // GET: api/MatchApi
+        /// <summary>
+        /// gets all matches
+        /// </summary>
+        /// <returns>list of all matches</returns>
 
         public IQueryable<MATCH> GetMATCHes()
         {
@@ -47,6 +39,13 @@ namespace userprofile.Controllers
             return matches;
         }
 
+        /// <summary>
+        /// Gets matches specific to the user logged in:
+        /// -upcomming matches for a referee
+        /// -upcomming matches a player is playing
+        /// </summary>
+        /// <param name="id">api key</param>
+        /// <returns>UpcommingMatches An object that holds several lists</returns>
         public IHttpActionResult GetMATCHes(String id)
         {
             Boolean somethingSet = false;
@@ -66,12 +65,20 @@ namespace userprofile.Controllers
 
                             foreach (var referee in user.REFEREEs.ElementAt(0).OFFERs)
                             {
-                                var tempMatches = db.MATCHes.Include(match => match.TOURNAMENT).Where(match => match.status == 1).Where(match => match.matchId == referee.matchId).ToList();
+                                var tempMatches = db.MATCHes.Include(match => match.TOURNAMENT)
+                                                            .Include(match => match.LOCATION)
+                                                            .Include(match => match.TEAM)
+                                                            .Include(match => match.TEAM1)
+                                                            .Where(match => match.status == 1)
+                                                            .Where(match => match.matchId == referee.matchId).ToList();
 
 
                                 foreach (var match in tempMatches)
                                 {
                                     match.tournamentName = match.TOURNAMENT.name;
+                                    match.locationName = match.LOCATION.name;
+                                    match.teamA = match.TEAM.name;
+                                    match.teamB = match.TEAM1.name;
                                 }
 
 
@@ -90,10 +97,13 @@ namespace userprofile.Controllers
                         case "Player":
                                 var playerMatches = new List<MATCH>();
                                 foreach(var player in user.PLAYERs){
-                                    var tempMatches = db.MATCHes.Where(match => match.status == 1).Where(match => match.teamAId == player.teamId || match.teamBId == player.teamId).ToList();
+                                    var tempMatches = db.MATCHes.Include(match => match.LOCATION)
+                                                                .Where(match => match.status == 1)
+                                                                .Where(match => match.teamAId == player.teamId || match.teamBId == player.teamId).ToList();
                                     foreach (var match in tempMatches)
                                     {
                                         match.tournamentName = match.TOURNAMENT.name;
+                                        match.locationName = match.LOCATION.name;
                                     }
                                     playerMatches.AddRange(tempMatches);
                                 }
@@ -133,7 +143,12 @@ namespace userprofile.Controllers
         }
 
 
-        // GET: api/Mobile/5
+        /// <summary>
+        /// Gets a specific match
+        /// </summary>
+        /// <param name="id">api key</param>
+        /// <param name="matchId">The id of the match requested</param>
+        /// <returns>the requested match</returns>
         [ResponseType(typeof(MATCH))]
         public async Task<IHttpActionResult> GetMATCH(String id, int matchId)
         {

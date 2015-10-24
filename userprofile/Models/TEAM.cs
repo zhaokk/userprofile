@@ -32,6 +32,8 @@ namespace userprofile.Models
         public string managerId { get; set; }
         public string shortName { get; set; }
         public int status { get; set; }
+
+        public string managerName { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<MATCH> MATCHes { get; set; }
@@ -52,9 +54,8 @@ namespace userprofile.Models
             info.AddValue("grade", grade);
             info.AddValue("sport", sport);
 
-            info.AddValue("managerId", managerId);
             info.AddValue("shortName", shortName);
-            info.AddValue("status", status);
+            info.AddValue("managerName", managerName);
         }
 
     }

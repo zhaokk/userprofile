@@ -16,6 +16,10 @@ using userprofile.Controllers;
 
 namespace userprofile.mobile
 {
+    /// <summary>
+    /// Authenticates a user, takes the account credentials and replys with an api key if authenticated
+    /// 
+    /// </summary>
     public class AuthenticationController : ApiController
     {
         private Raoconnection db = new Raoconnection();

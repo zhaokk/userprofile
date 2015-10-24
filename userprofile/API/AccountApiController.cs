@@ -13,6 +13,10 @@ using userprofile.Models;
 
 namespace userprofile.API
 {
+    /// <summary>
+    /// Account related controller
+    /// {id} is an api key
+    /// </summary>
     public class AccountApiController : ApiController
     {
         private Raoconnection db = new Raoconnection();

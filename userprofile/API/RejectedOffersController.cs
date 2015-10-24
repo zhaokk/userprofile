@@ -13,6 +13,10 @@ using userprofile.Models;
 
 namespace userprofile.API
 {
+    /// <summary>
+    /// Rejected offers thing
+    /// {id} is the apiKey
+    /// </summary>
     public class RejectedOffersController : ApiController
     {
         private Raoconnection db = new Raoconnection();
@@ -58,7 +62,12 @@ namespace userprofile.API
             return null;
         }
 
-        // GET: api/RejectedOffers/5
+        /// <summary>
+        /// Gets a specific offer
+        /// </summary>
+        /// <param name="id">apiKey</param>
+        /// <param name="offerId">The offerId</param>
+        /// <returns>a single offer</returns>
         [ResponseType(typeof(OFFER))]
         public async Task<IHttpActionResult> GetOFFER(String id, int offerId)
         {

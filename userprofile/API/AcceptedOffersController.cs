@@ -13,6 +13,10 @@ using userprofile.Models;
 
 namespace userprofile.API
 {
+    /// <summary>
+    /// Gets accepted offers
+    /// {id} is the apiKey
+    /// </summary>
     public class AcceptedOffersController : ApiController
     {
         private Raoconnection db = new Raoconnection();
@@ -58,7 +62,12 @@ namespace userprofile.API
             return null;
         }
 
-        // GET: api/RejectedOffers/5
+        /// <summary>
+        /// Gets a specific offer
+        /// </summary>
+        /// <param name="id">apiKey</param>
+        /// <param name="offerId">The offerId</param>
+        /// <returns>a single offer</returns>
         [ResponseType(typeof(OFFER))]
         public async Task<IHttpActionResult> GetOFFER(String id, int offerId)
         {
@@ -77,7 +86,12 @@ namespace userprofile.API
             return NotFound();
         }
 
-        // PUT: api/AcceptedOffers/5
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="oFFER"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutOFFER(int id, OFFER oFFER)
         {
@@ -110,37 +124,6 @@ namespace userprofile.API
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/AcceptedOffers
-        [ResponseType(typeof(OFFER))]
-        public async Task<IHttpActionResult> PostOFFER(OFFER oFFER)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.OFFERs.Add(oFFER);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = oFFER.offerId }, oFFER);
-        }
-
-        // DELETE: api/AcceptedOffers/5
-        [ResponseType(typeof(OFFER))]
-        public async Task<IHttpActionResult> DeleteOFFER(int id)
-        {
-            OFFER oFFER = await db.OFFERs.FindAsync(id);
-            if (oFFER == null)
-            {
-                return NotFound();
-            }
-
-            db.OFFERs.Remove(oFFER);
-            await db.SaveChangesAsync();
-
-            return Ok(oFFER);
         }
 
         protected override void Dispose(bool disposing)

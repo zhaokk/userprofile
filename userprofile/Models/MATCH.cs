@@ -54,6 +54,9 @@ namespace userprofile.Models
         [Display(Name = "Match counts towards point system")]
         public bool countsToDraw { get; set; }
         public String tournamentName { get; set; }
+        public String locationName { get; set; }
+        public String teamA { get; set; }
+        public String teamB { get; set; }
 
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }
@@ -68,8 +71,11 @@ namespace userprofile.Models
             info.AddValue("matchDate", matchDate);
             if (locationId != null)
             {
-                info.AddValue("locationId", locationId);
+                info.AddValue("locationId", locationName);
             }
+
+            info.AddValue("teamA", teamA);
+            info.AddValue("teamB", teamB);
 
             info.AddValue("teamAId", teamAId);
             info.AddValue("teamBId", teamBId);
