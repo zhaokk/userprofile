@@ -1,4 +1,162 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <doc>
-  
+    <assembly>
+        <name>userprofile</name>
+    </assembly>
+    <members>
+        <member name="M:userprofile.API.AcceptedOffersController.GetOFFERs">
+            <summary>
+            Default get, does nothing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:userprofile.API.AcceptedOffersController.GetOFFERs(System.String)">
+            <summary>
+            Returns the offers Accepted by that referee as long as the offer is not in the past
+            </summary>
+            <param name="id">The api key</param>
+            <returns>A json formatted array containing Accepted offers</returns>
+        </member>
+        <member name="M:userprofile.API.AccountApiController.GetAspNetUsers">
+            <summary>
+            Dummy getter
+            </summary>
+            <returns>nothing</returns>
+        </member>
+        <member name="M:userprofile.API.AccountApiController.GetAspNetUsers(System.String)">
+            <summary>
+            Dummy getter, we don't want people to be able to get a list of users with no context
+            </summary>
+            <param name="id"></param>
+            <returns>nothing</returns>
+        </member>
+        <member name="M:userprofile.API.AccountApiController.GetAspNetUser(System.String,System.String)">
+            <summary>
+            Takes an api key and a username, returns that users details
+            </summary>
+            <param name="id">api key</param>
+            <param name="userId">That users unique id</param>
+            <returns>an object of AspNetUser</returns>
+        </member>
+        <member name="M:userprofile.mobile.AuthenticationController.GetApiKey(System.String,System.String)">
+            <summary>
+            Checks if a user has an api key, if so it gives it back for use later on
+            </summary>
+            <param name="id">The username</param>
+            <param name="password">The password</param>
+            <returns>a json formated string containing the api key, -1 if user does not exist</returns>
+        </member>
+        <member name="T:userprofile.Controllers.MatchApiController">
+            <summary>
+            The match api controller
+            
+            to use the first variable needs to be the api key for the account you want information about
+            
+            
+            To get upcomming matches of intrest:
+            /api/MatchApi/*api-key*
+            This will return matches that you referee or play in
+            
+            To get a specific match details:
+            /api/MatchApi/*api-key*?id=*match-id*
+            This will return a single object that is the match you want
+            
+            To modify a match:
+            
+            </summary>
+        </member>
+        <member name="M:userprofile.Controllers.MatchApiController.PutMATCH(System.String,System.Int32,userprofile.Models.MATCH)">
+            <summary>
+            Takes an api key, match id and match object to UPDATE
+            validates and updates
+            </summary>
+            <param name="id">api key</param>
+            <param name="matchId">id of the match to update</param>
+            <param name="match">the match object to set</param>
+            <returns>BadRequest, NotFound or a status code depending on what happens</returns>
+        </member>
+        <member name="M:userprofile.Controllers.MatchApiController.PostMATCH(System.String,userprofile.Models.MATCH)">
+            <summary>
+            takes an api key and a match object to ADD to the database
+            </summary>
+            <param name="id">api key</param>
+            <param name="match">a MATCH object to set</param>
+            <returns></returns>
+        </member>
+        <member name="M:userprofile.Controllers.MatchApiController.Dispose(System.Boolean)">
+            <summary>
+            clears the database variable
+            </summary>
+            <param name="disposing">true if the database connection needs taking care of</param>
+        </member>
+        <member name="M:userprofile.Controllers.MatchApiController.MATCHExists(System.Int32)">
+            <summary>
+            Checks if the given match exists
+            </summary>
+            <param name="id">match id to look for</param>
+            <returns>true if exists</returns>
+        </member>
+        <member name="M:userprofile.API.PendingOffersController.GetOFFERs">
+            <summary>
+            Default get, does nothing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:userprofile.API.PendingOffersController.GetOFFERs(System.String)">
+            <summary>
+            Returns the offers awaiting response from this referee
+            </summary>
+            <param name="id">The api key</param>
+            <returns>A json formatted array containing rejected offers</returns>
+        </member>
+        <member name="M:userprofile.API.RejectedOffersController.GetOFFERs">
+            <summary>
+            Default get, does nothing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:userprofile.API.RejectedOffersController.GetOFFERs(System.String)">
+            <summary>
+            Returns the offers rejected by that referee in the last 30 days
+            </summary>
+            <param name="id">The api key</param>
+            <returns>A json formatted array containing rejected offers</returns>
+        </member>
+        <member name="T:AdminLteMvc.Controllers.AdminLteController">
+            <summary>
+            This is an example controller using the AdminLTE NuGet package's CSHTML templates, CSS, and JavaScript
+            You can delete these, or use them as handy references when building your own applications
+            </summary>
+        </member>
+        <member name="M:AdminLteMvc.Controllers.AdminLteController.Index">
+            <summary>
+            The home page of the AdminLTE demo dashboard, recreated in this new system
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AdminLteMvc.Controllers.AdminLteController.Colors">
+            <summary>
+            The color page of the AdminLTE demo, demonstrating the AdminLte.Color enum and supporting methods
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:userprofile.Controllers.HomeController.getNotifications">
+            <summary>
+            get all notifications for the user logged in
+            an admin really does not need to see anything here, just trying this out
+            -matches with no offers in the next 7 days
+            -offers with no referees
+            
+            
+            </summary>
+            <returns> notifications A list of strings that are "###  things are bad". last element is count of everything</returns>
+        </member>
+        <member name="M:userprofile.Controllers.NotificationsController.Display">
+            <summary>
+            Returns anything that needs attention
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
 </doc>

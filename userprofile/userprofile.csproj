@@ -30,6 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\AcceptedOffersController.cs" />
+    <Compile Include="API\AccountApiController.cs" />
     <Compile Include="API\AuthenticationController.cs" />
     <Compile Include="API\MatchAPIController.cs" />
     <Compile Include="API\PendingOffersController.cs" />

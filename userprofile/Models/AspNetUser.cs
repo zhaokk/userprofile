@@ -11,8 +11,9 @@ namespace userprofile.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class AspNetUser
+    using System.Runtime.Serialization;
+
+    public partial class AspNetUser : ISerializable
     {
         public AspNetUser()
         {
@@ -65,5 +66,38 @@ namespace userprofile.Models
         public virtual ICollection<TOURNAMENT> TOURNAMENTs { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<TOURNAMENT> TOURNAMENTs1 { get; set; }
+
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("firstName", firstName);
+            info.AddValue("UserName", UserName);
+            if (ffaNum != null)
+            {
+                info.AddValue("ffaNum", ffaNum);
+            }
+
+            info.AddValue("lastName", lastName);
+            if (phoneNum != null)
+            {
+                info.AddValue("phoneNum", phoneNum);
+            }
+
+
+            info.AddValue("email", email);
+
+            info.AddValue("country", country);
+            info.AddValue("postcode", postcode);
+            info.AddValue("street", street);
+            info.AddValue("city", city);
+            info.AddValue("state", state);
+            info.AddValue("dob", dob);
+            info.AddValue("willingToShowPhoneNum", willingToShowPhoneNum);
+            info.AddValue("willingToShowDOB", willingToShowDOB);
+            info.AddValue("willingToShowAddress", willingToShowAddress);
+            info.AddValue("willingToshowEmail", willingToshowEmail);
+            info.AddValue("wantsToReceiveTexts", wantsToReceiveTexts);
+          }
+
     }
 }
