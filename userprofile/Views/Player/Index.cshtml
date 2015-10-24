@@ -32,17 +32,17 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.position)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.shirtNum)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                                    Name
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.TEAM.name)
                                 </th>
+								<th>
+									Position
+								</th>
+								<th>
+									Shirt Number
+								</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -51,17 +51,23 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.position)
-                                    </td>
+										<a href="@Url.Action("Details", "Account", new { id = item.AspNetUser.UserName})">
+											@item.AspNetUser.firstName
+											@item.AspNetUser.lastName
+											(@item.AspNetUser.UserName)
+										</a>
+									</td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.shirtNum)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TEAM.name)
-                                    </td>
+										<a href="@Url.Action("Details", "Team", new { id = item.teamId})">
+											@Html.DisplayFor(modelItem => item.TEAM.name)
+										</a>
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.position)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.shirtNum)
+									</td>
                                     <td>
                                         @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

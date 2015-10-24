@@ -96,12 +96,22 @@
                                 </dd>
                             }
                         }
-						<dt>
-							Gender
-						</dt>
-						<dd>
-							@Html.DisplayFor(model => model.Item1.gender)
-						</dd>
+						@if (Model.Item1.gender == 1 || Model.Item1.gender == 2 || Model.Item1.gender == 3) {
+							<dt>
+								Gender
+							</dt>
+							<dd>
+								@if (Model.Item1.gender == 1) {
+									@:Male
+								}
+								else if (Model.Item1.gender == 2) { 
+									@:Female
+								}
+								else if (Model.Item1.gender == 3) {
+									@:Other
+								}
+							</dd>
+						}
                 </dl>
             </div>
         </div>

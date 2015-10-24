@@ -61,9 +61,39 @@
                     <dt>
                         @Html.DisplayNameFor(model => model.Item1.status)
                     </dt>
-
+					
                     <dd>
-                        @Html.DisplayFor(model => model.Item1.status)
+                        @switch (Model.Item1.status) {
+							case 0:
+								@:Deleted
+								break;
+							case 1:
+								@:Unplayed
+								break;
+							case 2:
+								@:Pending Result
+								break;
+							case 3:
+								@Model.Item1.TEAM
+								@:Won!
+								break;
+							case 4:
+								@:DRAW!
+								break;
+							case 5:
+								@Model.Item1.TEAM1
+								@:Won!
+								break;
+							case 6:
+								@:Delayed
+								break;
+							case 7:
+								@:Canceled
+								break;
+							default:
+								@:ERROR
+								break;
+						}
                     </dd>
 
                     <dt>
