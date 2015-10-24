@@ -72,7 +72,12 @@
 									@:Unplayed
 								}
 								else {
-									@:Pending Results
+									if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
+										@:In Progress
+									}
+									else {
+										@:Pending Results
+									}
 								}
 								break;
 							case 3:
