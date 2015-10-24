@@ -37,7 +37,14 @@ namespace userprofile.mobile
             response.Content = new StringContent("{\"apiKey\":\"-1\"}", Encoding.UTF8, "application/json");
 
 
-            if (true)
+
+
+            var um = new Microsoft.AspNet.Identity.UserManager<ApplicationUser>(
+            new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+            
+            var userCheck = um.FindAsync(id, password);
+
+            if (userCheck.Result != null)
             {
                 var user = db.AspNetUsers.Where(m => m.UserName == id).FirstOrDefault();
 

@@ -347,7 +347,6 @@
     <Content Include="Content\AdminLTE\skins\_all-skins.min.css" />
     <Content Include="Content\bootstrap-switch.css" />
     <Content Include="Content\bootstrap-switch.min.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\calendar\fullCalendar.css" />
@@ -929,6 +928,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\csci342 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\csci342 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\glen.pubxml" />
     <None Include="Properties\PublishProfiles\rao321.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\highlight.js" />
