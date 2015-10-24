@@ -177,7 +177,6 @@
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
-    <Compile Include="Controllers\PLAYERssController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />

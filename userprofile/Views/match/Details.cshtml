@@ -68,10 +68,17 @@
 								@:Deleted
 								break;
 							case 1:
-								@:Unplayed
-								break;
-							case 2:
-								@:Pending Result
+								if (Model.Item1.matchDate > DateTime.Now) { 
+									@:Unplayed
+								}
+								else {
+									if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
+										@:In Progress
+									}
+									else {
+										@:Pending Results
+									}
+								}
 								break;
 							case 3:
 								@Model.Item1.TEAM
@@ -207,6 +214,7 @@
                                             <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
                                                 @item.REFEREE.AspNetUser.firstName
 												@item.REFEREE.AspNetUser.lastName
+												(@item.REFEREE.AspNetUser.UserName)
                                             </a>
                                         </td>
 
@@ -216,7 +224,26 @@
 											</a>
 										</td>
                                         <td>
-                                            @item.status
+											@switch (item.status) {
+												case 1:
+													@:Accepted
+													break;
+												case 2:
+													@:Declined
+													break;
+												case 3:
+													@:Pending
+													break;
+												case 4:
+													@:Unassigned
+													break;
+												case 5:
+													@:Smart Assign
+													break;
+												default:
+													@:ERROR!
+													break;
+											}
                                         </td>
                                     </tr>
                                 }

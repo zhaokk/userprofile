@@ -79,7 +79,16 @@ namespace userprofile.Controllers
             tournament.status = 1;
             if (ModelState.IsValid)
             {
-                db.TOURNAMENTs.Add(tournament);
+				
+				AspNetUser organizer = db.AspNetUsers.Find(tournament.organizer); //get organizer
+				//if (organizer.AspNetRoles.Where(roles => roles.Id == "4").Count() == 0) { //check if already is in organizer role
+				tournament.AspNetUser = organizer;
+				tournament.AspNetUsers.Add(organizer);
+				IdentityManager idManager = new IdentityManager();
+				idManager.AddUserToRole(organizer.Id, "Organizer"); //add user as organizer
+				//db.TOURNAMENTs.Find(tournament.tournamentId).AspNetUsers.Add(tournament.AspNetUser);
+				//}
+				db.TOURNAMENTs.Add(tournament);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -152,6 +161,18 @@ namespace userprofile.Controllers
             
 
             tournament.status = 0;
+			var idManager = new IdentityManager();
+			foreach (var i in tournament.AspNetUsers) { //need to remove users from organizer role if this is their only tournamnet
+				bool removeRole = true;
+				foreach (var k in i.TOURNAMENTs1) { //go through tournaments they organize
+					if (k.status > 0 && k.tournamentId != tournament.tournamentId) { //if they have an active tournament
+						removeRole = false; //don't remove the role
+					}
+				}
+				if (removeRole) {
+					idManager.RemoveUserFromRole(i.Id, "Organizer");
+				}
+			}
             db.Entry(tournament).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

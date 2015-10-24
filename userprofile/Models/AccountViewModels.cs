@@ -172,6 +172,7 @@ namespace userprofile.Models
             this.state = user.state;
             this.street = user.street;
             this.postcode = user.postcode;
+			this.status = user.status;
         }
 
 
@@ -208,6 +209,8 @@ namespace userprofile.Models
         [Required]
         public string street { get; set; }
 
+		[Required]
+		public int status { get; set; }
     }
 
     public class SelectUserRolesViewModel
