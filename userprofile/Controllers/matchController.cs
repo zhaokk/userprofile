@@ -51,21 +51,22 @@ namespace userprofile.Controllers
             OFFER offer = db.OFFERs.Find(oID);
             List<REFEREE> availableReferees = new List<REFEREE>();
             List<KeyValuePair<int, int>> offerQuals = new List<KeyValuePair<int, int>>();
+			DateTime matchDate = offer.MATCH.matchDate;
 
             if (offer.OFFERQUALs==null) {
 
                 foreach (var i in db.REFEREEs)
                 {
-                    if (containsOneOff(offer.dateOfOffer, i.refId))
+                    if (containsOneOff(matchDate, i.refId))
                     {
-                        if (checkOneOff(offer.dateOfOffer, i.refId))
+						if (checkOneOff(matchDate, i.refId))
                         {
                             availableReferees.Add(i);
                         }
                     }
                     else
                     {
-                        if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer, i.refId), offer.dateOfOffer))
+						if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(matchDate, i.refId), matchDate))
                         {
                             availableReferees.Add(i);
                         }
@@ -96,16 +97,16 @@ namespace userprofile.Controllers
                     {
                         //check if has a free slot to ref on that day (is currently reffing < maxGames)
 
-                        if (containsOneOff(offer.dateOfOffer, i.refId))
+						if (containsOneOff(matchDate, i.refId))
                         {
-                            if (checkOneOff(offer.dateOfOffer, i.refId))
+							if (checkOneOff(matchDate, i.refId))
                             {
                                 availableReferees.Add(i);
                             }
                         }
                         else
                         {
-                            if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(offer.dateOfOffer, i.refId), offer.dateOfOffer))
+							if (checkWeeklyAvailabilityForMatch(getWeeklyAvailabilityForDay(matchDate, i.refId), matchDate))
                             {
                                 availableReferees.Add(i);
                             }
