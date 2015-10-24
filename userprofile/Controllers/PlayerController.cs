@@ -55,6 +55,8 @@ namespace userprofile.Controllers
             player.status = 1;
             if (ModelState.IsValid)
             {
+				IdentityManager idManager = new IdentityManager();
+				idManager.AddUserToRole(player.AspNetUser.Id, "Player");
                 db.PLAYERs.Add(player);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -123,6 +125,17 @@ namespace userprofile.Controllers
             PLAYER player = db.PLAYERs.Find(id);
 
             player.status = 0;
+			bool remove = true;
+			foreach (var i in player.AspNetUser.PLAYERs) { //remove from role if no active player
+				if (i.status > 0 && i.teamId != player.teamId) {
+					remove = false;
+					break;
+				}
+			}
+			if (remove) {
+				IdentityManager idManager = new IdentityManager();
+				idManager.RemoveUserFromRole(player.AspNetUser.Id, "Player");
+			}
             db.Entry(player).State = EntityState.Modified;
 
             db.SaveChanges();
