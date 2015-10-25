@@ -116,18 +116,17 @@ namespace userprofile.Controllers {
 		void initGlobalVars() {
 			db = new Raoconnection();
 			rand = new Random();
+			llCompleted = new LinkedList<pair>();
+			dQualificationRefStorage = new Dictionary<int, HashSet<int>>();
+			dRefereeStorage = new Dictionary<int, REFEREE>();
+		}
+
+		void resetGlobalVars() {
 			dOffers = new Dictionary<int, offerInfo>();
 			dReferees = new Dictionary<int, refInfo>();
-			llCompleted = new LinkedList<pair>();
 			hFilledOffers = new HashSet<int>();
 			hCanBeFilledOffers = new HashSet<int>();
-			dQualificationRefStorage = new Dictionary<int, HashSet<int>>();
 			dOfferStorage = new Dictionary<int, OFFER>();
-			dRefereeStorage = new Dictionary<int, REFEREE>();
-			dMatchStorage = new Dictionary<int, MATCH>();
-			matchClashes = new Dictionary<int, Dictionary<int, bool>>();
-			dGamesAvailableToRef = new Dictionary<int, int>();
-
 			bestOffersFilled = 0;
 			maxOffersFilled = 0;
 			currOffersFilled = 0;
@@ -135,6 +134,9 @@ namespace userprofile.Controllers {
 			currPriorityFilled = 0;
 			maxPriorityFilled = 0;
 			bestPriorityFilled = 0;
+			dGamesAvailableToRef = new Dictionary<int, int>();
+			dMatchStorage = new Dictionary<int, MATCH>();
+			matchClashes = new Dictionary<int, Dictionary<int, bool>>();
 		}
 
 		bool checkTabu(int oID, int rID) { //check if this is tabu
@@ -260,7 +262,7 @@ namespace userprofile.Controllers {
 
 		void getOffersAndQualificationIDs() {
 			foreach (var i in db.OFFERs) {
-				if (i.status == 5) {
+				if (i.status == 5 && i.MATCH.matchDate.Date == dateCurrent.Date) {
 					dOfferStorage.Add(i.offerId, i); //store offer by offerID
 					foreach (var k in i.OFFERQUALs) {
 						if (!dQualificationRefStorage.ContainsKey(k.qualificationId))
@@ -284,6 +286,8 @@ namespace userprofile.Controllers {
 						if (i.Key == k.qualificationId) {
 							if (!dRefereeStorage.ContainsKey(j.refId)) {
 								dRefereeStorage.Add(j.refId, j);
+							}
+							if (!dGamesAvailableToRef.ContainsKey(j.refId)) {
 								dGamesAvailableToRef.Add(j.refId, j.maxGames - countOffersAlreadyAssigned(j.refId));
 							}
 							if (dGamesAvailableToRef[j.refId] > 0)
@@ -742,34 +746,30 @@ namespace userprofile.Controllers {
 		}
 
 		void setModel() {
-			if (bestOffers != null) {
-				modelResult = new AlgorithmModel(bestOffers.Count);//bestOffers.Count()
-				for (int i = 0; i < bestOffers.Count; i++) {//bestOffers.Count()
-					foreach (var j in bestOffers[i]) {
-						modelResult.result[i].pairs.Add(new Models.pair(j.Key, j.Value.assignedTo, db));
-					}
-					foreach (var j in llCompleted) {
-						modelResult.result[i].pairs.Add(new Models.pair(j.offer, j.referee, db));
-					}
-				}
+			modelResult = new AlgorithmModel(1);
+			foreach (var i in llCompleted) {
+				modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee, db));
 			}
-			else {
-				modelResult = new AlgorithmModel(1);
-				foreach (var i in llCompleted) {
-					modelResult.result[0].pairs.Add(new Models.pair(i.offer, i.referee, db));
+		}
+
+		void saveResults() {
+			if (bestOffers != null) {
+				foreach (var i in bestOffers.First()) {
+					llCompleted.AddLast(new pair(i.Key,i.Value.assignedTo));
 				}
 			}
 		}
 
 		public void AssignReferees() {
+			initGlobalVars();
 			for (dateCurrent = dateStart; dateCurrent <= dateEnd; dateCurrent = dateCurrent.AddDays(1)) {
-				initGlobalVars();
+				resetGlobalVars();
 				fillSets();
 				initChecks();
 				performAlgorithm();
-				setModel();
+				saveResults();
 			}
-
+			setModel();
 
 			//db.Entry(of).State = EntityState.Modified;
 			//db.SaveChanges();
