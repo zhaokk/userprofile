@@ -49,6 +49,12 @@
                 color: "#949FB1",
                 highlight: "#A8B3C5",
                 label: "Unassigned Offers"
+            },    
+            {
+                value: @Model.smartAssign.Count(),
+                color: "#5bc0de",
+                highlight: "#00FFFF",
+                label: "Unassigned Offers"
             },
 
 
@@ -93,6 +99,7 @@
                                     <li><i class="fa fa-circle-o text-red"></i>Declined Offers</li>
 
                                     <li><i class="fa fa-circle-o text-gray"></i>Offer Not Assigned</li>
+                                    <li><i class="fa fa-circle-o text-blue"></i>Smart Assign</li>
                                 </ul>
                             </div><!-- /.col -->
                         
