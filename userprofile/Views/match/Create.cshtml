@@ -7,6 +7,10 @@
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
     <script src="~/Scripts/AdminLTE/plugins/locationPicker/locationpicker.jquery.js"></script>*@
 
+<script>
+
+</script>
+
 <div class="row">
     <div class="col-sm-12">
         <div class="box">
@@ -37,18 +41,26 @@
                                 @Html.ValidationMessageFor(model => model.createdMatch.locationId)
                             </div>
                         </div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
+
+								@Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
+							</div>
+						</div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.createdMatch.teamAId, "Home Team Name", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
 
-                                @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teamaID" })
+                                @Html.DropDownList("teamaID", Enumerable.Empty<SelectListItem>(), String.Empty, new { @Name = "createdMatch.teamaID" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.teamAId)
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.createdMatch.teamBId, "Away Team Name", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("teamaID", (SelectList)ViewBag.teamaID, String.Empty, new { @Name = "createdMatch.teambID" })
+                                @Html.DropDownList("teambID", Enumerable.Empty<SelectListItem>(), String.Empty, new { @Name = "createdMatch.teambID" })
                                 @Html.ValidationMessageFor(model => model.createdMatch.teamBId)
                             </div>
                         </div>
@@ -93,14 +105,7 @@
                        
 
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.createdMatch.tournamentId, "Tournament", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("tournament", (SelectList)ViewBag.tournamentId, String.Empty, new { @Name = "createdMatch.tournamentId" })
-
-                                @Html.ValidationMessageFor(model => model.createdMatch.tournamentId)
-                            </div>
-                        </div>
+                        
 
 
 
@@ -184,6 +189,55 @@
             }
         });
 
+        $('#tournament').change(function () {
+        	var tournId = $(this).val();
+        	$.ajax({
+        		type: "POST",
+        		url: '@Url.Action("getTeamsFromTournament", "match")',
+        		data: { 'tournamentId': tournId },
+        		datatype: "json",
+        		success: function (data) {
+        			var homeTeam = $('#teamaID');
+        			homeTeam.empty();
+        			$.each(data, function (val, text) {
+        				homeTeam.append(
+							$('<option></option>').val(text.Value).html(text.Text)
+						);
+        			});
+        			var awayTeam = $('#teambID');
+        			awayTeam.empty();
+        			$.each(data, function (val, text) {
+        				awayTeam.append(
+							$('<option></option>').val(text.Value).html(text.Text)
+						);
+        			});
+        			awayTeam.val(2);
+        		},
+        	})
+        });
+		$('#teamaID').change(function () {
+			var teambVal = $('#teambID').val();
+			var teamaVal = $('#teamaID').val();
+			if (teambVal == teamaVal) {
+				alert("A team may not play itself!")
+				if (teambVal != 1)
+					$(this).val(1)
+				else
+					$(this).val(2)
+			}
+		});
+
+		$('#teambID').change(function () {
+			var teambVal = $('#teambID').val();
+			var teamaVal = $('#teamaID').val();
+			if (teambVal == teamaVal) {
+				alert("A team may not play itself!")
+				if (teamaVal != 1)
+					$(this).val(1)
+				else
+					$(this).val(2)
+			}
+		});
 
 
 

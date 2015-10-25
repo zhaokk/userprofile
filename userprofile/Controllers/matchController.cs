@@ -260,13 +260,21 @@ namespace userprofile.Controllers
 
             return View(combined);
         }
+		[HttpPost]
+		public ActionResult getTeamsFromTournament(int? tournamentId) {
+			var teamsInTournament = db.TEAMINS.Where(t => t.tournament == tournamentId).ToList();
+			List<TEAM> teams = new List<TEAM>();
+			foreach (var i in teamsInTournament) {
+				teams.Add(i.TEAM);
+			}
+			SelectList teamViewBag = new SelectList(teams, "teamId", "name");
+			return Json(teamViewBag);
+		}
 
         [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Create()
         {
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name");
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name");
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name");
             ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             ViewBag.types = new SelectList(db.TYPEs, "name", "name");
@@ -329,9 +337,8 @@ namespace userprofile.Controllers
 
 
             ViewBag.location = new SelectList(db.LOCATIONs, "locationId", "name", matchVM.createdMatch.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamAId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", matchVM.createdMatch.teamBId);
-            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name", matchVM.createdMatch.tournamentId);
+
+            ViewBag.tournament = new SelectList(db.TOURNAMENTs, "tournamentId", "name");
             ViewBag.qualification = new SelectList(db.QUALIFICATIONS, "qualificationId", "name");
             return View(matchVM);
         }
