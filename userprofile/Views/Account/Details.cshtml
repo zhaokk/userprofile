@@ -35,7 +35,30 @@
                 
                 
                 @foreach (var i in Model.Item1.AspNetRoles) {
-					@i.Name
+					switch (i.Id) {
+						case "1": //Admin
+							<span class="label label-default">@i.Name</span>
+							
+							break;
+						case "2": //Player
+						<span class="label label-primary">@i.Name</span>
+							break;
+						case "3": //Referee
+						<span class="label label-info">@i.Name</span>
+
+
+							break;
+						case "4": //Tournament Organizer
+						<span class="label label-warning">@i.Name</span>
+							break;
+						case "5": //Team Manager
+						<span class="label label-danger">@i.Name</span>
+							break;
+						default:
+							@:ERROR!
+							break;
+					}
+					
 				}
 				
                 <hr />
