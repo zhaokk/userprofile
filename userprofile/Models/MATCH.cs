@@ -58,6 +58,9 @@ namespace userprofile.Models
         public String teamA { get; set; }
         public String teamB { get; set; }
 
+        public String lat { get; set; }
+        public String lon { get; set; }
+
         public virtual ICollection<INFRACTION> INFRACTIONS { get; set; }
         public virtual LOCATION LOCATION { get; set; }
         public virtual TEAM TEAM { get; set; }
@@ -88,6 +91,8 @@ namespace userprofile.Models
             info.AddValue("halfTimeDuration", halfTimeDuration);
             info.AddValue("countsToDraw", countsToDraw);
             info.AddValue("tournamentName", tournamentName);
+            info.AddValue("lat", lat);
+            info.AddValue("lon", lon);
         }
 
     }

@@ -97,6 +97,7 @@ namespace userprofile.Models
             info.AddValue("willingToShowAddress", willingToShowAddress);
             info.AddValue("willingToshowEmail", willingToshowEmail);
             info.AddValue("wantsToReceiveTexts", wantsToReceiveTexts);
+            info.AddValue("photoDir", photoDir);
           }
 
     }

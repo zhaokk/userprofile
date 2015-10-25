@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -75,10 +76,28 @@ namespace userprofile.Controllers
 
                                 foreach (var match in tempMatches)
                                 {
+
+                                    String latAndLong = "";
                                     match.tournamentName = match.TOURNAMENT.name;
                                     match.locationName = match.LOCATION.name;
                                     match.teamA = match.TEAM.name;
                                     match.teamB = match.TEAM1.name;
+
+                                    int pFrom = match.LOCATION.geogCol2.IndexOf("(") + "(".Length;
+                                    int pTo = match.LOCATION.geogCol2.LastIndexOf(", ");
+
+                                    latAndLong = match.LOCATION.geogCol2.Substring(pFrom, pTo - pFrom);
+
+
+                                    pTo = latAndLong.LastIndexOf(" ");
+
+                                    match.lat = latAndLong.Substring(0, pTo - 0);
+
+                                    match.lon = latAndLong.Substring(pTo+1);
+
+
+                                    Debug.Write(match.lat);
+                                    Debug.Write(match.lon);
                                 }
 
 

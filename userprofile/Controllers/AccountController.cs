@@ -31,6 +31,13 @@ namespace userprofile.Controllers
             return View(model);
         
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="Message"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id, ManageMessageId? Message = null)
         {

@@ -55,6 +55,16 @@ namespace userprofile.API
 
             if (user != null)
             {
+                var userToDealWith = db.AspNetUsers.Find(userId);
+                String tempPhotoDir = "";
+
+                //strip the photo directory to what's needed and add in the url
+                int pFrom = userToDealWith.photoDir.IndexOf("\\") + "\\".Length;
+                tempPhotoDir = userToDealWith.photoDir.Substring(pFrom);
+                pFrom = tempPhotoDir.IndexOf("\\") + "\\".Length;
+                tempPhotoDir = tempPhotoDir.Substring(pFrom);
+                userToDealWith.photoDir = "http://csci342.azurewebsites.net/userprofile/"+tempPhotoDir;
+
 
                 return Ok(db.AspNetUsers.Find(userId));
 
