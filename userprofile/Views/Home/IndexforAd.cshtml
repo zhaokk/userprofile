@@ -140,8 +140,8 @@
 										Referee Name
                                     </th>
                                     <th>
-                                        Referee Type
-                                    </th>
+										<span style="cursor:help;" title="Type of referee">Referee Type</span>
+									</th>
 
                                 </tr>
                             </thead>
@@ -162,13 +162,14 @@
                                 </td>
 								<td>
 									<a href="@Url.Action("Details","Referee", new {id = offer.refId})">
-										@offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+										@offer.REFEREE.AspNetUser.firstName
+										@offer.REFEREE.AspNetUser.lastName
 									</a>
 								</td>
                                 <td>
                                     <a href="@Url.Action("Details","Types", new { id = offer.TYPE.name })">
-                                        @offer.typeOfOffer
-                                    </a>
+										<span style="cursor:help;" title="@offer.TYPE.description">@offer.typeOfOffer</span>
+									</a>
                                 </td>
                             </tr>
 
@@ -195,58 +196,60 @@
                         <table id="example3" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+									<th>
+										Tournament Name
+									</th>
                                     <th>
-                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                        Match Date
-                                    </th>
+										Match Date
+									</th>
                                     <th>
                                         Match Location
                                     </th>
                                     <th>
-                                        Home Team
+                                        Referee Type
                                     </th>
                                     <th>
-                                        Away Team
-                                    </th>
-                                    <th>
-                                        Tournament name
-                                    </th>
-
+										<span style="cursor:help;" title="List of Qualifications Required for offer <Qualification Name>:<Qualification Level>">Qualification</span>
+									</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var match in @Model.matches)
+                                @foreach (var unassignedOffer in @Model.notassignedOffers)
                             {
                             <tr>
+								<td>
+									<a href="@Url.Action( "Details","Tournament", new { id = unassignedOffer.MATCH.tournamentId })">
+										@unassignedOffer.MATCH.TOURNAMENT.name
+									</a>
+								</td>
                                 <td>
-                                    <a href="@Url.Action( "Details","match", new { id = match.matchId })">
-                                        @match.matchDate
+                                    <a href="@Url.Action( "Details","match", new { id = unassignedOffer.matchId })">
+                                        @unassignedOffer.MATCH.matchDate
                                     </a>
-</td>
+								</td>
                                 <td>
                                    
-                                    <a href="@Url.Action("Details","location", new { id = match.locationId })">
-                                        @match.LOCATION.name
+                                    <a href="@Url.Action("Details","location", new { id = unassignedOffer.MATCH.locationId })">
+                                        @unassignedOffer.MATCH.LOCATION.name
                                     </a>
                                 </td>
 
                                 <td>
-                                   
-                                    <a href="@Url.Action("Details", "team", new { id = match.TEAM.teamId })">
-                                        @match.TEAM.name
-                                    </a>
-                                </td>
-                                <td>
-                                   
-                                    <a href="@Url.Action("Details", "team", new { id = match.TEAM1.teamId })">
-                                        @match.TEAM1.name
-                                    </a>
-                                </td>
-                                <td>
-									<a href="@Url.Action( "Details","Tournament", new { id = match.tournamentId })">
-										@match.TOURNAMENT.name
-									</a>
+									<a href="@Url.Action("Details","types", new { id = unassignedOffer.typeOfOffer })">
+										<span style="cursor:help;" title="@unassignedOffer.TYPE.description">@unassignedOffer.typeOfOffer</span>
+</a>
 								</td>
+                                <td>
+									@foreach (var qualsRequired in unassignedOffer.OFFERQUALs) {
+										<a href="@Url.Action("Details","qualification", new { id = qualsRequired.qualificationId })">
+											<span style="cursor:help;" title="@qualsRequired.QUALIFICATION.description">
+												@qualsRequired.QUALIFICATION.name
+												:
+												@qualsRequired.qualLevel
+											</span>
+										</a>
+									}
+                                </td>
                             </tr>
 
 
@@ -306,12 +309,13 @@
 										</td>
 										<td>
 											<a href="@Url.Action("Details","Referee", new {id = offer.refId})">
-												@offer.REFEREE.AspNetUser.firstName @offer.REFEREE.AspNetUser.lastName
+												@offer.REFEREE.AspNetUser.firstName
+												@offer.REFEREE.AspNetUser.lastName
 											</a>
 										</td>
 										<td>
 											<a href="@Url.Action("Details","Types", new { id = offer.TYPE.name })">
-												@offer.typeOfOffer
+												<span style="cursor:help;" title="@offer.TYPE.description">@offer.typeOfOffer</span>
 											</a>
 										</td>
                                     </tr>
