@@ -6,7 +6,39 @@
 
 <script src="~/Scripts/AdminLTE/plugins/switch/bootstrap-switch.js" type="text/javascript"></script>
 <link href="~/Scripts/AdminLTE/plugins/switch/bootstrap-switch.css" rel="stylesheet" type="text/css">
+<style>
+    /* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
 
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+</style>
 @*<div>
     <a class="btn btn-default" href="@Url.Action( "showresults","Algorithm")">
         Algorithm
@@ -72,8 +104,20 @@
         </div><!-- /.box-footer -->
     </form>
 </div>
-
+<div class="box box-success result">
+    <div class="box-header with-border">
+        <h3 class="box-title">Smart assign Result</h3>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+   
+</div>
+<div class="modal"><!-- Place at bottom of page --></div>
     <script>
+        $body = $("body");
+        $(document).on({
+            ajaxStart: function () { $body.addClass("loading"); },
+            ajaxStop: function () { $body.delay(800).removeClass("loading"); }
+        });
         $(function () {
             $('input[name="daterange"]').daterangepicker({
                 timePicker: false,
@@ -92,7 +136,7 @@
             } else {
                 assignAll = false;
             }
-            $.ajax({
+            @*$.ajax({
                 type: "POST",
                 url: "@Url.Action("showResults", "Algorithm")",
            
@@ -104,11 +148,19 @@
                         'endDate': end
                     }
         ),
-            success: function (data) { alert(data); },
+                success: function (data) { $(".result").html(data); },
             failure: function (errMsg) {
                 alert(errMsg);
             }
-        });
+        });*@
+            $.post("./Algorithm/showresults", {
+                'assignAll': assignAll,
+                'startDate': start,
+                'endDate': end
+            })
+  .done(function (data) {
+      alert("Data Loaded: " + data);
+  });
         }
         $("[name='my-checkbox']").bootstrapSwitch();
     </script>
