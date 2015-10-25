@@ -1058,6 +1058,7 @@
     <Content Include="Views\PLAYERss\Edit.cshtml" />
     <Content Include="Views\PLAYERss\Index.cshtml" />
     <Content Include="Views\Notifications\display.cshtml" />
+    <Content Include="Views\Algorithm\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
