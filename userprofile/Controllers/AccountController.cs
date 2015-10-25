@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using userprofile.Models;
 using System.Reflection;
+using System.Net;
 
 namespace userprofile.Controllers
 {
@@ -391,6 +392,12 @@ namespace userprofile.Controllers
                     if (result.Succeeded)
                     {
                         var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
+
+
+                        var client = new WebClient();
+                        //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TournamentManager&to="+storedUser.phoneNum+"&text=Welcome&nbsp;to&nbsp;Tournament&nbsp;manager&nbsp;"+storedUser.UserName);
+
+
                         ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
 
                         var idManager = new IdentityManager();
