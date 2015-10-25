@@ -102,11 +102,12 @@ namespace userprofile.Controllers
             {
 
                 // need to pass a tournament in here for adding to the team, create for now with default tournament
-                TOURNAMENT t = db.TOURNAMENTs.Find(1);
+                /*TOURNAMENT t = db.TOURNAMENTs.Find(1);
                 
                 var tins = new TEAMIN();
                 tins.tournament = t.tournamentId;
-                team.TEAMINS.Add(tins);
+                team.TEAMINS.Add(tins);*/
+				new IdentityManager().AddUserToRole(team.managerId, "Manager");
                 db.TEAMs.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Team", new {Id = team.teamId });
@@ -147,6 +148,21 @@ namespace userprofile.Controllers
         {
             if (ModelState.IsValid)
             {
+				TEAM old = db.TEAMs.Find(team.teamId);
+				if (db.TEAMs.Find(team.teamId).managerId != team.managerId) { //check if manager changed
+					bool remove = true;
+					foreach (var i in db.AspNetUsers.Find(old.managerId).TEAMs) { //check if manages another active team
+						if (i.status > 0 && i.teamId != team.teamId) {
+							remove = false;
+							break;
+						}
+					}
+					if (remove) { //if not then remove role
+						new IdentityManager().RemoveUserFromRole(old.managerId, "Manager");
+					}
+					new IdentityManager().AddUserToRole(team.managerId, "Manager"); //add role to new manager
+				}
+				
                 db.Entry(team).State = System.Data.Entity.EntityState.Modified;
                 //db.Entry(team).State = EntityState.Modified;
                 db.SaveChanges();
