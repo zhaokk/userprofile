@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using userprofile.Models;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Net;
+using System.Diagnostics;
 
 namespace userprofile.Controllers
 {
@@ -63,23 +66,154 @@ namespace userprofile.Controllers
         public List<String> getNotifications()
         {
             List<String> notifications = new List<String>();
+
+            if (User.IsInRole("Admin"))
+            {
+                notifications = getAdminNotifications();
+
+            }
+            else if (User.IsInRole("Organizer"))
+            {
+                notifications = getOrganizerNotifications(User.Identity.Name);
+            }
+            else if (User.IsInRole("Referee"))
+            {
+                var referee = db.AspNetUsers.Where(us => us.UserName == User.Identity.Name).FirstOrDefault();
+                notifications = getRefereeNotifications(referee.REFEREEs.ElementAt(0).refId);
+            }
+
+
+
+
+            return notifications;
+        }
+
+        private List<String> getRefereeNotifications(int id)
+        {
+            DateTime today = DateTime.Now;
+            List<String> notifications = new List<String>();
+
+            //pending offers
+            var refereeOffers = db.OFFERs.Where(referee => referee.refId == id).Where(referee => referee.status == 3).Count();
+
+            //matches requiring updating
+            List<MATCH> refereeMatches = new List<MATCH>();
+            var tempReferee = db.REFEREEs.Find(id);
+            int tempMatchCounter = 0;
+
+
+            foreach (var offer in tempReferee.OFFERs)
+            {
+                if (offer.status == 1 && offer.MATCH.matchDate < today)
+                {
+                    tempMatchCounter++;
+                }
+            }
+
+
+            notifications.Add("" + refereeOffers + " Pending offers");
+            notifications.Add("" + tempMatchCounter + " Matches need scores");
+            notifications.Add("" + (tempMatchCounter + refereeOffers));
+
+
+            return notifications;
+        }
+
+
+        /// <summary>
+        /// Returns a string List of notifications for use in populating the notifications menu item
+        /// </summary>
+        /// <returns>A string list containing notifications</returns>
+        private List<String> getAdminNotifications()
+        {
             DateTime nextWeek = DateTime.Now;
-            String futureDate = nextWeek.ToShortDateString();
+            DateTime today = DateTime.Now;
             nextWeek = nextWeek.AddDays(7);
+            List<String> notifications = new List<String>();
 
+            //matches with no offers
+            int matches = db.MATCHes.Include("OFFERs").Where(match => match.OFFERs.Count == 0)
+                                                        .Where(match => match.matchDate < nextWeek)
+                                                        .Where(match => match.matchDate >= today).Count();
 
-            //referee rejected offer 3 
-            int matches = db.MATCHes.Where(match => match.OFFERs.Count == 0).Where(match => match.matchDate < nextWeek).Count();
+            //offers with no referees
+            int offers = db.OFFERs.Where(offer => offer.REFEREEs.Count == 0)
+                                    .Where(offer => offer.status ==4)
+                                    .Where(offer => offer.MATCH.matchDate >= today).Count();
 
-            int offers = db.OFFERs.Where(offer => offer.REFEREEs.Count == 0).Count();
+            //offers rejected by referees
             int rejectedOffers = db.OFFERs.Where(offer => offer.status == 3).Count(); //rejected status == 3
+
+            //players that have requested to join a team
+            int newPlayers = db.PLAYERs.Where(player => player.status == 3).Count();
 
             notifications.Add("" + matches + " matches have no referee");
             notifications.Add("" + offers + " offers dont have a referee");
-            notifications.Add("" + rejectedOffers + " referees have rejected offers");
-            notifications.Add("" + (matches + offers + rejectedOffers));
+            notifications.Add("" + newPlayers + " player requests");
+            notifications.Add("" + (matches + offers + newPlayers));
 
             return notifications;
+        }
+
+        private List<String> getOrganizerNotifications(String id)
+        {
+
+            DateTime nextWeek = DateTime.Now;
+            DateTime today = DateTime.Now;
+            nextWeek = nextWeek.AddDays(7);
+            List<String> notifications = new List<String>();
+
+
+            int matches = 0;
+            int offers = 0;
+            int rejectedOffers = 0;
+            int newPlayers = 0;
+
+
+
+            var thisUser = db.AspNetUsers.Where(user => user.UserName == id).FirstOrDefault();
+
+            foreach (var tournament in thisUser.TOURNAMENTs1)
+            {
+                //matches with no offers
+                 matches += db.MATCHes.Include("OFFERs").Where(match => match.OFFERs.Count == 0)
+                                                            .Where(match => match.matchDate < nextWeek)
+                                                            .Where(match => match.matchDate >= today)
+                                                            .Where(match => match.tournamentId == tournament.tournamentId).Count();
+
+                //offers with no referees
+                 offers += db.OFFERs.Where(offer => offer.REFEREEs.Count == 0)
+                                        .Where(offer => offer.status == 4)
+                                        .Where(offer => offer.MATCH.matchDate >= today)
+                                        .Where(offer => offer.MATCH.tournamentId == tournament.tournamentId).Count();
+
+                //offers rejected by referees
+                 rejectedOffers += db.OFFERs.Where(offer => offer.status == 3)
+                                            .Where(offer => offer.MATCH.tournamentId == tournament.tournamentId).Count(); //rejected status == 3
+
+                //players that have requested to join a team
+                 var players = db.PLAYERs.Where(player => player.status == 3).ToList();
+
+                 foreach(var play in players){
+                     foreach (var team in play.TEAM.TEAMINS)
+                     {
+                         if (team.tournament == tournament.tournamentId)
+                         {
+                             newPlayers++;
+                         }
+                     }
+                 }
+
+
+            }
+
+            notifications.Add("" + matches + " matches have no referee");
+            notifications.Add("" + offers + " offers dont have a referee");
+            notifications.Add("" + newPlayers + " player requests");
+            notifications.Add("" + (matches + offers + newPlayers));
+
+            return notifications;
+
         }
 
         public String getJsonNotifications()

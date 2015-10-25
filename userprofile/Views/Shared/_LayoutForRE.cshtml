@@ -58,7 +58,54 @@
                
             });
         });
-    </script>
+    
+
+            $.ajax({
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+                url: "/home/getJsonNotifications",
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    addNotifications(data)
+                }
+            });
+
+        function addNotifications(thing) {
+            var somethingSet = false;
+
+            var obj = jQuery.parseJSON(thing);
+            if(parseInt(obj[obj.length-1]) > 0){
+                $(".notification")
+                .html(obj[obj.length-1]);
+            }
+            else{
+                $(".notification")
+                .html("");
+            }
+
+            //clear the notifications
+            $(".menu").html("");
+
+            for (i = 0; i < obj.length - 1 ; i++) {
+                if (obj[i].charAt(0) != "0") {
+                    addRowToMenu(obj[i]);
+                    somethingSet = true;
+                }
+            }
+
+            //if nothing was set in the notifications, everything is good
+            if (!somethingSet) {
+                addRowToMenu("Everything is good!");
+            }
+
+        }
+
+        function addRowToMenu(thing) {
+            $(".menu").append($('<li><a href="@Url.Action("Display", "Notifications", new { })"><i class="ion ion-ios-people info"></i>' + thing + '</a></li>'));
+        }
+
+        </script>
 
 
 </head>
@@ -81,9 +128,6 @@
                     <li>@Html.ActionLink("Team list", "Index", "team")</li>
                     <li>@Html.ActionLink("Special availability", "Index", "OneOffAVAILABILITies")</li>
                     <li>@Html.ActionLink("My availability", "Availability", "REFEREE")</li>
-
-                   
-                    
                    
                 </ul>
                
@@ -91,6 +135,26 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning notification">  </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!--<li class="header">You have 10 notifications</li>-->
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="ion ion-ios-people info"></i> Notification title
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="@Url.Action("Display", "Notifications", new { })">View all</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown user user-menu">
                         <a href=" #" class="dropdown-toggle" data-toggle="dropdown">
                         @Html.Action("showProfile", "Account", new { id = User.Identity.GetUserName()})

@@ -7,14 +7,16 @@
 <link href="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
 <section class="content">
 
+    @if (User.IsInRole("Admin") || User.IsInRole("Organizer")) { 
 
-    @if (Model.Item1.Count > 0)
+
+    if (Model.Item1.Count > 0)
     {//offers
         <div class="col-md-12">
             <div class="box">
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Match Offers</h3>
+                        <h3 class="box-title">Offers with no referees</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
@@ -95,13 +97,13 @@
             </div>
         </div>
     }
-    @if (Model.Item2.Count > 0)
+    if (Model.Item2.Count > 0)
     { //matches
         <div class="col-md-12">
             <div class="box">
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Match Offers</h3>
+                        <h3 class="box-title">Matches with no referees</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
@@ -187,7 +189,7 @@
         </div>
     }
 
-    @if (Model.Item3.Count > 0)
+    if (Model.Item3.Count > 0)
     {//players
         <div class="col-md-12">
             <div class="box">
@@ -256,5 +258,195 @@
             </div>
         </div>
     }
+    }
+    
+
+    @*referee things*@
+
+    @if (User.IsInRole("Referee") && !User.IsInRole("Admin") && !User.IsInRole("Organizer"))
+    {
+        
+
+        if (Model.Item1.Count > 0)
+        {//offers
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pending offers</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+
+                        <div class="box-body " style="display: block;">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Tournament Name
+                                            </th>
+                                            <th>
+                                                Match Id
+                                            </th>
+                                            <th>
+                                                Match date
+                                            </th>
+                                            <th>
+                                                Date offer created
+                                            </th>
+                                            <th>
+                                                Problem
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var offer in @Model.Item1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="@Url.Action("Details", "Tournament", new { id = offer.MATCH.TOURNAMENT.name })">
+                                                        @offer.MATCH.TOURNAMENT.name
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details", "Tournament", new { id = offer.matchId })">
+                                                        @offer.matchId
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @offer.MATCH.matchDate
+                                                </td>
+                                                <td>
+                                                    @offer.dateOfOffer
+                                                </td>
+                                                <td>
+                                                    <p>There is no referee!</p>
+                                                </td>
+                                                <td>
+                                                    <a class=" btn btn-warning pull-right" href='@Url.Action("Details", "Match", new { id = offer.matchId })'>Manage offer</a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- /.box-body -->
+                        </div>
+                    </div>
+                </div>
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="box box-success collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">No pending offers</h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div><!-- /.box-header -->
+
+                </div>
+            </div>
+        }
+        if (Model.Item2.Count > 0)
+        { //matches
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Matches requiring game results</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tournament Name</th>
+                                        <th>Match Id</th>
+                                        <th>Date of match</th>
+                                        <th>Location</th>
+                                        <th>Contributes points to rank</th>
+                                        <th>Problem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var match in Model.Item2)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                <a href="@Url.Action("Details", "Match", new { id = match.TOURNAMENT.tournamentId })">
+                                                    @match.TOURNAMENT.name
+                                                </a>
+
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Details", "Match", new { id = match.matchId })">
+                                                    @match.matchId
+                                                </a>
+
+                                            </td>
+                                            <td>
+                                                @match.matchDate
+                                            </td>
+                                            <td>
+                                                @match.LOCATION.name
+                                            </td>
+                                            <td>
+                                                @if (@match.countsToDraw)
+                                                {
+                                                    <p>yes</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>no</p>
+                                                }
+                                            </td>
+                                            <td>
+                                                <p>Needs scores</p>
+                                            </td>
+                                            <td>
+                                                <a class=" btn btn-warning pull-right" href='@Url.Action("Details", "Match", new { id = match.matchId })'>Manage offers</a>
+                                            </td>
+                                        </tr>
+                                    
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="box box-success collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Matches are all up to date</h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div><!-- /.box-header -->
+
+                </div>
+            </div>
+        }
+    }
+    
+    
 
 </section><!-- /.content -->
