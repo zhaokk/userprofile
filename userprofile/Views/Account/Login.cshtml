@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="~/Content/login.css">
 </head>
 <body>
-   
+   @{ Response.Redirect("~/Help/Index");}
        @Html.ActionLink("API", "Index", "Help", new { area = "" }, null)
 </body>
 </html>
