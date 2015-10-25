@@ -56,6 +56,7 @@ namespace userprofile.Models
             declinedOffers = new List<OFFER>();
             pendingOffers = new List<OFFER>();
             matches = new List<MATCH>();
+            smartAssign = new List<OFFER>();
             foreach (var offer in offers)
             { 
             switch (offer.status){
@@ -72,6 +73,9 @@ namespace userprofile.Models
                 notassignedOffers.Add(offer);
                 matches.Add(offer.MATCH);
                 break;
+                case 5:
+                smartAssign.Add(offer);
+                break;
                 default:
                 break;
             }
@@ -81,6 +85,7 @@ namespace userprofile.Models
         public List<OFFER> declinedOffers { get; set; }
         public List<OFFER> pendingOffers { get; set; }
         public List<OFFER> notassignedOffers { get; set; }
+        public List<OFFER> smartAssign { get; set; }
         public List<MATCH> matches { get; set; }
     }
 

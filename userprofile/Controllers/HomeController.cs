@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace userprofile.Controllers
 {
@@ -47,6 +48,45 @@ namespace userprofile.Controllers
             }
 
         }
+
+
+
+        /// <summary>
+        /// get all notifications for the user logged in
+        /// an admin really does not need to see anything here, just trying this out
+        /// -matches with no offers in the next 7 days
+        /// -offers with no referees
+        /// 
+        /// 
+        /// </summary>
+        /// <returns> notifications A list of strings that are "###  things are bad". last element is count of everything</returns>
+        public List<String> getNotifications()
+        {
+            List<String> notifications = new List<String>();
+            DateTime nextWeek = DateTime.Now;
+            String futureDate = nextWeek.ToShortDateString();
+            nextWeek = nextWeek.AddDays(7);
+
+
+            //referee rejected offer 3 
+            int matches = db.MATCHes.Where(match => match.OFFERs.Count == 0).Where(match => match.matchDate < nextWeek).Count();
+
+            int offers = db.OFFERs.Where(offer => offer.REFEREEs.Count == 0).Count();
+            int rejectedOffers = db.OFFERs.Where(offer => offer.status == 3).Count(); //rejected status == 3
+
+            notifications.Add("" + matches + " matches have no referee");
+            notifications.Add("" + offers + " offers dont have a referee");
+            notifications.Add("" + rejectedOffers + " referees have rejected offers");
+            notifications.Add("" + (matches + offers + rejectedOffers));
+
+            return notifications;
+        }
+
+        public String getJsonNotifications()
+        {
+            return JsonConvert.SerializeObject(getNotifications());
+        }
+
         [Authorize(Roles = "Admin")]
         public ActionResult IndexforAd()
         {

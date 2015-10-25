@@ -51,21 +51,12 @@
                                 </th>
                                 <th>
                                     Home Team
-
-                                </th>
-                                <th>
-                                    Home Team Score
-
                                 </th>
                                 <th>
                                     Away Team
                                 </th>
                                 <th>
-                                    Away Team Score
-
-                                </th>
-                                <th>
-                                    Sport
+                                    Results
                                 </th>
                                 
                                 @if (User.IsInRole("Admin"))
@@ -102,18 +93,6 @@
                                             @Html.DisplayFor(modelItem => item.TEAM.name)
                                         </a>
                                     </td>
-                                    <td>
-                                        @{  
-                                            if (item.teamAScore == null)
-                                            {
-                                                  <p>Pending results</p>
-                                            }
-                                            else
-                                            {
-                                                @Html.DisplayFor(modelItem => item.teamAScore)
-                                            }
-                                          }
-                                    </td>
 
                                     <td>
                                         <a href="@Url.Action("Details", "team", new { id = item.TEAM1.teamId })">
@@ -121,20 +100,37 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @{
-                                            if (item.teamBScore == null)
-                                            {
-                                                <p>Pending results</p>
-                                            }
-                                            else
-                                            {
-                                                @Html.DisplayFor(modelItem => item.teamBScore)
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TOURNAMENT.sport)
-
+										@switch (item.status) {
+											case 1:
+												@:Pending Results
+												break;
+											case 3:
+												@item.teamAScore
+												@:-
+												@item.teamBScore
+												<br />
+												@item.TEAM.name
+												@:WON!
+												break;
+											case 4:
+												@item.teamAScore
+												@:-
+												@item.teamBScore
+												<br />
+												@:DRAW!
+												break;
+											case 5:
+												@item.teamAScore
+												@:-
+												@item.teamBScore
+												<br />
+												@item.TEAM1.name
+												@:WON!
+												break;
+											default:
+												@:ERROR!
+												break;
+										}
                                     </td>
                                    
 

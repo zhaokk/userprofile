@@ -52,15 +52,16 @@
                         {
                         <tr>
                             <td>
-
-                                
-                                    
-                                
                                 <a href="@Url.Action("Details", new { id = item.UserName })">
                                     @Html.DisplayFor(modelItem => item.UserName)
-                                    </a>
-
-</td>
+                                </a>
+								@if (item.status == 0) {
+									@:(DEACTIVATED)
+								}
+								else if (item.status == 2) {
+									@:(AWAITING ACTIVATION)
+								}
+							</td>
                             @*<td>
                         @Html.DisplayFor(modelItem => item.winnerID)
                     </td>*@

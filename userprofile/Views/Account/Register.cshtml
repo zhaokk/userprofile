@@ -117,14 +117,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.optionalRe.re.sport, "sport", new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-
-                                    @Html.DropDownList("sport", (SelectList)ViewBag.sport, new { @Name = "optionalRe.re.sport" })
-                                    @Html.ValidationMessageFor(model => model.optionalRe.re.sport)
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 @Html.LabelFor(model => model.optionalRe.re.maxGames, "maxgame", new { @class = "control-label col-md-2", value = "4" })
                                 <div class="col-md-10">
 

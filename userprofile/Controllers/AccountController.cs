@@ -124,9 +124,10 @@ namespace userprofile.Controllers
 
 
             var user = db.AspNetUsers.First(u => u.UserName == id);
-            var playerIn = db.PLAYERs.Where(teams => teams.userId == user.Id).ToList();
-            var managerOfteams = db.TEAMs.Where(teams => teams.managerId == user.Id).ToList();
-            List<TOURNAMENT> organizerOfTournaments = db.TOURNAMENTs.Where(t => t.AspNetUser.Id == id).ToList();
+            var playerIn = db.PLAYERs.Where(teams => teams.userId == user.Id && teams.status > 0).ToList();
+            var managerOfteams = db.TEAMs.Where(teams => teams.managerId == user.Id && teams.status > 0).ToList();
+            //List<TOURNAMENT> organizerOfTournaments = db.TOURNAMENTs.Where(t => t.AspNetUser.Id == id && t.status > 0).ToList();
+			List<TOURNAMENT> organizerOfTournaments = db.TOURNAMENTs.Where(t => t.AspNetUsers.Where(u => u.Id == user.Id).Count() > 0 && t.status > 0).ToList();
 
             if (user == null)
             {
@@ -259,7 +260,8 @@ namespace userprofile.Controllers
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
-        }
+			UserManager.UserValidator = new UserValidator<ApplicationUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
+		}
 
         public AccountController(UserManager<ApplicationUser> userManager)
         {

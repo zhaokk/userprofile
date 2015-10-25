@@ -91,7 +91,20 @@
                                         @item.typeOfOffer
                                     </td>
                                     <td>
-                                        @item.status
+                                        @switch (@item.status) {
+											case 1:
+												@:Accepted
+												break;
+											case 2:
+												@:Declined
+												break;
+											case 3:
+												@:Pending
+												break;
+											default:
+												@:ERROR
+												break;
+										}
                                     </td>
                                 </tr>
                             }

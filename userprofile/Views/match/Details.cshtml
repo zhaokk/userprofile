@@ -61,9 +61,46 @@
                     <dt>
                         @Html.DisplayNameFor(model => model.Item1.status)
                     </dt>
-
+					
                     <dd>
-                        @Html.DisplayFor(model => model.Item1.status)
+                        @switch (Model.Item1.status) {
+							case 0:
+								@:Deleted
+								break;
+							case 1:
+								if (Model.Item1.matchDate > DateTime.Now) { 
+									@:Unplayed
+								}
+								else {
+									if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
+										@:In Progress
+									}
+									else {
+										@:Pending Results
+									}
+								}
+								break;
+							case 3:
+								@Model.Item1.TEAM
+								@:Won!
+								break;
+							case 4:
+								@:DRAW!
+								break;
+							case 5:
+								@Model.Item1.TEAM1
+								@:Won!
+								break;
+							case 6:
+								@:Delayed
+								break;
+							case 7:
+								@:Canceled
+								break;
+							default:
+								@:ERROR
+								break;
+						}
                     </dd>
 
                     <dt>
@@ -156,19 +193,41 @@
                                 {
                                      <tr>
                                         <td>
-                                            NULL
+                                            Unassigned
                                         </td>
-                                         <td> <a href="@Url.Action("Edit", "offer", new { id = item.offerId })">
-                                                  No referee set yet - placeholder for link to go to assigning a ref to this offer
-                                        </a>
-                                         
-                                         </td>
+                                        <td> 
+											@item.typeOfOffer
+											@if (item.OFFERQUALs.Count() != 0) {
+												@:Required Quals: 
+												foreach (var i in item.OFFERQUALs) {
+													@i.QUALIFICATION.name
+													@i.qualLevel
+												}
+											}                   
+                                        </td>
                                         <td>
-                                            @item.typeOfOffer
+                                            @switch (item.status) {
+												case 1:
+													@:Accepted
+													break;
+												case 2:
+												@:Declined
+													break;
+												case 3:
+												@:Pending
+													break;
+												case 4:
+												@:Unassigned
+													break;
+												case 5:
+												@:Smart Assign
+													break;
+												default:
+												@:ERROR!
+													break;
+											}
                                         </td>
-                                        <td>
-                                            @item.status
-                                        </td>
+
                                     </tr>
                                 }
                                 else { 
@@ -177,6 +236,7 @@
                                             <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
                                                 @item.REFEREE.AspNetUser.firstName
 												@item.REFEREE.AspNetUser.lastName
+												(@item.REFEREE.AspNetUser.UserName)
                                             </a>
                                         </td>
 
@@ -186,7 +246,26 @@
 											</a>
 										</td>
                                         <td>
-                                            @item.status
+											@switch (item.status) {
+												case 1:
+													@:Accepted
+													break;
+												case 2:
+													@:Declined
+													break;
+												case 3:
+													@:Pending
+													break;
+												case 4:
+													@:Unassigned
+													break;
+												case 5:
+													@:Smart Assign
+													break;
+												default:
+													@:ERROR!
+													break;
+											}
                                         </td>
                                     </tr>
                                 }

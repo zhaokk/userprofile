@@ -49,6 +49,12 @@
                 color: "#949FB1",
                 highlight: "#A8B3C5",
                 label: "Unassigned Offers"
+            },    
+            {
+                value: @Model.smartAssign.Count(),
+                color: "#5bc0de",
+                highlight: "#00FFFF",
+                label: "Unassigned Offers"
             },
 
 
@@ -93,6 +99,7 @@
                                     <li><i class="fa fa-circle-o text-red"></i>Declined Offers</li>
 
                                     <li><i class="fa fa-circle-o text-gray"></i>Offer Not Assigned</li>
+                                    <li><i class="fa fa-circle-o text-blue"></i>Smart Assign</li>
                                 </ul>
                             </div><!-- /.col -->
                         
@@ -130,7 +137,7 @@
                                     </th>
                                     <th>
                                         @*@Html.DisplayNameFor(model => model.matchDate)*@
-										Name
+										Referee Name
                                     </th>
                                     <th>
                                         Referee Type
@@ -266,19 +273,19 @@
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Tournament Name
-                                    </th>
-                                    <th>
-                                        @*@Html.DisplayNameFor(model => model.matchDate)*@
-                                        Match Date
-                                    </th>
-                                    <th>
-                                        Location
-                                    </th>
+									<th>
+										Tournament Name
+									</th>
+									<th>
+										Match Date
+									</th>
+									<th>
+										@*@Html.DisplayNameFor(model => model.matchDate)*@
+										Referee Name
+									</th>
+									<th>
+										Referee Type
+									</th>
 
                                 </tr>
                             </thead>

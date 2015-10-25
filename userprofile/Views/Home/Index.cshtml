@@ -254,7 +254,11 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">@Html.DisplayFor(modelItem => offer.MATCH.matchDate)</a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + accordionCounter)" aria-expanded="false" aria-controls="@("collapse" + accordionCounter)">
+												@Html.DisplayFor(modelItem => offer.MATCH.matchDate)
+												-
+												@offer.typeOfOffer
+											</a>
                                         </h4>
                                     </div>
                                     <div id="@("collapse" + accordionCounter)" role="tabpanel" aria-labelledby="@("heading" + accordionCounter)" class="panel-collapse collapse">
@@ -269,7 +273,7 @@
                                                 <div class="col-sm-12" style="text-align:center">
 
                                                     <p>
-                                                        match city:<a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
+                                                        Location:<a style="text-decoration:none" href="@Url.Action( "Details" ,"match", new { id = offer.MATCH.matchId })">
                                                             @Html.DisplayFor(modelItem => offer.MATCH.LOCATION.city)
                                                         </a>
                                                     </p>
@@ -341,7 +345,7 @@
                 </div>
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Accepted offeres</h3>
+                        <h3 class="box-title">Accepted offers</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
@@ -351,9 +355,17 @@
 
                         <table class="table">
 
-                            @foreach (var aoffer in Model.acceptedOffers)
+                            @foreach (var offer in Model.acceptedOffers)
                             {
-                                <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
+                                <tr>
+									<td>
+										<a href="@Url.Action("Details", "match", new {id=offer.MATCH.matchId })">
+											@offer.MATCH.matchDate
+											-
+											@offer.typeOfOffer
+										</a>
+									</td>
+								</tr>
                             }
 
                         </table>
@@ -362,17 +374,24 @@
                 </div>
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Declined offeres</h3>
+                        <h3 class="box-title">Declined offers</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
                     </div><!-- /.box-header -->
                     <div class="box-body " style="display: block;">
                         <table class="table">
-                            @foreach (var aoffer in Model.declinedOffers)
-                            {
-                                <tr><td><a href="@Url.Action("Details", "match", new {id=aoffer.MATCH.matchId })">@aoffer.MATCH.matchDate</a></td></tr>
-                            }
+                            @foreach (var offer in Model.declinedOffers) {
+								<tr>
+									<td>
+										<a href="@Url.Action("Details", "match", new {id=offer.MATCH.matchId })">
+											@offer.MATCH.matchDate
+											-
+											@offer.typeOfOffer
+										</a>
+									</td>
+								</tr>
+							}
                         </table>
                     </div>
                 </div>

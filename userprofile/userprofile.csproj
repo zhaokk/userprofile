@@ -173,10 +173,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\locationController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\offerController.cs" />
     <Compile Include="Controllers\OneOffAVAILABILITiesController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
-    <Compile Include="Controllers\PLAYERssController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
     <Compile Include="Controllers\sportController.cs" />
@@ -1057,6 +1057,7 @@
     <Content Include="Views\PLAYERss\Details.cshtml" />
     <Content Include="Views\PLAYERss\Edit.cshtml" />
     <Content Include="Views\PLAYERss\Index.cshtml" />
+    <Content Include="Views\Notifications\display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
