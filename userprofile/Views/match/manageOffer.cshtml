@@ -33,7 +33,7 @@
 											</div>
 											<div>
 												<div class=" label label-default">@item.dateOfOffer.ToString("dd-MM-yyyy")</div>
-												<h2>
+												<h3>
 													<a href="@Url.Action("Details","types", new { id = item.typeOfOffer })">
 														@item.typeOfOffer
 													</a>
@@ -42,7 +42,7 @@
 														@item.REFEREE.AspNetUser.firstName
 														@item.REFEREE.AspNetUser.lastName
 													</a>
-												</h2>
+												</h3>
 
 											</div>
 											<h3>Qualifications Required</h3>
@@ -210,22 +210,22 @@
 											</div>
 											<div>
 												<p>Qualification Required:</p>
-												<select name="offer[@i][qualification]" class="required" id="qualification@(i)" disabled>
+												@if (item.OFFERQUALs.Count != 0) {
+													<select name="offer[@i][qualification]" class="required" id="qualification@(i)" disabled>
 													@foreach (var selection in (List<SelectListItem>)ViewBag.qualification) {
-														if (item.OFFERQUALs.Count != 0) {
 															if (item.OFFERQUALs.First().qualLevel.ToString() == selection.Value) {
-
 																<option value="@selection.Value" selected>@selection.Text</option>
-
 															}
 															else {
-
 																<option value="@selection.Value">@selection.Text</option>
 															}
-														}
 													}
-												</select>
-												<input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
+													</select>
+													<input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
+												}
+												else {
+													
+												}
 											</div>
 											<input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
 											<div class="form-group">
