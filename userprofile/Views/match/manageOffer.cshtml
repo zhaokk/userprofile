@@ -1,406 +1,417 @@
 ﻿@model userprofile.Models.MoffersViewModels
 @{
-    ViewBag.Title = "Manage Offer Page";
-    int i = 0;
-    int j = 0;
-    int z = 0;
+	ViewBag.Title = "Manage Offer Page";
+	int i = 0;
+	int j = 0;
+	int z = 0;
 }
 <style>
-    .hidde {
-        display: none;
-    }
+	.hidde {
+		display: none;
+	}
 </style>
 <div class="row">
-<div class="col-md-12">
-    <div class="box-solid">
-        <div class="box-body">
+	<div class="col-md-12">
+		<div class="box-solid">
+			<div class="box-body">
 
-            @using (Html.BeginForm())
-            {
-                <div class="row col-md-12">
-                    @foreach (var item in Model.offers)
-                    {
-                        
-                        if (item.status == 0)
-                        { //don't show deleted offers
-                        }
-                        else if (item.status == 1)
-                        {
-                            z++;
-                            <div class="well col-lg-4 col-md-12" id="@i" style="padding-bottom:70px;" >
-                                <div class="row">
-                                    <div class="form-group form-group col-lg-8 col-xs-8 col-sm-8">
+				@using (Html.BeginForm()) {
+					<div class="row col-md-12">
+						@foreach (var item in Model.offers) {
 
-                                        <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+							if (item.status == 0) { //don't show deleted offers
+							}
+							else if (item.status == 1) {
+								z++;
+								<div class="well col-lg-4 col-md-12" id="@i" style="padding-bottom:70px;">
+									<div class="row">
+										<div class="form-group form-group col-lg-8 col-xs-8 col-sm-8">
+											<input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+											<div>
 
+												<input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
+											</div>
+											<div>
+												<div class=" label label-default">@item.dateOfOffer.ToString("dd-MM-yyyy")</div>
+												<h3>
+													<a href="@Url.Action("Details","types", new { id = item.typeOfOffer })">
+														@item.typeOfOffer
+													</a>
+													:
+													<a href="@Url.Action("Details","referee", new { id = item.refId })">
+														@item.REFEREE.AspNetUser.firstName
+														@item.REFEREE.AspNetUser.lastName
+													</a>
+												</h3>
 
+											</div>
+											<h3>Qualifications Required</h3>
+											<div>
 
-                                        <div>
+												@if (item.OFFERQUALs.Count != 0) {
+													foreach (var offerQual in item.OFFERQUALs) { //For each qualification in the offer
+														<div class=" label label-default" style="font-size:12pt">
+															@offerQual.QUALIFICATION.name
+															Level
+															@offerQual.qualLevel
+														</div>
+														<br />
+													}
+												}
+												else {
+													<div class=" label label-default" style="font-size:12pt">
+														No Qualifications Required
+													</div>
+													<br />
+												}
+											</div>
+											<br />
+											<div class="form-group">
+												<div class="callout callout-success">
+													<h4>
+														<i class="icon fa fa-check"> </i>
+														This offer has been accepted!
+													</h4>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 col-xs-4">
+											<a href="#" class="btn btn-info btn-sm delete" id="delete@(i)">
+												<span class="glyphicon glyphicon-remove"></span> Remove offer
+											</a>
+										</div>
+									</div>
+								</div>
+							}
+							else if (item.status == 6) { //Offers before committed to database
+								
+								<div class="well col-lg-4 col-md-12" id="@i" style="padding-bottom:70px;" hidden>
+									<div class=" label label-default">N/A</div>
+									<div class="row">
+										<div class="form-group form-group col-lg-8 col-xs-8 col-sm-8">
+											<input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+											<div>
+												<input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
+											</div>
+											<div>
+												<br />
+												<p>Select the type of offer:</p>
+												@Html.DropDownList("types", (List<SelectListItem>)ViewBag.types, "Type", new { @Name = "offer[" + i + "][typename]" })
 
-                                            <input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
-                                        </div>
-                                        <div>
-                                            <p> offertype :</p>
-                                            <div class=" label label-default">@item.typeOfOffer</div>
+											</div>
+											<div>
+												<br />
+												<p>Select the Qualification & Level Required:</p>
+												@Html.DropDownList("types", (List<SelectListItem>)ViewBag.qualification, "Qualification", new { @Name = "offer[" + i + "][qualification]" })
+												<input type="number" min="0" max="9" name="offer[@i][qlevel]">
+											</div>
+											<div class="form-group">
+												<div class="callout callout-info">
+													<h4>
+														<i class="icon fa fa-info"> </i>
+														This offer has not been created!
+													</h4>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 col-xs-4">
+											<a href="#" class="btn btn-info btn-sm delete" id="delete@(i)">
+												<span class="glyphicon glyphicon-remove"></span> Remove new
+											</a>
+										</div>
+									</div>
 
-                                        </div>
-                                        <div>
-                                            <p> qualification name:</p>
-                                           
-                                            <div class=" label label-default">@item.OFFERQUALs.First().QUALIFICATION.name</div>
-                                            <p>qualification Level:</p>
+									@{j++;}
 
-                                            <div class=" label label-default">@item.OFFERQUALs.First().qualLevel</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p>The issue date of the offer is: </p>
-                                            <div class=" label label-default">@item.dateOfOffer.ToString("dd-MM-yyyy")</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p>The state of the offer is: </p>
+								</div>
 
-                                            <div class="label label-info">Accept offer</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-xs-4">
-                                        <a href="#" class="btn btn-info btn-sm delete" id="delete@(i)">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove offer
-                                        </a>
-                                    </div>
-                                </div>
+							}
+							else { //Offer which hasn't been accepted or isn't just created
 
-                               
+								<div class="well col-lg-4 col-md-12" id="@i">
+									<div class="row">
 
-                            </div>
-     
+										<div class="form-group col-lg-7 col-xs-8 col-sm-8">
+											<div class=" label label-default">@item.dateOfOffer.ToString("dd-MM-yyyy")</div>
+											<input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
+											@if (item.status != 5) {
+												<div id="a@(i)">
+													<p>Please select a Referee:</p>
 
-                        }
-                        else if (item.status == 6)
-                        {
-                            <div class="well col-lg-4 col-md-12" id="@i"style="padding-bottom:70px;"  hidden>
-                                <div class="row">
-                                    <div class="form-group form-group col-lg-8 col-xs-8 col-sm-8">
-  
-                                        <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+													<select name="offer[@i][refID]">
+														@if (item.refId == null || item.status == 4) {
+															<option value="">Available Referees</option>
+															foreach (var selection in @Model.screeneddropdown[i - z]) {
+																<option value="@selection.Value">@selection.Text</option>
+															}
+														}
+														else {
+															foreach (var selection in @Model.screeneddropdown[i - z]) {
 
+																if (item.refId.ToString() == selection.Value) {
 
+																	<option value="@selection.Value" selected>@selection.Text</option>
 
-                                        <div>
+																}
+																else {
 
-                                            <input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
-                                        </div>
-                                        <div>
-                                            <p>Please select one offertype :</p>
-                                            @Html.DropDownList("types", (List<SelectListItem>)ViewBag.types, "select referee type", new { @Name = "offer[" + i + "][typename]" })
-
-                                        </div>
-                                        <div>
-                                            <p>Please select offer qualification :</p>
-                                            @Html.DropDownList("types", (List<SelectListItem>)ViewBag.qualification, "select qualification type", new { @Name = "offer[" + i + "][qualification]" })
-                                            <input type="number" min="0" max="9" name="offer[@i][qlevel]">
-                                        </div>
-                                        <div class="form-group">
-                                            <p>The issue date of the offer is: </p>
-                                            <div class=" label label-default">N/A</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <p>The state of the offer is: </p>
-                                         
-                                            <div class="label label-info">New Offer</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-xs-4">
-                                        <a href="#" class="btn btn-info btn-sm delete" id="delete@(i)">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove new
-                                        </a>
-                                    </div>
-                                    </div>
-
-                                @{j++;}
-
-                            </div>
-
-                        }
-                        else
-                        {
-                           
-                            <div class="well col-lg-4 col-md-12" id="@i"> <div class="row">
-                               @*@Html.ActionLink("Delete", "Delete", "offer", new { id = item.offerId }, new { @class = "btn btn-danger pull-right" })*@
-                               
-                                   <div class="form-group col-lg-7 col-xs-8 col-sm-8">
-                                      
-                                       <input type="text" value="@item.status" id="s@(i)" name="offer[@i][status]" hidden>
-                                     @if (item.status != 5)
-                                     {
-                                        <div id="a@(i)">
-                                            <p>Please select a Referee :</p>
-
-                                            <select name="offer[@i][refID]">
-                                                @if (item.refId == null || item.status == 4)
-                                                {
-                                                    <option value="">select one referees</option>
-                                                    foreach (var selection in @Model.screeneddropdown[i-z])
-                                                    {
-                                                        <option value="@selection.Value">@selection.Text</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    foreach (var selection in @Model.screeneddropdown[i-z])
-                                                    {
-
-                                                        if (item.refId.ToString() == selection.Value)
-                                                        {
-
-                                                            <option value="@selection.Value" selected>@selection.Text</option>
-
-                                                        }
-                                                        else
-                                                        {
-
-                                                            <option value="@selection.Value">@selection.Text</option>
-                                                        }
+																	<option value="@selection.Value">@selection.Text</option>
+																}
 
 
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                     }
-                                     else
-                                     {
-                                            <div id="a@(i)" hidden>
-                                                <p>Please select a Referee :</p>
+															}
+														}
+													</select>
+												</div>
+											}
+											else {
+												<div id="a@(i)" hidden>
+													<p>Please select a Referee:</p>
 
-                                                <select name="offer[@i][refID]">
-                                                    @if (item.refId == null || item.status == 4)
-                                           {
-                                                        <option value="">select one referees</option>
-                                               foreach (var selection in @Model.screeneddropdown[i-z])
-                                               {
-                                                <option value="@selection.Value">@selection.Text</option>
-                                               }
-                                           }
-                                           else
-                                           {
-                                               foreach (var selection in @Model.screeneddropdown[i-z])
-                                               {
+													<select name="offer[@i][refID]">
+														@if (item.refId == null || item.status == 4) {
+															<option value="">Available Referees</option>
+															foreach (var selection in @Model.screeneddropdown[i - z]) {
+																<option value="@selection.Value">@selection.Text</option>
+															}
+														}
+														else {
+															foreach (var selection in @Model.screeneddropdown[i - z]) {
 
-                                                   if (item.refId.ToString() == selection.Value)
-                                                   {
+																if (item.refId.ToString() == selection.Value) {
+																	<option value="@selection.Value" selected>@selection.Text</option>
+																}
+																else {
+																	<option value="@selection.Value">@selection.Text</option>
+																}
+															}
+														}
+													</select>
+												</div>
+											}
 
-                                                    <option value="@selection.Value" selected>@selection.Text</option>
+											<div>
+												<p>Type of Offer:</p>
 
-                                                   }
-                                                   else
-                                                   {
+												<select name="offer[@i][typename]" class="required" id="type@(i)" disabled>
+													@foreach (var selection in (List<SelectListItem>)ViewBag.types) {
+														if (item.typeOfOffer.ToString() == selection.Value) {
 
-                                                    <option value="@selection.Value">@selection.Text</option>
-                                                   }
+															<option value="@selection.Value" selected>@selection.Text</option>
 
+														}
+														else {
 
-                                               }
-                                           }
-                                                </select>
-                                            </div>
-                                                }
-                                         
-                                            <div>
-                                                <p>offertype :</p>
+															<option value="@selection.Value">@selection.Text</option>
+														}
 
-                                                <select name="offer[@i][typename]" class="required" id="type@(i)" disabled>
-                                                    @foreach (var selection in (List<SelectListItem>)ViewBag.types)
-                                        {
-                                            if (item.typeOfOffer.ToString() == selection.Value)
-                                            {
+													}
+												</select>
+											</div>
+											<div>
+												<p>Qualification Required:</p>
+												@if (item.OFFERQUALs.Count != 0) {
+													<select name="offer[@i][qualification]" class="required" id="qualification@(i)" disabled>
+													@foreach (var selection in (List<SelectListItem>)ViewBag.qualification) {
+															if (item.OFFERQUALs.First().qualLevel.ToString() == selection.Value) {
+																<option value="@selection.Value" selected>@selection.Text</option>
+															}
+															else {
+																<option value="@selection.Value">@selection.Text</option>
+															}
+													}
+													</select>
+													<input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
+												}
+												else {
+													
+												}
+											</div>
+											<input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
+											<div class="form-group">
+												<p>The state of the offer is: </p>
+												@switch (item.status) {
+													case 1:
+														<div class="label label-success">Accepted</div>
+														break;
+													case 2:
+														<div class="form-group">
+															<div class="callout callout-danger">
+																<h4>
+																	<i class="icon fa fa-ban"> </i>
+																	This offer has been declined!
+																</h4>
+															</div>
+														</div>
+														break;
+													case 3:
+														<div class="form-group">
+															<div class="callout callout-warning">
+																<h4>
+																	<i class="icon fa fa-warning"> </i>
+																	This offer is pending!
+																</h4>
+															</div>
+														</div>
+														break;
+													case 4:
+														<div class="form-group">
+															<div id="calloutChangingOffer@(i)" class="callout callout-danger">
+																<h4>
+																	<i id="icon@(i)"  class="icon fa fa-ban"> </i>
+																	<text id="changingText@(i)">This offer is not assigned!</text>
+																</h4>
+															</div>
+														</div>
+														break;
+													case 5:
+													<div class="form-group">
+														<div id="calloutChangingOffer@(i)" class="callout callout-info">
+															<h4>
+																<i id="icon@(i)" class="icon fa fa-info"> </i>
+																<text id="changingText@(i)">This offer will be assigned by Smart Assign!</text>
+															</h4>
+														</div>
+													</div>
+														break;
+													default:
+														@:ERROR!
+														break;
 
-                                                <option value="@selection.Value" selected>@selection.Text</option>
+												}
+											</div>
+										</div>
 
-                                            }
-                                            else
-                                            {
-
-                                                <option value="@selection.Value">@selection.Text</option>
-                                            }
-
-                                        }
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <p> offer qualification :</p>
-                                                <select name="offer[@i][qualification]" class="required" id="qualification@(i)" disabled>
-                                                    @foreach (var selection in (List<SelectListItem>)ViewBag.qualification)
-                                        {
-                                            if (item.OFFERQUALs.Count != 0)
-                                            {
-                                                if (item.OFFERQUALs.First().qualLevel.ToString() == selection.Value)
-                                                {
-
-                                                    <option value="@selection.Value" selected>@selection.Text</option>
-
-                                            }
-                                            else
-                                            {
-
-                                                    <option value="@selection.Value">@selection.Text</option>
-                                            }
-                                            }
-                                        }
-                                                </select>
-                                                <input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
-                                            </div>
-                                            <input type="text" value="@item.offerId" name="offer[@i][ID]" hidden>
-
-                                            <div class="form-group">
-                                                <p>The issue date of the offer is: </p>
-                                                <div class=" label label-default">@item.dateOfOffer.ToString("dd-MM-yyyy")</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <p>The state of the offer is: </p>
-                                                @switch (item.status)
-                                    {
-                                        case 1:
-                                                        <div class="label label-success">Accepted</div>
-                                            break;
-                                        case 2:
-                                        <div class="label label-danger">Declined</div>
-                                            break;
-                                        case 3:
-                                        <div class="label label-warning">Pending</div>
-                                            break;
-                                        case 4:
-                                        <div class="label label-default">Unassigned</div>
-                                            break;
-                                        case 5:
-                                        <div class="label label-primary smartAssign">SmartAssign</div>
-                                            break;
-                                        default:
-
-                                            break;
-
-                                    }
-                                                <div class="label label-info"></div>
-                                            </div>
-                                        </div>
-
-                                <div class="col-lg-5 col-xs-3">
-                                    <a href="#" class="btn btn-warning btn-sm delete" id="delete@(i)">
-                                        <span class="glyphicon glyphicon-remove"></span> Remove exist
-                                    </a>
-                                    <a href="#" class="btn btn-primary btn-sm assign" id="assign@(i)">
-                                        Smart Assign on/off
-                                    </a>
-                                </div>
-
+										<div class="col-lg-5 col-xs-3">
+											<a href="#" class="btn btn-warning btn-sm delete" id="delete@(i)">
+												<span class="glyphicon glyphicon-remove"></span> Remove exist
+											</a>
+											<a href="#" class="btn btn-primary btn-sm assign" id="assign@(i)">
+												Smart Assign on/off
+											</a>
+										</div>
 
 
 
-                            </div>
-                                </div>
-                           
-                        }
-                        i++;
-                    }
-                </div>
-                <div class="col-md-6" id="addnew">
-                    @if (j == 0) { }
-                    else
-                    {
+
+									</div>
+								</div>
+
+							}
+							i++;
+						}
+					</div>
+					<div class="col-md-6" id="addnew">
+						@if (j == 0) { }
+						else {
 
 
 
-                        <a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
+							<a href="#" id="addnewoffer" class="btn btn-success" onclick="newOffer()">Add New Offer</a>
 
 
 
-                    }
+						}
 
-                    @Html.HiddenFor(model => model.mID)
-                    <input type="text" id="flag" value="@j" hidden>
+						@Html.HiddenFor(model => model.mID)
+						<input type="text" id="flag" value="@j" hidden>
 
 
 
-                    <input onload="check()" type="submit" value="Apply" class="btn btn-success pull-right" />
+						<input onload="check()" type="submit" value="Apply" class="btn btn-success pull-right" />
 
-                </div>
-            }
+					</div>
+				}
 
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>
-    </div>
 
 <script>
-    var j = $("#flag").val();
-    var mid=$("#mID").val();
-    var intj = parseInt(j);
-    var v = 9 - intj;
-    function newOffer() {
-       
-        $("#" + v).show("slow", function () {
-            // Animation complete.
-            v++;
-        });
-       
-        if (v>=j) {
+	var j = $("#flag").val();
+	var mid = $("#mID").val();
+	var intj = parseInt(j);
+	var v = 9 - intj;
+	function newOffer() {
 
-            $("#addnewoffer").css("display", "none");
-        }
-    }
-    $(".delete").click(function () {
-        var fullID = $(this).attr('id');
-        var num = fullID.charAt(6);
-        var statusInputId = "#"+"s" + num;
-        var statusOfOffer = $(statusInputId).val();
-        if (statusOfOffer == "6") {
-            $("#" + num).hide("slow", function () {
+		$("#" + v).show("slow", function () {
+			// Animation complete.
+			v++;
+		});
 
-            });
-        } else {
-            if (confirm("Are you sure you want to delete this offer?") == true) {
-                $("#" + num).hide("slow", function () {
-                    $(statusInputId).val(0);
-                });
-            } else {
-            }
-        }
-        
-    });
-    $(".assign").click(function () {
-        var fullID = $(this).attr('id');
-        var num = fullID.charAt(6);
-        var selectRefId="#"+"a"+num;
-        var statusInputId = "#" + "s" + num;
-        var statusOfOffer = $(statusInputId).val();
-        //change status
-         
-        
-        //hide or show the select referee
-        if ($(selectRefId).css("display") == "none") {
-            $(selectRefId).css("display", "block");
-            $(statusInputId).val(4);
-        } else {
-            $(selectRefId).css("display", "none");
-            $(statusInputId).val(5);
-        }
-         
-      
+		if (v >= j) {
 
-    });
+			$("#addnewoffer").css("display", "none");
+		}
+	}
+	$(".delete").click(function () {
+		var fullID = $(this).attr('id');
+		var num = fullID.charAt(6);
+		var statusInputId = "#" + "s" + num;
+		var statusOfOffer = $(statusInputId).val();
+		if (statusOfOffer == "6") {
+			$("#" + num).hide("slow", function () {
 
-    function UnqualifiedReferee(qid,qlevel) {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("qualReferee", "Match")",
-           
-            contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({'qid':1,'qlevel':1,'mid':mid}),
-        success: function (data) { alert(data); },
-        failure: function (errMsg) {
-            alert(errMsg);
-        }
-    });
-    }
+			});
+		} else {
+			if (confirm("Are you sure you want to delete this offer?") == true) {
+				$("#" + num).hide("slow", function () {
+					$(statusInputId).val(0);
+				});
+			} else {
+			}
+		}
+
+	});
+	$(".assign").click(function () {
+		var fullID = $(this).attr('id');
+		var num = fullID.charAt(6);
+		var selectRefId = "#" + "a" + num;
+		var statusInputId = "#" + "s" + num;
+		var statusOfOffer = $(statusInputId).val();
+		var callout = "#" + "calloutChangingOffer" + num;
+		var changingIcon = "#icon" + num;
+		var changingTexts = "#changingText" + num;
+		//change status
+
+
+		//hide or show the select referee
+		if ($(selectRefId).css("display") == "none") {
+			$(selectRefId).css("display", "block");
+			$(statusInputId).val(4);
+			$(callout).removeClass("callout-info");
+			$(callout).addClass("callout-danger");
+			$(changingIcon).removeClass("fa-info");
+			$(changingIcon).addClass("fa-ban");
+			$(changingTexts).text("This offer is not assigned!");
+		} else {
+			$(selectRefId).css("display", "none");
+			$(statusInputId).val(5);
+			$(callout).removeClass("callout-danger");
+			$(callout).addClass("callout-info");
+			$(changingIcon).removeClass("fa-ban");
+			$(changingIcon).addClass("fa-info");
+			$(changingTexts).text("This offer will be assigned by Smart Assign!");
+		}
+
+
+
+	});
+
+	function UnqualifiedReferee(qid, qlevel) {
+		$.ajax({
+			type: "POST",
+			url: "@Url.Action("qualReferee", "Match")",
+
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify({ 'qid': 1, 'qlevel': 1, 'mid': mid }),
+			success: function (data) { alert(data); },
+			failure: function (errMsg) {
+				alert(errMsg);
+			}
+		});
+	}
 
 
 
