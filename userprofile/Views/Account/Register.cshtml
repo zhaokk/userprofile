@@ -42,15 +42,7 @@
                     @Html.TextBoxFor(m => m.country, new { @class = "form-control" })
                 </div>
             </div>*@
-                        <div class="form-group row" >
-                            @Html.LabelFor(m => m.dob, new { @class = "col-md-2 control-label" })
-
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.dob)
-                                @Html.ValidationMessageFor(model => model.dob)
-
-                            </div><div class="col-md-2 " id="dobinfor"></div>
-                        </div>
+                        
                         @*<div class="form-group">
                 @Html.LabelFor(m => m.street, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -78,6 +70,15 @@
                                 @Html.ValidationMessageFor(m => m.LastName)
                             </div>
                         </div>
+						<div class="form-group row">
+							@Html.LabelFor(m => m.dob, "Date of Birth", new { @class = "col-md-2 control-label" })
+
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.dob)
+								@Html.ValidationMessageFor(model => model.dob)
+
+							</div><div class="col-md-2 " id="dobinfor"></div>
+						</div>
                         <div class="form-group">
                             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
@@ -86,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.phoneNum, new { @class = "col-md-2 control-label" })
+                            @Html.LabelFor(m => m.phoneNum, "Phone Number", new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
                                 @Html.TextBoxFor(m => m.phoneNum, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.phoneNum)
@@ -94,7 +95,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ffa, new { @class = "col-md-2 control-label" })
+                            @Html.LabelFor(m => m.ffa, "FFA # (if applicable)", new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
                                 @Html.EditorFor(m => m.ffa, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.ffa)
