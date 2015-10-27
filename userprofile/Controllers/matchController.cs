@@ -362,7 +362,7 @@ namespace userprofile.Controllers
                 foreach (REFEREE re in db.REFEREEs)
                 {
                     var sli = new SelectListItem();
-                    sli.Text = re.AspNetUser.firstName + " " + re.AspNetUser.LastName;
+                    sli.Text = re.AspNetUser.firstName + " " + re.AspNetUser.lastName;
                     sli.Value = re.refId.ToString();
                     refereesList.Add(sli);
 
@@ -399,7 +399,7 @@ namespace userprofile.Controllers
                         
                     foreach(REFEREE re in getAvailableRefereesForOffer(aoffer.offerId)){
                         var sli = new SelectListItem();
-                        sli.Text = re.AspNetUser.lastName + " " + re.AspNetUser.firstName;
+                        sli.Text = re.AspNetUser.firstName + " " + re.AspNetUser.lastName;
                         sli.Value = re.refId.ToString();
                         screenedList.Add(sli);
                     }
