@@ -352,7 +352,7 @@
 		var statusOfOffer = $(statusInputId).val();
 		if (statusOfOffer == "6") {
 			$("#" + num).hide("slow", function () {
-
+			    $("select[name='offer["+num+"][typename]']").val("")
 			});
 		} else {
 			if (confirm("Are you sure you want to delete this offer?") == true) {
