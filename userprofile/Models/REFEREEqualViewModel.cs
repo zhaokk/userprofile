@@ -43,8 +43,11 @@ namespace userprofile.Models
             this.quals = new List<SelectQualEditorViewModel>();
             foreach (var qual in db.QUALIFICATIONS)
             {
-                var qvm = new SelectQualEditorViewModel(qual);
-                this.quals.Add(qvm);
+                if (qual.status != 0) {
+                    var qvm = new SelectQualEditorViewModel(qual);
+                    this.quals.Add(qvm);
+                }
+     
             }
 
         }
@@ -104,15 +107,17 @@ namespace userprofile.Models
             foreach (var qual in allquals)
             {
                 var qvm = new SelectQualEditorViewModel(qual);
+                
                 this.quals.Add(qvm);
+                
             }
-            /*foreach (var qual in refe.QUALIFICATIONS)
+            foreach (var qual in refe.USERQUALs)
             {
-                var checkqual = this.quals.Find(q => q.qualName == qual.name);
+                var checkqual = this.quals.Find(q => q.qualName == qual.QUALIFICATION.name);
                 checkqual.Selected = true;
+                checkqual.qlevel = qual.qualLevel;
 
-
-            }*/
+            }
 
 
         }
@@ -132,6 +137,7 @@ namespace userprofile.Models
         {
             
             this.qualName = qual.name;
+            qlevel = 1;
         }
         public bool Selected { get; set; }
 
@@ -139,6 +145,8 @@ namespace userprofile.Models
         
         [Required]
         public String qualName { get; set; }
+        
+        public int qlevel { get; set; }
 
     }
     //public class SelectQualEditorViewModel

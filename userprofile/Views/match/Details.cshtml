@@ -190,7 +190,10 @@
                         <tbody>
                             @foreach (var item in Model.Item2)
                             {
+                                if (item.status == 0) {
 
+                                }
+                                else { 
                                 if (item.status == 4 || item.status == 5)
                                 {
                                      <tr>
@@ -270,6 +273,7 @@
 											}
                                         </td>
                                     </tr>
+                                }
                                 }
                             }
                         </tbody>

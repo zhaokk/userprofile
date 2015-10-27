@@ -37,6 +37,8 @@ namespace userprofile.Models
         public int qualificationLevel { get; set; }
         [Display(Name = "Status")]
         public int status { get; set; }
+
+        public int qlevelForEditView { get; set; }
     
         public virtual ICollection<OFFERQUAL> OFFERQUALs { get; set; }
         public virtual SPORT SPORT1 { get; set; }

@@ -104,6 +104,7 @@ namespace userprofile.Controllers
                         if (qual.Selected == true)
                         {
                             USERQUAL newQual = new USERQUAL();
+                            newQual.qualLevel = qual.qlevel;
                             newQual.qualificationId = thequal.qualificationId;
                             re.USERQUALs.Add(newQual);
                         }
@@ -159,6 +160,7 @@ namespace userprofile.Controllers
                       QUALIFICATION thequal = db.QUALIFICATIONS.First(q => q.name == qual.qualName);
                       USERQUAL newQual = new USERQUAL();
                       newQual.qualificationId = thequal.qualificationId;
+                      newQual.qualLevel = qual.qlevel;
                       refe.USERQUALs.Add(newQual);
                   }
               }

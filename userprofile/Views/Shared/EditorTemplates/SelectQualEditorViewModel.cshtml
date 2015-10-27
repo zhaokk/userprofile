@@ -10,5 +10,6 @@
        <b> @Html.CheckBoxFor(model => model.Selected)</b>
 
         @Html.DisplayFor(model => model.qualName)
+        @Html.TextBoxFor(model => model.qlevel, new { min = "0",max="4" ,type = "number" })
     </label>
 </div>

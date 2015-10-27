@@ -26,6 +26,8 @@ namespace userprofile.Models
 
         [Display(Name = "Referee Id")]
         public int refId { get; set; }
+         [Range(0, 10000,
+            ErrorMessage = "max distance  must be between 1 and 10000")]
          [Display(Name = "Travel Distance")]
         public Nullable<int> distTravel { get; set; }
         [Display(Name = "User Id")]
