@@ -56,7 +56,7 @@ namespace userprofile.Controllers
             if (ModelState.IsValid)
             {
 				IdentityManager idManager = new IdentityManager();
-				idManager.AddUserToRole(player.AspNetUser.Id, "Player");
+				idManager.AddUserToRole(player.userId, "Player");
                 db.PLAYERs.Add(player);
                 db.SaveChanges();
                 return RedirectToAction("Index");

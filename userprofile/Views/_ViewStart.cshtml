@@ -4,25 +4,25 @@
         Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
         roleSet = true;
     }
-    if (User.IsInRole("Organizer"))
+    else if (User.IsInRole("Organizer"))
     {
         Layout = "~/Views/Shared/_AdminLteLayout.cshtml";
         roleSet = true;
     }
     
-    if (User.IsInRole("Referee"))
+    else if (User.IsInRole("Referee"))
     {
        
         Layout = "~/Views/shared/_LayoutForRE.cshtml";
         roleSet = true;
 
     }
-    if (User.IsInRole("Player")) {
+    else if (User.IsInRole("Player")) {
         Layout = "~/Views/shared/_LayoutForRE.cshtml";
         roleSet = true;
     
     }
-    if(!roleSet) { 
+    else if(!roleSet) { 
         Layout = "~/Views/Shared/_LayoutForAnyone.cshtml";
     }
     
