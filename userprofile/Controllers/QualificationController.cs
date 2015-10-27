@@ -30,6 +30,28 @@ namespace userprofile.Controllers
             }
             QUALIFICATION qualification = db.QUALIFICATIONS.Find(id);
             var refs = db.USERQUALs.Where(a => a.qualificationId == qualification.qualificationId).Include(m => m.REFEREE).ToList();
+            var reflist = new List<SelectListItem>();
+            var refeWithoutQual = db.REFEREEs.ToList();
+            var flag=true;
+            foreach (REFEREE refe in db.REFEREEs)
+            {
+                 flag= true;
+                foreach (var userqual in refs) { 
+                if (refe.refId==userqual.refId)
+                {
+                    flag = false;
+                   
+                }
+                }
+                if (flag) {
+                    var qitem = new SelectListItem();
+                    qitem.Text = refe.AspNetUser.firstName + " " + refe.AspNetUser.lastName;
+                    qitem.Value = refe.refId.ToString();
+                    reflist.Add(qitem);
+                }
+             
+            }
+            ViewBag.refeList = reflist;
             if (qualification == null)
             {
                 return HttpNotFound();
@@ -39,7 +61,18 @@ namespace userprofile.Controllers
             return View(combined);
             //return View(qualification);
         }
+        public ActionResult addReferee(int refereeID, int qlevel, int qualid) {
+            USERQUAL userq = new USERQUAL()
+            {
+                refId = refereeID,
+                qualificationId = qualid,
+                qualLevel = qlevel
 
+            };
+            db.USERQUALs.Add(userq);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = qualid });
+        }
         // GET: /qualification/Create
         public ActionResult Create()
         {

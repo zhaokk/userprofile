@@ -87,24 +87,38 @@
                         <tbody>
                             @{ var counter = 0;}
                             @foreach (var item in Model.Item2)
-            {
-                    <tr>
-                        <td>
-                            <a href="@Url.Action( "Details","REFEREE", new { id = item.REFEREE.refId })">
-                                @item.REFEREE.AspNetUser.UserName
-                            </a>
-                        </td>
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action( "Details","REFEREE", new { id = item.REFEREE.refId })">
+                                            @item.REFEREE.AspNetUser.UserName
+                                        </a>
+                                    </td>
 
 
-                        <td>
-                            @item.qualLevel
-                        </td>
-                        <td>
-                            Buttons go here when actions exist for editing level/removing a userqual
-                        </td>
-                    </tr>
-                counter++;
-            }
+                                    <td>
+                                        @item.qualLevel
+                                    </td>
+                                    <td>
+                                        Buttons go here when actions exist for editing level/removing a userqual
+                                    </td>
+                                </tr>
+                                counter++;
+                            }
+                            <tr>
+                                <td>
+                                    @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.refeList, "Select a new referee")
+
+                                </td>
+
+
+                                <td>
+                                    <input type="number" max="@Model.Item1.qualificationLevel" min="0" id="newReferee" value="1">
+                                </td>
+                                <td>
+                                    <button type="button" id="update" class="btn bg-purple" disabled>Add new Referee</button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -112,3 +126,26 @@
             </div>
             </div>
         </div>
+<script>
+    $("#referees").change(function () {
+        if ($(this).val() != "") {
+            $("#update").prop('disabled', false);
+
+        } else {
+            $("#update").prop('disabled', true);
+        }
+
+    })
+    $("#update").click(function () {
+        $.post("../addReferee", {
+            'refereeID': $("#referees").val(),
+            'qlevel': $("#newReferee").val(),
+            'qualid': @Model.Item1.qualificationId,
+        } ).done(function (data) {
+            $("body").html(data);
+        });
+       
+    })
+
+
+</script>
