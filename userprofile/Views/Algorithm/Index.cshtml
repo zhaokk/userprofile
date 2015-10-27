@@ -85,15 +85,15 @@
     <form class="form-horizontal">
         <div class="box-body">
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">use algorithm to assign all empty offer</label>
+                <label for="inputEmail3" class="col-sm-4 control-label">Assign offers for year</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" name="my-checkbox" id="assignAll" checked>
+                    <input type="checkbox" name="my-checkbox" id="assignAll" unchecked>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-4 control-label">algorithm running time span</label>
+                <label for="inputPassword3" class="col-sm-4 control-label">Run Algorithm on specific dates</label>
                 <div class="col-sm-8">
-                    <input type="text" name="daterange" class="form-control" size="50" value="01/01/2015 1:30 PM - 01/01/2015 2:00 PM" /><br />
+                    <input type="text" name="daterange" class="form-control" size="50" value="01/01/2015 - 01/01/2015 " /><br />
                 </div>
             </div>
 
@@ -104,16 +104,16 @@
         </div><!-- /.box-footer -->
     </form>
 </div>
-<div class="box box-success result">
-    <div class="box-header with-border">
-        <h3 class="box-title">Smart assign Result</h3>
-    </div><!-- /.box-header -->
-    <!-- form start -->
-   
-</div>
+
 <div class="modal"><!-- Place at bottom of page --></div>
     <script>
+        var date = new Date();
+        date.setDate(date.getDate() +14)
         $body = $(".content");
+        //$(document).ready(function () {
+        //    $('input[name="daterange"]').data('daterangepicker').setStartDate('2014-03-01');
+        //    $('input[name="daterange"]').data('daterangepicker').setEndDate(new Date());
+        //});
         $(document).on({
             ajaxStart: function () { $body.addClass("loading"); },
             ajaxStop: function () { $body.removeClass("loading"); }
@@ -121,15 +121,18 @@
         $(function () {
             $('input[name="daterange"]').daterangepicker({
                 timePicker: false,
-                
+              
                 locale: {
-                    format: 'MM/DD/YYYY'
-                }
+                    format: 'DD/MM/YYYY'
+                },
+                startDate: new Date(),
+                endDate: date,
+                
             });
         });
         function runsmartassgin() {
-            var start = $('input[name="daterange"]').data('daterangepicker').startDate.format('MM/DD/YYYY');
-            var end = $('input[name="daterange"]').data('daterangepicker').endDate.format('MM/DD/YYYY');
+            var start = $('input[name="daterange"]').data('daterangepicker').startDate.format('DD/MM/YYYY');
+            var end = $('input[name="daterange"]').data('daterangepicker').endDate.format('DD/MM/YYYY');
             var assignAll = false;
             if ($('#assignAll').val() == "on") {
                 assignAll = true;

@@ -21,11 +21,23 @@ using userprofile.Models;
 namespace userprofile.Controllers {
 	public class AlgorithmController : Controller {
 
+		/// <summary>
+		///Runs algorithm without any dates.  Used in previous version
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult showResults() {
 			AssignReferees();
 			modelResult.sortResult();
 			return View(modelResult);
 		}
+
+		/// <summary>
+		/// Runs algorithm passing in dates and bool.  General way algorithm is called.
+		/// </summary>
+		/// <param name="assignAll">Decide if assign using dates or just assign all offers within the year</param>
+		/// <param name="startDate">Start date of algorithm</param>
+		/// <param name="endDate">End date of algorithm</param>
+		/// <returns></returns>
         [HttpPost]
         public ActionResult showResults(Boolean assignAll, System.DateTime startDate, System.DateTime endDate) {
 			dateStart = startDate;
@@ -36,11 +48,18 @@ namespace userprofile.Controllers {
             return View(modelResult);
         }
 
+		/// <summary>
+		/// Shows admin index page
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Index() {
 
 			return View();
 		}
 
+		/// <summary>
+		/// General class to have a referee and offer combined
+		/// </summary>
 		class pair {
 			public int referee; //referee
 			public int offer; //offer
@@ -50,6 +69,15 @@ namespace userprofile.Controllers {
 				offer = off;
 			}
 		}
+
+		/// <summary>
+		/// Class for what fields a referee has:
+		///		available: Dictionary of available offers (for this referee), int: offerID, Item: contains further information if needed on offer in relation to ref
+		///		unavailable: Dictionary of unavailable offers (for this referee), int: offerID, Item: contains further information if needed on offer in relation to ref
+		///		assignedTo: Hashset of ints which are offerIds which this ref is assigned to
+		///		canAssign: How many offers the referee can be assigned to
+		///		actualRef: Referee data for this referee as assigned to in db		
+		/// </summary>
 		class refInfo {
 			public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
 			public HashSet<int> assignedTo; //what that offer/referee is assigned to (offer is always only 1)
@@ -65,6 +93,13 @@ namespace userprofile.Controllers {
 			}
 		}
 
+
+		/// <summary>
+		///		available: Dictionary of available referees (for this offer), int: refID, Item: contains further information if needed on referee in relation to this offer
+		///		unavailable: Dictionary of unavailable referees (for this offer), int: refID, Item: contains further information if needed on referee in relation to this offer
+		///		assignedTo: refId of offer it is assigned to.  -1 if unassigned
+		///		actualOffer: Referee data for this offer as assigned to in db
+		/// </summary>
 		class offerInfo {
 			public Dictionary<int, Item> available, unavailable; //available & unavailable referees/offers of that offer/referee
 			public int assignedTo;
@@ -78,6 +113,10 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Further information needed for either offer/referee for a single referee/offer
+		///		tabu: How many turns should the referee/offer pair not be assigned to again
+		/// </summary>
 		class Item {
 			public int tabu; //At what temperature this item will not be tabu anymore
 
@@ -86,33 +125,37 @@ namespace userprofile.Controllers {
 			}
 		}
 
-		Dictionary<int, offerInfo> dOffers;
-		Dictionary<int, refInfo> dReferees; //offers, referees
-		LinkedList<pair> llCompleted; //Best options for offers/referees
-		HashSet<int> hFilledOffers, hCanBeFilledOffers;
-		Dictionary<int, HashSet<int>> dQualificationRefStorage;
-		Dictionary<int, OFFER> dOfferStorage;
-		Dictionary<int, REFEREE> dRefereeStorage;
-		Dictionary<int, MATCH> dMatchStorage;
-		List<Dictionary<int, offerInfo>> bestOffers;
-		List<Dictionary<int, refInfo>> bestReferees;
-		Dictionary<int, Dictionary<int, bool>> matchClashes;
-		Dictionary<int, int> dGamesAvailableToRef;
-		DateTime dateCurrent, dateStart, dateEnd;
+		Dictionary<int, offerInfo> dOffers;  //Dictionary of offers that need to be assigned
+		Dictionary<int, refInfo> dReferees; //Dictionary of referees that can be assigned
+		LinkedList<pair> llCompleted; //List of assigned offers/referee pairs
+		HashSet<int> hFilledOffers; //hashset of filled offers (so can be easily unassigned)
+		HashSet<int> hCanBeFilledOffers; //Hashset of offers which have available referees (so can easily fill to be position)
+		Dictionary<int, HashSet<int>> dQualificationRefStorage; //Dictionary of an int (qualificationID), and a Hashset of referee Id's with that qualification ID
+		Dictionary<int, OFFER> dOfferStorage; //storage of actual offers that need to be assigned
+		Dictionary<int, REFEREE> dRefereeStorage; //storage of actual referees that need to be assigned
+		Dictionary<int, MATCH> dMatchStorage; //storage of actual matches that have offers
+		List<Dictionary<int, offerInfo>> bestOffers; //storage of the dOffers at the best point in time -> Used for if the current set fails the sim annealing part to reset it
+		List<Dictionary<int, refInfo>> bestReferees; //storage of dReferees at the best point in time -> Used if the current set fails the sim annealing to reset it
+		Dictionary<int, Dictionary<int, bool>> matchClashes; //Dictionary of int (match id), with a dictionary of int (other matches), and whether they clash or not
+		Dictionary<int, int> dGamesAvailableToRef; //dictionary of int (referee IDs) to how many games they can ref for the day
+		DateTime dateCurrent, dateStart, dateEnd; //Dates of start/current/end of the algorithm
 
 
-		Raoconnection db;
-		AlgorithmModel modelResult;
+		Raoconnection db; //db connection
+		AlgorithmModel modelResult; //model that is required to fill to show to user once algorithm has completed
 		int maxOffersFilled; //Max amount of offers that can be filled
 		int currOffersFilled; //current number of offers filled
 		long initTemp; //How many iterations of search to go through
 		long currTemp; //What current iteration (temperature it is)
-		int bestOffersFilled;
-		Random rand;
-		int currPriorityFilled;
-		int bestPriorityFilled;
-		int maxPriorityFilled;
+		int bestOffersFilled; //number of offers filled at best point in time
+		Random rand; //random number generator
+		int currPriorityFilled; //current priority filled
+		int bestPriorityFilled; //best priority filled
+		int maxPriorityFilled; //best case scenario of priority filled
 
+		/// <summary>
+		/// Initialise the global variable for the entire algorithm
+		/// </summary>
 		void initGlobalVars() {
 			db = new Raoconnection();
 			rand = new Random();
@@ -121,6 +164,9 @@ namespace userprofile.Controllers {
 			dRefereeStorage = new Dictionary<int, REFEREE>();
 		}
 
+		/// <summary>
+		/// Initialise or reset the global variables for a day by day basis
+		/// </summary>
 		void resetGlobalVars() {
 			dOffers = new Dictionary<int, offerInfo>();
 			dReferees = new Dictionary<int, refInfo>();
@@ -139,6 +185,12 @@ namespace userprofile.Controllers {
 			matchClashes = new Dictionary<int, Dictionary<int, bool>>();
 		}
 
+		/// <summary>
+		/// Checks if the offer/referee pair is tabu or not
+		/// </summary>
+		/// <param name="oID">Offer ID</param>
+		/// <param name="rID">Referee ID</param>
+		/// <returns></returns>
 		bool checkTabu(int oID, int rID) { //check if this is tabu
 			if (dOffers[oID].available[rID].tabu > 0) {
 				dOffers[oID].available[rID].tabu -= 1;
@@ -149,88 +201,130 @@ namespace userprofile.Controllers {
 				return false;
 		}
 
+		/// <summary>
+		/// Checks if a referee can fill an offer at the current point in time by:
+		///		Checking if referee has been assigned to max amount of offers he can be
+		///		Checking if offer is currently filled
+		///		Checking if referee is assigned to an offer which clashes with the offer it is checking
+		/// </summary>
+		/// <param name="oID">Offer ID</param>
+		/// <param name="rID">Referee ID</param>
+		/// <returns>
+		///		true: If referee can be assigned to offer
+		///		false: If referee cannot be assigned to offer
+		/// </returns>
 		bool checkAvailable(int oID, int rID) { //check if this ref is available to referee this offer (mostly for conflicts timewise)
 			if (dReferees[rID].canAssign == dReferees[rID].assignedTo.Count()) { //referee is assigned to max
 				return false;
 			}
-			if (dOffers[oID].assignedTo != -1) {//already filled
+			if (dOffers[oID].assignedTo != -1) {//Offer is already filled
 				return false;
 			}
 			foreach (var i in dReferees[rID].assignedTo) {
 				if (dOfferStorage[i].matchId == dOfferStorage[oID].matchId) //if offers are on the same match
 					return false;
-				if (!matchClashes.ContainsKey(dOfferStorage[i].matchId)) {
-					calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId);
+				if (!matchClashes.ContainsKey(dOfferStorage[i].matchId)) { //if matchClashes does not hold both match ID's
+					calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId); //calculate if it clashes
 				}
-				else if (!matchClashes[dOfferStorage[i].matchId].ContainsKey(dOfferStorage[oID].matchId)) {
-					calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId);
+				else if (!matchClashes[dOfferStorage[i].matchId].ContainsKey(dOfferStorage[oID].matchId)) { //if matchClashes holds only one matchID and not the other
+					calculateClash(dOfferStorage[oID].matchId, dOfferStorage[i].matchId); //calculate if it clashes
 				}
-				if (matchClashes[dOfferStorage[i].matchId][dOfferStorage[oID].matchId] == true) {
+				if (matchClashes[dOfferStorage[i].matchId][dOfferStorage[oID].matchId] == true) { //if it holds both id's
 					return false;
 				}
 			}
 			return true;
 		}
 
-		void setPairUnavailable(int oID, int rID) { //make combination of Offer/Ref unavailable
-			bool canBeFilled = (dOffers[oID].available.Count() > 0);
-			if (!dOffers[oID].available.ContainsKey(rID)) {
+		/// <summary>
+		/// Mark the offerID/refereeID pair as unavailable (as it has already checked and said it is not)
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
+		void setPairUnavailable(int oID, int rID) {
+			bool canBeFilled = (dOffers[oID].available.Count() > 0); //saves whether the offer has available referees
+			if (!dOffers[oID].available.ContainsKey(rID)) { //checks if the offer/referee pair is already marked as unavailable
 				return; //ALREADY REMOVED -> Most common cause is when it is the offer you assigned
 			}
+			
+			//add the offer/referee to unavailable part and remove from available
 			dOffers[oID].unavailable.Add(rID, dOffers[oID].available[rID]);
-			dOffers[oID].available.Remove(rID);
+			dOffers[oID].available.Remove(rID); 
 			dReferees[rID].unavailable.Add(oID, dReferees[rID].available[oID]);
 			dReferees[rID].available.Remove(oID);
-			if (canBeFilled) {
-				if (dOffers[oID].available.Count() == 0) {
-					hCanBeFilledOffers.Remove(oID);
+
+
+			if (canBeFilled) { //if it could be filled before
+				if (dOffers[oID].available.Count() == 0) { //and can't be now
+					hCanBeFilledOffers.Remove(oID); //remove from CanBeFilled
 				}
 			}
 		}
 
+		/// <summary>
+		/// Mark referee/offer pair as available (already checked if it can be)
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
 		void setPairAvailable(int oID, int rID) {
-			bool canBeFilled = (dOffers[oID].available.Count() > 0);
+			bool canBeFilled = (dOffers[oID].available.Count() > 0); //save state whether it can be filled or not
+
+			//mark referee/offer pair as available then remove from unavailable
 			dOffers[oID].available.Add(rID, dOffers[oID].unavailable[rID]);
 			dOffers[oID].unavailable.Remove(rID);
 			dReferees[rID].available.Add(oID, dReferees[rID].unavailable[oID]);
 			dReferees[rID].unavailable.Remove(oID);
-			if (!canBeFilled) {
-				if (dOffers[oID].available.Count() > 0) {
-					hCanBeFilledOffers.Add(oID);
+			
+			
+			if (!canBeFilled) { //if couldn't be filled before
+				if (dOffers[oID].available.Count() > 0) { //and can be now
+					hCanBeFilledOffers.Add(oID); //add to canbefilled
 				}
 			}
 		}
 
+		/// <summary>
+		/// Used when adding or removing a referee to update the status of the other offers/referees in relation to that pair
+		/// </summary>
+		/// <param name="addRemove">
+		///		true: if adding a referee to an offer
+		///		false: if removing a referee from an offer
+		/// </param>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
 		void updateAvailability(bool addRemove, int oID, int rID) { //Update availability of referee
-			if (addRemove) { //if assigning a ref to an offer
-				setOfferUnavailable(oID);
-				if (dReferees[rID].canAssign == dReferees[rID].assignedTo.Count()) { //if assigned to max amount of offers that ref can have
-					setRefereeUnavailable(rID);
-					return;
+			if (addRemove) { //if assigning a referee to an offer
+				setOfferUnavailable(oID); //set offer as unavailable to all referees
+				
+				if (dReferees[rID].canAssign == dReferees[rID].assignedTo.Count()) { //if referee is assigned to max amount of referees
+					setRefereeUnavailable(rID); //mark referee as completely unavailable
+					return; //(set offer and referee unavailable)
 				}
-				LinkedList<int> nuke = new LinkedList<int>();
-				foreach (var i in dReferees[rID].available) {
-					if (!checkAvailable(i.Key, rID)) {
-						nuke.AddLast(i.Key);//i.Key = oID
+
+				LinkedList<int> nuke = new LinkedList<int>(); //save the offers that need to be marked unavailable
+				foreach (var i in dReferees[rID].available) { //for each available offer for that referee
+					if (!checkAvailable(i.Key, rID)) { //check if offer is still available for the referee
+						nuke.AddLast(i.Key); //if not mark to set pair as unavailable
 					}
 				}
 				foreach (var i in nuke) {
-					setPairUnavailable(i, rID);
+					setPairUnavailable(i, rID); //set pair unavailable
 				}
 			}
-			else {
-				LinkedList<int> nuke = new LinkedList<int>();
-				foreach (var i in dOffers[oID].unavailable) {
-					if (checkAvailable(oID, i.Key)) {
-						nuke.AddLast(i.Key);
+
+			else { //if unassigning a referee from an offer
+				LinkedList<int> nuke = new LinkedList<int>(); //used to save offer/ref id's marked for an action
+				foreach (var i in dOffers[oID].unavailable) { //for each referee marked as unavailable for that offer (offer was just filled so all of them)
+					if (checkAvailable(oID, i.Key)) { //check if referee can now fill that offer
+						nuke.AddLast(i.Key); //mark to set available
 					}
 				}
 				foreach (var i in nuke) {
-					setPairAvailable(oID, i);
+					setPairAvailable(oID, i); //set as available
 				}
-				nuke = new LinkedList<int>();
-				foreach (var i in dReferees[rID].unavailable) {
-					if (checkAvailable(i.Key, rID)) {
+				nuke = new LinkedList<int>(); //reset the list
+				foreach (var i in dReferees[rID].unavailable) { //for each offer that was marked as unavailable
+					if (checkAvailable(i.Key, rID)) { //check if ref can now be assigned to that offer
 						nuke.AddLast(i.Key);
 					}
 				}
@@ -240,58 +334,78 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Mark referee as unavailable to all offers
+		/// </summary>
+		/// <param name="rID">refereeID</param>
 		void setRefereeUnavailable(int rID) { //Referee has been assigned to canAssign offers
 			LinkedList<int> nuke = new LinkedList<int>();
-			foreach (var i in dReferees[rID].available) {
-				nuke.AddLast(i.Key);
+			foreach (var i in dReferees[rID].available) { //for each offer marked as available
+				nuke.AddLast(i.Key); //mark to set unavailable
 			}
 			foreach (var i in nuke) {
-				setPairUnavailable(i, rID);
+				setPairUnavailable(i, rID); //set as unavailable
 			}
 		}
 
-		void setOfferUnavailable(int oID) { //Offer has been assigned a referee
+		/// <summary>
+		/// Set offer as unavailable to be filled to all referees: Most likely offer has been filled
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		void setOfferUnavailable(int oID) {
 			LinkedList<int> nuke = new LinkedList<int>();
-			foreach (var i in dOffers[oID].available) {
-				nuke.AddLast(i.Key);
+			foreach (var i in dOffers[oID].available) { //for each referee that has offer marked as available
+				nuke.AddLast(i.Key); //mark to set it as unavailable
 			}
 			foreach (var i in nuke) {
-				setPairUnavailable(oID, i);
+				setPairUnavailable(oID, i); //set as unavailable
 			}
 		}
 
+		/// <summary>
+		/// Calls from db the offers that are needed to be filled
+		/// Also saves the qualifications needed that are needed to fill those offers
+		/// </summary>
 		void getOffersAndQualificationIDs() {
 			foreach (var i in db.OFFERs) {
-				if (i.status == 5 && i.MATCH.matchDate.Date == dateCurrent.Date) {
+				if (i.status == 5 && i.MATCH.matchDate.Date == dateCurrent.Date) { //get offers where status is SmartAssign and date is the current date
 					dOfferStorage.Add(i.offerId, i); //store offer by offerID
-					foreach (var k in i.OFFERQUALs) {
-						if (!dQualificationRefStorage.ContainsKey(k.qualificationId))
-							dQualificationRefStorage.Add(k.qualificationId, new HashSet<int>()); //Make list of qualifications needed by all offers
+					foreach (var k in i.OFFERQUALs) { //for each qualification in offer
+						if (!dQualificationRefStorage.ContainsKey(k.qualificationId)) //if not already stored the qualification ID
+							dQualificationRefStorage.Add(k.qualificationId, new HashSet<int>()); //Store the qualification ID
 					}
-					dOffers.Add(i.offerId, new offerInfo(i)); //store offer ID for use of main algorithm
-					maxPriorityFilled += i.priority;
+					dOffers.Add(i.offerId, new offerInfo(i)); //store offer ID, and offerInfo and pass the actual offer
+					maxPriorityFilled += i.priority; //add priority to count best possible priority
 				}
 			}
 		}
 
+		/// <summary>
+		/// Returns how many games on current date the referee is assigned to (pending or accepted)
+		/// </summary>
+		/// <param name="rID">refereeID</param>
+		/// <returns>int of offers already assigned to on that specific date</returns>
 		int countOffersAlreadyAssigned(int rID) {
-			//return db.OFFERs.Where(o => (o.REFEREE.refId == rID) && DateTime.Compare(o.MATCH.matchDate, dateCurrent) >= 0 && DateTime.Compare(o.MATCH.matchDate, dateCurrent.AddDays(1)) <= 0).Count();
 			return db.OFFERs.Where(o => o.refId == rID && (o.status == 1 || o.status == 3) && o.dateOfOffer == dateCurrent).Count();
 		}
 
+
+		/// <summary>
+		/// Gets all referees and stores them that have a qualification needed by an offer and adds them to a list which can be easily accessed to get all referees with a specific qualification
+		/// </summary>
 		void fillRefereeByQualification() {
-			foreach (var i in dQualificationRefStorage) { //make all qualificationRefStorage[qID] have all referee id's with qualification
-				foreach (var j in db.REFEREEs) {
-					foreach (var k in j.USERQUALs) {
-						if (i.Key == k.qualificationId) {
-							if (!dRefereeStorage.ContainsKey(j.refId)) {
+			foreach (var i in dQualificationRefStorage) { //For each qualification that an offer needs
+				foreach (var j in db.REFEREEs) { //for each referee
+					foreach (var k in j.USERQUALs) { //for each qualification a referee has
+						if (i.Key == k.qualificationId) { //if qualification is needed
+							if (!dRefereeStorage.ContainsKey(j.refId)) { //save referee if not already stored
 								dRefereeStorage.Add(j.refId, j);
 							}
-							if (!dGamesAvailableToRef.ContainsKey(j.refId)) {
+							if (!dGamesAvailableToRef.ContainsKey(j.refId)) { //count games already assigned to him if not already stored
 								dGamesAvailableToRef.Add(j.refId, j.maxGames - countOffersAlreadyAssigned(j.refId));
 							}
-							if (dGamesAvailableToRef[j.refId] > 0)
-								i.Value.Add(j.refId); //adding refID to qualificationRefStorage[qID]
+							if (dGamesAvailableToRef[j.refId] > 0) //add as having qualification if available to referee at least one game
+								i.Value.Add(j.refId);
 
 						}
 					}
@@ -299,6 +413,12 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="oID"></param>
+		/// <param name="rID"></param>
+		/// <returns></returns>
 		bool containsOneOff(int oID, int rID) {
 			return containsOneOff(db.OFFERs.Find(oID).dateOfOffer, rID);
 		}

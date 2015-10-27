@@ -21,7 +21,7 @@
 
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" id="content">
         <div class="box">
             <div class="box-body">
                 @if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
@@ -41,22 +41,24 @@
                     <dd>
                         @Html.DisplayFor(model => model.Item1.matchDate)
                     </dd>
+                    @if (Model.Item1.status == 1 && Model.Item1.matchDate > DateTime.Now) { }
+                    else
+                    {
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Item1.teamAScore)
-                    </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Item1.teamAScore)
+                        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Item1.teamBScore)
+    </dd>
+                    }
+                    
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Item1.teamAScore)
-                    </dd>
+                
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Item1.teamBScore)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Item1.teamBScore)
-                    </dd>
+                   
+ 
+                
 
                     <dt>
                         @Html.DisplayNameFor(model => model.Item1.status)
@@ -276,6 +278,35 @@
 
             </div>
         </div>
+        @if (Model.Item1.matchDate > DateTime.Now) {
+        
+        }
+        else {
+        if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
+        
+        }
+        else {
+        <div class="pull-right" style="padding-right:15px;">
+            <div class="btn-group">
 
+                @if (User.IsInRole("Admin") || User.IsInRole("Organizer")||User.IsInRole("Referee"))
+                {
+          
+                    <button type="button" id="update"  class="btn btn-success btn-lg  pull-right">Update Match Result</button>
+                }
+            </div>
+        </div>
+            <script>
+                $("#update").click(function () {
+                    var form="<form action='../index'> <input type='submit' value='Submit'> </form>";
+                    $("#content").append(form);
+              
+                    $("#update").hide();
+                })
+
+
+            </script>
+        }
+        }
     </div>
 </div>
