@@ -27,8 +27,15 @@
                                 @Html.ValidationMessageFor(model => model.re.availability)
                             </div>
                         </div>*@
+						<div class="form-group">
+							@Html.LabelFor(model => model.re.userId, "Username", new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("userId", (SelectList)ViewBag.ID, new { @Name = "re.userId" })
+								@Html.ValidationMessageFor(model => model.re.userId)
+							</div>
+						</div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.re.distTravel, new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.re.distTravel, "Distance Travel", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.re.distTravel,new {max="9999",min="0"})
                                 @Html.ValidationMessageFor(model => model.re.distTravel)
@@ -36,23 +43,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="re_prefGrade">Numer of games willing to referee per week</label>
+                            <label class="control-label col-md-2" for="re_prefGrade">Max Games per day</label>
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.re.maxGames)
                                 @Html.ValidationMessageFor(model => model.re.maxGames)
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.re.userId, "User Id", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("userId", (SelectList)ViewBag.ID, new { @Name = "re.userId" })
-                                @Html.ValidationMessageFor(model => model.re.userId)
-                            </div>
-                        </div>
+                        
                         
                         <div class="form-group">
                             
-                                <label class="control-label col-md-2">Select qual</label>
+                                <label class="control-label col-md-2">Qualifications</label>
                             
                             
                             <div class="col-md-10">

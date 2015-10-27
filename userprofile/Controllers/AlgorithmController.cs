@@ -194,7 +194,7 @@ namespace userprofile.Controllers {
 		bool checkTabu(int oID, int rID) { //check if this is tabu
 			if (dOffers[oID].available[rID].tabu > currTemp) {
 				dOffers[oID].available[rID].tabu -= 1; //minus one from tabu
-				dReferees[oID].available[oID].tabu -= 1;
+				dReferees[rID].available[oID].tabu -= 1;
 				return true;
 			}
 			else
