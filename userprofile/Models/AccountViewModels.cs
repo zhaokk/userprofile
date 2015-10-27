@@ -83,7 +83,7 @@ namespace userprofile.Models
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
-        public Int32 ffa { get; set; }
+        public Nullable<Int32> ffa { get; set; }
        
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
@@ -182,7 +182,7 @@ namespace userprofile.Models
 
         [Required]
         [Display(Name = "FFA Number")]
-        public Int32 ffaNum { get; set; }
+        public Nullable<Int32> ffaNum { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]

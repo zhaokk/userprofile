@@ -37,7 +37,7 @@ namespace userprofile.Models
         [Required]
         public string city { get; set; }
         [Required]
-        public int ffaNum { get; set; }
+        public int? ffaNum { get; set; }
         public int status { get; set; }
     }
 

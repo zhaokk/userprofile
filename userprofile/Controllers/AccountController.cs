@@ -349,11 +349,11 @@ namespace userprofile.Controllers
         {
             Boolean shouldFail = false;
             var db = new Raoconnection();
-			ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+			//ViewBag.sport = new SelectList(db.SPORTs, "name", "name"); DISABLED
 			RegisterViewModel RVM = new RegisterViewModel(db);
             string location = @"~\userprofile\default.png";
             REFEREE newref=new REFEREE();
-            if (model.upload != null)
+            /*if (model.upload != null) DISABLED UPLOAD
             {
                 string[] split = model.upload.FileName.Split('.');
                 string newfilename = model.UserName + '.' + split[1];
@@ -362,6 +362,8 @@ namespace userprofile.Controllers
                  location = @"~\userprofile\" + newfilename;
 
             }
+			 
+			 */
             model.photoDir = location;
 
 
@@ -380,26 +382,27 @@ namespace userprofile.Controllers
                     ModelState.AddModelError("Email", "email already registered");
                     shouldFail = true;
                 }
-                if (checkFFA(user.ffaNum))
-                {
-                    ModelState.AddModelError("ffaNum", "FFA number alredy in system");
-                    shouldFail = true;
-                }
-
+				if (user.ffaNum != 0) {
+					if (checkFFA(user.ffaNum)) {
+						ModelState.AddModelError("ffaNum", "FFA number alredy in system");
+						shouldFail = true;
+					}
+				}
                 if (!shouldFail)
                 {
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
                         var storedUser = db.AspNetUsers.First(u => u.UserName == model.UserName);
-
+						if (storedUser.ffaNum == 0)
+							storedUser.ffaNum = null;
 
                         var client = new WebClient();
                         //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TournamentManager&to="+storedUser.phoneNum+"&text=Welcome&nbsp;to&nbsp;Tournament&nbsp;manager&nbsp;"+storedUser.UserName);
 
 
-                        ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
-
+                        //ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
+						/*
                         var idManager = new IdentityManager();
                         switch (model.Roles)
                         {
@@ -433,7 +436,9 @@ namespace userprofile.Controllers
 
 
                         }
-
+						*/
+						storedUser.status = 1;
+						await db.SaveChangesAsync();
 
                         bool val1 = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                      if (val1) //is logged in
@@ -490,7 +495,7 @@ namespace userprofile.Controllers
             }
             return false;
         }
-        private Boolean checkFFA(int ffa)
+        private Boolean checkFFA(Nullable<int> ffa)
         {
             var db = new Raoconnection();
 
