@@ -83,15 +83,9 @@ namespace userprofile.Controllers
                     bool refHasQualification = true;
                     foreach (var j in offerQuals)
                     {
-                        try
-                        {
-                            db.USERQUALs.Find(j.Key, i.refId);
-                        }
-                        catch (SystemException a)
-                        {
-                            refHasQualification = false;
-                            break;
-                        }
+						if (db.USERQUALs.Find(j.Key, i.refId) == null) {
+							refHasQualification = false;
+						}
                     }
                     if (refHasQualification)
                     {
