@@ -3,11 +3,44 @@
     ViewBag.Title = "IndexForPlayer";
 }
 
+<script src="/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+<script src="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<link href="/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+
+<script>
+	$(function () {
+		$('#teamTable').DataTable({
+			"paging": false,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false
+		});
+		$('#upcomingTable').DataTable({
+			"paging": false,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false
+		});
+		$('#pastTable').DataTable({
+			"paging": false,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false
+		});
+	});
+</script>
+
 <div class="box">
     <div class="box-body">
         <div class="table-responsive">
 			<h4>Your teams</h4>
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="teamTable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Team Name</th>
@@ -51,7 +84,7 @@
     <div class="box-body">
         <div class="table-responsive">
 			<h4>Upcoming Games</h4>
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="upcomingTable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -145,7 +178,7 @@
     <div class="box-body">
         <div class="table-responsive">
 			<h4>Past Games</h4>
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="pastTable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>
