@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
 
 namespace userprofile.Controllers
 {
@@ -14,10 +15,13 @@ namespace userprofile.Controllers
     {
         private Raoconnection db = new Raoconnection();
 
-        // GET: OneOffAVAILABILITies
+		// GET: OneOffAVAILABILITies
+		[Authorize(Roles = "Admin,Organizer,Referee")]
         public ActionResult Index()
         {
-            var oneOffAVAILABILITies = db.OneOffAVAILABILITies.Include(o => o.REFEREE);
+			var currentRefereeId= User.Identity.GetUserId();
+            var refe= db.REFEREEs.First(rid=>rid.userId==currentRefereeId);
+            var oneOffAVAILABILITies = db.OneOffAVAILABILITies.Where(o => o.refId == refe.refId).Include(o => o.REFEREE);
             return View(oneOffAVAILABILITies.ToList());
         }
 

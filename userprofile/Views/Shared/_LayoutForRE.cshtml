@@ -124,11 +124,12 @@
          
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Match list", "Index", "match")</li>
-                    <li>@Html.ActionLink("Team list", "Index", "team")</li>
-                    <li>@Html.ActionLink("Special availability", "Index", "OneOffAVAILABILITies")</li>
-                    <li>@Html.ActionLink("My availability", "Availability", "REFEREE")</li>
-                   
+                    <li>@Html.ActionLink("Match List", "Index", "match")</li>
+                    <li>@Html.ActionLink("Team List", "Index", "team")</li>
+					@if (User.IsInRole("Referee")) { 
+						<li>@Html.ActionLink("Special Availability", "Index", "OneOffAVAILABILITies")</li>
+						<li>@Html.ActionLink("My Availability", "Availability", "REFEREE")</li>
+					}
                 </ul>
                
             </div><!-- /.navbar-collapse -->

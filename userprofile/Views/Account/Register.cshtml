@@ -101,7 +101,7 @@
                             </div>
                         </div>
 
-
+						@*
                         <div class="form-group">
                             <label class="col-md-2 control-label">Getroles</label>
                             <div class="col-md-10">
@@ -132,7 +132,7 @@
                                     @Html.ValidationMessageFor(model => model.optionalRe.re.rating)
                                 </div>
                             </div>
-
+							*@
                             @*<div class="form-group">
                 @Html.LabelFor(model => model.optionalRe.re.ID, "ID", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -140,24 +140,25 @@
                     @Html.ValidationMessageFor(model => model.optionalRe.re.ID)
                 </div>
             </div>*@
+						@*
+		<div class="form-group">
+			<div class="control-label col-md-2">
+			   <b> Select qual</b>
+			</div>
 
-                            <div class="form-group">
-                                <div class="control-label col-md-2">
-                                   <b> Select qual</b>
-                                </div>
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.optionalRe.srqvm.quals)
+			</div>
+		</div>
 
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.optionalRe.srqvm.quals)
-                                </div>
-                            </div>
+	</div>
+	<div class="form-group">
 
-                        </div>
-                        <div class="form-group">
+		@Html.LabelFor(m => m.upload, new { @class = "col-md-2 control-label" })
+		@Html.TextBoxFor(m => m.upload, new { type = "file", @class = "col-md-10" })
 
-                            @Html.LabelFor(m => m.upload, new { @class = "col-md-2 control-label" })
-                            @Html.TextBoxFor(m => m.upload, new { type = "file", @class = "col-md-10" })
-
-                        </div>
+	</div>
+						*@
                     </div>
                             @Html.EditorFor(m => m.residentLoc)
                         
