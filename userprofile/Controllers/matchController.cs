@@ -83,8 +83,14 @@ namespace userprofile.Controllers
                     bool refHasQualification = true;
                     foreach (var j in offerQuals)
                     {
-						if (db.USERQUALs.Find(j.Key, i.refId) == null) {
+						var qual = db.USERQUALs.Find(j.Key, i.refId);
+						if (qual == null) {
 							refHasQualification = false;
+						}
+						else {
+							if (qual.qualLevel < j.Value) {
+								refHasQualification = false;
+							}
 						}
                     }
                     if (refHasQualification)
@@ -112,7 +118,7 @@ namespace userprofile.Controllers
             return availableReferees;
         }
         bool containsOneOff(DateTime matchDateTime, int rID)
-        { //REDO
+        {
             try
             {
                 var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); //WRITE PRIMARY KEY FOR REFAVAILABILITY
