@@ -427,13 +427,14 @@ namespace userprofile.Controllers
                 string offerType = "offer[" + i + "][typename]";
                 string indexofrefid = "offer[" + i + "][refID]";
                 string offerqualification = "offer[" + i + "][qualification]";
-                string qualificationlevel = "offer[" + i + "][[qlevel]";
+                string qualificationlevel = "qlevel[" + i + "]";
                   int mid = Convert.ToInt32(Request["mID"]);
                  int status = Convert.ToInt32(Request["offer[" + i + "][status]"]);
                  string typename = Request[offerType];
                  var stringrefID = Request[indexofrefid];
                 var stringq=Request[offerqualification];
                  var offerID=0;
+                 //var qlevel = Request["qlevel[8]"];
                  OFFER of=new OFFER() ;
                  switch (status) { 
                      case 1:

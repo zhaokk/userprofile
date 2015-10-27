@@ -103,7 +103,7 @@
 												<br />
 												<p>Select the Qualification & Level Required:</p>
 												@Html.DropDownList("types", (List<SelectListItem>)ViewBag.qualification, "Qualification", new { @Name = "offer[" + i + "][qualification]" })
-												<input type="number" min="0" max="4" name="offer[@i][qlevel]">
+												<input type="number" min="0" max="4" name="qlevel[@i]">
 											</div>
 											<div class="form-group">
 												<div class="callout callout-info">
@@ -221,7 +221,7 @@
 															}
 													}
 													</select>
-													<input type="number" min="0" max="4" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
+													<input type="number" min="0" max="4" name="qlevel[@i]" value="@item.OFFERQUALs.First().qualLevel" disabled>
 												}
 												else {
 													
