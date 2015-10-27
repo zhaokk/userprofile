@@ -103,7 +103,7 @@
 												<br />
 												<p>Select the Qualification & Level Required:</p>
 												@Html.DropDownList("types", (List<SelectListItem>)ViewBag.qualification, "Qualification", new { @Name = "offer[" + i + "][qualification]" })
-												<input type="number" min="0" max="9" name="offer[@i][qlevel]">
+												<input type="number" min="0" max="4" name="offer[@i][qlevel]">
 											</div>
 											<div class="form-group">
 												<div class="callout callout-info">
@@ -213,7 +213,7 @@
 												@if (item.OFFERQUALs.Count != 0) {
 													<select name="offer[@i][qualification]" class="required" id="qualification@(i)" disabled>
 													@foreach (var selection in (List<SelectListItem>)ViewBag.qualification) {
-															if (item.OFFERQUALs.First().qualLevel.ToString() == selection.Value) {
+															if (item.OFFERQUALs.First().qualificationId.ToString() == selection.Value) {
 																<option value="@selection.Value" selected>@selection.Text</option>
 															}
 															else {
@@ -221,7 +221,7 @@
 															}
 													}
 													</select>
-													<input type="number" min="0" max="9" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
+													<input type="number" min="0" max="4" name="offer[@i][qlevel]" value="@item.OFFERQUALs.First().qualLevel" disabled>
 												}
 												else {
 													
