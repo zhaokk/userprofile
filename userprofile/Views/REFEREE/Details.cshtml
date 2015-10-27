@@ -12,7 +12,7 @@
                 @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.refId }, new { @class = "btn btn-warning pull-right" })
                 
                 <div>
-                    <h4>Edit referee</h4>
+                    <h4>Referee Details</h4>
                     <hr />
                     <dl class="dl-horizontal">
                         <dt>
@@ -100,6 +100,12 @@
 												break;
 											case 3:
 												@:Pending
+												break;
+											case 4:
+												@:Unassigned
+												break;
+											case 5:
+												@:Smart Assign
 												break;
 											default:
 												@:ERROR
