@@ -48,6 +48,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "name,status")] SPORT sPORT)
         {
+			sPORT.status = 1;
             if (ModelState.IsValid)
             {
                 db.SPORTs.Add(sPORT);

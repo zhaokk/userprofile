@@ -36,7 +36,7 @@
                                 @Html.DisplayNameFor(model => model.name)
                                
                             </th>
-                            <th>
+                            <th hidden>
                                 @Html.DisplayNameFor(model => model.status)
                             </th>
                             <th>
@@ -58,12 +58,12 @@
                                    
                                     
                                 </td>
-                                <td>
+                                <td hidden>
                                     @Html.DisplayFor(modelItem => item.status)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "Delete", new { id = item.name }, new { @class = "btn btn-danger pull-right" })
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.name }, new { @class = "btn btn-warning pull-right" })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.name }, new { @class = "btn btn-warning pull-right hidden" })
                               
                                    
                                 </td>
