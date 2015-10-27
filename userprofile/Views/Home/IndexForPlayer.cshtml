@@ -185,9 +185,6 @@
                             Date
                         </th>
                         <th>
-                            Location
-                        </th>
-                        <th>
                             Home Team
 
                         </th>
@@ -197,6 +194,9 @@
                         <th>
                             Sport
                         </th>
+						<th>
+							Results
+						</th>
                         @if (User.IsInRole("Admin") || User.IsInRole("Assignor") || User.IsInRole("Organizer")) //change to include tournament once implemented multiple tournaments
                         {
                             <th></th>
@@ -217,12 +217,6 @@
                             </td>
 
                             <td>
-                                <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
-                                    @Html.DisplayFor(modelItem => item.LOCATION.name)
-                                </a>
-                            </td>
-
-                            <td>
                                 <a href="@Url.Action( "Details","team", new { id = item.TEAM.teamId })">
                                     @Html.DisplayFor(modelItem => item.TEAM.name)
                                 </a>
@@ -239,6 +233,39 @@
 
                             </td>
 
+							<td>
+								@switch (item.status) {
+									case 1:
+										@:Pending Results
+												break;
+									case 3:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@item.TEAM.name
+									@:WON!
+												break;
+									case 4:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@:DRAW!
+												break;
+									case 5:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@item.TEAM1.name
+									@:WON!
+												break;
+									default:
+									@:ERROR!
+												break;
+								}
+							</td>
 @{
                         if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
                         {
