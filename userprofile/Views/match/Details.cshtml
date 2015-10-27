@@ -29,9 +29,9 @@
                     @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.matchId }, new { @class = "btn btn-warning pull-right" })
                     @Html.ActionLink("Manage Offers", "manageOffer", new { id = Model.Item1.matchId }, new { @class = "btn bg-purple pull-right" })
                 }
-                
-                
-                
+
+
+
 
                 <dl class="dl-horizontal">
                     <dt>
@@ -48,61 +48,66 @@
                         <dt>
                             @Html.DisplayNameFor(model => model.Item1.teamAScore)
                         </dt>
-    <dd>
-        @Html.DisplayFor(model => model.Item1.teamBScore)
-    </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.Item1.teamBScore)
+                        </dd>
                     }
-                    
 
-                
 
-                   
- 
-                
+
+
+
+
+
 
                     <dt>
                         @Html.DisplayNameFor(model => model.Item1.status)
                     </dt>
-					
+
                     <dd>
-                        @switch (Model.Item1.status) {
-							case 0:
-								@:Deleted
+                        @switch (Model.Item1.status)
+                        {
+                            case 0:
+                                @:Deleted
 								break;
-							case 1:
-								if (Model.Item1.matchDate > DateTime.Now) { 
-									@:Unplayed
+                            case 1:
+                                if (Model.Item1.matchDate > DateTime.Now)
+                                {
+                                    @:Unplayed
 								}
-								else {
-									if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
-										@:In Progress
+                                else
+                                {
+                                    if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now)
+                                    {
+                                        @:In Progress
 									}
-									else {
-										@:Pending Results
+                                    else
+                                    {
+                                        @:Pending Results
 									}
-								}
+                                }
+                                break;
+                            case 3:
+                            @Model.Item1.TEAM
+                            @:Won!
 								break;
-							case 3:
-								@Model.Item1.TEAM
-								@:Won!
+                            case 4:
+                            @:DRAW!
 								break;
-							case 4:
-								@:DRAW!
+                            case 5:
+                            @Model.Item1.TEAM1
+                            @:Won!
 								break;
-							case 5:
-								@Model.Item1.TEAM1
-								@:Won!
+                            case 6:
+                            @:Delayed
 								break;
-							case 6:
-								@:Delayed
+                            case 7:
+                            @:Canceled
 								break;
-							case 7:
-								@:Canceled
+                            default:
+                            @:ERROR
 								break;
-							default:
-								@:ERROR
-								break;
-						}
+                        }
                     </dd>
 
                     <dt>
@@ -129,7 +134,7 @@
                         <a href="@Url.Action( "Details","location", new { id = Model.Item1.locationId })">
                             @Html.DisplayFor(model => model.Item1.LOCATION.name)
                         </a>
-                       
+
                     </dd>
 
                     <dt>
@@ -140,7 +145,7 @@
                         <a href="@Url.Action( "Details","team", new { id = Model.Item1.teamAId })">
                             @Html.DisplayFor(model => model.Item1.TEAM.name)
                         </a>
-                       
+
                     </dd>
 
                     <dt>
@@ -151,7 +156,7 @@
                         <a href="@Url.Action( "Details","team", new { id = Model.Item1.teamBId })">
                             @Html.DisplayFor(model => model.Item1.TEAM1.name)
                         </a>
-                      
+
                     </dd>
 
                     <dt>
@@ -159,13 +164,15 @@
                     </dt>
 
                     <dd>
-						<a href="@Url.Action( "Details","Tournament", new { id = Model.Item1.tournamentId })">
-							@Html.DisplayFor(model => model.Item1.TOURNAMENT.name)
-							</a>
-					</dd>
+                        <a href="@Url.Action( "Details","Tournament", new { id = Model.Item1.tournamentId })">
+                            @Html.DisplayFor(model => model.Item1.TOURNAMENT.name)
+                        </a>
+                    </dd>
                 </dl>
             </div>
         </div>
+
+
 
         <div class="box">
             <div class="box-body">
@@ -190,90 +197,97 @@
                         <tbody>
                             @foreach (var item in Model.Item2)
                             {
-                                if (item.status == 0) {
-
-                                }
-                                else { 
-                                if (item.status == 4 || item.status == 5)
+                                if (item.status == 0)
                                 {
-                                     <tr>
-                                        <td>
-                                            Unassigned
-                                        </td>
-                                        <td> 
-											@item.typeOfOffer
-											@if (item.OFFERQUALs.Count() != 0) {
-												@:Required Quals: 
-												foreach (var i in item.OFFERQUALs) {
-													@i.QUALIFICATION.name
-													@i.qualLevel
-												}
-											}                   
-                                        </td>
-                                        <td>
-                                            @switch (item.status) {
-												case 1:
-													@:Accepted
-													break;
-												case 2:
-												@:Declined
-													break;
-												case 3:
-												@:Pending
-													break;
-												case 4:
-												@:Unassigned
-													break;
-												case 5:
-												@:Smart Assign
-													break;
-												default:
-												@:ERROR!
-													break;
-											}
-                                        </td>
 
-                                    </tr>
                                 }
-                                else { 
-                                    <tr>
-                                        <td>
-                                            <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
-                                                @item.REFEREE.AspNetUser.firstName
-												@item.REFEREE.AspNetUser.lastName
-												(@item.REFEREE.AspNetUser.UserName)
-                                            </a>
-                                        </td>
+                                else
+                                {
+                                    if (item.status == 4 || item.status == 5)
+                                    {
+                                        <tr>
+                                            <td>
+                                                Unassigned
+                                            </td>
+                                            <td>
+                                                @item.typeOfOffer
+                                                @if (item.OFFERQUALs.Count() != 0)
+                                                {
+                                                    @:Required Quals:
+												foreach (var i in item.OFFERQUALs)
+                                                {
+                                                    @i.QUALIFICATION.name
+                                                    @i.qualLevel
+                                                }
+                                                }
+                                            </td>
+                                            <td>
+                                                @switch (item.status)
+                                                {
+                                                    case 1:
+                                                        @:Accepted
+													break;
+                                                    case 2:
+                                                    @:Declined
+													break;
+                                                    case 3:
+                                                    @:Pending
+													break;
+                                                    case 4:
+                                                    @:Unassigned
+													break;
+                                                    case 5:
+                                                    @:Smart Assign
+													break;
+                                                    default:
+                                                    @:ERROR!
+													break;
+                                                }
+                                            </td>
 
-                                        <td>
-											<a href="@Url.Action( "Details","Types", new { id = item.typeOfOffer })">
-												@item.typeOfOffer
-											</a>
-										</td>
-                                        <td>
-											@switch (item.status) {
-												case 1:
-													@:Accepted
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
+                                                    @item.REFEREE.AspNetUser.firstName
+                                                    @item.REFEREE.AspNetUser.lastName
+                                                    (@item.REFEREE.AspNetUser.UserName)
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a href="@Url.Action( "Details","Types", new { id = item.typeOfOffer })">
+                                                    @item.typeOfOffer
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @switch (item.status)
+                                                {
+                                                    case 1:
+                                                        @:Accepted
 													break;
-												case 2:
-													@:Declined
+                                                    case 2:
+                                                    @:Declined
 													break;
-												case 3:
-													@:Pending
+                                                    case 3:
+                                                    @:Pending
 													break;
-												case 4:
-													@:Unassigned
+                                                    case 4:
+                                                    @:Unassigned
 													break;
-												case 5:
-													@:Smart Assign
+                                                    case 5:
+                                                    @:Smart Assign
 													break;
-												default:
-													@:ERROR!
+                                                    default:
+                                                    @:ERROR!
 													break;
-											}
-                                        </td>
-                                    </tr>
-                                }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                             }
                         </tbody>
@@ -282,35 +296,99 @@
 
             </div>
         </div>
-        @if (Model.Item1.matchDate > DateTime.Now) {
-        
-        }
-        else {
-        if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now) {
-        
-        }
-        else {
-        <div class="pull-right" style="padding-right:15px;">
-            <div class="btn-group">
 
-                @if (User.IsInRole("Admin") || User.IsInRole("Organizer")||User.IsInRole("Referee"))
+
+
+
+        @if (Model.Item1.matchDate > DateTime.Now)
+        {
+
+        }
+        else
+        {
+            if (Model.Item1.matchDate.AddMinutes(Model.Item1.matchLength + Model.Item1.halfTimeDuration) > DateTime.Now)
+            {
+
+            }
+            else
+            {
+
+
+                if (ViewBag.upload)
                 {
-          
-                    <button type="button" id="update"  class="btn btn-success btn-lg  pull-right">Update Match Result</button>
-                }
-            </div>
+                  
+                    <div class="col-md-6 teamscore" hidden>
+                        <div class="box box-success">
+                            <div class="box-body">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Item1.teamAScore, "Team A score", new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Item1.teamAScore, new { min = "0", max = "200", type = "number", @class = "col-md-4" })
+                                        @Html.ValidationMessageFor(model => model.Item1.teamAScore)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Item1.teamBScore, "Team B score", new { @class = "control-label col-md-4" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Item1.teamBScore, new { min = "0", max = "200", type = "number", @class="col-md-4"})
+                                        @Html.ValidationMessageFor(model => model.Item1.teamBScore)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        </div>
+                        <div class="pull-right" style="padding-right:15px;">
+                            <div class="btn-group">
+                                <button type="button" id="update" class="btn btn-success btn-lg  pull-right">Update Match Result</button>
+                               
+
+                            </div>
+                        </div>
+    <div class="pull-right" id="submit" style="padding-right:15px;" hidden>
+        <div class="btn-group">
+            <button type="button" id="submit" class="btn btn-warning btn-lg  pull-right">Submit result</button>
+           
+
         </div>
-            <script>
-                $("#update").click(function () {
-                    var form="<form action='../index'> <input type='submit' value='Submit'> </form>";
-                    $("#content").append(form);
-              
-                    $("#update").hide();
-                })
-
-
-            </script>
-        }
-        }
     </div>
+    
+                }
+
+                        <script>
+                            $("#update").click(function () {
+                                var form = "<form action='../index'> <input type='submit' value='Submit'> </form>";
+                                $(".teamscore").show("slow", function () {
+                                    $("#update").hide();
+                                    if ($("#Item1_teamAScore").val() == "") {
+                                        $("#Item1_teamAScore").val(0);
+                                        $("#Item1_teamBScore").val(0);
+                                    }
+                                    $("#submit").show();
+
+                                });
+
+
+                            });
+                         
+                            var matchID=@Model.Item1.matchId;
+                            $("#submit").click(function () {
+                                var A=$("#Item1_teamAScore").val();
+                                var B=$("#Item1_teamBScore").val();
+                                $.post("../uploadResult", {
+                                    'Ascore': A,
+                                    'Bscore': B,
+                                    'matchID':matchID,
+
+                                }).done(function (data) {
+                                    $("body").html(data);
+                                });
+                            }
+                                );
+
+                        </script>
+                        }
+                        }
+                    </div>
 </div>

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using userprofile.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace userprofile.Controllers
 {
@@ -257,8 +259,36 @@ namespace userprofile.Controllers
                 return HttpNotFound();
             }
             var combined = new Tuple<MATCH, List<OFFER>>(match, offers) { };
-
+            ViewBag.upload = ableToUploadScore(id);
             return View(combined);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin,Organizer,Referee")]
+        public ActionResult uploadResult(int Ascore,int Bscore,int matchID)
+        {
+
+            MATCH updateMatch = db.MATCHes.Find(matchID);
+            updateMatch.teamAScore = Ascore;
+            updateMatch.teamBScore = Bscore;
+            if (Ascore > Bscore) {
+                updateMatch.status = 3;
+            }
+            else if (Ascore < Bscore)
+            {
+
+                updateMatch.status = 5;
+            }
+            else {
+                updateMatch.status = 4;
+            }
+            db.Entry(updateMatch).State = EntityState.Modified;
+            db.SaveChanges();
+            ViewBag.upload = true;
+            return RedirectToAction("Details", new
+            {
+                id = matchID,
+
+            });
         }
 		[HttpPost]
 		public ActionResult getTeamsFromTournament(int? tournamentId) {
@@ -671,6 +701,53 @@ namespace userprofile.Controllers
 
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        protected bool ableToUploadScore(int? matchID) {
+            if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("Referee"))
+            {
+                string userid = User.Identity.GetUserId();
+                if (User.IsInRole("Admin"))
+                {
+
+                    return true;
+                }
+
+                if (User.IsInRole("Organizer"))
+                {
+                    List<TOURNAMENT> organizeTour = new List<TOURNAMENT>();
+                    foreach (var tour in db.TOURNAMENTs)
+                    {
+                        if (tour.organizer == userid)
+                        {
+                            if (tour.MATCHes.First(m => m.matchId == matchID) != null)
+                            {
+                                return true;
+                            }
+                        }
+
+                    }
+
+                    if (User.IsInRole("Referee"))
+                    {
+
+                        MATCH thismatch = db.MATCHes.Find(matchID);
+                        foreach (var offer in thismatch.OFFERs)
+                        {
+                            if (offer.REFEREE.userId == userid)
+                            {
+                                return true;
+                            }
+
+                        }
+                    }
+                 
+                   
+
+                }
+            }
+            return false;
+
+          
         }
 
         protected override void Dispose(bool disposing)
