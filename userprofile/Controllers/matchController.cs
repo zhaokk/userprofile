@@ -463,6 +463,7 @@ namespace userprofile.Controllers
                              {
                                  if (Request[qualificationlevel] != "")
                                  {
+                                    string ql=Request[qualificationlevel];
                                      of.OFFERQUALs.Add(new OFFERQUAL { qualLevel = Convert.ToInt32(Request[qualificationlevel]), qualificationId = Convert.ToInt32(Request[offerqualification]) });
 
                                  }
