@@ -1,21 +1,17 @@
 ﻿@model userprofile.Models.TOURNAMENT
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Tournament";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TOURNAMENT</h4>
-        <hr />
+		        <hr />
         @Html.ValidationSummary(true)
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, "Tournament Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name)
                 @Html.ValidationMessageFor(model => model.name)
@@ -23,7 +19,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.startDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.startDate, "Start Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.startDate)
 
@@ -32,7 +28,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.organizer, "organizer", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.organizer, "Main Organizer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("organizer", String.Empty)
                 @Html.ValidationMessageFor(model => model.organizer)
@@ -40,7 +36,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ageBracket, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ageBracket, "Age Bracket", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ageBracket)
                 @Html.ValidationMessageFor(model => model.ageBracket)
@@ -48,7 +44,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.grade, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.grade, "Grade", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.grade)
                 @Html.ValidationMessageFor(model => model.grade)
@@ -56,7 +52,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.sport, "sport", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.sport, "Sport", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("sport", String.Empty)
                 @Html.ValidationMessageFor(model => model.sport)
