@@ -49,8 +49,14 @@
                             @Html.DisplayNameFor(model => model.Item1.teamAScore)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Item1.teamBScore)
+                            @Html.DisplayFor(model => model.Item1.teamAScore)
                         </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Item1.teamBScore)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Item1.teamBScore)
+    </dd>
                     }
 
 
@@ -88,14 +94,14 @@
                                 }
                                 break;
                             case 3:
-                            @Model.Item1.TEAM
+                            @Model.Item1.TEAM.name
                             @:Won!
 								break;
                             case 4:
                             @:DRAW!
 								break;
                             case 5:
-                            @Model.Item1.TEAM1
+                            @Model.Item1.TEAM1.name
                             @:Won!
 								break;
                             case 6:
