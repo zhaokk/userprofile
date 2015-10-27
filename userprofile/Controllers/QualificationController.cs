@@ -160,6 +160,12 @@ namespace userprofile.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        //delete user quilifiaction in detail page
+        public void deleteUserqual(int refereeID,int qualid) {
+           List<USERQUAL> deletedUserQual =db.USERQUALs.Where(uq => uq.refId == refereeID).Where(uq => uq.qualificationId == qualid).ToList();
+           db.USERQUALs.Remove(deletedUserQual.First());
+           db.SaveChanges();
+        }
 
         protected override void Dispose(bool disposing)
         {

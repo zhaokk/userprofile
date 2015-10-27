@@ -88,7 +88,7 @@
                             @{ var counter = 0;}
                             @foreach (var item in Model.Item2)
                             {
-                                <tr>
+                                <tr id="row@(item.refId)">
                                     <td>
                                         <a href="@Url.Action( "Details","REFEREE", new { id = item.REFEREE.refId })">
                                             @item.REFEREE.AspNetUser.UserName
@@ -100,7 +100,7 @@
                                         @item.qualLevel
                                     </td>
                                     <td>
-                                        Buttons go here when actions exist for editing level/removing a userqual
+                                        <button type="button" id="@item.refId" class="btn btn-google-plus delete" >&nbsp;&nbsp;&nbsp;delete referee&nbsp;&nbsp;&nbsp;</button>
                                     </td>
                                 </tr>
                                 counter++;
@@ -145,6 +145,25 @@
             $("body").html(data);
         });
        
+    });
+    $(".delete").click(function (){
+        var refid=$(this).attr('id');
+        var rowid="row"+refid;
+ 
+        $.post("../deleteUserqual",{
+            'refereeID': refid,
+            'qualid': @Model.Item1.qualificationId,
+        },function(){
+            $("#"+rowid).hide(1000).children('td, th')
+     .animate({
+         padding: 0
+     })
+     .wrapInner('<div />')
+     .children()
+     .slideUp(function () {
+         $(this).closest('tr').remove();
+     });
+        });
     })
 
 
