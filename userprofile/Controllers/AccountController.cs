@@ -18,6 +18,17 @@ namespace userprofile.Controllers
     public class AccountController : Controller
     {
 
+		public ActionResult makeAdmin(int? userID) {
+			int uID = userID.Value;
+			string user = userID.ToString();
+			Raoconnection db = new Raoconnection();
+			if (db.AspNetUsers.First(o=> o.Id == user).AspNetRoles.Where(role => role.Id == "1").Count() == 0)
+				new IdentityManager().AddUserToRole(user,"Admin");
+			else
+				new IdentityManager().RemoveUserFromRole(user, "Admin");
+			return Json(userID);
+		}
+
         [Authorize(Roles = "Admin,Organizer")]
         public ActionResult Index(){
             var Db = new ApplicationDbContext();

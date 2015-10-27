@@ -16,6 +16,7 @@
     });
 </script>
 
+<p hidden id="UserID">@Model.Item1.Id</p>
 
 <div class="row">
     <div class="col-xs-12">
@@ -25,13 +26,20 @@
                     if (User.IsInRole("Admin") || User.IsInRole("Organizer"))
                     {
                        @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.UserName }, new { @class = "btn btn-warning pull-right" })
-                    }
-                    else if (User.Identity.Name == Model.Item1.UserName)
-                    {
+						if (User.IsInRole("Admin")) {
+							if (Model.Item1.AspNetRoles.Where(qual => qual.Id == "1").Count() == 0) {
+								<button id="MakeAdmin" type="button" class="btn btn-danger pull-right">Make Admin</button>
+							}
+							else {
+								<button id="MakeAdmin" type="button" class="btn btn-danger pull-right">Remove Admin</button>
+							}
+						}
+					}
+					else if (User.Identity.Name == Model.Item1.UserName) {
                         <a class=" btn btn-warning pull-right" href='@Url.Action("SelfEdit", "Account")'>Edit my details</a>
 					}
 					
-}
+				}
                 
                 
                 @foreach (var i in Model.Item1.AspNetRoles) {
@@ -322,3 +330,50 @@
 
     </div>
 </div>
+
+<script>
+	$("#MakeAdmin").click(function () {
+			if (confirm("Are you sure you want to do this?") == true) {
+				var i = parseInt($("#UserID").text());
+				$.ajax({
+					type: "POST",
+					url: '@Url.Action("makeAdmin", "Account")',
+					data: {'userID' : i },
+					datatype: 'json',
+					success: function () {
+						location.reload();
+					}
+				});
+				
+			}
+	});
+
+
+
+        $('#tournament').change(function () {
+        	var tournId = $(this).val();
+        	$.ajax({
+        		type: "POST",
+        		url: '@Url.Action("getTeamsFromTournament", "match")',
+        		data: { 'tournamentId': tournId },
+        		datatype: "json",
+        		success: function (data) {
+        			var homeTeam = $('#teamaID');
+        			homeTeam.empty();
+        			$.each(data, function (val, text) {
+        				homeTeam.append(
+							$('<option></option>').val(text.Value).html(text.Text)
+						);
+        			});
+        			var awayTeam = $('#teambID');
+        			awayTeam.empty();
+        			$.each(data, function (val, text) {
+        				awayTeam.append(
+							$('<option></option>').val(text.Value).html(text.Text)
+						);
+        			});
+        			awayTeam.val(2);
+        		},
+        	})
+        });
+	</script>
