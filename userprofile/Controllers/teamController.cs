@@ -50,7 +50,7 @@ namespace userprofile.Controllers
         public ActionResult Details(int? id)
         {
             DateTime nextWeek = DateTime.Today;
-            nextWeek.AddDays(14);
+            nextWeek = nextWeek.AddDays(14);
 
             if (id == null)
             {

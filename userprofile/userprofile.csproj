@@ -1052,11 +1052,6 @@
     <Content Include="Views\Tournament\History.cshtml" />
     <Content Include="Views\Home\IndexForPlayer.cshtml" />
     <Content Include="Views\Shared\_LayoutForPL.cshtml" />
-    <Content Include="Views\PLAYERss\Create.cshtml" />
-    <Content Include="Views\PLAYERss\Delete.cshtml" />
-    <Content Include="Views\PLAYERss\Details.cshtml" />
-    <Content Include="Views\PLAYERss\Edit.cshtml" />
-    <Content Include="Views\PLAYERss\Index.cshtml" />
     <Content Include="Views\Notifications\display.cshtml" />
     <Content Include="Views\Algorithm\Index.cshtml" />
   </ItemGroup>

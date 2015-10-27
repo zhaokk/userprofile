@@ -45,7 +45,7 @@ namespace userprofile.Controllers
         
         }
 
-        // GET: TOURNAMENTs/Details/5
+
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,11 +53,25 @@ namespace userprofile.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TOURNAMENT tournament = await db.TOURNAMENTs.FindAsync(id);
-            if (tournament == null)
+            if (tournament != null)
             {
-                return HttpNotFound();
+                DateTime today = DateTime.Today;
+
+
+                var futureMatches = db.MATCHes.Where(match => match.status > 0)
+                                              .Where(match => match.matchDate > today).ToList();
+
+                var pastMatches = db.MATCHes.Where(match => match.status >= 0)
+                                              .Where(match => match.matchDate < today).ToList();
+
+
+
+
+                var combined = new Tuple<TOURNAMENT, List<MATCH>, List<MATCH>>(tournament, futureMatches, pastMatches) { };
+
+                return View(combined);
             }
-            return View(tournament);
+            return HttpNotFound();
         }
 
         // GET: TOURNAMENTs/Create
