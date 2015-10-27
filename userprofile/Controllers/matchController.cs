@@ -470,7 +470,7 @@ namespace userprofile.Controllers
                                  }
                                  else
                                  {
-                                     of.OFFERQUALs.Add(new OFFERQUAL { qualLevel = 10, qualificationId = Convert.ToInt32(Request[offerqualification]) });
+                                     of.OFFERQUALs.Add(new OFFERQUAL { qualLevel = 1, qualificationId = Convert.ToInt32(Request[offerqualification]) });
                                  }
                              }
                              else { 
