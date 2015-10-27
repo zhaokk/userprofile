@@ -356,17 +356,13 @@ namespace userprofile.Controllers
                 var refereesList = new List<SelectListItem>()
                 {
 
-
-
-
-
                 };
 
 
                 foreach (REFEREE re in db.REFEREEs)
                 {
                     var sli = new SelectListItem();
-                    sli.Text = re.AspNetUser.lastName + " " + re.AspNetUser.firstName;
+                    sli.Text = re.AspNetUser.firstName + " " + re.AspNetUser.LastName;
                     sli.Value = re.refId.ToString();
                     refereesList.Add(sli);
 
@@ -385,10 +381,12 @@ namespace userprofile.Controllers
                 ViewBag.types = typelist;
                 var qlist = new List<SelectListItem>();
                 foreach (QUALIFICATION q in db.QUALIFICATIONS) {
-                    var qitem = new SelectListItem();
-                    qitem.Text = q.name;
-                    qitem.Value = q.qualificationId.ToString();
-                    qlist.Add(qitem);
+					if (q.status > 0) {
+						var qitem = new SelectListItem();
+						qitem.Text = q.name;
+						qitem.Value = q.qualificationId.ToString();
+						qlist.Add(qitem);
+					}
                 }
                 ViewBag.qualification = qlist;
                 refereesList.Select(x => refereesList.First(r => r.Value == "2"));
