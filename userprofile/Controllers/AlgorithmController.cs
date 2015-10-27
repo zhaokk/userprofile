@@ -192,8 +192,8 @@ namespace userprofile.Controllers {
 		/// <param name="rID">Referee ID</param>
 		/// <returns></returns>
 		bool checkTabu(int oID, int rID) { //check if this is tabu
-			if (dOffers[oID].available[rID].tabu > 0) {
-				dOffers[oID].available[rID].tabu -= 1;
+			if (dOffers[oID].available[rID].tabu > currTemp) {
+				dOffers[oID].available[rID].tabu -= 1; //minus one from tabu
 				dReferees[oID].available[oID].tabu -= 1;
 				return true;
 			}
@@ -414,32 +414,53 @@ namespace userprofile.Controllers {
 		}
 
 		/// <summary>
-		/// 
+		/// changes offer ID to the date of the offer
 		/// </summary>
-		/// <param name="oID"></param>
-		/// <param name="rID"></param>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
 		/// <returns></returns>
 		bool containsOneOff(int oID, int rID) {
 			return containsOneOff(db.OFFERs.Find(oID).dateOfOffer, rID);
 		}
 
-		bool containsOneOff(DateTime matchDateTime, int rID) { //REDO
+		/// <summary>
+		/// Checks if a referee contains a one-off availability on a date 
+		/// </summary>
+		/// <param name="matchDateTime">Date of the match</param>
+		/// <param name="rID">refereeID</param>
+		/// <returns></returns>
+		bool containsOneOff(DateTime matchDateTime, int rID) { 
 			try {
-				var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); //WRITE PRIMARY KEY FOR REFAVAILABILITY
-				if (temp == null)
+				var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date); 
+				if (temp == null) //if it can't find it
 					return false;
 				else
-					return true;
+					return true; //if it found one
 			}
 			catch {
-				return false;
+				return false; //if it can't find it/had an exception
 			}
 		}
 
+		/// <summary>
+		/// converts offerID to date of match of offer
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
+		/// <returns></returns>
 		bool checkOneOff(int oID, int rID) {
 			return checkOneOff(db.OFFERs.Find(oID).dateOfOffer, rID);
 		}
 
+		/// <summary>
+		/// Returns if one-off referee has is available or not available
+		/// </summary>
+		/// <param name="matchDateTime">dateTime of Match</param>
+		/// <param name="rID">refereeID</param>
+		/// <returns>
+		///		true: Available
+		///		false: Unavailable
+		/// </returns>
 		bool checkOneOff(DateTime matchDateTime, int rID) {
 			try {
 				var temp = db.OneOffAVAILABILITies.Find(rID, matchDateTime.Date);
@@ -454,6 +475,14 @@ namespace userprofile.Controllers {
 
 		}
 
+		/// <summary>
+		/// Gets the availability for day of datetime for a referee
+		/// </summary>
+		/// <param name="dt">dateTime</param>
+		/// <param name="rID">refereeID</param>
+		/// <returns>
+		///		The weekly availability of the date time for a referee -> Refer to data dictionary for actual values
+		/// </returns>
 		int getWeeklyAvailabilityForDay(DateTime dt, int rID) {
 			try {
 				switch (dt.DayOfWeek) {
@@ -481,6 +510,16 @@ namespace userprofile.Controllers {
 			}
 		}
 
+
+		/// <summary>
+		/// Checks the weekly availability against the dateTime of match
+		/// </summary>
+		/// <param name="weeklyAvailability">Weekly Availability of referee (refer to data dictionary)</param>
+		/// <param name="matchDateTime">DateTime of Referee</param>
+		/// <returns>
+		///		true: Available
+		///		false: Unavailable
+		/// </returns>
 		bool checkWeeklyAvailabilityForMatch(int weeklyAvailability, DateTime matchDateTime) {
 			if (weeklyAvailability == 0) {
 				return false;
@@ -524,12 +563,20 @@ namespace userprofile.Controllers {
 			throw new SystemException();
 		}
 
-		bool checkInitAvailability(int oID, int rID) {
-			//if (rID == 87784161)
-			//return false;
-			DateTime matchDateTime = dOfferStorage[oID].MATCH.matchDate;
 
-			if (containsOneOff(matchDateTime, rID)) {
+		/// <summary>
+		///		Check if referee is available to do the match (without assigning any new offers to him/her)
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
+		/// <returns>
+		///		true: Available
+		///		false: Unavailable
+		/// </returns>
+		bool checkInitAvailability(int oID, int rID) {
+			DateTime matchDateTime = dOfferStorage[oID].MATCH.matchDate; //get date
+
+			if (containsOneOff(matchDateTime, rID)) { //check if has one off
 				if (checkOneOff(matchDateTime, rID))
 					return true;
 				else
@@ -541,45 +588,60 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Add referee with rID to offer with oID as referee is available
+		/// </summary>
+		/// <param name="oID">offerID</param>
+		/// <param name="rID">refereeID</param>
 		void addInitialRefereesToOffer(int oID, int rID) {
-			dOffers[oID].available.Add(rID, new Item());
-			if (!dReferees.ContainsKey(rID)) {
-				dReferees.Add(rID, new refInfo(dGamesAvailableToRef[rID], dRefereeStorage[rID])); //refereeStorage[rID].maxGames
+			dOffers[oID].available.Add(rID, new Item()); //add referee to offer
+			if (!dReferees.ContainsKey(rID)) { //check if is first time referee has been assigned to an offer
+				dReferees.Add(rID, new refInfo(dGamesAvailableToRef[rID], dRefereeStorage[rID])); //add referee to storage, with gamesAvailableToRef, and the actual Referee
 				maxOffersFilled += dReferees[rID].canAssign; //count what top number of offers to fill is
 			}
-			dReferees[rID].available.Add(oID, new Item());
+			dReferees[rID].available.Add(oID, new Item()); //add offer to referee
 		}
 
+		/// <summary>
+		/// Add referees who have qualifications and are available for the offer
+		/// Checks:
+		///		Qualifications & Levels
+		///		Availability
+		/// </summary>
 		void addRefereesToOffers() {
-			foreach (var i in dOfferStorage) {
-				HashSet<int> availableReferees = null;
-				if (i.Value.OFFERQUALs.Count() > 0) {
-					foreach (var j in i.Value.OFFERQUALs) {
-						if (availableReferees == null) {
+			foreach (var i in dOfferStorage) { //for each offer that needs to be assigned
+				HashSet<int> availableReferees = null; 
+				if (i.Value.OFFERQUALs.Count() > 0) { //if has qualification
+					foreach (var j in i.Value.OFFERQUALs) { //for each qualication in offer
+						if (availableReferees == null) { //if it's the first qualification
 							availableReferees = new HashSet<int>();
-							foreach (var k in dQualificationRefStorage[j.qualificationId]) {
-								if (checkInitAvailability(i.Key, k)) {
-									availableReferees.Add(k);
+							foreach (var k in dQualificationRefStorage[j.qualificationId]) { //each referee with that qualification
+								if (dRefereeStorage[k].USERQUALs.Where(qual => qual.qualificationId == j.qualificationId).First().qualLevel >= j.qualLevel) { //if referee qualification level is >= required qualification level -> Should store in qualStorage
+									if (checkInitAvailability(i.Key, k)) { //check if referee is available
+										availableReferees.Add(k); //add that referee
+									}
 								}
 							}
 						}
-						else {
-							HashSet<int> temp = availableReferees;
-							availableReferees = new HashSet<int>();
-							foreach (var k in temp) {
-								if (dQualificationRefStorage[j.qualificationId].Contains(k)) {
-									availableReferees.Add(k);
+						else { //if not first qualification
+							HashSet<int> temp = availableReferees; //save current refs
+							availableReferees = new HashSet<int>(); //set available refs to null
+							foreach (var k in temp) { //each ref previously available
+								if (dQualificationRefStorage[j.qualificationId].Contains(k)) { //if ref prev available has next qualification
+									if (dRefereeStorage[k].USERQUALs.Where(qual => qual.qualificationId == j.qualificationId).First().qualLevel >= j.qualLevel) { //if referee qualification level is >= required qualification level -> Should store in qualStorage
+										availableReferees.Add(k); //add ref as available
+									}
 								}
 							}
 						}
-						if (availableReferees.Count() == 0) {
-							break;
+						if (availableReferees.Count() == 0) { //if no referees are available
+							break; //stop checking
 						}
 					}
 				}
-				else {
+				else { //if no qualification
 					availableReferees = new HashSet<int>();
-					foreach (var j in db.REFEREEs) {
+					foreach (var j in db.REFEREEs) { //check every referee
 						if (!dRefereeStorage.ContainsKey(j.refId)) {
 							dRefereeStorage.Add(j.refId, j);
 						}
@@ -588,18 +650,30 @@ namespace userprofile.Controllers {
 						}
 					}
 				}
-				if (availableReferees.Count == 0) {
-					llCompleted.AddLast(new pair(i.Key, -1));
-					dOffers.Remove(i.Key);
+
+				if (availableReferees.Count == 0) { //if there are no available referees for an offer
+					llCompleted.AddLast(new pair(i.Key, -1)); //add offer as completed unassigned
+					dOffers.Remove(i.Key); //remove from processing
 				}
 				else {
-					foreach (var j in availableReferees) {
-						addInitialRefereesToOffer(i.Key, j);
+					foreach (var j in availableReferees) { //for every referee that is available
+						addInitialRefereesToOffer(i.Key, j); //add them
 					}
 				}
 			}
 		}
 
+		/// <summary>
+		/// Stub for calculating how long it will take for a referee to travel in between the offers.
+		/// Need to implement google API to check time to travel between each location
+		/// </summary>
+		/// <param name="i">matchID of initial match</param>
+		/// <param name="j">matchID of match to travel to</param>
+		/// <returns>
+		///		Time required between games in minutes
+		///			0 if at same location
+		///			30 if not at same location
+		/// </returns>
 		int calcTimeBufferBetweenGames(int i, int j) {
 			if (dMatchStorage[i].locationId == dMatchStorage[j].locationId) {
 				return 0;
@@ -609,28 +683,37 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Calculate if 2 matches clash (same time period)
+		/// </summary>
+		/// <param name="i">matchID of first match</param>
+		/// <param name="j">matchID of second match</param>
+		/// <returns>
+		///		true: If matches clash
+		///		false: If matches don't clash
+		/// </returns>
 		bool calcMatchTimeClash(int i, int j) {
-			if (!dMatchStorage.ContainsKey(i)) {
-				dMatchStorage.Add(i, db.MATCHes.Find(i));
+			if (!dMatchStorage.ContainsKey(i)) { //if matchStorage doesn't have the matchID
+				dMatchStorage.Add(i, db.MATCHes.Find(i)); //Save the matchID in storage
 			}
-			if (!dMatchStorage.ContainsKey(j)) {
-				dMatchStorage.Add(j, db.MATCHes.Find(j));
-			}
-			int buffer = calcTimeBufferBetweenGames(i, j);
-			if (dMatchStorage[i].matchDate.Date == dMatchStorage[j].matchDate.Date) {
-				if (dMatchStorage[i].matchDate < dMatchStorage[j].matchDate) {
-					if (dMatchStorage[i].matchDate.AddMinutes(dMatchStorage[i].matchLength + buffer) <= dMatchStorage[j].matchDate)
+			if (!dMatchStorage.ContainsKey(j)) {//if matchStorage doesn't have the matchID
+				dMatchStorage.Add(j, db.MATCHes.Find(j)); //Save the matchID in storage
+			} 
+			int buffer = calcTimeBufferBetweenGames(i, j); //calculate time in minutes required to travel between matches
+			if (dMatchStorage[i].matchDate.Date == dMatchStorage[j].matchDate.Date) { //if matches are on the same date (will always be true on this iteration of algorithm as algorithm does day by day)
+				if (dMatchStorage[i].matchDate < dMatchStorage[j].matchDate) { //if first match is before second match
+					if (dMatchStorage[i].matchDate.AddMinutes(dMatchStorage[i].matchLength + buffer) <= dMatchStorage[j].matchDate) //if first match + matchlength + buffer is after the second match start
 						return false;
 					else
 						return true;
 				}
-				else if (dMatchStorage[i].matchDate > dMatchStorage[j].matchDate) {
-					if (dMatchStorage[i].matchDate >= dMatchStorage[j].matchDate.AddMinutes(dMatchStorage[j].matchLength + buffer))
+				else if (dMatchStorage[i].matchDate > dMatchStorage[j].matchDate) { //if second match is before the first match
+					if (dMatchStorage[i].matchDate >= dMatchStorage[j].matchDate.AddMinutes(dMatchStorage[j].matchLength + buffer)) // if second match + length + buffer is after the first match start
 						return false;
 					else
 						return true;
 				}
-				else { // ==
+				else { // if both matches at the same time
 					return true;
 				}
 			}
@@ -639,12 +722,18 @@ namespace userprofile.Controllers {
 			}
 		}
 
+
+		/// <summary>
+		/// Calculate if 2 matches clash
+		/// </summary>
+		/// <param name="i">matchID of first match</param>
+		/// <param name="j">matchID of second match</param>
 		void calculateClash(int i, int j) {
 			if (matchClashes.ContainsKey(i)) {
 				if (matchClashes[i].ContainsKey(j)) { //have already calculated
 					return;
 				}
-				else {
+				else { //haven't calculated
 					bool tmp = calcMatchTimeClash(i, j);
 					matchClashes[i].Add(j, tmp);
 					if (!matchClashes.ContainsKey(j)) {
@@ -653,7 +742,7 @@ namespace userprofile.Controllers {
 					matchClashes[j].Add(i, tmp);
 				}
 			}
-			else {
+			else { //haven't calculated
 				bool tmp = calcMatchTimeClash(i, j);
 				matchClashes.Add(i, new Dictionary<int, bool>());
 				matchClashes[i].Add(j, tmp);
@@ -664,18 +753,29 @@ namespace userprofile.Controllers {
 			}
 		}
 
+
+		/// <summary>
+		/// Calculate clashes for all matches between each other.  Should remove function and calculate them if required in runtime
+		/// </summary>
 		void calculateClashes() {
-			foreach (var i in dReferees) {
-				foreach (var j in i.Value.available) {
-					foreach (var k in i.Value.available) {
-						if (dOfferStorage[j.Key].MATCH.matchId != dOfferStorage[k.Key].MATCH.matchId) {
-							calculateClash(dOfferStorage[j.Key].MATCH.matchId, dOfferStorage[k.Key].MATCH.matchId);
+			foreach (var i in dReferees) { //for each referee
+				foreach (var j in i.Value.available) { //for each offer in referee
+					foreach (var k in i.Value.available) { //for each offer in referee (checking each offer against every other offer -> NOT EFFICIENT
+						if (dOfferStorage[j.Key].MATCH.matchId != dOfferStorage[k.Key].MATCH.matchId) { //if it isn't the same match
+							calculateClash(dOfferStorage[j.Key].MATCH.matchId, dOfferStorage[k.Key].MATCH.matchId); //calculate if the 2 matches clash
 						}
 					}
 				}
 			}
 		}
 
+		/// <summary>
+		/// Fill the initial sets:
+		///		Gets offers and Qualifications
+		///		Fills Referees by Qualifications
+		///		Adds the Referees to dOffers
+		///		Calculates clashes between matches can make more efficient by removing this
+		/// </summary>
 		void fillSets() {
 			getOffersAndQualificationIDs();
 			fillRefereeByQualification();
@@ -683,12 +783,16 @@ namespace userprofile.Controllers {
 			calculateClashes();
 		}
 
-		void removeOffer(int oID) { //remove offer
-			if (dOffers.ContainsKey(oID)) { //might've already been removed (other ref could have completed)
-				foreach (var i in dOffers[oID].available) {
-					dReferees[i.Key].available.Remove(oID);
-					if (dReferees[i.Key].available.Count() == 0) {
-						maxOffersFilled -= dReferees[i.Key].canAssign;
+		/// <summary>
+		/// Remove an offer from algorithm -> Generally used for if there is no referee that can complete or referee can complete without it affecting anything else
+		/// </summary>
+		/// <param name="oID">offerID of offer to remove</param>
+		void removeOffer(int oID) { 
+			if (dOffers.ContainsKey(oID)) { //Check if it hasn't been removed already
+				foreach (var i in dOffers[oID].available) { //for each referee that can do this
+					dReferees[i.Key].available.Remove(oID);//remove the offer from his availability
+					if (dReferees[i.Key].available.Count() == 0) { //if only offer that referee could have completed
+						maxOffersFilled -= dReferees[i.Key].canAssign; //remove the referee
 						dReferees.Remove(i.Key);
 					}
 				}
@@ -696,7 +800,14 @@ namespace userprofile.Controllers {
 			}
 		}
 
-		public IEnumerable<TKey> UniqueRandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict) { //randomise order of dictionary
+
+		/// <summary>
+		/// Randomise the order of the dictionary - Unknown source
+		/// Call by using a foreach (var i in UniqueRandomValues(ICollectible)) -> Will output the values in a random order
+		/// </summary>
+		/// <param name="dict">Dictionary that you want values from</param>
+		/// <returns>values from the dictionary in a random order</returns>
+		public IEnumerable<TKey> UniqueRandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict) {
 			// Put the values in random order
 			Random rand = new Random();
 			LinkedList<TKey> values = new LinkedList<TKey>(from v in dict.Keys
@@ -709,46 +820,77 @@ namespace userprofile.Controllers {
 			}
 		}
 
-		public void assign(int oID, int rID) { // Assign referee to offer
+		/// <summary>
+		/// Assign a referee to an offer (has been checked if available)
+		/// </summary>
+		/// <param name="oID">offerID of offer to assign referee too</param>
+		/// <param name="rID">refereeID of referee to assign</param>
+		public void assign(int oID, int rID) {
 			dOffers[oID].assignedTo = rID;
 			dReferees[rID].assignedTo.Add(oID);
-			updateAvailability(true, oID, rID);
+			updateAvailability(true, oID, rID); //update availability
 			currOffersFilled++;
 			currPriorityFilled += dOffers[oID].actualOffer.priority;
 			hFilledOffers.Add(oID);
 		}
 
+		/// <summary>
+		/// Returns a value for how long a offer/referee pair should be tabu
+		/// </summary>
+		/// <param name="oID">ID of item you want to make tabu</param>
+		/// <returns>The temperature at when it will no longer be tabu</returns>
 		long calcTabu(int oID) {
 			return (initTemp / ((initTemp - currTemp) / ((long)dOffers[oID].available.Count() + (long)dOffers[oID].unavailable.Count())));
 		}
 
+		/// <summary>
+		/// Mark an offer/referee pair as tabu (usually when unassigning)
+		/// </summary>
+		/// <param name="oID">offerID of offer you want to make tabu</param>
+		/// <param name="rID">refereeID of referee you want to make tabu</param>
 		void setTabu(int oID, int rID) {
 			int amount = (int)calcTabu(oID);
 			dOffers[oID].available[rID].tabu += amount;
 			dReferees[rID].available[oID].tabu += amount;
 		}
 
+		/// <summary>
+		/// Make an offer unassigned
+		/// </summary>
+		/// <param name="oID">offerID you want to unassign</param>
 		void unassign(int oID) {
 			int rID = dOffers[oID].assignedTo;
 			hFilledOffers.Remove(oID);
 			dOffers[oID].assignedTo = -1;
 			dReferees[rID].assignedTo.Remove(oID);
-			updateAvailability(false, oID, rID);
-			setTabu(oID, rID);
+			updateAvailability(false, oID, rID); //updateAvailability
+			setTabu(oID, rID); //set tabu
 			currOffersFilled--;
 			currPriorityFilled -= dOffers[oID].actualOffer.priority;
 		}
 
-		int randomAvailableRef(int oID) { // get a random available Ref  TODO: MAKE IT PICK ONE WITH TABU IF NONE AVAILABLE
+
+		/// <summary>
+		/// Get a random available referee for an offer
+		/// </summary>
+		/// <param name="oID"></param>
+		/// <returns></returns>
+		int randomAvailableRef(int oID) {
 			Random rand = new Random();
-			foreach (var i in UniqueRandomValues(dOffers[oID].available)) {
-				if (checkTabu(oID, i)) {
-					return i;
+			foreach (var i in UniqueRandomValues(dOffers[oID].available)) { //randomly go through the available referees
+				if (!checkTabu(oID, i)) { //check if they have tabu
+					return i; //if not tabu then return ref
 				}
 			}
 			return dOffers[oID].available.ElementAt(rand.Next(0, dOffers[oID].available.Count)).Key; //if all have tabu, assign random
 		}
 
+		/// <summary>
+		/// Preprocess for algorithm:
+		///		if referee can ref all games assigned to him -> Make him do so (won't affect other referees)
+		///		Randomly assign all referees best possible for starting position
+		///		Set MaxOffersFilled (to count if all offers have been filled)
+		/// </summary>
 		private void initChecks() {
 			LinkedList<int> nuke = new LinkedList<int>();
 			do {
@@ -798,17 +940,27 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Calculate how many offers to reset at a current point in time based off how many offers there are and how long algorithm has been running
+		/// </summary>
+		/// <returns>Int of how many offers to reset</returns>
 		long calcOffersToReset() {
 			if (dOffers.Count() < 20)
 				return 1;
 			return (long)(((0.2 * dOffers.Count()) * (initTemp / currTemp)) + 1);
 		}
 
+		/// <summary>
+		/// Unassign a random offer (which has been filled)
+		/// </summary>
 		void unassignRandom() {
 			Random rand = new Random();
 			unassign(hFilledOffers.ElementAt(rand.Next(0, hFilledOffers.Count())));
 		}
 
+		/// <summary>
+		/// Save state -> Currently stores 3 states -> Used to reset back to previous best state or to say what the best set of refs it found
+		/// </summary>
 		void saveState() {
 			if (bestOffers.Count > 2) { // if there are 3 elements remove one before inserting
 				bestOffers.RemoveAt(rand.Next(0, 3));
@@ -817,6 +969,9 @@ namespace userprofile.Controllers {
 			bestReferees.Add(new Dictionary<int, refInfo>(dReferees));
 		}
 
+		/// <summary>
+		/// reset the state back to the best previous state
+		/// </summary>
 		void resetState() {
 			Random rand = new Random();
 			int chooseState = rand.Next(0, bestReferees.Count());
@@ -824,6 +979,14 @@ namespace userprofile.Controllers {
 			dReferees = new Dictionary<int, refInfo>(bestReferees[chooseState]);
 		}
 
+		/// <summary>
+		///		Decided whether to accept or deny the current solution (as in continue or reset back to best solution) - Based off Simulated Annealing
+		/// </summary>
+		/// <param name="dif">Difference between current priority filled and best priority filled</param>
+		/// <returns>
+		///		true: Accepted difference
+		///		false: Denied difference (reset state)
+		/// </returns>
 		bool SimulatedAnnealing(int dif) {
 			double difPercent = dif / maxPriorityFilled;
 			double currTempPercent = currTemp / initTemp;
@@ -834,14 +997,29 @@ namespace userprofile.Controllers {
 
 		}
 
+		/// <summary>
+		///		Core part of the algorithm -> Performs the actual algorithm and calculates the best case it can find
+		///		Rough Pseudocode:
+		///			while (below a certain number of runs & not found a case where all offers filled {
+		///				unassign a number of offers
+		///				fill all possible offers randomly
+		///				If  better case than best found case
+		///					save and continue
+		///				else if equal
+		///					continue (possibly save)
+		///				else if worse
+		///					possibly reset
+		///			}
+		///					
+		/// </summary>
 		void performAlgorithm() {
 			for (currTemp = 0; currTemp < initTemp && bestOffersFilled < maxOffersFilled; currTemp++) {
-				long countAssign = calcOffersToReset();
-				for (long i = 0; i < countAssign; i++) {
+				long countAssign = calcOffersToReset(); //Calc how many to unassign
+				for (long i = 0; i < countAssign; i++) { 
 					unassignRandom();
 				}
-				while (hCanBeFilledOffers.Count() > 0) {
-					int currOffer = hCanBeFilledOffers.ElementAt(rand.Next(0, hCanBeFilledOffers.Count()));
+				while (hCanBeFilledOffers.Count() > 0) { //while offers can be filled
+					int currOffer = hCanBeFilledOffers.ElementAt(rand.Next(0, hCanBeFilledOffers.Count())); //assign to a random referee who is available
 					assign(currOffer, randomAvailableRef(currOffer));
 				}
 
@@ -865,6 +1043,9 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Put the results of the algorithm in a format that can be displayed on a webpage
+		/// </summary>
 		void setModel() {
 			modelResult = new AlgorithmModel(1);
 			foreach (var i in llCompleted) {
@@ -872,6 +1053,9 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// Save the best results of bestOffers to llCompleted
+		/// </summary>
 		void saveResults() {
 			if (bestOffers != null) {
 				foreach (var i in bestOffers.First()) {
@@ -880,6 +1064,9 @@ namespace userprofile.Controllers {
 			}
 		}
 
+		/// <summary>
+		/// The main function to call to start the algorithm -> Function is self-explanatory
+		/// </summary>
 		public void AssignReferees() {
 			initGlobalVars();
 			for (dateCurrent = dateStart; dateCurrent <= dateEnd; dateCurrent = dateCurrent.AddDays(1)) {
@@ -895,7 +1082,11 @@ namespace userprofile.Controllers {
 			//db.SaveChanges();
 		}
 
-
+		/// <summary>
+		/// Function to get referees available for an offer outside of algorithm -> Built for Connor
+		/// </summary>
+		/// <param name="oID">offerID of offer you want to find referees for</param>
+		/// <returns>List of referees available to take an offer (available and has qualifications)</returns>
 		public List<REFEREE> getAvailableRefereesForOffer(int oID) {
 			OFFER offer = db.OFFERs.Find(oID);
 			List<REFEREE> availableReferees = new List<REFEREE>();
