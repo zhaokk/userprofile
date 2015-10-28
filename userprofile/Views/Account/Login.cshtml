@@ -48,7 +48,7 @@
                 <div class="container">
                    
                     <h1>
-                        Tournament Manager
+                        <b>Tournament Manager</b>
                     </h1>
 
                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "sp2" }))
@@ -65,10 +65,14 @@
 
     <input  type="submit" value="Log in" class="login login-submit" />
 
-    <input type="button" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
+                       <div style="width: 42%;  margin: 0 auto;">
+                    <input type="button" style="display:inline; width:120px;  float: left;" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
+                           <input type="button" style="display:inline; width:120px;  float: right;" onclick="location.href = '@Url.Action( "index","Match")';" value="Guest" />
+                       </div>
+    
    
 
-   
+
 
 
                         @*<button type="submit" id="login-button">
