@@ -2,424 +2,423 @@
 @model Tuple<TOURNAMENT, List<MATCH>, List<MATCH>>
 
 <script type="text/javascript">
-    $(function () {
-        $("#example1").DataTable();
-        $("#example3").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
-    });
+	$(function () {
+		$("#example1").DataTable();
+		$("#example3").DataTable();
+		$('#example2').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false
+		});
+	});
 </script>
 
 
 <section class="content">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="box">
-                <div class="box-body">
-                    <div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="box">
+				<div class="box-body">
+					<div>
 
-                        @{
-                            //check if this user is an organizer for the tournament
-                            foreach (var org in Model.Item1.AspNetUsers)
-                            {
-                                if (User.Identity.Name == org.UserName)
-                                {
-                                    @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-warning pull-right" })
-                                }
-                            }
+						@{
+							//check if this user is an organizer for the tournament
+							foreach (var org in Model.Item1.AspNetUsers) {
+								if (User.Identity.Name == org.UserName) {
+									@Html.ActionLink("Edit", "Edit", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-warning pull-right" })
+								}
+							}
 
-                            //admin is god
-                            if (User.IsInRole("Admin"))
-                            {
-                                @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-warning pull-right" })
-                                @Html.ActionLink("Delete", "Delete", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-danger pull-right" })
-                            }
-                        }
-                        <h4>TOURNAMENT</h4>
-                        <hr />
-                        <dl class="dl-horizontal">
-                            <dt>
-                                Name
-                            </dt>
-                            <dd>
-                                @Model.Item1.name
-                            </dd>
-                            <dt>
-                                Start Date
-                            </dt>
-                            <dd>
-                                @Model.Item1.startDate
-                            </dd>
-                            <dt>
-                                Age Bracket
-                            </dt>
-                            <dd>
-                                @Model.Item1.ageBracket
-                            </dd>
-                            <dt>
-                                Grade
-                            </dt>
-                            <dd>
-                                @Model.Item1.grade
-                            </dd>
-                            <dt>
-                                Status
-                            </dt>
-                            <dd>
-                                @switch (Model.Item1.status)
-                                {
-                                    case 0:
-                                        @:Cancelled
+							//admin is god
+							if (User.IsInRole("Admin")) {
+								@Html.ActionLink("Edit", "Edit", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-warning pull-right" })
+								@Html.ActionLink("Delete", "Delete", new { id = Model.Item1.tournamentId }, new { @class = "btn btn-danger pull-right" })
+							}
+						}
+						<h4>TOURNAMENT</h4>
+						<hr />
+						<dl class="dl-horizontal">
+							<dt>
+								Name
+							</dt>
+							<dd>
+								@Model.Item1.name
+							</dd>
+							<dt>
+								Start Date
+							</dt>
+							<dd>
+								@Model.Item1.startDate
+							</dd>
+							<dt>
+								Age Bracket
+							</dt>
+							<dd>
+								@Model.Item1.ageBracket
+							</dd>
+							<dt>
+								Grade
+							</dt>
+							<dd>
+								@Model.Item1.grade
+							</dd>
+							<dt>
+								Status
+							</dt>
+							<dd>
+								@switch (Model.Item1.status) {
+									case 0:
+										@:Cancelled
 									break;
-                                    case 1:
-                                    if (Model.Item1.startDate > DateTime.Now)
-                                    {
-                                        @:Not Started
+									case 1:
+									if (Model.Item1.startDate > DateTime.Now) {
+										@:Not Started
 									}
-                                    else
-                                    {
-                                        @:In Progress
+									else {
+										@:In Progress
 									}
-                                    break;
-                                    case 2:
-                                    @: Completed
 									break;
-                                    default:
-                                    @:ERROR!
+									case 2:
+									@: Completed
 									break;
-                                }
-                            </dd>
-                            @if (User.IsInRole("Admin") || User.IsInRole("Assignor"))
-                            {
-                                <dt>
-                                    Priority
-                                </dt>
-                                <dd>
-                                    @Model.Item1.priority
-                                </dd>
-                            }
-                            <dt>
-                                Tournament Organizer
-                            </dt>
-                            <dd>
-                                <a href="@Url.Action("Details", "Account", new { id = Model.Item1.AspNetUser.UserName })">
-                                    @Model.Item1.AspNetUser.firstName
-                                    @Model.Item1.AspNetUser.lastName
-                                    (@Model.Item1.AspNetUser.UserName)
-                                </a>
-                            </dd>
-                            <dt>
-                                Sport
-                            </dt>
-                            <dd>
-                                @Model.Item1.SPORT1.name
-                            </dd>
-                        </dl>
-                    </div>
-                    <p>
+									default:
+									@:ERROR!
+									break;
+								}
+							</dd>
+							@if (User.IsInRole("Admin") || User.IsInRole("Assignor")) {
+								<dt>
+									Priority
+								</dt>
+								<dd>
+									@Model.Item1.priority
+								</dd>
+							}
+							<dt>
+								Tournament Organizer
+							</dt>
+							<dd>
+								<a href="@Url.Action("Details", "Account", new { id = Model.Item1.AspNetUser.UserName })">
+									@Model.Item1.AspNetUser.firstName
+									@Model.Item1.AspNetUser.lastName
+									(@Model.Item1.AspNetUser.UserName)
+								</a>
+							</dd>
+							<dt>
+								Sport
+							</dt>
+							<dd>
+								@Model.Item1.SPORT1.name
+							</dd>
+						</dl>
+					</div>
+					<p>
 
-                        @Html.ActionLink("List of tournaments", "Index")
-                    </p>
-                </div>
-            </div>
-        </div> @*End tournament details*@
+						@Html.ActionLink("List of tournaments", "Index")
+					</p>
+				</div>
+			</div>
+		</div> @*End tournament details*@
 
-        @*teams in this tournament*@
-        @if (Model.Item2.Count > 0)
-        { //if there is no team data, don't display the table
-            <div class="col-md-8">
+		@*teams in this tournament*@
+		@if (Model.Item2.Count > 0) { //if there is no team data, don't display the table
+			<div class="col-md-8">
 
-                <div class="box">
-                    <div class="box box-primary collapsed-box">
-                        <div class="box-header with-border " id="teams">
-                            <h3 class="box-title">Teams</h3>
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                            </div>
-                        </div><!-- /.box-header -->
+				<div class="box">
+					<div class="box box-primary collapsed-box">
+						<div class="box-header with-border " id="teams">
+							<h3 class="box-title">Teams</h3>
+							<div class="box-tools pull-right">
+								<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+							</div>
+						</div><!-- /.box-header -->
 
-                        <div class="box-body " style="display: none;">
-                            <div class="table-responsive">
-                                <table id="example2" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Current position</th>
-                                            <th>Team Name</th>
-                                            <th>Points</th>
-                                            <th>Wins</th>
-                                            <th>Draws</th>
-                                            <th>Losses</th>
-                                            <th>For</th>
-                                            <th>Against</th>
-                                            <th>Goal Draw</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{foreach (var item in Model.Item1.TEAMINS)
-                                    {
+						<div class="box-body " style="display: none;">
+							<div class="table-responsive">
+								<table id="example2" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Current position</th>
+											<th>Team Name</th>
+											<th>Points</th>
+											<th>Wins</th>
+											<th>Draws</th>
+											<th>Losses</th>
+											<th>For</th>
+											<th>Against</th>
+											<th>Goal Draw</th>
+										</tr>
+									</thead>
+									<tbody>
+										@{foreach (var item in Model.Item1.TEAMINS) {
 
-                                            <tr>
-                                                <td>
-                                                    @item.currentPosition
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details", "team", new { id = item.teamID })">
-                                                        @item.TEAM.name
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @item.points
-                                                </td>
-                                                <td>
-                                                    @item.wins
-                                                </td>
-                                                <td>
-                                                    @item.draws
-                                                </td>
-                                                <td>
-                                                    @item.losses
-                                                </td>
-                                                <td>
-                                                    @item.goalsFor
-                                                </td>
-                                                <td>
-                                                    @item.goalsAgainst
-                                                </td>
-                                                <td>
-                                                    @item.goalDraw
-                                                </td>
-                                            </tr>
-                                    }
+											<tr>
+												<td>
+													@item.currentPosition
+												</td>
+												<td>
+													<a href="@Url.Action("Details", "team", new { id = item.teamID })">
+														@item.TEAM.name
+													</a>
+												</td>
+												<td>
+													@item.points
+												</td>
+												<td>
+													@item.wins
+												</td>
+												<td>
+													@item.draws
+												</td>
+												<td>
+													@item.losses
+												</td>
+												<td>
+													@item.goalsFor
+												</td>
+												<td>
+													@item.goalsAgainst
+												</td>
+												<td>
+													@item.goalDraw
+												</td>
+											</tr>
+										}
 
-                                        }
+										}
 
-                                    </tbody>
-                                </table>
-                            </div>
+									</tbody>
+								</table>
+							</div>
 
-                        </div>
-                    </div>
-                    </div>
-                </div>
-        }
-        else
-        {
-            <div class="col-md-8">
-                <div class="box box-danger collapsed-box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">No Teams</h3>
-                        <div class="box-tools pull-right">
-                        </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		else {
+			<div class="col-md-8">
+				<div class="box box-danger collapsed-box">
+					<div class="box-header with-border">
+						<h3 class="box-title">No Teams</h3>
+						<div class="box-tools pull-right">
+						</div>
 
-                    </div><!-- /.box-header -->
+					</div><!-- /.box-header -->
 
-                </div>
-            </div>
-        }
-        @if (ViewBag.ableToEdit)
-        {
+				</div>
+			</div>
+		}
+		@if (ViewBag.ableToEdit) {
 
-            <div class="col-md-8 pull-right">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h5 class="box-title">Add Team to Tournament: </h5>
+			<div class="col-md-8 pull-right">
+				<div class="box">
+					<div class="box-header with-border">
+						<h5 class="box-title">Add Team to Tournament: </h5>
 						@Html.DropDownList("addteam", (List<SelectListItem>)ViewBag.teamList, "Team to Add", new { @Name = "re.userId" })
 						<button type="button" id="addbutton" class="btn btn-success pull-right" disabled>Add new Team</button>
-                    </div><!-- /.box-header -->
+					</div><!-- /.box-header -->
 
-                    <div class="box-body " style="display: none;">
+					<div class="box-body " style="display: none;">
 
-                        
-                      </div>
-                   
 
-                </div>
-            </div>
-        }
-       
-    </div>
-    <div class="row">
+					</div>
 
-        @if (Model.Item2.Count > 0)
-        {
-            <div class="col-md-6">
-                <div class="box box-success">
-                    <div class="box-header with-border" >
-                        <h3 class="box-title">Upcoming matches</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </div><!-- /.box-header -->
 
-                    <div class="box-body " style="display: block;">
-                        <div class="table-responsive">
-                            <table id="example1" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Location
-                                        </th>
-                                        <th>
-                                            Home team
-                                        </th>
-                                        <th>
-                                            Away team
-                                        </th>
+				</div>
+			</div>
+		}
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var match in @Model.Item2)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @match.matchDate
-                                            </td>
-                                            <td>
-                                                @match.LOCATION.name, @match.LOCATION.city
-                                            </td>
-                                            <td>
-                                                @match.TEAM.name
-                                            </td>
-                                            <td>
-                                                @match.TEAM1.name
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="col-md-12">
-                <div class="box box-danger collapsed-box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">No Past Matches</h3>
-                        <div class="box-tools pull-right">
-                        </div>
-                    </div><!-- /.box-header -->
+	</div>
+	<div class="row">
 
-                </div>
-            </div>
-        }
+		@if (Model.Item2.Count > 0) {
+			<div class="col-md-6">
+				<div class="box box-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Upcoming matches</h3>
+						<div class="box-tools pull-right">
+							<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						</div>
+					</div><!-- /.box-header -->
 
-        @if (Model.Item3.Count > 0)
-        {
-            <div class="col-md-6">
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Past matches</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </div><!-- /.box-header -->
+					<div class="box-body " style="display: block;">
+						<div class="table-responsive">
+							<table id="example1" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>
+											Date
+										</th>
+										<th>
+											Location
+										</th>
+										<th>
+											Home team
+										</th>
+										<th>
+											Away team
+										</th>
 
-                    <div class="box-body " style="display: block;">
-                        <div class="table-responsive">
-                            <table id="example3" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Location
-                                        </th>
-                                        <th>
-                                            Home team
-                                        </th>
-                                        <th>
-                                            Away team
-                                        </th>
-                                        <th>
-                                            Result
-                                        </th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var match in @Model.Item2) {
+										<tr>
+											<td>
+												<a href="@Url.Action("Details", "match", new { id = match.matchId })">
+													@match.matchDate
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "location", new { id = match.matchId })">
+													@match.LOCATION.name, @match.LOCATION.city
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "team", new { id = match.matchId })">
+													@match.TEAM.name
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "team", new { id = match.matchId })">
+													@match.TEAM1.name
+												</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div><!-- /.box-body -->
+				</div>
+			</div>
+		}
+		else {
+			<div class="col-md-12">
+				<div class="box box-danger collapsed-box">
+					<div class="box-header with-border">
+						<h3 class="box-title">No Past Matches</h3>
+						<div class="box-tools pull-right">
+						</div>
+					</div><!-- /.box-header -->
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var match in @Model.Item3)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @match.matchDate
-                                            </td>
-                                            <td>
-                                                @match.LOCATION.name, @match.LOCATION.city
-                                            </td>
-                                            <td>
-                                                @match.TEAM.name
-                                            </td>
-                                            <td>
-                                                @match.TEAM1.name
-                                            </td>
-                                            <td>
-                                                @match.teamAScore - @match.teamBScore
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div><!-- /.box-body -->
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="col-md-6 " >
-                <div class="box box-danger collapsed-box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">No Upcoming Matches</h3>
-                        <div class="box-tools pull-right">
-                        </div>
-                    </div><!-- /.box-header -->
+				</div>
+			</div>
+		}
 
-                </div>
-            </div>
-        }
-    </div>
+		@if (Model.Item3.Count > 0) {
+			<div class="col-md-6">
+				<div class="box box-danger">
+					<div class="box-header with-border">
+						<h3 class="box-title">Past matches</h3>
+						<div class="box-tools pull-right">
+							<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						</div>
+					</div><!-- /.box-header -->
+
+					<div class="box-body " style="display: block;">
+						<div class="table-responsive">
+							<table id="example3" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>
+											Date
+										</th>
+										<th>
+											Location
+										</th>
+										<th>
+											Home team
+										</th>
+										<th>
+											Away team
+										</th>
+										<th>
+											Result
+										</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var match in @Model.Item3) {
+										<tr>
+											<td>
+												<a href="@Url.Action("Details", "match", new { id = match.matchId })">
+													@match.matchDate
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "location", new { id = match.matchId })">
+													@match.LOCATION.name, @match.LOCATION.city
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "team", new { id = match.matchId })">
+													@match.TEAM.name
+												</a>
+											</td>
+											<td>
+												<a href="@Url.Action("Details", "team", new { id = match.matchId })">
+													@match.TEAM1.name
+												</a>
+											</td>
+											<td>
+												@match.teamAScore - @match.teamBScore
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div><!-- /.box-body -->
+				</div>
+			</div>
+		}
+		else {
+			<div class="col-md-6 ">
+				<div class="box box-danger collapsed-box">
+					<div class="box-header with-border">
+						<h3 class="box-title">No Upcoming Matches</h3>
+						<div class="box-tools pull-right">
+						</div>
+					</div><!-- /.box-header -->
+
+				</div>
+			</div>
+		}
+	</div>
 </section>
 <script>
-    $("#addbutton").click(
+	$("#addbutton").click(
         function () {
-         
-            $.post("../addTeam", {
-                'teamId': $("#addteam").val(),
-                'tId':@Model.Item1.tournamentId,
-            },
+
+        	$.post("../addTeam", {
+        		'teamId': $("#addteam").val(),
+        		'tId':@Model.Item1.tournamentId,
+        	},
             function(){
-                $("#teams").hide("quick").show("quick");
-                $("#addteam option[value="+$("#addteam").val()+"]").remove();
-                $("#addbutton").prop('disabled', true);
+            	$("#teams").hide("quick").show("quick");
+            	$("#addteam option[value="+$("#addteam").val()+"]").remove();
+            	$("#addbutton").prop('disabled', true);
             }
 
                 )
 
         }
         );
-    $("#addteam").change(
+	$("#addteam").change(
         function(){
-            if($(this).val()!=""){
-                $("#addbutton").prop('disabled', false);
-            }else{
-            
-                $("#addbutton").prop('disabled', true);
-            }
-        
+        	if($(this).val()!=""){
+        		$("#addbutton").prop('disabled', false);
+        	}else{
+
+        		$("#addbutton").prop('disabled', true);
+        	}
+
         }
         )
 
