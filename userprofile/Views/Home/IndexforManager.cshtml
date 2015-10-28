@@ -42,7 +42,7 @@ else
         <div class="col-xs-12">
              <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">TEAM MANAGING</h3>
+                    <h3 class="box-title">Teams Managing</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -108,7 +108,7 @@ else
         <div class="col-xs-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">upcoming matches</h3>
+                    <h3 class="box-title">Upcoming Matches</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -197,7 +197,7 @@ else
         <div class="col-xs-12">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> matche history</h3>
+                    <h3 class="box-title">Past Matches</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -212,9 +212,6 @@ else
                                         Date
                                     </th>
                                     <th>
-                                        Location
-                                    </th>
-                                    <th>
                                         Home Team
 
                                     </th>
@@ -224,7 +221,9 @@ else
                                     <th>
                                         Sport
                                     </th>
-
+									<th>
+										Results
+									</th>
 
 
                                 </tr>
@@ -237,12 +236,6 @@ else
 
                                             <a href="@Url.Action( "Details", new { id = item.matchId })">
                                                 @Html.DisplayFor(modelItem => item.matchDate)
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <a href="@Url.Action( "Details","location", new { id = item.LOCATION.locationId })">
-                                                @Html.DisplayFor(modelItem => item.LOCATION.name)
                                             </a>
                                         </td>
 
@@ -263,7 +256,39 @@ else
 
                                         </td>
 
-
+										<td>
+@switch (item.status) {
+	case 1:
+		@:Pending Results
+												break;
+	case 3:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@item.TEAM.name
+									@:WON!
+												break;
+	case 4:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@:DRAW!
+												break;
+	case 5:
+									@item.teamAScore
+									@:-
+									@item.teamBScore
+									<br />
+									@item.TEAM1.name
+									@:WON!
+												break;
+	default:
+									@:ERROR!
+												break;
+}
+										</td>
 
 
                                     </tr>

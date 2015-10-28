@@ -639,8 +639,12 @@ namespace userprofile.Controllers
                 return HttpNotFound();
             }
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
-            ViewBag.teamaID = new SelectList(db.TEAMs, "teamId", "name", match.teamAId);
-            ViewBag.teambID = new SelectList(db.TEAMs, "teamId", "name", match.teamBId);
+			List<TEAM> listOfTeams = new List<TEAM>();
+			foreach (var i in db.MATCHes.Find(id.Value).TOURNAMENT.TEAMINS) {
+				listOfTeams.Add(i.TEAM);
+			}
+            ViewBag.teamaID = new SelectList(listOfTeams, "teamId", "name", match.teamAId);
+            ViewBag.teambID = new SelectList(listOfTeams, "teamId", "name", match.teamBId);
             ViewBag.tournamentId = new SelectList(db.TOURNAMENTs, "tournamentId", "name", match.tournamentId);
             return View(match);
         }

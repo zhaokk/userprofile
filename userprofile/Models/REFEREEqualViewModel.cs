@@ -103,7 +103,7 @@ namespace userprofile.Models
         {
             this.refeid = refe.refId;
             this.quals = new List<SelectQualEditorViewModel>();
-            var allquals = db.QUALIFICATIONS;
+            var allquals = db.QUALIFICATIONS.Where(qual=>qual.status > 0);
             foreach (var qual in allquals)
             {
                 var qvm = new SelectQualEditorViewModel(qual);
