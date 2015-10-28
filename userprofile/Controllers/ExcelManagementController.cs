@@ -22,6 +22,12 @@ namespace userprofile.Controllers
 
             return View();
         }
+        public FileResult Download()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"C:\Users\kang\Source\Repos\userprofile\userprofile\Excel\sampleExcel.xls");
+            string fileName = "sampleExcel.xls";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
         //  [HttpPost]
         public string importXml()
         {
@@ -113,7 +119,7 @@ namespace userprofile.Controllers
                                     modelfromExcel.optionalRe = new REFEREEqualViewModel();
                                     modelfromExcel.optionalRe.re = new REFEREE();
                                     modelfromExcel.optionalRe.re.status = int.Parse(row["status"].ToString());
-                                    modelfromExcel.optionalRe.re.status = int.Parse(row["rating"].ToString());
+                                    modelfromExcel.optionalRe.re.rating = int.Parse(row["rating"].ToString());
                                     modelfromExcel.residentLoc.street = row["street"].ToString();
                                     modelfromExcel.residentLoc.city = row["city"].ToString();
                                     modelfromExcel.residentLoc.state = row["state"].ToString();
@@ -125,9 +131,10 @@ namespace userprofile.Controllers
 
 
                                     modelfromExcel.optionalRe.re.maxGames = int.Parse(row["maxGames"].ToString());
-                                    if (db.AspNetUsers.First(u => u.UserName == modelfromExcel.UserName) == null)
+                                    
+                                    if (db.AspNetUsers.FirstOrDefault(u => u.UserName == modelfromExcel.UserName) == null)
                                     {
-                                        if (db.AspNetUsers.First(u => u.email == modelfromExcel.Email) == null)
+                                        if (db.AspNetUsers.FirstOrDefault(u => u.email == modelfromExcel.Email) == null)
                                         {
                                             new AccountController().createUserFromExcel(modelfromExcel, "Referee");
                                             message += "success at row" + i + "<br>";
