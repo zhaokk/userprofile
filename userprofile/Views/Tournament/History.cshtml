@@ -72,8 +72,10 @@
                                         @Html.DisplayFor(modelItem => item.grade)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
-                                    </td>
+										<a href="@Url.Action("Details", "Account", new { id = item.AspNetUser.UserName })">
+											@Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+											</a>
+</td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SPORT1.name)
                                     </td>
