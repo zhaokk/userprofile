@@ -409,7 +409,7 @@ namespace userprofile.Controllers
 							storedUser.ffaNum = null;
 
                         var client = new WebClient();
-                        //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TM&to=61"+storedUser.phoneNum+"&text=Welcome&nbsp;to&nbsp;Tournament&nbsp;manager&nbsp;"+storedUser.UserName);
+                        //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TM&to=61"+storedUser.phoneNum+"&text=Welcome%20to%20Tournament%20manager%20"+storedUser.UserName);
 
 
                         //ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
