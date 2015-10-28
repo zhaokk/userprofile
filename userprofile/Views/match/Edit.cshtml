@@ -120,3 +120,54 @@
         </div>
     </div>
                 
+<script>
+	$('#tournamentId').change(function () {
+		var tournId = $(this).val();
+		$.ajax({
+			type: "POST",
+			url: '@Url.Action("getTeamsFromTournament", "match")',
+			data: { 'tournamentId': tournId },
+			datatype: "json",
+			success: function (data) {
+				var homeTeam = $('#teamaID');
+				homeTeam.empty();
+				$.each(data, function (val, text) {
+					homeTeam.append(
+						$('<option></option>').val(text.Value).html(text.Text)
+					);
+				});
+				var awayTeam = $('#teambID');
+				awayTeam.empty();
+				$.each(data, function (val, text) {
+					awayTeam.append(
+						$('<option></option>').val(text.Value).html(text.Text)
+					);
+				});
+				awayTeam.val(2);
+			},
+		})
+	});
+	$('#teamaID').change(function () {
+		var teambVal = $('#teambID').val();
+		var teamaVal = $('#teamaID').val();
+		if (teambVal == teamaVal) {
+			alert("A team may not play itself!")
+			if (teambVal != 1)
+				$(this).val(1)
+			else
+				$(this).val(2)
+		}
+	});
+
+	$('#teambID').change(function () {
+		var teambVal = $('#teambID').val();
+		var teamaVal = $('#teamaID').val();
+		if (teambVal == teamaVal) {
+			alert("A team may not play itself!")
+			if (teamaVal != 1)
+				$(this).val(1)
+			else
+				$(this).val(2)
+		}
+	});
+</script>
