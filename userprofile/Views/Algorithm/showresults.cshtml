@@ -6,8 +6,9 @@
 	var i = 1;
 }
 
-<script type="text/javascript">
-	$(function () {
+<script >
+    $(function () {
+        alert(lol);
 		$("#example1").DataTable();
 		$("#example3").DataTable();
 		$("#example4").DataTable();
@@ -20,99 +21,124 @@
 			"autoWidth": false
 		});
 	});
+	
+    $("#acceptsolu").click(function () {
+        alert("lol");
+    });
+	function acceptSol(){
+	    //$.post("../saveSoluction").done(function (data) {
+	    alert("lol");
+	    //});
+	    $(".saved").show("slow");
+	}
+
 </script>
 
-<div>
+<div class="row">
 	@{ var counter = 0;}
 
 	@foreach (userprofile.Models.solution solu in Model.result) {
 
 		<h2>SOLUTION @i</h2>
+    @Html.HiddenFor(model => model.result)
+        foreach (userprofile.Models.sorted sortedmatch in solu.matchpair)
+        {
 
-		foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
-			
-			counter++;
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="box">
+            counter++;
+		
+                <div class="col-sm-12">
+                    <div class="box box-default">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><a href="@Url.Action( "Details","match", new { id = sortedmatch.match.matchId })">
-    <h1>@sortedmatch.match.matchDate</h1>
-</a></h3>
+                            <h4 class="box-title">
+                                <a href="@Url.Action( "Details","match", new { id = sortedmatch.match.matchId })">
+                                    Match Date :<b>@sortedmatch.match.matchDate</b>&nbsp; &nbsp;&nbsp;<span class="glyphicon saved glyphicon-floppy-saved" style="display:none;"></span>
+                                </a>
+                            </h4>
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             </div>
                         </div><!-- /.box-header -->
-						<div class="box-body">
-							<div class="table-responsive">
-								<table id=@("example"+counter) class="table table-bordered table-hover">
-									<thead>
-										<tr>
-											<th>Referee Type</th>
-											<th>Qualifications Required</th>
-											<th>Referee Name</th>
-											<th>Referee Qualifications</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach (userprofile.Models.pair pair in sortedmatch.assigned) {
-											<tr>
-												<td>
-													<a href="@Url.Action( "Details","types", new { id = pair.offer.typeOfOffer })">
-														@pair.offer.typeOfOffer
-													</a>
-												</td>
-												<td>
-													<ul>
-														@if (pair.offer.OFFERQUALs.Count() > 0) {
-															foreach (var q in pair.offer.OFFERQUALs) {
-																<li>
-																	<a href="@Url.Action( "Details","qualification", new { id = q.qualificationId })">
-																		@q.QUALIFICATION.name
-																		:
-																		@q.qualLevel
-																	</a>
-																</li>
-															}
-														}
-													</ul>
-												</td>
-												<td>
-													@if (pair.refeid != -1) {
-														<a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-															@pair.refe.AspNetUser.firstName
-															@pair.refe.AspNetUser.lastName
-														</a>
-													}
-													else {
-														@:Not Assigned
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id=@("example"+counter) class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Referee Type</th>
+                                            <th>Qualifications Required</th>
+                                            <th>Referee Name</th>
+                                            <th>Referee Qualifications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (userprofile.Models.pair pair in sortedmatch.assigned)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="@Url.Action( "Details","types", new { id = pair.offer.typeOfOffer })">
+                                                        @pair.offer.typeOfOffer
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        @if (pair.offer.OFFERQUALs.Count() > 0)
+                                                        {
+                                                            foreach (var q in pair.offer.OFFERQUALs)
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action( "Details","qualification", new { id = q.qualificationId })">
+                                                                        @q.QUALIFICATION.name
+                                                                        :
+                                                                        @q.qualLevel
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    @if (pair.refeid != -1)
+                                                    {
+                                                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+                                                            @pair.refe.AspNetUser.firstName
+                                                            @pair.refe.AspNetUser.lastName
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @:Not Assigned
 										}
-												</td>
-												<td>
-													<ul>
-														@if (pair.refeid != -1) {
-															foreach (var q in pair.refe.USERQUALs) {
-																<li>
-																	<a href="@Url.Action( "Details","qualification", new { id = q.qualificationId })">
-																		@q.QUALIFICATION.name
-																		:
-																		@q.qualLevel
-																	</a>
-																</li>
-															}
-														}
-													</ul>
-												</td>
-											</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        @if (pair.refeid != -1)
+                                                        {
+                                                            foreach (var q in pair.refe.USERQUALs)
+                                                            {
+                                                                <li>
+                                                                    <a href="@Url.Action( "Details","qualification", new { id = q.qualificationId })">
+                                                                        @q.QUALIFICATION.name
+                                                                        :
+                                                                        @q.qualLevel
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+               
 			</div>
-		}
-	}
+        }
+        
+    <a href="@Url.Action("saveSolution", "Algorithm")" class="btn btn-success btn-lg pull-right">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Accept solution
+    </a>
+    }
 </div>
 

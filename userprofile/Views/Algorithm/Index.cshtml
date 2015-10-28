@@ -77,6 +77,16 @@
         </div><!-- /.box-footer -->
     </form>
 </div>
+@if (ViewBag.save != null)
+{
+    <div class="callout saveInfo callout-info">
+        <h3>
+            <span class="glyphicon saved glyphicon-floppy-saved"></span>
+            solution saved
+        </h3>
+    </div>
+}
+
 <div class="box box-success" >
     <div class="box-header with-border">
         <h3 class="box-title">Smart assign </h3>
@@ -99,14 +109,20 @@
 
         </div><!-- /.box-body -->
         <div class="box-footer">
-
+         
+           
             <button type="button" onclick="runsmartassgin()" class="btn btn-success btn-lg  pull-right">RUN smart assign</button>
         </div><!-- /.box-footer -->
+     
     </form>
 </div>
 
 <div class="modal"><!-- Place at bottom of page --></div>
     <script>
+        $(document).ready(function () {
+            setTimeout(function () { $(".saveInfo").hide("slow") }, 3000);
+            
+        });
         var date = new Date();
         date.setDate(date.getDate() +14)
         $body = $(".content");
@@ -166,4 +182,6 @@
   });
         }
         $("[name='my-checkbox']").bootstrapSwitch();
+      
+        
     </script>
