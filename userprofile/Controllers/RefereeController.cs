@@ -59,13 +59,18 @@ namespace userprofile.Controllers
             }
             REFEREE referee = db.REFEREEs.Find(id);
             var matches = db.OFFERs.Where(o => o.refId == id).Include(m => m.MATCH).Where( match => match.status > 0).ToList();
+                  List<QUALIFICATION> acquiredQual=new List<QUALIFICATION>();
+            foreach(var userqual in referee.USERQUALs){
+            acquiredQual.Add(userqual.QUALIFICATION);
+            }
+      
             if (referee == null)
             {
                 return HttpNotFound();
             }
 
             var combined = new Tuple<REFEREE, List<OFFER>>(referee, matches) { };
-
+            ViewBag.acquiredQual = acquiredQual;
             return View(combined);
         }
 

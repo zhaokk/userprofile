@@ -10,7 +10,7 @@
 
             <div class="box-body">
                 @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.refId }, new { @class = "btn btn-warning pull-right" })
-                
+
                 <div>
                     <h4>Referee Details</h4>
                     <hr />
@@ -19,13 +19,13 @@
                             <b>Name</b>
 
                         </dt>
-							<dd>
-								<a href="@Url.Action("Details", "Account", new { id = Model.Item1.AspNetUser.UserName})">
-									@Html.DisplayFor(model => model.Item1.AspNetUser.firstName)
-									@Html.DisplayFor(model => model.Item1.AspNetUser.lastName)
-									(@Html.DisplayFor(model => model.Item1.AspNetUser.UserName))
-								</a>
-							</dd>
+                        <dd>
+                            <a href="@Url.Action("Details", "Account", new { id = Model.Item1.AspNetUser.UserName})">
+                                @Html.DisplayFor(model => model.Item1.AspNetUser.firstName)
+                                @Html.DisplayFor(model => model.Item1.AspNetUser.lastName)
+                                (@Html.DisplayFor(model => model.Item1.AspNetUser.UserName))
+                            </a>
+                        </dd>
                         <dt>
                             <b>Phone number</b>
 
@@ -91,26 +91,27 @@
                                         @item.typeOfOffer
                                     </td>
                                     <td>
-                                        @switch (@item.status) {
-											case 1:
-												@:Accepted
+                                        @switch (@item.status)
+                                        {
+                                            case 1:
+                                                @:Accepted
 												break;
-											case 2:
-												@:Declined
+                                            case 2:
+                                            @:Declined
 												break;
-											case 3:
-												@:Pending
+                                            case 3:
+                                            @:Pending
 												break;
-											case 4:
-												@:Unassigned
+                                            case 4:
+                                            @:Unassigned
 												break;
-											case 5:
-												@:Smart Assign
+                                            case 5:
+                                            @:Smart Assign
 												break;
-											default:
-												@:ERROR
+                                            default:
+                                            @:ERROR
 												break;
-										}
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -122,5 +123,27 @@
 
             </div>
         </div>
-    </div>
-</div>
+        <div class="box box-success">
+            <div class="box-body">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Acquired qualification</h3>
+                </div><!-- /.box-header -->
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr><td>Qualification name</td><td>Qualification level</td></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (QUALIFICATION qual in ViewBag.acquiredQual)
+                        {
+                            if (qual.status != 0)
+                            {
+                                <tr><td>@qual.name</td><td>@qual.qualificationLevel</td></tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+
+        </div>
