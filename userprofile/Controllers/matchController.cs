@@ -367,6 +367,7 @@ namespace userprofile.Controllers
                     }
                 }
             }
+            updateRanks(updateMatch.tournamentId);
             db.Entry(updateMatch).State = EntityState.Modified;
             db.SaveChanges();
             ViewBag.upload = true;
@@ -377,8 +378,35 @@ namespace userprofile.Controllers
             });
         }
 
+        //updates team ranks based on points
         private void updateRanks(int tournamentID)
         {
+
+            var teams = db.TEAMINS.Where(team => team.tournament == tournamentID)
+                                  .Where(team => team.status == 1)
+                                  .OrderByDescending(team => team.points);
+
+
+            int lastTeamScore = 0;
+            int lastTeamPosition = 1;
+
+            int counter = 1;
+            foreach(var team in teams){
+                if (lastTeamScore == team.points)
+                {
+                    team.currentPosition = lastTeamPosition;
+                }
+                else
+                {
+                    team.currentPosition = counter;
+                    lastTeamPosition = counter;
+                    lastTeamScore = team.points;
+                }
+                counter++;
+                db.Entry(team).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            
 
             return;
         }
