@@ -92,7 +92,7 @@ namespace userprofile.Controllers
 
             foreach (var offer in tempReferee.OFFERs)
             {
-                if (offer.status == 1 && offer.MATCH.matchDate < today)
+                if (offer.status == 1 && offer.MATCH.matchDate < today && offer.MATCH.status==1)
                 {
                     refereeMatches.Add(offer.MATCH);
                 }
@@ -244,7 +244,7 @@ namespace userprofile.Controllers
 
             foreach (var offer in tempReferee.OFFERs)
             {
-                if (offer.status == 1 && offer.MATCH.matchDate < today)
+                if (offer.status == 1 && offer.MATCH.matchDate < today && offer.MATCH.status == 1)
                 {
                     tempMatchCounter++;
                 }
