@@ -25,11 +25,35 @@ namespace userprofile.Controllers {
 		///Runs algorithm without any dates.  Used in previous version
 		/// </summary>
 		/// <returns></returns>
+        [Authorize(Roles = "Admin")]
 		public ActionResult showResults() {
 			AssignReferees();
 			modelResult.sortResult();
+            
 			return View(modelResult);
 		}
+        public ActionResult saveSolution() {
+            Raoconnection db2 = new Raoconnection();
+            AlgorithmModel theResult = Session["result"] as AlgorithmModel;
+            foreach (solution sol in theResult.result) {
+                foreach (sorted sor in sol.matchpair) {
+                    foreach ( userprofile.Models.pair refereeOffer in sor.assigned) {
+                        if (refereeOffer.refeid != -1) {
+                            OFFER theOf = db2.OFFERs.Find(refereeOffer.offer.offerId);
+                            theOf.refId = refereeOffer.refeid;
+                            theOf.status = 3;
+                            db2.Entry(theOf).State = EntityState.Modified;
+                           
+                        }
+                    
+                    }
+                
+                }
+            }
+            db2.SaveChanges();
+            Session["saved"] = "Solution applied";
+            return RedirectToAction("index");
+        }
 
 		/// <summary>
 		/// Runs algorithm passing in dates and bool.  General way algorithm is called.
@@ -45,6 +69,7 @@ namespace userprofile.Controllers {
 
             AssignReferees();
             modelResult.sortResult();
+            Session["result"] = modelResult;
             return View(modelResult);
         }
 
@@ -53,7 +78,10 @@ namespace userprofile.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		public ActionResult Index() {
-
+            if (Session["saved"] != null) {
+                ViewBag.save = Session["saved"] as string;
+                Session["saved"] = null;
+            }
 			return View();
 		}
 
