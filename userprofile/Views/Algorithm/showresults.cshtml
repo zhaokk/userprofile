@@ -59,24 +59,29 @@
                                     </td>
                                     <td>
                                         <ul>
-                                            @foreach (var q in pair.offer.OFFERQUALs)
+											@if (pair.offer.OFFERQUALs.Count() > 0) {  
+                                            foreach (var q in pair.offer.OFFERQUALs)
                                                 {
                                                 <li>@q.QUALIFICATION.name</li>
-                                            }
+												}
+											}
                                         </ul>
                                     </td>
                                     <td>
-                                        <a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
-                                            @pair.refe.AspNetUser.lastName
-
-
-                                        </a>
+                                        @if (pair.refeid != -1) { 
+											<a href="@Url.Action( "Details","REFEREE", new { id = pair.refe.refId })">
+												@pair.refe.AspNetUser.lastName
+											</a>
+										}
+										else {
+											@:Not Assigned
+										}
                                     </td>
                                     <td>
 
-
-                                        @pair.refeid
-
+										@if (pair.refeid != -1) { 
+											@pair.refeid
+										}
 
                                     </td>
                                     <td>
@@ -84,10 +89,12 @@
 
 
                                         <ul>
-                                            @foreach (var q in pair.refe.USERQUALs)
-                                            {
-                                                <li>@q.QUALIFICATION.name</li>
-                                            }
+											@if (pair.refeid != -1) {
+												foreach (var q in pair.refe.USERQUALs)
+												{
+													<li>@q.QUALIFICATION.name</li>
+												}
+											}
                                         </ul>
                                     </td>
                                     <td>
