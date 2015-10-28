@@ -24,7 +24,8 @@ namespace userprofile.Controllers
         }
         public FileResult Download()
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"C:\Users\kang\Source\Repos\userprofile\userprofile\Excel\sampleExcel.xls");
+			var filePath = Server.MapPath("~/Excel/");
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath + "sampleExcel.xls");
             string fileName = "sampleExcel.xls";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
