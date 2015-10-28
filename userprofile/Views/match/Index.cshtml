@@ -156,16 +156,17 @@
 
 <script>
     $("#TournamentList").change(function () {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("TournamentSelected", "Tournament")",
+    	$.ajax({
+    		type: "POST",
+    		url: "@Url.Action("TournamentSelected", "Tournament")",
 
-            contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ 'tournamentID': $(this).val() }),
-        success: function (data) { alert(data); },
-        failure: function (errMsg) {
-            alert(errMsg);
-        }
+    		contentType: "application/json; charset=utf-8",
+    		data: JSON.stringify({ 'tournamentID': $(this).val() }),
+    		success: function (data) { alert(data); location.reload(); },
+    		failure: function (errMsg) {
+    			alert(errMsg);
+    		}
+			
     });
 
     });

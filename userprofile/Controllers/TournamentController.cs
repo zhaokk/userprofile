@@ -23,13 +23,18 @@ namespace userprofile.Controllers
             {
                 Session["tournamentID"] = null;
                 Session["tournamentname"] = null;
+				return ("Viewing all tournaments");
             }
             else { 
                 Session["tournamentID"] = tournamentID;
                 int tid = Int32.Parse(tournamentID);
             Session["tournamentname"] = db.TOURNAMENTs.Find(tid).name;
+			int id = Convert.ToInt32(tournamentID);
+			return ("Only viewing " + db.TOURNAMENTs.Find(id).name);
                }
-           return ("tournamentID has change to"+ tournamentID);
+			 
+			 
+           
         }
         // GET: TOURNAMENTs
         public async Task<ActionResult> Index()
