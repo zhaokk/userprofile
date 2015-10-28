@@ -640,7 +640,7 @@ namespace userprofile.Controllers
             }
             ViewBag.locationId = new SelectList(db.LOCATIONs, "locationId", "name", match.locationId);
 			List<TEAM> listOfTeams = new List<TEAM>();
-			foreach (var i in db.TOURNAMENTs.Find(id.Value).TEAMINS) {
+			foreach (var i in db.MATCHes.Find(id.Value).TOURNAMENT.TEAMINS) {
 				listOfTeams.Add(i.TEAM);
 			}
             ViewBag.teamaID = new SelectList(listOfTeams, "teamId", "name", match.teamAId);
