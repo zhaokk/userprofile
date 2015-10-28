@@ -41,6 +41,13 @@
                                 @Html.ValidationMessageFor(model => model.description)
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.qualificationLevel, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.qualificationLevel, new { min = "0", max = "10", type = "number" })
+                                @Html.ValidationMessageFor(model => model.qualificationLevel)
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">

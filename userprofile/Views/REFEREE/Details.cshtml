@@ -130,14 +130,14 @@
                 </div><!-- /.box-header -->
                 <table class="table table-bordered table-hover">
                     <thead>
-                        <tr><td>Qualification name</td><td>Qualification level</td></tr>
+                        <tr><td><b>Qualification name</b></td><td><b>Qualification level</b></td><td><b>Qualification description</b></td></tr>
                     </thead>
                     <tbody>
-                        @foreach (QUALIFICATION qual in ViewBag.acquiredQual)
+                        @foreach (USERQUAL qual in ViewBag.acquiredQual)
                         {
-                            if (qual.status != 0)
+                            if (qual.QUALIFICATION.status != 0)
                             {
-                                <tr><td>@qual.name</td><td>@qual.qualificationLevel</td></tr>
+                                <tr><td>@qual.QUALIFICATION.name</td><td>@qual.qualLevel</td><td>@qual.QUALIFICATION.description</td></tr>
                             }
                         }
                     </tbody>
