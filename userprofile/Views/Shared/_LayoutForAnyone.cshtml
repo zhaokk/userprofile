@@ -94,7 +94,7 @@
 
 </head>
 
-<body class="layout-top-nav skin-green">
+<body class="layout-top-nav skin-green " style="padding:0px;">
     <div class="wrapper">
         <header class="main-header">
             <div class="navbar navbar-static-top">
@@ -113,8 +113,8 @@
                             @{ bool someoneLoggedIn = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                              if (someoneLoggedIn) //if someone is logged in
                              {
-                                 <li>@Html.ActionLink("My Details", "Details","Account", new { id = User.Identity.GetUserName()}, null )</li>
-                               // <li>@Html.Action( "Details", "Account", new { id = User.Identity.GetUserName() })</li>
+                                <li>@Html.ActionLink("My Details", "Details", "Account", new { id = User.Identity.GetUserName() }, null)</li>
+                                 // <li>@Html.Action( "Details", "Account", new { id = User.Identity.GetUserName() })</li>
                              }
                             }
 
@@ -140,8 +140,8 @@
                                     </ul>
                                 </li>
                              }
-                               else
-                               {
+                             else
+                             {
                                 <li class="dropdown user user-menu">
                                     <a href="@Url.Action( "Index","Home")">
 
@@ -207,4 +207,5 @@
     @RenderSection("scripts", required: false)
     <link rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" href="/Content/mycss.css" />
 </body>
+
 </html>
