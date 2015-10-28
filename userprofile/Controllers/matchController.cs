@@ -267,19 +267,105 @@ namespace userprofile.Controllers
         public ActionResult uploadResult(int Ascore,int Bscore,int matchID)
         {
 
+            /*
+             *         
+        public int currentPosition { get; set; }
+        public int points { get; set; }
+        public int wins { get; set; }
+        public int draws { get; set; }
+        public int losses { get; set; }
+        public int goalsFor { get; set; }
+        public int goalsAgainst { get; set; }
+        public int goalDraw { get; set; }
+             */
+
             MATCH updateMatch = db.MATCHes.Find(matchID);
             updateMatch.teamAScore = Ascore;
             updateMatch.teamBScore = Bscore;
+            //team a won
             if (Ascore > Bscore) {
                 updateMatch.status = 3;
+                foreach (var team in updateMatch.TEAM.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.goalsFor += Ascore;
+                        team.goalsAgainst += Bscore;
+                        team.points += 3;
+                        team.wins++;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                foreach (var team in updateMatch.TEAM1.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.goalsAgainst += Ascore;
+                        team.goalsFor += Bscore;
+                        team.losses++;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
             }
+                //team b won
             else if (Ascore < Bscore)
             {
-
+                //team1 is teamb
+                //team is teama
+                foreach (var team in updateMatch.TEAM1.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.goalsAgainst += Ascore;
+                        team.goalsFor += Bscore;
+                        team.points += 3;
+                        team.wins++;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                foreach (var team in updateMatch.TEAM.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.losses++;
+                        team.goalsFor += Ascore;
+                        team.goalsAgainst += Bscore;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
                 updateMatch.status = 5;
             }
+                //it was a draw
             else {
                 updateMatch.status = 4;
+                foreach (var team in updateMatch.TEAM1.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.goalsAgainst += Ascore;
+                        team.goalsFor += Bscore;
+                        team.points += 1;
+                        team.draws++;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                foreach (var team in updateMatch.TEAM.TEAMINS)
+                {
+                    if (team.tournament == updateMatch.tournamentId)
+                    {
+                        team.points += 1;
+                        team.draws++;
+                        team.goalsFor += Ascore;
+                        team.goalsAgainst += Bscore;
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
             }
             db.Entry(updateMatch).State = EntityState.Modified;
             db.SaveChanges();
@@ -290,6 +376,14 @@ namespace userprofile.Controllers
 
             });
         }
+
+        private void updateRanks(int tournamentID)
+        {
+
+            return;
+        }
+
+
 		[HttpPost]
 		public ActionResult getTeamsFromTournament(int? tournamentId) {
 			var teamsInTournament = db.TEAMINS.Where(t => t.tournament == tournamentId).ToList();
