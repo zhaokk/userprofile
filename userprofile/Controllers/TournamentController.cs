@@ -60,10 +60,10 @@ namespace userprofile.Controllers
                 DateTime today = DateTime.Today;
 
 
-                var futureMatches = db.MATCHes.Where(match => match.status > 0)
+                var futureMatches = db.MATCHes.Where(match => match.status > 0 && match.tournamentId == id)
                                               .Where(match => match.matchDate > today).ToList();
 
-                var pastMatches = db.MATCHes.Where(match => match.status >= 0)
+                var pastMatches = db.MATCHes.Where(match => match.status >= 0 && match.tournamentId == id)
                                               .Where(match => match.matchDate < today).ToList();
                 var teamsNotin = db.TEAMs.ToList();
                 var teamList = new List<SelectListItem>();

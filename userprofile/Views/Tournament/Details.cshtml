@@ -226,18 +226,16 @@
         {
 
             <div class="col-md-8 pull-right">
-                <div class="box box-danger collapsed-box">
+                <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Add team To tournament</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                        </div>
+                        <h5 class="box-title">Add Team to Tournament: </h5>
+						@Html.DropDownList("addteam", (List<SelectListItem>)ViewBag.teamList, "Team to Add", new { @Name = "re.userId" })
+						<button type="button" id="addbutton" class="btn btn-success pull-right" disabled>Add new Team</button>
                     </div><!-- /.box-header -->
 
                     <div class="box-body " style="display: none;">
 
-                        @Html.DropDownList("addteam", (List<SelectListItem>)ViewBag.teamList,"chose a team you want to add", new { @Name = "re.userId" })
-                        <button type="button" id="addbutton" class="btn btn-success pull-right" disabled>Add new Team</button>
+                        
                       </div>
                    
 
@@ -309,7 +307,7 @@
             <div class="col-md-12">
                 <div class="box box-danger collapsed-box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">No upcoming matches</h3>
+                        <h3 class="box-title">No Past Matches</h3>
                         <div class="box-tools pull-right">
                         </div>
                     </div><!-- /.box-header -->
@@ -385,7 +383,7 @@
             <div class="col-md-6 " >
                 <div class="box box-danger collapsed-box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">No upcoming matches</h3>
+                        <h3 class="box-title">No Upcoming Matches</h3>
                         <div class="box-tools pull-right">
                         </div>
                     </div><!-- /.box-header -->
