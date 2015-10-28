@@ -596,6 +596,9 @@ namespace userprofile.Controllers {
 		void addInitialRefereesToOffer(int oID, int rID) {
 			dOffers[oID].available.Add(rID, new Item()); //add referee to offer
 			if (!dReferees.ContainsKey(rID)) { //check if is first time referee has been assigned to an offer
+				if (!dGamesAvailableToRef.ContainsKey(rID)) { //count games already assigned to him if not already stored
+					dGamesAvailableToRef.Add(rID, dRefereeStorage[rID].maxGames - countOffersAlreadyAssigned(rID));
+				}
 				dReferees.Add(rID, new refInfo(dGamesAvailableToRef[rID], dRefereeStorage[rID])); //add referee to storage, with gamesAvailableToRef, and the actual Referee
 				maxOffersFilled += dReferees[rID].canAssign; //count what top number of offers to fill is
 			}
@@ -644,6 +647,7 @@ namespace userprofile.Controllers {
 					foreach (var j in db.REFEREEs) { //check every referee
 						if (!dRefereeStorage.ContainsKey(j.refId)) {
 							dRefereeStorage.Add(j.refId, j);
+							dGamesAvailableToRef.Add(j.refId, j.maxGames - countOffersAlreadyAssigned(j.refId));
 						}
 						if (checkInitAvailability(i.Key, j.refId)) {
 							availableReferees.Add(j.refId);
