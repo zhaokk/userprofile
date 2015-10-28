@@ -48,6 +48,7 @@ namespace userprofile.Models
     public class RegisterViewModel
     {
         public RegisterViewModel() {
+            this.residentLoc = new ResidentLoc();
           
         }
         
@@ -137,11 +138,11 @@ namespace userprofile.Models
         
         public RegisterViewModel(Raoconnection db)
         {
-            this.optionalRe = new REFEREEqualViewModel(db);
-            this.optionalRe.re = new REFEREE();
+            //this.optionalRe = new REFEREEqualViewModel(db);
+            //this.optionalRe.re = new REFEREE();
             this.residentLoc = new ResidentLoc();
-            this.optionalRe.re.rating = 0;
-            this.optionalRe.re.maxGames = 1;
+          
+         
         }
     }
     public class ResidentLoc {
