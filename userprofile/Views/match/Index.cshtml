@@ -21,6 +21,11 @@
     });
 </script>
 
+   
+
+    Select one tournament you want to View: @Html.DropDownList("TournamentList", String.Empty)
+<br/>
+  
 
    @if (Session["tournamentID"] != null)
    {
@@ -150,8 +155,22 @@
 </div>
 
 <script>
+    $("#TournamentList").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("TournamentSelected", "Tournament")",
 
+            contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ 'tournamentID': $(this).val() }),
+        success: function (data) { alert(data); },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+
+    });
     function uploadFile() {
+       
         var file = document.getElementById('input-4').files[0];
         var formData = new FormData();
         formData.append("file_name", file);

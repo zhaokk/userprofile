@@ -22,7 +22,7 @@
                                 
                                 @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label", style = "cursor:help;", title = "Type in your preferred username here" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.UserName, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.UserName)
                                 </div>
                             </div>
@@ -45,14 +45,14 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label", style = "cursor:help;", title = " Type in your names here" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.FirstName, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.FirstName)
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label", style = "cursor:help;", title = " Type in your names here" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.LastName, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.LastName)
                                 </div>
                             </div>
@@ -68,14 +68,14 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label", style = "cursor:help;", title = "Enter your email here" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.Email, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.Email)
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(m => m.phoneNum, "Phone Number", new { @class = "col-md-2 control-label", style = "cursor:help;", title = "Enter your phone number here" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.phoneNum, new { @class = "form-control" })
+                                    @Html.EditorFor(m => m.phoneNum, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.phoneNum)
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" hidden>
+                            <div class="form-group" >
 
                                 @Html.LabelFor(m => m.upload, new { @class = "col-md-2 control-label" })
                                 @Html.TextBoxFor(m => m.upload, new { type = "file", @class = "col-md-10" })

@@ -93,14 +93,19 @@
         </div><!-- /.box -->
         <div class="col-md-3">
 
-            <div class="btn-group">
-                <div class="btn btn-block btn-primary btn-file" id="buttongroup_import">
-                    <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Import Excel
-                    <input id="input-4" type="file" onchange="uploadFile();">
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group" role="group">
+                    <div class="btn btn-block btn-primary btn-file" id="buttongroup_import">
+                        <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Import Excel
+                        <input id="input-4" type="file" onchange="uploadFile();">
+                    </div>
+                    </div>
+                <div class="btn-group" role="group">
+                    <a class=" btn btn-block btn-info" href='@Url.Action("Download","ExcelManagement")'><i class="glyphicon glyphicon-save"></i><b>Sample Excel</b></a>
                 </div>
-                <a class=" btn btn-block btn-success" href='@Url.Action("Register","Account")'><b>Create New User</b></a>
-            </div>
-            
+                   
+                </div>
+            <a class=" btn btn-block btn-success" href='@Url.Action("Register","Account")'><b>Create New User</b></a>
         </div>
         <div class="col-md-9">
             <div class="well well-sm" id="myDiv" hidden>lol</div>

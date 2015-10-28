@@ -45,6 +45,8 @@ namespace userprofile.Controllers
                 matchintournament = matchlist;
             
             }
+            ViewBag.session = Session["tournamentID"] as string;
+            ViewBag.TournamentList = new SelectList(db.TOURNAMENTs, "tournamentId", "name", Session["tournamentID"]);
             return View(matchintournament);
         }
    

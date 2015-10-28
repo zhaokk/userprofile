@@ -361,10 +361,10 @@ namespace userprofile.Controllers
             Boolean shouldFail = false;
             var db = new Raoconnection();
 			//ViewBag.sport = new SelectList(db.SPORTs, "name", "name"); DISABLED
-			RegisterViewModel RVM = new RegisterViewModel(db);
+			RegisterViewModel RVM = new RegisterViewModel();
             string location = @"~\userprofile\default.png";
-            REFEREE newref=new REFEREE();
-            /*if (model.upload != null) DISABLED UPLOAD
+          
+            if (model.upload != null) 
             {
                 string[] split = model.upload.FileName.Split('.');
                 string newfilename = model.UserName + '.' + split[1];
@@ -374,7 +374,7 @@ namespace userprofile.Controllers
 
             }
 			 
-			 */
+			 
             model.photoDir = location;
 
 
@@ -462,8 +462,8 @@ namespace userprofile.Controllers
                          lvm.Password = model.Password;
                          lvm.UserName = model.UserName;
                          lvm.RememberMe = true;
-                         await Login(lvm, "/Account/Index");
-                         //return RedirectToAction("Index", "Account");
+                         await SignInAsync(user, isPersistent: false);
+                         return RedirectToAction("Index", "Home");
                      }
 
                         

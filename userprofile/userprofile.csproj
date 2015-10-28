@@ -901,6 +901,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Excel\sampleExcel.xls" />
     <None Include="Properties\PublishProfiles\rao321.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\highlight.js" />
