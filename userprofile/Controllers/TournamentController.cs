@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using userprofile.Models;
 
 namespace userprofile.Controllers
@@ -63,10 +65,32 @@ namespace userprofile.Controllers
 
                 var pastMatches = db.MATCHes.Where(match => match.status >= 0)
                                               .Where(match => match.matchDate < today).ToList();
+                var teamsNotin = db.TEAMs.ToList();
+                var teamList = new List<SelectListItem>();
+                foreach (TEAMIN aTeamin in tournament.TEAMINS) {
+                    
+                    teamsNotin.Remove(aTeamin.TEAM);
+                }
+                foreach (TEAM aTeam in teamsNotin) {
+                    var teamItem = new SelectListItem();
+                    teamItem.Text = aTeam.name;
+                    teamItem.Value = aTeam.teamId.ToString();
+                    teamList.Add(teamItem);
+                }
+                ViewBag.teamList = teamList;
+                var editable = false;
+                if (User.IsInRole("Admin")) {
+                    editable = true;
 
-
-
-
+                }
+                else if (User.IsInRole("Organizer")) {
+                    if (db.TOURNAMENTs.Find(id).AspNetUsers.First(u => u.Id == User.Identity.GetUserId()) != null) {
+                        editable = true;
+                    }
+                
+                }
+                ViewBag.ableToEdit = editable;
+                
                 var combined = new Tuple<TOURNAMENT, List<MATCH>, List<MATCH>>(tournament, futureMatches, pastMatches) { };
 
                 return View(combined);
@@ -201,6 +225,18 @@ namespace userprofile.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public void addTeam(int teamId,int tId) {
+            TEAMIN newteamin = new TEAMIN()
+            {
+                teamID=teamId,
+
+            };
+            TOURNAMENT changet = db.TOURNAMENTs.Find(tId);
+            changet.TEAMINS.Add(newteamin);
+            db.Entry(changet).State = EntityState.Modified;
+            db.SaveChanges();
+        
         }
     }
 }

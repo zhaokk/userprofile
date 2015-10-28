@@ -137,7 +137,7 @@
 
                 <div class="box">
                     <div class="box box-primary collapsed-box">
-                        <div class="box-header with-border">
+                        <div class="box-header with-border " id="teams">
                             <h3 class="box-title">Teams</h3>
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
@@ -210,18 +210,41 @@
         }
         else
         {
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="box box-danger collapsed-box">
                     <div class="box-header with-border">
                         <h3 class="box-title">No Teams</h3>
                         <div class="box-tools pull-right">
                         </div>
+
                     </div><!-- /.box-header -->
 
                 </div>
             </div>
         }
+        @if (ViewBag.ableToEdit)
+        {
 
+            <div class="col-md-8 pull-right">
+                <div class="box box-danger collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add team To tournament</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+
+                    <div class="box-body " style="display: none;">
+
+                        @Html.DropDownList("addteam", (List<SelectListItem>)ViewBag.teamList,"chose a team you want to add", new { @Name = "re.userId" })
+                        <button type="button" id="addbutton" class="btn btn-success pull-right" disabled>Add new Team</button>
+                      </div>
+                   
+
+                </div>
+            </div>
+        }
+       
     </div>
     <div class="row">
 
@@ -229,7 +252,7 @@
         {
             <div class="col-md-6">
                 <div class="box box-success">
-                    <div class="box-header with-border">
+                    <div class="box-header with-border" >
                         <h3 class="box-title">Upcoming matches</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -359,7 +382,7 @@
         }
         else
         {
-            <div class="col-md-6">
+            <div class="col-md-6 " >
                 <div class="box box-danger collapsed-box">
                     <div class="box-header with-border">
                         <h3 class="box-title">No upcoming matches</h3>
@@ -372,3 +395,34 @@
         }
     </div>
 </section>
+<script>
+    $("#addbutton").click(
+        function () {
+         
+            $.post("../addTeam", {
+                'teamId': $("#addteam").val(),
+                'tId':@Model.Item1.tournamentId,
+            },
+            function(){
+                $("#teams").hide("quick").show("quick");
+                $("#addteam option[value="+$("#addteam").val()+"]").remove();
+                $("#addbutton").prop('disabled', true);
+            }
+
+                )
+
+        }
+        );
+    $("#addteam").change(
+        function(){
+            if($(this).val()!=""){
+                $("#addbutton").prop('disabled', false);
+            }else{
+            
+                $("#addbutton").prop('disabled', true);
+            }
+        
+        }
+        )
+
+</script>
