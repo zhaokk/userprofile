@@ -13,15 +13,16 @@ namespace userprofile.Models
             List<OFFER> offermanagedbyO = new List<OFFER>();
             AspNetUser Orgnizer = db.AspNetUsers.Find(userid);
             majorT = db.TOURNAMENTs.First(d => d.organizer == userid);
+			otherTs = db.TOURNAMENTs.Where(t => t.AspNetUsers.Where(orgs => orgs.Id == userid).Count() > 0).ToList();
             //posible other tournamanes
-            foreach (MATCH m in majorT.MATCHes)
-            {
-                foreach (OFFER o in m.OFFERs)
-                {
-                    offermanagedbyO.Add(o);
-                }
-            }
-            orgOVM = new admineOfferViewModel(offermanagedbyO);
+			foreach (var tournaments in otherTs) {
+				foreach (MATCH m in tournaments.MATCHes) {
+					foreach (OFFER o in m.OFFERs) {
+						offermanagedbyO.Add(o);
+					}
+				}
+				orgOVM = new admineOfferViewModel(offermanagedbyO);
+			}
         }
         public OrgViewModels()
         {
