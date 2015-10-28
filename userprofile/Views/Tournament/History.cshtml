@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<userprofile.Models.TOURNAMENT>
 @{
-    ViewBag.Title = "Tournament list";
+    ViewBag.Title = "Tournament History";
 }
 <script type="text/javascript">
     $(function () {
@@ -22,7 +22,7 @@
     <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">tournmant history</h3>
+                <h3 class="box-title">Tournmant History</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -33,28 +33,22 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.name)
+                                    Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.startDate)
+                                    Start Date
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ageBracket)
+                                    Age
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.grade)
+                                    Grade
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.status)
+                                    Manager
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.priority)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.AspNetUser.UserName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.SPORT1.name)
+                                    Sport
                                 </th>
                                 <th></th>
                             </tr>
@@ -78,23 +72,17 @@
                                         @Html.DisplayFor(modelItem => item.grade)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.status)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.priority)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.SPORT1.name)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.tournamentId }) |
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.tournamentId })
-                                        }
+										@if (User.IsInRole("Admin")) {
+											@Html.ActionLink("Delete", "Delete", new { id = item.tournamentId }, new { @class = "btn btn-danger pull-right" })
+										}
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.tournamentId }, new { @class = "btn btn-warning pull-right" })
+                                        
                                     </td>
                                 </tr>
                             }
@@ -109,7 +97,7 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <a class=" btn btn-block btn-success" href='@Url.Action("Create","TOURNAMENTs")'><b>Create New tournamants</b></a>
+        <a class=" btn btn-block btn-success" href='@Url.Action("Create","tournament")'><b>Create New Tournamant</b></a>
     }
-    <a class=" btn btn-block btn-success" href='@Url.Action("History", "Tournament")'><b>tournamants History</b></a>
+    <a class=" btn btn-block btn-success" href='@Url.Action("index", "tournament")'><b>Tournament Index</b></a>
 </div>
