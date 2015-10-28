@@ -58,17 +58,17 @@
                           
                         
                         
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username" ,autocomplete="off"})
                             @Html.ValidationMessageFor(m => m.UserName)
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", autocomplete = "off" })
                             @Html.ValidationMessageFor(m => m.Password)
 
     <input  type="submit" value="Log in" class="login login-submit" />
 
-                       <div style="width: 42%;  margin: 0 auto;">
-                    <input type="button" style="display:inline; width:120px;  float: left;" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
-                           <input type="button" style="display:inline; width:120px;  float: right;" onclick="location.href = '@Url.Action( "index","Match")';" value="Guest" />
-                       </div>
+                       @*<div style="width: 42%;  margin: 0 auto;">*@
+                    <input type="button" style="margin-top: -50px; width:120px;  float: left;" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
+                           <input type="button" style="margin-top: -50px; width:120px;  float: right;" onclick="location.href = '@Url.Action( "index","Match")';" value="Guest" />
+                       
     
    
 
