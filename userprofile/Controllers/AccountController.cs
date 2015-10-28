@@ -390,12 +390,12 @@ namespace userprofile.Controllers
                 }
                 if (checkEmail(user.email))
                 {
-                    ModelState.AddModelError("Email", "email already registered");
+                    ModelState.AddModelError("Email", "Email already registered");
                     shouldFail = true;
                 }
-				if (user.ffaNum != 0) {
+				if (user.ffaNum != 0 && user.ffaNum != null) {
 					if (checkFFA(user.ffaNum)) {
-						ModelState.AddModelError("ffaNum", "FFA number alredy in system");
+						ModelState.AddModelError("ffaNum", "FFA number already in system");
 						shouldFail = true;
 					}
 				}
