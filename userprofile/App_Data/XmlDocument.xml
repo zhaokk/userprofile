@@ -717,24 +717,6 @@
             <param name="Message"></param>
             <returns></returns>
         </member>
-        <member name="T:AdminLteMvc.Controllers.AdminLteController">
-            <summary>
-            This is an example controller using the AdminLTE NuGet package's CSHTML templates, CSS, and JavaScript
-            You can delete these, or use them as handy references when building your own applications
-            </summary>
-        </member>
-        <member name="M:AdminLteMvc.Controllers.AdminLteController.Index">
-            <summary>
-            The home page of the AdminLTE demo dashboard, recreated in this new system
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:AdminLteMvc.Controllers.AdminLteController.Colors">
-            <summary>
-            The color page of the AdminLTE demo, demonstrating the AdminLte.Color enum and supporting methods
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:userprofile.Controllers.HomeController.getNotifications">
             <summary>
             get all notifications for the user logged in
@@ -745,13 +727,6 @@
             
             </summary>
             <returns> notifications A list of strings that are "###  things are bad". last element is count of everything</returns>
-        </member>
-        <member name="M:userprofile.Controllers.NotificationsController.Display">
-            <summary>
-            Returns anything that needs attention
-            
-            </summary>
-            <returns></returns>
         </member>
     </members>
 </doc>
