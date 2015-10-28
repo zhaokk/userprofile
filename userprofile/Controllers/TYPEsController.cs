@@ -48,6 +48,7 @@ namespace userprofile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "typeId,name,description,priority,status")] TYPE tYPE)
         {
+			tYPE.status = 1;
             if (ModelState.IsValid)
             {
                 db.TYPEs.Add(tYPE);
