@@ -390,12 +390,12 @@ namespace userprofile.Controllers
                 }
                 if (checkEmail(user.email))
                 {
-                    ModelState.AddModelError("Email", "email already registered");
+                    ModelState.AddModelError("Email", "Email already registered");
                     shouldFail = true;
                 }
-				if (user.ffaNum != 0) {
+				if (user.ffaNum != 0 && user.ffaNum != null) {
 					if (checkFFA(user.ffaNum)) {
-						ModelState.AddModelError("ffaNum", "FFA number alredy in system");
+						ModelState.AddModelError("ffaNum", "FFA number already in system");
 						shouldFail = true;
 					}
 				}
@@ -409,7 +409,7 @@ namespace userprofile.Controllers
 							storedUser.ffaNum = null;
 
                         var client = new WebClient();
-                        //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TournamentManager&to="+storedUser.phoneNum+"&text=Welcome&nbsp;to&nbsp;Tournament&nbsp;manager&nbsp;"+storedUser.UserName);
+                        //var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TM&to=61"+storedUser.phoneNum+"&text=Welcome%20to%20Tournament%20manager%20"+storedUser.UserName);
 
 
                         //ViewBag.sport = new SelectList(db.SPORTs, "name", "name");
