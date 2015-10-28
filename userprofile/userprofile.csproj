@@ -179,7 +179,6 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\QualificationController.cs" />
     <Compile Include="Controllers\REFEREEController.cs" />
-    <Compile Include="Controllers\sportController.cs" />
     <Compile Include="Controllers\SPORTsController.cs" />
     <Compile Include="Controllers\teamController.cs" />
     <Compile Include="Controllers\TournamentController.cs" />
@@ -986,11 +985,6 @@
     <Content Include="Views\Shared\_AdminLteTopMenu.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\sport\Create.cshtml" />
-    <Content Include="Views\sport\Delete.cshtml" />
-    <Content Include="Views\sport\Details.cshtml" />
-    <Content Include="Views\sport\Edit.cshtml" />
-    <Content Include="Views\sport\Index.cshtml" />
     <Content Include="Views\team\Create.cshtml" />
     <Content Include="Views\team\Delete.cshtml" />
     <Content Include="Views\team\Details.cshtml" />
