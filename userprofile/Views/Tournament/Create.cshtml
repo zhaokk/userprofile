@@ -1,93 +1,100 @@
 ﻿@model userprofile.Models.TOURNAMENT
 
 @{
-    ViewBag.Title = "Create Tournament";
+	ViewBag.Title = "Create Tournament";
 }
+<div class="row">
+	<div class="col-sm-12">
+		<div class="box">
+			<div class="box-body">
+				@using (Html.BeginForm()) {
+					@Html.AntiForgeryToken()
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-		        <hr />
-        @Html.ValidationSummary(true)
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, "Tournament Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name)
-                @Html.ValidationMessageFor(model => model.name)
-            </div>
-        </div>
+					<div class="form-horizontal">
+						<hr />
+						@Html.ValidationSummary(true)
+						<div class="form-group">
+							@Html.LabelFor(model => model.name, "Tournament Name", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.name)
+								@Html.ValidationMessageFor(model => model.name)
+							</div>
+						</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.startDate, "Start Date", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.startDate)
+						<div class="form-group">
+							@Html.LabelFor(model => model.startDate, "Start Date", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.startDate)
 
-                @Html.ValidationMessageFor(model => model.startDate)
-            </div>
-        </div>
+								@Html.ValidationMessageFor(model => model.startDate)
+							</div>
+						</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.organizer, "Main Organizer", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("organizer", String.Empty)
-                @Html.ValidationMessageFor(model => model.organizer)
-            </div>
-        </div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.organizer, "Main Organizer", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("organizer", String.Empty)
+								@Html.ValidationMessageFor(model => model.organizer)
+							</div>
+						</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ageBracket, "Age Bracket", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ageBracket)
-                @Html.ValidationMessageFor(model => model.ageBracket)
-            </div>
-        </div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.ageBracket, "Age Bracket", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.ageBracket)
+								@Html.ValidationMessageFor(model => model.ageBracket)
+							</div>
+						</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.grade, "Grade", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.grade)
-                @Html.ValidationMessageFor(model => model.grade)
-            </div>
-        </div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.grade, "Grade", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.grade)
+								@Html.ValidationMessageFor(model => model.grade)
+							</div>
+						</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.sport, "Sport", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("sport", String.Empty)
-                @Html.ValidationMessageFor(model => model.sport)
-            </div>
-        </div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.sport, "Sport", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col-md-10">
+								@Html.DropDownList("sport", String.Empty)
+								@Html.ValidationMessageFor(model => model.sport)
+							</div>
+						</div>
 
-   
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.priority)
-                @Html.ValidationMessageFor(model => model.priority)
-            </div>
-        </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+						@*<div class="form-group">
+								@Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
+								<div class="col-md-10">
+									@Html.EditorFor(model => model.priority)
+									@Html.ValidationMessageFor(model => model.priority)
+								</div>
+							</div>*@
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<input type="submit" value="Create" class="btn btn-default" />
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <script>
-    $(function () {
-        $('input[name="startDate"]').daterangepicker({
-            singleDatePicker: true,
-            timePicker: false,
-            
-            locale: {
-                format: 'DD/MM/YYYY '
-            }
-        });
-    });
+	$(function () {
+		$('input[name="startDate"]').daterangepicker({
+			singleDatePicker: true,
+			timePicker: false,
+
+			locale: {
+				format: 'DD/MM/YYYY '
+			}
+		});
+	});
 
 </script>
