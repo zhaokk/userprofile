@@ -30,13 +30,19 @@
 		<h2>SOLUTION @i</h2>
 
 		foreach (userprofile.Models.sorted sortedmatch in solu.matchpair) {
-			<a href="@Url.Action( "Details","match", new { id = sortedmatch.match.matchId })">
-				<h1>@sortedmatch.match.matchDate</h1>
-			</a>
+			
 			counter++;
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><a href="@Url.Action( "Details","match", new { id = sortedmatch.match.matchId })">
+    <h1>@sortedmatch.match.matchDate</h1>
+</a></h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id=@("example"+counter) class="table table-bordered table-hover">

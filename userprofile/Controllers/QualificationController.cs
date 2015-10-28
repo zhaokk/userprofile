@@ -85,7 +85,7 @@ namespace userprofile.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "qualificationId,name,sport,description")] QUALIFICATION qualification)
+        public ActionResult Create([Bind(Include = "qualificationId,name,sport,description,qualificationLevel")] QUALIFICATION qualification)
         {
             if (ModelState.IsValid)
             {
