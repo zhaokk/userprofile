@@ -63,108 +63,122 @@
 
 
 <div class="row">
-    <div class="col-sm-12">
-        <div class="box">
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>User name</th>
+	<div class="col-sm-12">
+		<div class="box">
+			<div class="box-body">
+				<div class="table-responsive">
+					<table id="example2" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>User name</th>
 
 
-                                <th>
+								<th>
 
-                                    Qualification Level
+									Qualification Level
 
-                                </th>
+								</th>
 
-                                <th>
+								<th>
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{ var counter = 0;}
-                            @foreach (var item in Model.Item2)
-                            {
-                                <tr id="row@(item.refId)">
-                                    <td>
-                                        <a href="@Url.Action( "Details","REFEREE", new { id = item.REFEREE.refId })">
-                                            @item.REFEREE.AspNetUser.UserName
-                                        </a>
-                                    </td>
-
-
-                                    <td>
-                                        @item.qualLevel
-                                    </td>
-                                    <td>
-                                        <button type="button" id="@item.refId" class="btn btn-google-plus delete" >&nbsp;&nbsp;&nbsp;delete referee&nbsp;&nbsp;&nbsp;</button>
-                                    </td>
-                                </tr>
-                                counter++;
-                            }
-                            <tr>
-                                <td>
-                                    @Html.DropDownList("referees", (List<SelectListItem>)ViewBag.refeList, "Select a new referee")
-
-                                </td>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@{ var counter = 0;}
+							@foreach (var item in Model.Item2) {
+								<tr id="row@(item.refId)">
+									<td>
+										<a href="@Url.Action( "Details","REFEREE", new { id = item.REFEREE.refId })">
+											@item.REFEREE.AspNetUser.UserName
+										</a>
+									</td>
 
 
-                                <td>
-                                    <input type="number" max="@Model.Item1.qualificationLevel" min="0" id="newReferee" value="1">
-                                </td>
-                                <td>
-                                    <button type="button" id="update" class="btn bg-purple" disabled>Add new Referee</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-<script>
-    $("#referees").change(function () {
-        if ($(this).val() != "") {
-            $("#update").prop('disabled', false);
+									<td>
+										@item.qualLevel
+									</td>
+									<td>
+										<button type="button" id="@item.refId" class="btn btn-danger delete"><i class="icon fa fa-remove"></i>Delete</button>
+									</td>
+								</tr>
+								counter++;
+							}
 
-        } else {
-            $("#update").prop('disabled', true);
-        }
+						</tbody>
+					</table>
 
-    })
-    $("#update").click(function () {
-        $.post("../addReferee", {
-            'refereeID': $("#referees").val(),
-            'qlevel': $("#newReferee").val(),
-            'qualid': @Model.Item1.qualificationId,
-        } ).done(function (data) {
-            $("body").html(data);
-        });
-       
-    });
-    $(".delete").click(function (){
-        var refid=$(this).attr('id');
-        var rowid="row"+refid;
- 
-        $.post("../deleteUserqual",{
-            'refereeID': refid,
-            'qualid': @Model.Item1.qualificationId,
-        },function(){
-            $("#"+rowid).hide(1000).children('td, th')
-     .animate({
-         padding: 0
-     })
-     .wrapInner('<div />')
-     .children()
-     .slideUp(function () {
-         $(this).closest('tr').remove();
-     });
-        });
-    })
+				</div>
+			</div>
+
+		</div>
+		<div class="box">
+			<div class="box-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<tr>
+							<td>
+								@Html.DropDownList("referees", (List<SelectListItem>)ViewBag.refeList, "Select a new referee")
+
+							</td>
 
 
-</script>
+							<td>
+								Qualification Level: <input type="number" max="@Model.Item1.qualificationLevel" min="0" id="newReferee" value="1">
+							</td>
+							<th>
+								<button type="button" id="update" class="btn btn-success" disabled>Add new Referee</button>
+							</th>
+						</tr>
+					</table>
+					</div>
+				</div>
+			</div>
+				</div>
+			</div>
+			<script>
+				$(function () {
+					$('#example2').DataTable();
+				});
+
+				$("#referees").change(function () {
+					if ($(this).val() != "") {
+						$("#update").prop('disabled', false);
+
+					} else {
+						$("#update").prop('disabled', true);
+					}
+
+				})
+				$("#update").click(function () {
+					$.post("../addReferee", {
+						'refereeID': $("#referees").val(),
+						'qlevel': $("#newReferee").val(),
+						'qualid': @Model.Item1.qualificationId,
+					} ).done(function (data) {
+						$("body").html(data);
+					});
+
+				});
+				$(".delete").click(function (){
+					var refid=$(this).attr('id');
+					var rowid="row"+refid;
+
+					$.post("../deleteUserqual",{
+						'refereeID': refid,
+						'qualid': @Model.Item1.qualificationId,
+					},function(){
+						$("#"+rowid).hide(1000).children('td, th')
+				 .animate({
+				 	padding: 0
+				 })
+				 .wrapInner('<div />')
+				 .children()
+				 .slideUp(function () {
+				 	$(this).closest('tr').remove();
+				 });
+					});
+				})
+
+
+			</script>
