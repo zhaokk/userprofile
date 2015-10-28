@@ -19,6 +19,9 @@
         .smallbutr {
     display:inline; width:120px;  float: right;
     }
+    .container {
+    margin-top:-40px !important;
+    }
 </style>
     <meta charset="UTF-8">
 <link rel="stylesheet" href="~/Content/login.css">
@@ -71,10 +74,10 @@
 
     <input  type="submit" value="Log in" class="login login-submit" />
 
-                       <div style="width: 42%;  margin: 0 auto;">
-                    <input type="button" class="smallbutl" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
-                           <input type="button" class="smallbutr"  onclick="location.href = '@Url.Action( "index","Match")';" value="Guest" />
-                       </div>
+                    
+                    <input type="button" onclick="location.href = '@Url.Action( "RegisterNew","Account")';" value="Register" />
+                           <input type="button"  onclick="location.href = '@Url.Action( "index","Match")';" value="Guest" />
+                   
     
    
 
