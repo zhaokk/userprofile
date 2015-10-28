@@ -170,6 +170,8 @@ namespace userprofile.Controllers {
 		void resetGlobalVars() {
 			dOffers = new Dictionary<int, offerInfo>();
 			dReferees = new Dictionary<int, refInfo>();
+			bestOffers = null;
+			bestReferees = null;
 			hFilledOffers = new HashSet<int>();
 			hCanBeFilledOffers = new HashSet<int>();
 			dOfferStorage = new Dictionary<int, OFFER>();
@@ -813,7 +815,6 @@ namespace userprofile.Controllers {
 		/// <returns>values from the dictionary in a random order</returns>
 		public IEnumerable<TKey> UniqueRandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict) {
 			// Put the values in random order
-			Random rand = new Random();
 			LinkedList<TKey> values = new LinkedList<TKey>(from v in dict.Keys
 														   orderby rand.Next()
 														   select v);
@@ -902,9 +903,9 @@ namespace userprofile.Controllers {
 					removeOffer(i);
 				}
 				nuke.Clear();
-				foreach (var i in dReferees) {
-					if (i.Value.available.Count <= i.Value.canAssign) { //if the ref is available to referee all games the can be assigned
-						foreach (var k in i.Value.available) {
+				foreach (var i in UniqueRandomValues(dReferees)) {
+					if (dReferees[i].available.Count <= dReferees[i].canAssign) { //if the ref is available to referee all games the can be assigned
+						foreach (var k in dReferees[i].available) {
 							bool notDouble = true;
 							foreach (var j in llCompleted) {
 								if (j.offer == k.Key) {
@@ -913,7 +914,7 @@ namespace userprofile.Controllers {
 
 							}
 							if (notDouble) {
-								llCompleted.AddLast(new pair(k.Key, i.Key)); //mark as completed
+								llCompleted.AddLast(new pair(k.Key, i)); //mark as completed
 								nuke.AddLast(k.Key); //mark to remove the offer
 								break;
 							}
@@ -926,7 +927,6 @@ namespace userprofile.Controllers {
 				hCanBeFilledOffers.Add(i.Key);
 			}
 
-			Random rand = new Random();
 			foreach (var i in UniqueRandomValues(dOffers)) { //randomise offers 
 				if (dOffers[i].available.Count() > 0) {
 					assign(i, dOffers[i].available.ElementAt(rand.Next(0, dOffers[i].available.Count)).Key); //Assign to an offer i, a randomly selected ref from available referees

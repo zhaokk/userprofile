@@ -186,7 +186,7 @@ namespace userprofile.Controllers
                               .Where(offer => offer.status == 4)
                               .Where(offer => offer.MATCH.matchDate >= today).ToList();
 
-            players = db.PLAYERs.Where(player => player.status == 3).ToList();
+            players = db.PLAYERs.Where(player => player.status == 5).ToList();
 
             return new Tuple<List<OFFER>, List<MATCH>, List<PLAYER>>(offers, matches, players);
         }
@@ -285,7 +285,7 @@ namespace userprofile.Controllers
             int rejectedOffers = db.OFFERs.Where(offer => offer.status == 3).Count(); //rejected status == 3
 
             //players that have requested to join a team
-            int newPlayers = db.PLAYERs.Where(player => player.status == 3).Count();
+            int newPlayers = db.PLAYERs.Where(player => player.status == 5).Count();
 
             notifications.Add("" + matches + " matches have no referee");
             notifications.Add("" + offers + " offers dont have a referee");
@@ -332,7 +332,7 @@ namespace userprofile.Controllers
                                            .Where(offer => offer.MATCH.tournamentId == tournament.tournamentId).Count(); //rejected status == 3
 
                 //players that have requested to join a team
-                var players = db.PLAYERs.Where(player => player.status == 3).ToList();
+                var players = db.PLAYERs.Where(player => player.status == 5).ToList();
 
                 foreach (var play in players)
                 {
