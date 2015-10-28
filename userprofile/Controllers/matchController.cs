@@ -253,12 +253,20 @@ namespace userprofile.Controllers
             }
             MATCH match = db.MATCHes.Find(id);
             var offers = db.OFFERs.Where(o => o.matchId == id).ToList();
+
+            var adminDetails = db.ADMINISTRATIONs.Find("X");
+            
+            bool temp = true;
+
+            if(adminDetails != null){
+                temp = adminDetails.refsCanSeeOtherGames;
+            }
            
             if (match == null)
             {
                 return HttpNotFound();
             }
-            var combined = new Tuple<MATCH, List<OFFER>>(match, offers) { };
+            var combined = new Tuple<MATCH, List<OFFER>, bool>(match, offers, temp) { };
             ViewBag.upload = ableToUploadScore(id);
             return View(combined);
         }

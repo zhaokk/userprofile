@@ -1,5 +1,5 @@
 ﻿@using userprofile.Models;
-@model Tuple<MATCH, List<OFFER>>
+@model Tuple<MATCH, List<OFFER>, bool>
 
 @{
 
@@ -179,129 +179,141 @@
         </div>
 
 
+        @if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("Referee"))
+        {
 
-        <div class="box">
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
 
-                                <th>Referee Name</th>
+                                    <th>Referee Name</th>
 
-                                <th>
+                                    <th>
 
-                                    Type
+                                        Type
 
-                                </th>
+                                    </th>
 
-                                <th>
-                                    Status
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Item2)
-                            {
-                                if (item.status == 0)
+                                    <th>
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Item2)
                                 {
-
-                                }
-                                else
-                                {
-                                    if (item.status == 4 || item.status == 5)
+                                    if (User.IsInRole("Admin") || User.IsInRole("Organizer") || User.IsInRole("Referee"))
                                     {
-                                        <tr>
-                                            <td>
-                                                Unassigned
-                                            </td>
-                                            <td>
-                                                @item.typeOfOffer
-                                                @if (item.OFFERQUALs.Count() != 0)
+                                        if (Model.Item3 || User.Identity.Name == item.REFEREE.AspNetUser.UserName)
+                                        {
+
+                                            if (item.status == 0)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                if (item.status == 4 || item.status == 5)
                                                 {
-                                                    @:Required Quals:
+                                                    <tr>
+                                                        <td>
+                                                            Unassigned
+                                                        </td>
+                                                        <td>
+                                                            @item.typeOfOffer
+                                                            @if (item.OFFERQUALs.Count() != 0)
+                                                            {
+                                                                @:Required Quals:
 												foreach (var i in item.OFFERQUALs)
                                                 {
                                                     @i.QUALIFICATION.name
-                                                    @i.qualLevel
+                                                                @i.qualLevel
                                                 }
-                                                }
-                                            </td>
-                                            <td>
-                                                @switch (item.status)
-                                                {
-                                                    case 1:
-                                                        @:Accepted
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @switch (item.status)
+                                                            {
+                                                                case 1:
+                                                                    @:Accepted
 													break;
-                                                    case 2:
-                                                    @:Declined
+                                                                case 2:
+                                                                @:Declined
 													break;
-                                                    case 3:
-                                                    @:Pending
+                                                                case 3:
+                                                                @:Pending
 													break;
-                                                    case 4:
-                                                    @:Unassigned
+                                                                case 4:
+                                                                @:Unassigned
 													break;
-                                                    case 5:
-                                                    @:Smart Assign
+                                                                case 5:
+                                                                @:Smart Assign
 													break;
-                                                    default:
-                                                    @:ERROR!
+                                                                default:
+                                                                @:ERROR!
 													break;
-                                                }
-                                            </td>
+                                                            }
+                                                        </td>
 
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td>
-                                                <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
-                                                    @item.REFEREE.AspNetUser.firstName
-                                                    @item.REFEREE.AspNetUser.lastName
-                                                    (@item.REFEREE.AspNetUser.UserName)
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                <a href="@Url.Action( "Details","Types", new { id = item.typeOfOffer })">
-                                                    @item.typeOfOffer
-                                                </a>
-                                            </td>
-                                            <td>
-                                                @switch (item.status)
-                                                {
-                                                    case 1:
-                                                        @:Accepted
-													break;
-                                                    case 2:
-                                                    @:Declined
-													break;
-                                                    case 3:
-                                                    @:Pending
-													break;
-                                                    case 4:
-                                                    @:Unassigned
-													break;
-                                                    case 5:
-                                                    @:Smart Assign
-													break;
-                                                    default:
-                                                    @:ERROR!
-													break;
+                                                    </tr>
                                                 }
-                                            </td>
-                                        </tr>
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a href="@Url.Action( "Details","REFEREE", new { id = item.refId })">
+                                                                @item.REFEREE.AspNetUser.firstName
+                                                                @item.REFEREE.AspNetUser.lastName
+                                                                (@item.REFEREE.AspNetUser.UserName)
+                                                            </a>
+                                                        </td>
+
+                                                        <td>
+                                                            <a href="@Url.Action( "Details","Types", new { id = item.typeOfOffer })">
+                                                                @item.typeOfOffer
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            @switch (item.status)
+                                                            {
+                                                                case 1:
+                                                                    @:Accepted
+													break;
+                                                                case 2:
+                                                                @:Declined
+													break;
+                                                                case 3:
+                                                                @:Pending
+													break;
+                                                                case 4:
+                                                                @:Unassigned
+													break;
+                                                                case 5:
+                                                                @:Smart Assign
+													break;
+                                                                default:
+                                                                @:ERROR!
+													break;
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+
                                     }
                                 }
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
-        </div>
+
+        }
 
 
 
