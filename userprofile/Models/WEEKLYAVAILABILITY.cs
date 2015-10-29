@@ -14,6 +14,7 @@ namespace userprofile.Models
     
     public partial class WEEKLYAVAILABILITY
     {
+     
         public int refId { get; set; }
         public int monday { get; set; }
         public int tuesday { get; set; }

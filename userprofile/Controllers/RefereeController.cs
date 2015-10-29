@@ -116,8 +116,22 @@ namespace userprofile.Controllers
 
                     }
                 }
+
+
+
+                AspNetUser newref = db.AspNetUsers.Find(re.userId);
+                re.WEEKLYAVAILABILITY = new WEEKLYAVAILABILITY();
                 db.REFEREEs.Add(re);
                 db.SaveChanges();
+
+                var idManager = new IdentityManager();
+                idManager.AddUserToRole(re.userId, "Referee");
+
+
+
+
+
+
                 return RedirectToAction("Index");
             }
 

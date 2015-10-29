@@ -671,6 +671,13 @@ namespace userprofile.Controllers
                               of.status = 3;
                               of.refId = Convert.ToInt32(Request[indexofrefid]);
                               db.Entry(of).State = EntityState.Modified;
+                              var user =  db.REFEREEs.Find(of.refId).AspNetUser;
+                              var client = new WebClient();
+
+                              var content = client.DownloadString("http://www.smsglobal.com/http-api.php?action=sendsms&user=hy8e6w5k&password=sbn74Yrw&&from=TM&to=61" + user.phoneNum + "&text=You%20have%20a%20new%20offer%20for%20" + of.MATCH.matchDate + "%20at%20" + of.MATCH.LOCATION.name);
+
+                              
+                             
                           }
                        
                           break;
